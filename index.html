@@ -5,30 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ismail Hossen Nihad | Portfolio</title>
     <style>
-        /* গ্লোবাল স্টাইল */
+        /* কালার ভেরিয়েবল (থিম চেঞ্জের জন্য) */
+        :root {
+            --bg-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --subtitle-color: #666666;
+            --heading-color: #2c3e50;
+            --border-color: #eaeaea;
+            --skill-bg: #e9ecef;
+            --p-color: #555555;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --subtitle-color: #b0b0b0;
+            --heading-color: #ffffff;
+            --border-color: #2d2d2d;
+            --skill-bg: #2d2d2d;
+            --p-color: #cccccc;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* কন্টেইনার */
         .container {
             max-width: 800px;
             margin: 40px auto;
-            background: #fff;
+            background: var(--container-bg);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: background 0.3s ease;
         }
 
-        /* প্রোফাইল সেকশন */
+        /* কন্ট্রোল বাটন (থিম ও ল্যাঙ্গুয়েজ) */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .control-btn {
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #007bff;
+            background: transparent;
+            color: #007bff;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: #007bff;
+            color: #fff;
+        }
+
         .header-section {
             text-align: center;
-            border-bottom: 2px solid #eaeaea;
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 25px;
         }
 
@@ -42,18 +89,17 @@
         }
 
         h1 {
-            color: #2c3e50;
+            color: var(--heading-color);
             margin: 15px 0 5px 0;
             font-size: 28px;
         }
 
         .subtitle {
-            color: #666;
+            color: var(--subtitle-color);
             font-size: 16px;
             margin-top: 0;
         }
 
-        /* অন্যান্য সেকশন */
         h2 {
             color: #007bff;
             border-left: 4px solid #007bff;
@@ -63,10 +109,9 @@
 
         p {
             font-size: 16px;
-            color: #555;
+            color: var(--p-color);
         }
 
-        /* স্কিল লিস্ট */
         .skills-list {
             list-style: none;
             padding: 0;
@@ -76,14 +121,13 @@
         }
 
         .skills-list li {
-            background: #e9ecef;
+            background: var(--skill-bg);
             padding: 10px;
             border-radius: 6px;
             text-align: center;
             font-weight: 500;
         }
 
-        /* বোতাম বা অ্যাকশন সেকশন */
         .action-buttons {
             display: flex;
             flex-direction: column;
@@ -103,73 +147,113 @@
             transition: background 0.3s ease;
         }
 
-        .btn-whatsapp {
-            background-color: #25D366;
-        }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-whatsapp:hover { background-color: #1ebd57; }
+        .btn-email { background-color: #007bff; }
+        .btn-email:hover { background-color: #0056b3; }
 
-        .btn-whatsapp:hover {
-            background-color: #1ebd57;
-        }
-
-        .btn-email {
-            background-color: #007bff;
-        }
-
-        .btn-email:hover {
-            background-color: #0056b3;
-        }
-
-        /* ফুটার */
         .footer {
             text-align: center;
             margin-top: 40px;
             font-size: 14px;
             color: #888;
         }
+
+        /* ভাষা পরিবর্তনের লজিক */
+        .lang-bn { display: block; }
+        .lang-en { display: none; }
+
+        .show-en .lang-bn { display: none; }
+        .show-en .lang-en { display: block; }
     </style>
 </head>
-<body>
+<body class="show-bn"> <!-- ডিফল্ট ভাষা বাংলা -->
 
 <div class="container">
     
+    <!-- থিম ও ভাষা পরিবর্তনের বাটনসমূহ -->
+    <div class="controls">
+        <button class="control-btn" onclick="toggleTheme()">🌓 Dark/Light মোড</button>
+        <div>
+            <button class="control-btn" onclick="setLang('bn')">বাংলা</button>
+            <button class="control-btn" onclick="setLang('en')">English</button>
+        </div>
+    </div>
+    
     <!-- প্রোফাইল এবং হেডার -->
     <div class="header-section">
-        <!-- এখানে আপনার গিটহাবের ছবির নাম হুবহু বসানো হয়েছে -->
         <img src="IMG-20260704-WA0046.jpg" alt="Ismail Hossen Nihad" class="profile-img">
         <h1>Ismail Hossen Nihad</h1>
-        <p class="subtitle">Computer Operator & Freelancer</p>
+        <!-- ডাইনামিক সাবটাইটেল -->
+        <p class="subtitle lang-bn">কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
+        <p class="subtitle lang-en">Computer Operator & Freelancer</p>
     </div>
 
     <!-- আমার সম্পর্কে -->
-    <h2>About Me</h2>
-    <p>আসসালামু আলাইকুম, আমি ইসমাইল হোসেন নিহাদ। আমি বর্তমানে কম্পিউটার অপারেশনের কাজ শিখছি এবং ফ্রিল্যান্সিং ক্যারিয়ার শুরু করার জন্য প্রস্তুতি নিচ্ছি। আমি নিখুঁত এবং প্রফেশনালভাবে ডাটা এন্ট্রি ও অফিসিয়াল কাজ সম্পন্ন করতে পারি।</p>
+    <div class="lang-bn">
+        <h2>আমার সম্পর্কে</h2>
+        <p>আসসালামু আলাইকুম, আমি ইসমাইল হোসেন নিহাদ। আমি বর্তমানে কম্পিউটার অপারেশনের কাজ শিখছি এবং ফ্রিল্যান্সিং ক্যারিয়ার শুরু করার জন্য প্রস্তুতি নিচ্ছি। আমি নিখুঁত এবং প্রফেশনালভাবে ডাটা এন্ট্রি ও অফিসিয়াল কাজ সম্পন্ন করতে পারি।</p>
+    </div>
+    <div class="lang-en">
+        <h2>About Me</h2>
+        <p>Assalamu Alaikum, I am Ismail Hossen Nihad. I am currently learning Computer Operation and preparing for my freelancing career. I can complete data entry and official tasks perfectly and professionally.</p>
+    </div>
 
     <!-- সেবাসমূহ/স্কিল -->
-    <h2>My Skills & Services</h2>
-    <ul class="skills-list">
-        <li>MS Word</li>
-        <li>MS Excel</li>
-        <li>Data Entry</li>
-        <li>Internet Browsing</li>
-    </ul>
+    <div class="lang-bn">
+        <h2>আমার দক্ষতা এবং সেবাসমূহ</h2>
+        <ul class="skills-list">
+            <li>এমএস ওয়ার্ড (MS Word)</li>
+            <li>এমএস এক্সেল (MS Excel)</li>
+            <li>ডাটা এন্ট্রি (Data Entry)</li>
+            <li>ইন্টারনেট ব্রাউজিং</li>
+        </ul>
+    </div>
+    <div class="lang-en">
+        <h2>My Skills & Services</h2>
+        <ul class="skills-list">
+            <li>MS Word</li>
+            <li>MS Excel</li>
+            <li>Data Entry</li>
+            <li>Internet Browsing</li>
+        </ul>
+    </div>
 
     <!-- লক্ষ্য -->
-    <h2>My Goal</h2>
-    <p>আমার লক্ষ্য হলো ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করা এবং মাইক্রোসফট অফিস (ওয়ার্ড ও এক্সেল) সংক্রান্ত যেকোনো কাজ দ্রুত ও সঠিকভাবে সম্পন্ন করে একজন সফল ফ্রিল্যান্সার হওয়া।</p>
+    <div class="lang-bn">
+        <h2>আমার লক্ষ্য</h2>
+        <p>আমার লক্ষ্য হলো ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করা এবং মাইক্রোসফট অফিস (ওয়ার্ড ও এক্সেল) সংক্রান্ত যেকোনো কাজ দ্রুত ও সঠিকভাবে সম্পন্ন করে একজন সফল ফ্রিল্যান্সার হওয়া।</p>
+    </div>
+    <div class="lang-en">
+        <h2>My Goal</h2>
+        <p>My goal is to provide the highest quality service to clients and become a successful freelancer by completing any Microsoft Office (Word & Excel) related work quickly and accurately.</p>
+    </div>
 
     <!-- অর্ডার করার মাধ্যমসমূহ -->
-    <h2>Order Now</h2>
-    <p>আপনার কাজের জন্য আমাকে এখনই অর্ডার করতে পারেন। নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
+    <div class="lang-bn">
+        <h2>এখনই অর্ডার করুন</h2>
+        <p>আপনার কাজের জন্য আমাকে এখনই অর্ডার করতে পারেন। নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
+    </div>
+    <div class="lang-en">
+        <h2>Order Now</h2>
+        <p>You can order me right now for your project. Choose any of the options below:</p>
+    </div>
     
     <div class="action-buttons">
-        <!-- WhatsApp অর্ডার লিংক আপনার নম্বর সহ -->
-        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp">
-            💬 WhatsApp-এ অর্ডার করুন (Order via WhatsApp)
+        <!-- WhatsApp অর্ডার লিংক -->
+        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-bn">
+            💬 WhatsApp-এ অর্ডার করুন
+        </a>
+        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-en">
+            💬 Order via WhatsApp
         </a>
 
         <!-- সরাসরি ইমেইল করার লিংক -->
-        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email">
+        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email lang-bn">
             ✉️ ইমেইল করুন: ismailhoseen77@gmail.com
+        </a>
+        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email lang-en">
+            ✉️ Email Me: ismailhoseen77@gmail.com
         </a>
     </div>
 
@@ -179,6 +263,26 @@
 
 </div>
 
+<!-- থিম এবং ল্যাঙ্গুয়েজ চেঞ্জ করার জাভাস্ক্রিপ্ট কোড -->
+<script>
+    // থিম টগল করার ফাংশন
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    // ভাষা পরিবর্তন করার ফাংশন
+    function setLang(lang) {
+        if(lang === 'en') {
+            document.body.classList.remove('show-bn');
+            document.body.classList.add('show-en');
+        } else {
+            document.body.classList.remove('show-en');
+            document.body.classList.add('show-bn');
+        }
+    }
+</script>
+
 </body>
 </html>
+
 
