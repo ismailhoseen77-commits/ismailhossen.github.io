@@ -1,27 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>Ismail Hossen Nihad</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismail Hossen Nihad | Portfolio</title>
+    <style>
+        /* গ্লোবাল স্টাইল */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* কন্টেইনার */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* প্রোফাইল সেকশন */
+        .header-section {
+            text-align: center;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 25px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 4px solid #007bff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 15px 0 5px 0;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        /* অন্যান্য সেকশন */
+        h2 {
+            color: #007bff;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* স্কিল লিস্ট */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .skills-list li {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* বোতাম বা অ্যাকশন সেকশন */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            padding: 14px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1ebd57;
+        }
+
+        .btn-email {
+            background-color: #007bff;
+        }
+
+        .btn-email:hover {
+            background-color: #0056b3;
+        }
+
+        /* ফুটার */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Portfolio</h1>
+
+<div class="container">
+    
+    <div class="header-section">
+        <img src="1000003795.jpg" alt="Ismail Hossen Nihad" class="profile-img">
+        <h1>Ismail Hossen Nihad</h1>
+        <p class="subtitle">Computer Operator & Freelancer</p>
+    </div>
 
     <h2>About Me</h2>
-    <p>My name is Ismail Hossen Nihad.</p>
-    <p>I am currently learning Computer Operation and preparing for freelancing.</p>
+    <p>আসসালামু আলাইকুম, আমি ইসমাইল হোসেন নিহাদ। আমি বর্তমানে কম্পিউটার অপারেশনের কাজ শিখছি এবং ফ্রিল্যান্সিং ক্যারিয়ার শুরু করার জন্য প্রস্তুতি নিচ্ছি। আমি নিখুঁত এবং প্রফেশনালভাবে ডাটা এন্ট্রি ও অফিসিয়াল কাজ সম্পন্ন করতে পারি।</p>
 
-    <h2>Skills</h2>
-    <ul>
-        <li>Computer Operation (Learning)</li>
+    <h2>My Skills & Services</h2>
+    <ul class="skills-list">
         <li>MS Word</li>
         <li>MS Excel</li>
+        <li>Data Entry</li>
         <li>Internet Browsing</li>
     </ul>
 
     <h2>My Goal</h2>
-    <p>My goal is to become a successful freelancer.</p>
+    <p>আমার লক্ষ্য হলো ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করা এবং মাইক্রোসফট অফিস (ওয়ার্ড ও এক্সেল) সংক্রান্ত যেকোনো কাজ দ্রুত ও সঠিকভাবে সম্পন্ন করে একজন সফল ফ্রিল্যান্সার হওয়া।</p>
 
-    <h2>Contact</h2>
-    <p>Email: your@email.com</p>
+    <h2>Order Now</h2>
+    <p>আপনার কাজের জন্য আমাকে এখনই অর্ডার করতে পারেন। নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
+    
+    <div class="action-buttons">
+        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp">
+            💬 WhatsApp-এ অর্ডার করুন (Order via WhatsApp)
+        </a>
+
+        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email">
+            ✉️ ইমেইল করুন: ismailhoseen77@gmail.com
+        </a>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 Ismail Hossen Nihad. All Rights Reserved.</p>
+    </div>
+
+</div>
+
 </body>
 </html>
