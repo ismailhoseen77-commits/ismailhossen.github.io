@@ -5,29 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ismail Hossen Nihad | Portfolio</title>
     <style>
-        /* কালার ভেরিয়েবল (থিম চেঞ্জের জন্য) */
+        /* কালার ভেরিয়েবল (থিম পরিবর্তনের জন্য সুন্দর রঙ ও ডিজাইন) */
         :root {
-            --bg-color: #f4f7f6;
+            --bg-color: #eef2f7; /* হালকা নীলাভ-ধূসর ব্যাকগ্রাউন্ড */
             --container-bg: #ffffff;
-            --text-color: #333333;
+            --text-color: #2c3e50;
             --subtitle-color: #666666;
-            --heading-color: #2c3e50;
+            --heading-color: #007bff;
+            --nav-bg: #1a252f;
+            --nav-text: #ffffff;
             --border-color: #eaeaea;
-            --skill-bg: #e9ecef;
+            --skill-bg: #f8f9fa;
             --p-color: #555555;
+            --card-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
         .dark-mode {
-            --bg-color: #121212;
-            --container-bg: #1e1e1e;
+            --bg-color: #0f171e; /* প্রিমিয়াম ডার্ক ব্লু ব্যাকগ্রাউন্ড */
+            --container-bg: #1a242f;
             --text-color: #e0e0e0;
             --subtitle-color: #b0b0b0;
-            --heading-color: #ffffff;
+            --heading-color: #3792ff;
+            --nav-bg: #0b1116;
+            --nav-text: #ffffff;
             --border-color: #2d2d2d;
-            --skill-bg: #2d2d2d;
+            --skill-bg: #253341;
             --p-color: #cccccc;
+            --card-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
+        /* গ্লোবাল স্টাইল ও রেসপনসিভ লেআউট */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -35,24 +42,73 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: var(--container-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* ফিক্সড নেভিগেশন বার */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
             transition: background 0.3s ease;
         }
 
-        /* কন্ট্রোল বাটন (থিম ও ল্যাঙ্গুয়েজ) */
+        .nav-container {
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .nav-logo {
+            font-weight: bold;
+            color: var(--nav-text);
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3792ff;
+        }
+
+        /* কন্টেইনার (মোবাইল ও কম্পিউটারের জন্য সুন্দর রেসপনসিভ সাইজ) */
+        .container {
+            max-width: 800px;
+            margin: 90px auto 40px auto; /* নেভবারের জন্য ওপরে ফাঁকা জায়গা */
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        /* কন্ট্রোল প্যানেল (থিম ও ভাষা) */
         .controls {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -73,6 +129,7 @@
             color: #fff;
         }
 
+        /* প্রোফাইল সেকশন */
         .header-section {
             text-align: center;
             border-bottom: 2px solid var(--border-color);
@@ -80,16 +137,16 @@
         }
 
         .profile-img {
-            width: 180px;
-            height: 220px;
+            width: 170px;
+            height: 210px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 4px solid #007bff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         h1 {
-            color: var(--heading-color);
+            color: var(--text-color);
             margin: 15px 0 5px 0;
             font-size: 28px;
         }
@@ -100,11 +157,13 @@
             margin-top: 0;
         }
 
+        /* সেকশন ডিজাইন */
         h2 {
-            color: #007bff;
+            color: var(--heading-color);
             border-left: 4px solid #007bff;
             padding-left: 10px;
-            margin-top: 30px;
+            margin-top: 35px;
+            font-size: 22px;
         }
 
         p {
@@ -112,27 +171,58 @@
             color: var(--p-color);
         }
 
+        /* স্কিল ও সোশাল গ্রিড (রেসপনসিভ) */
         .skills-list {
             list-style: none;
             padding: 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
         }
 
         .skills-list li {
             background: var(--skill-bg);
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
             font-weight: 500;
+            border: 1px solid var(--border-color);
         }
 
+        /* সোশাল বাটনের জন্য স্টাইল */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #fff;
+            transition: transform 0.2s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-fb { background-color: #1877f2; }
+        .btn-git { background-color: #24292e; }
+        .btn-mail-blue { background-color: #007bff; }
+
+        /* অর্ডার বোতাম */
         .action-buttons {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .btn {
@@ -154,20 +244,50 @@
 
         .footer {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 50px;
             font-size: 14px;
             color: #888;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
         }
 
-        /* ভাষা পরিবর্তনের লজিক */
+        /* ল্যাঙ্গুয়েজ হাইড/শো লজিক */
         .lang-bn { display: block; }
         .lang-en { display: none; }
 
         .show-en .lang-bn { display: none; }
         .show-en .lang-en { display: block; }
+
+        /* মোবাইল স্ক্রিনের জন্য রেসপনসিভ টুইক */
+        @media (max-width: 600px) {
+            .container {
+                margin: 80px 15px 20px 15px;
+                padding: 20px;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 13px;
+            }
+            h1 { font-size: 24px; }
+        }
     </style>
 </head>
-<body class="show-bn"> <!-- ডিফল্ট ভাষা বাংলা -->
+<body class="show-bn">
+
+<!-- 🌐 নেভিগেশন বার -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo">Nihad</a>
+        <ul class="nav-links">
+            <li><a href="#" class="lang-bn">হোম</a><a href="#" class="lang-en">Home</a></li>
+            <li><a href="#about" class="lang-bn">আমার সম্পর্কে</a><a href="#about" class="lang-en">About</a></li>
+            <li><a href="#skills" class="lang-bn">দক্ষতা</a><a href="#skills" class="lang-en">Skills</a></li>
+            <li><a href="#contact" class="lang-bn">যোগাযোগ</a><a href="#contact" class="lang-en">Contact</a></li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container">
     
@@ -180,162 +300,119 @@
         </div>
     </div>
     
-    <!-- প্রোফাইল এবং হেডার -->
+    <!-- 👤 প্রোফাইল এবং হেডার সেকশন -->
     <div class="header-section">
         <img src="IMG-20260704-WA0046.jpg" alt="Ismail Hossen Nihad" class="profile-img">
         <h1>Ismail Hossen Nihad</h1>
-        <!-- ডাইনামিক সাবটাইটেল -->
         <p class="subtitle lang-bn">কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
         <p class="subtitle lang-en">Computer Operator & Freelancer</p>
     </div>
 
-    <!-- আমার সম্পর্কে -->
-    <div class="lang-bn">
-        <h2>আমার সম্পর্কে</h2>
-        <p>আসসালামু আলাইকুম, আমি ইসমাইল হোসেন নিহাদ। আমি বর্তমানে কম্পিউটার অপারেশনের কাজ শিখছি এবং ফ্রিল্যান্সিং ক্যারিয়ার শুরু করার জন্য প্রস্তুতি নিচ্ছি। আমি নিখুঁত এবং প্রফেশনালভাবে ডাটা এন্ট্রি ও অফিসিয়াল কাজ সম্পন্ন করতে পারি।</p>
-    </div>
-    <div class="lang-en">
-        <h2>About Me</h2>
-        <p>Assalamu Alaikum, I am Ismail Hossen Nihad. I am currently learning Computer Operation and preparing for my freelancing career. I can complete data entry and official tasks perfectly and professionally.</p>
-    </div>
-
-    <!-- সেবাসমূহ/স্কিল -->
-    <div class="lang-bn">
-        <h2>আমার দক্ষতা এবং সেবাসমূহ</h2>
-        <ul class="skills-list">
-            <li>এমএস ওয়ার্ড (MS Word)</li>
-            <li>এমএস এক্সেল (MS Excel)</li>
-            <li>ডাটা এন্ট্রি (Data Entry)</li>
-            <li>ইন্টারনেট ব্রাউজিং</li>
-        </ul>
-    </div>
-    <div class="lang-en">
-        <h2>My Skills & Services</h2>
-        <ul class="skills-list">
-            <li>MS Word</li>
-            <li>MS Excel</li>
-            <li>Data Entry</li>
-            <li>Internet Browsing</li>
-        </ul>
+    <!-- 📄 আমার সম্পর্কে (About Me) -->
+    <div id="about">
+        <div class="lang-bn">
+            <h2>About Me | আমার সম্পর্কে</h2>
+            <p>আসসালামু আলাইকুম, আমি ইসমাইল হোসেন নিহাদ। আমি বর্তমানে কম্পিউটার অপারেশনের কাজ শিখছি এবং ফ্রিল্যান্সিং ক্যারিয়ার শুরু করার জন্য প্রস্তুতি নিচ্ছি। আমি নিখুঁত এবং প্রফেশনালভাবে ডাটা এন্ট্রি ও অফিসিয়াল কাজ সম্পন্ন করতে পারি।</p>
+        </div>
+        <div class="lang-en">
+            <h2>About Me</h2>
+            <p>Assalamu Alaikum, I am Ismail Hossen Nihad. I am currently learning Computer Operation and preparing for my freelancing career. I can complete data entry and official tasks perfectly and professionally.</p>
+        </div>
     </div>
 
-    <!-- লক্ষ্য -->
-    <div class="lang-bn">
-        <h2>আমার লক্ষ্য</h2>
-        <p>আমার লক্ষ্য হলো ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করা এবং মাইক্রোসফট অফিস (ওয়ার্ড ও এক্সেল) সংক্রান্ত যেকোনো কাজ দ্রুত ও সঠিকভাবে সম্পন্ন করে একজন সফল ফ্রিল্যান্সার হওয়া।</p>
-    </div>
-    <div class="lang-en">
-        <h2>My Goal</h2>
-        <p>My goal is to provide the highest quality service to clients and become a successful freelancer by completing any Microsoft Office (Word & Excel) related work quickly and accurately.</p>
-    </div>
-
-    <!-- অর্ডার করার মাধ্যমসমূহ -->
-    <div class="lang-bn">
-        <h2>এখনই অর্ডার করুন</h2>
-        <p>আপনার কাজের জন্য আমাকে এখনই অর্ডার করতে পারেন। নিচের যেকোনো একটি মাধ্যম বেছে নিন:</p>
-    </div>
-    <div class="lang-en">
-        <h2>Order Now</h2>
-        <p>You can order me right now for your project. Choose any of the options below:</p>
-    </div>
-    
-    <div class="action-buttons">
-        <!-- WhatsApp অর্ডার লিংক -->
-        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-bn">
-            💬 WhatsApp-এ অর্ডার করুন
-        </a>
-        <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-en">
-            💬 Order via WhatsApp
-        </a>
-
-        <!-- সরাসরি ইমেইল করার লিংক -->
-        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email lang-bn">
-            ✉️ ইমেইল করুন: ismailhoseen77@gmail.com
-        </a>
-        <a href="mailto:ismailhoseen77@gmail.com?subject=New%20Order%20for%20MS%20Office%20Work&body=Hello%20Ismail,%20I%20want%20to%20order..." class="btn btn-email lang-en">
-            ✉️ Email Me: ismailhoseen77@gmail.com
-        </a>
-    </div>
-    <!-- শিক্ষাগত যোগ্যতা -->
-    <div class="lang-bn">
-        <h2>শিক্ষাগত যোগ্যতা</h2>
-        <p><strong>মাধ্যমিক স্কুল সার্টিফিকেট (SSC)</strong><br>ব্যবসায় শিক্ষা বিভাগ (Commerce)<br>পরীক্ষার্থী ২০২৬</p>
-    </div>
-    <div class="lang-en">
-        <h2>Education</h2>
-        <p><strong>Secondary School Certificate (SSC)</strong><br>Business Studies Group (Commerce)<br>Examinee 2026</p>
+    <!-- 🎓 শিক্ষাগত যোগ্যতা (Education) -->
+    <div>
+        <div class="lang-bn">
+            <h2>🎓 শিক্ষাগত যোগ্যতা</h2>
+            <p><strong>মাধ্যমিক স্কুল সার্টিফিকেট (SSC)</strong><br>ব্যবসায় শিক্ষা বিভাগ (Commerce)<br>পরীক্ষার্থী ২০২৬</p>
+        </div>
+        <div class="lang-en">
+            <h2>🎓 Education</h2>
+            <p><strong>Secondary School Certificate (SSC)</strong><br>Business Studies Group (Commerce)<br>Examinee 2026</p>
+        </div>
     </div>
 
-    <!-- অতিরিক্ত কার্যক্রম বা অভিজ্ঞতা -->
-    <div class="lang-bn">
-        <h2>অন্যান্য কার্যক্রম ও অভিজ্ঞতা</h2>
-        <p><strong>সদস্য, বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)</strong><br>স্কাউট গ্রুপের বিভিন্ন মিটিং পরিচালনা, বার্তা তৈরি এবং প্রাতিষ্ঠানিক দায়িত্ব পালনের অভিজ্ঞতা রয়েছে।</p>
-    </div>
-    <div class="lang-en">
-        <h2>Extra-Curricular Activities & Experience</h2>
-        <p><strong>Member, Bangladesh Scouts (Railway Region)</strong><br>Experienced in drafting group messages, organizing meetings, and managing responsibilities within the scout group.</p>
-    </div>
-
-    <!-- শখ বা ব্যক্তিগত আগ্রহ -->
-    <div class="lang-bn">
-        <h2>ব্যক্তিগত আগ্রহ ও শখ</h2>
-        <p>কম্পিউটার ও প্রযুক্তির পাশাপাশি অবসরে আমি অ্যাকোয়ারিয়ামে ছোট পরিসরে মাছের প্রজনন ও পরিচর্যা করতে পছন্দ করি।</p>
-    </div>
-    <div class="lang-en">
-        <h2>Interests & Hobbies</h2>
-        <p>Alongside computers and technology, I enjoy small-scale fish breeding and maintaining home aquariums in my free time.</p>
-    </div>
-        <!-- 🎓 Education Section -->
-    <div class="lang-bn">
-        <h2>🎓 শিক্ষাগত যোগ্যতা</h2>
-        <p><strong>মাধ্যমিক স্কুল সার্টিফিকেট (SSC)</strong><br>ব্যবসায় শিক্ষা বিভাগ (Commerce)<br>পরীক্ষার্থী ২০২৬</p>
-    </div>
-    <div class="lang-en">
-        <h2>🎓 Education</h2>
-        <p><strong>Secondary School Certificate (SSC)</strong><br>Business Studies Group (Commerce)<br>Examinee 2026</p>
+    <!-- 💼 আসন্ন প্রজেক্টসমূহ (Upcoming Projects) -->
+    <div>
+        <div class="lang-bn">
+            <h2>💼 আসন্ন প্রজেক্টসমূহ (Upcoming Projects)</h2>
+            <p>বর্তমানে আমি কম্পিউটার অপারেশন এবং ফ্রিল্যান্সিং এর কাজগুলো আরও গভীরভাবে শিখছি। খুব শীঘ্রই আমার করা সেরা প্রজেক্টগুলো (যেমন: ডাটা এন্ট্রি শিট, এক্সেল ড্যাশবোর্ড ইত্যাদি) এখানে যোগ করা হবে।</p>
+        </div>
+        <div class="lang-en">
+            <h2>💼 Upcoming Projects</h2>
+            <p>I am currently mastering computer operation and freelancing skills. Soon, my best projects (such as Data Entry sheets, Excel Dashboards, etc.) will be displayed here.</p>
+        </div>
     </div>
 
-    <!-- 💼 Upcoming Projects Section -->
-    <div class="lang-bn">
-        <h2>💼 আসন্ন প্রজেক্টসমূহ (Upcoming Projects)</h2>
-        <p>বর্তমানে আমি কম্পিউটার অপারেশন এবং ফ্রিল্যান্সিং এর কাজগুলো আরও গভীরভাবে শিখছি। খুব শীঘ্রই আমার করা সেরা প্রজেক্টগুলো (যেমন: ডাটা এন্ট্রি শিট, এক্সেল ড্যাশবোর্ড ইত্যাদি) এখানে যোগ করা হবে।</p>
-    </div>
-    <div class="lang-en">
-        <h2>💼 Upcoming Projects</h2>
-        <p>I am currently mastering computer operation and freelancing skills. Soon, my best projects (such as Data Entry sheets, Excel Dashboards, etc.) will be displayed here.</p>
-    </div>
-
-    <!-- 📄 CV Download Button Section -->
-    <div class="lang-bn">
-        <h2>📄 জীবনবৃত্তান্ত (CV)</h2>
-        <p>আমার কাজের বিস্তারিত অভিজ্ঞতা দেখতে নিচের বাটন থেকে আমার সিভি (CV) ডাউনলোড করতে পারেন:</p>
-    </div>
-    <div class="lang-en">
-        <h2>📄 Curriculum Vitae (CV)</h2>
-        <p>To view my detailed work experience, you can download my CV from the button below:</p>
-    </div>
-    <div class="action-buttons" style="margin-top: 10px; margin-bottom: 20px;">
-        <!-- এখানে '#' এর জায়গায় ভবিষ্যতে আপনার সিভির লিংক বসিয়ে দিতে পারবেন -->
-        <a href="#" download class="btn btn-email lang-bn">📥 সিভি ডাউনলোড করুন (Download CV)</a>
-        <a href="#" download class="btn btn-email lang-en">📥 Download CV</a>
+    <!-- 🛠️ দক্ষতা এবং সেবাসমূহ (Skills) -->
+    <div id="skills">
+        <div class="lang-bn">
+            <h2>🛠️ আমার দক্ষতা এবং সেবাসমূহ</h2>
+            <ul class="skills-list">
+                <li>এমএস ওয়ার্ড (MS Word)</li>
+                <li>এমএস এক্সেল (MS Excel)</li>
+                <li>ডাটা এন্ট্রি (Data Entry)</li>
+                <li>ইন্টারনেট ব্রাউজিং</li>
+            </ul>
+        </div>
+        <div class="lang-en">
+            <h2>🛠️ My Skills & Services</h2>
+            <ul class="skills-list">
+                <li>MS Word</li>
+                <li>MS Excel</li>
+                <li>Data Entry</li>
+                <li>Internet Browsing</li>
+            </ul>
+        </div>
     </div>
 
-    <!-- 🔗 Social Links Section -->
-    <div class="lang-bn">
-        <h2>🔗 সামাজিক যোগাযোগ মাধ্যম</h2>
-        <p>আমার সাথে অন্যান্য প্ল্যাটফর্মে যুক্ত হতে নিচের লিংকগুলোতে ভিজিট করুন:</p>
+    <!-- 🎯 লক্ষ্য (Goal) -->
+    <div>
+        <div class="lang-bn">
+            <h2>🎯 আমার লক্ষ্য</h2>
+            <p>আমার লক্ষ্য হলো ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করা এবং মাইক্রোসফট অফিস (ওয়ার্ড ও এক্সেল) সংক্রান্ত যেকোনো কাজ দ্রুত ও সঠিকভাবে সম্পন্ন করে একজন সফল ফ্রিল্যান্সার হওয়া।</p>
+        </div>
+        <div class="lang-en">
+            <h2>🎯 My Goal</h2>
+            <p>My goal is to provide the highest quality service to clients and become a successful freelancer by completing any Microsoft Office (Word & Excel) related work quickly and accurately.</p>
+        </div>
     </div>
-    <div class="lang-en">
-        <h2>🔗 Social Profiles</h2>
-        <p>Connect with me on other professional platforms:</p>
+
+    <!-- 📞 যোগাযোগ এবং সোশ্যাল বাটন সেকশন (Contact) -->
+    <div id="contact">
+        <div class="lang-bn">
+            <h2>📞 আমার সাথে যোগাযোগ করুন</h2>
+            <p>আপনার কাজের জন্য আমাকে এখনই অর্ডার করতে পারেন অথবা সামাজিক যোগাযোগ মাধ্যমে যুক্ত হতে পারেন। নিচের যেকোনো বাটন চাপুন:</p>
+        </div>
+        <div class="lang-en">
+            <h2>📞 Contact & Connect Me</h2>
+            <p>You can order me right now for your project or connect with me via social platforms. Choose any option below:</p>
+        </div>
+        
+        <!-- অর্ডার এবং মেসেজ বাটন -->
+        <div class="action-buttons">
+            <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-bn">
+                💬 WhatsApp-এ অর্ডার করুন
+            </a>
+            <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="btn btn-whatsapp lang-en">
+                💬 Order via WhatsApp
+            </a>
+        </div>
+
+        <!-- 🔗 সোশ্যাল এবং ইমেইল গ্রিড বাটন (আপনার ইমেইল ও গিটহাব সহ) -->
+        <div class="social-grid">
+            <!-- ফেসবুক বাটন (# কেটে আপনার প্রোফাইল লিংক বসিয়ে দিতে পারেন) -->
+            <a href="#" target="_blank" class="social-btn btn-fb">🌐 Facebook</a>
+            
+            <!-- গিটহাব বাটন -->
+            <a href="https://github.com/ismailhossen77-commits" target="_blank" class="social-btn btn-git">💻 GitHub</a>
+            
+            <!-- ইমেইল বাটন -->
+            <a href="mailto:ismailhoseen77@gmail.com?subject=Inquiry%20from%20Portfolio" class="social-btn btn-mail-blue">✉️ Email</a>
+        </div>
     </div>
-    <div class="skills-list" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); margin-bottom: 30px;">
-        <!-- এখানে '#' এর জায়গায় আপনার প্রোফাইলের আসল লিংকগুলো বসিয়ে দেবেন -->
-        <li><a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" style="text-decoration: none; color: inherit; font-weight: bold;">🌐 Facebook</a></li>
-        <li><a href="https://github.com/ismailhossen77-commits" target="_blank" style="text-decoration: none; color: inherit; font-weight: bold;">💻 GitHub</a></li>
-        <li><a href="#" target="_blank" style="text-decoration: none; color: inherit; font-weight: bold;">👔 LinkedIn</a></li>
-    </div>
-    
+
+    <!-- 📝 ফুটার -->
     <div class="footer">
         <p>© 2026 Ismail Hossen Nihad. All Rights Reserved.</p>
     </div>
@@ -344,12 +421,10 @@
 
 <!-- থিম এবং ল্যাঙ্গুয়েজ চেঞ্জ করার জাভাস্ক্রিপ্ট কোড -->
 <script>
-    // থিম টগল করার ফাংশন
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
     }
 
-    // ভাষা পরিবর্তন করার ফাংশন
     function setLang(lang) {
         if(lang === 'en') {
             document.body.classList.remove('show-bn');
@@ -363,5 +438,3 @@
 
 </body>
 </html>
-
-
