@@ -6,13 +6,21 @@ function enterSite() {
 
 // ২. 🍔 সরাসরি অন-ক্লিক মেথড (মেনু ওপেন এবং ক্লোজ করার জন্য)
 function openSidebar() {
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('sidebarOverlay').classList.add('open');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+    }
 }
 
 function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('open');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+    }
 }
 
 // ৩. 🚀 পেজ ন্যাভিগেশন কন্ট্রোল
@@ -38,7 +46,7 @@ function showPage(pageId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ৪. 🌐 ল্যাঙ্গুয়েজ চেঞ্জার লজিক (রিয়েল-টাইম ট্রান্সলেশন ফিক্স)
+// ৪. 🌐 ল্যাঙ্গুয়েজ চেঞ্জার লজিক (রিয়েল-টাইম গ্যারান্টিড সলিউশন)
 let currentLang = 'bn'; 
 
 function toggleLanguage() {
