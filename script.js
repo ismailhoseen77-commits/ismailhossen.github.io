@@ -1,108 +1,96 @@
 // ==========================================================================
-// 🚀 1. SINGLE PAGE APPLICATION (SPA) SYSTEM (ট্যাব পরিবর্তন)
+// 🚪 1. WELCOME SCREEN CLOSING LOGIC (স্বাগতম স্ক্রিন বন্ধ করা)
+// ==========================================================================
+function enterSite() {
+    const welcomeScreen = document.getElementById('welcome-screen');
+    if (welcomeScreen) {
+        welcomeScreen.classList.add('fade-out');
+    }
+}
+
+// ==========================================================================
+// 🚀 2. PAGE NAVIGATION SYSTEM (SPA)
 // ==========================================================================
 function showPage(pageId) {
-    const sections = document.querySelectorAll('.page-section');
-    sections.forEach(section => section.classList.remove('active'));
+    // সব পেজ হাইড করা
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
     
-    const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => link.classList.remove('active'));
+    // সব নেভলিঙ্ক নিষ্ক্রিয় করা
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+    });
     
+    // নির্দিষ্ট পেজ ও নেভলিঙ্ক অ্যাক্টিভ করা
     const targetPage = document.getElementById('page-' + pageId);
-    const targetNavLink = document.getElementById('nav-' + pageId);
+    const targetLink = document.getElementById('nav-' + pageId);
     
-    if (targetPage) {
-        targetPage.classList.add('active');
-    }
-    if (targetNavLink) {
-        targetNavLink.classList.add('active');
-    }
+    if (targetPage) targetPage.classList.add('active');
+    if (targetLink) targetLink.classList.add('active');
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ==========================================================================
-// 🌙 2. DARK / LIGHT MODE SWITCHER (থিম মেমোরি)
+// 🌐 3. PERFECT LANGUAGE TOGGLE SYSTEM (বাংলা ও ইংরেজি পরিবর্তন)
 // ==========================================================================
-const themeToggleBtn = document.getElementById('theme-toggle');
+let currentLang = 'bn'; // ডিফল্ট ভাষা বাংলা
 
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-    if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-}
-
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', 'light');
-        }
-    });
-}
-
-// ==========================================================================
-// 🌐 3. LANGUAGE TOGGLE SYSTEM (বাংলা ও ইংরেজি পরিবর্তন)
-// ==========================================================================
 function toggleLanguage() {
     const langBtn = document.getElementById('lang-btn');
     
-    if (document.body.classList.contains('show-en')) {
-        document.body.classList.remove('show-en');
-        document.body.classList.add('show-bn');
-        if (langBtn) langBtn.innerText = 'EN';
-    } else {
-        document.body.classList.remove('show-bn');
-        document.body.classList.add('show-en');
+    if (currentLang === 'bn') {
+        currentLang = 'en';
         if (langBtn) langBtn.innerText = 'BN';
+    } else {
+        currentLang = 'bn';
+        if (langBtn) langBtn.innerText = 'EN';
     }
-}
-
-// ==========================================================================
-// ⬆️ 4. SCROLL TO TOP SYSTEM
-// ==========================================================================
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-window.onscroll = function() {
-    if (scrollTopBtn) {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            scrollTopBtn.style.display = "flex";
+    
+    // সমস্ত টেক্সট পরিবর্তন করা
+    document.querySelectorAll('.lang-text').forEach(el => {
+        const textValue = el.getAttribute('data-' + currentLang);
+        if (textValue) {
+            el.innerText = textValue;
+        }
+    });
+    
+    // প্লেসহোল্ডার টেক্সট কাস্টমাইজেশন (অর্ডার ফর্মের জন্য)
+    const nameInput = document.getElementById('clientName');
+    const phoneInput = document.getElementById('clientPhone');
+    const detailsInput = document.getElementById('clientDetails');
+    
+    if (nameInput && phoneInput && detailsInput) {
+        if (currentLang === 'en') {
+            nameInput.placeholder = "Your Name";
+            phoneInput.placeholder = "Phone Number";
+            detailsInput.placeholder = "Task Details & Address...";
         } else {
-            scrollTopBtn.style.display = "none";
+            nameInput.placeholder = "আপনার নাম";
+            phoneInput.placeholder = "মোবাইল নম্বর";
+            detailsInput.placeholder = "বিস্তারিত ঠিকানা ও কাজের বিবরণ...";
         }
     }
-};
-
-if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
 }
 
 // ==========================================================================
-// 🛍️ 5. WHATSAPP CUSTOM ORDER SUBMISSION SYSTEM
+// 🛍️ 4. WHATSAPP ORDER SUBMISSION
 // ==========================================================================
 function sendOrder(event) {
     event.preventDefault();
 
     const name = document.getElementById('clientName').value;
     const phone = document.getElementById('clientPhone').value;
-    const service = document.getElementById('serviceType').value;
     const details = document.getElementById('clientDetails').value;
 
-    const baseText = `*New Order Received from Portfolio!* 🔥\n\n` +
+    const baseText = `*New Order from Portfolio!* 🔥\n\n` +
                      `👤 *Name:* ${name}\n` +
                      `📞 *Phone:* ${phone}\n` +
-                     `💼 *Service:* ${service}\n` +
-                     `📝 *Details & Address:* ${details}`;
+                     `📝 *Details:* ${details}`;
 
     const encodedText = encodeURIComponent(baseText);
     const whatsappURL = `https://wa.me/8801576502490?text=${encodedText}`;
     
     window.open(whatsappURL, '_blank');
-}
-
+        }
