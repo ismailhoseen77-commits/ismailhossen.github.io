@@ -20,18 +20,10 @@
         </div>
     </div>
 
-    <!-- 🌐 Glassmorphism Navbar (সবগুলো মেনু ব্যাক আনা হয়েছে) -->
-    <nav class="navbar">
+    <!-- 🌐 Header Brand Logo Only -->
+    <header class="app-header">
         <a href="#" onclick="showPage('home')" class="nav-logo">Nihad</a>
-        <div class="nav-links">
-            <a onclick="showPage('home')" class="active" id="nav-home"><span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
-            <a onclick="showPage('about')" id="nav-about"><span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
-            <a onclick="showPage('skills')" id="nav-skills"><span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
-            <a onclick="showPage('projects')" id="nav-projects"><span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
-            <a onclick="showPage('shop')" id="nav-shop"><span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
-            <a onclick="showPage('order')" id="nav-order"><span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
-        </div>
-    </nav>
+    </header>
 
     <!-- 🕋 Main Container -->
     <main class="container">
@@ -50,11 +42,15 @@
             </div>
         </section>
 
-        <!-- 👨‍💻 About Section -->
+        <!-- 👨‍💻 About Section (বিস্তারিত ব্যাক আনা হয়েছে) -->
         <section id="page-about" class="page">
             <div class="hero-card text-left">
                 <h2 class="lang-text" data-bn="👨‍💻 আমার সম্পর্কে" data-en="👨‍💻 About Me">👨‍💻 আমার সম্পর্কে</h2>
-                <p class="lang-text" data-bn="আমি একজন ডেডিকেটেড এবং প্রফেশনাল কম্পিউটার অপারেটর। ডাটা এন্ট্রি, মাইক্রোসফট অফিস ম্যানেজমেন্ট এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে আমার ভালো অভিজ্ঞতা রয়েছে।" data-en="I am a dedicated and professional Computer Operator. I have solid experience in data entry, Microsoft Office management, and official documentation tasks.">আমি একজন ডেডিকেটেড এবং প্রফেশনাল কম্পিউটার অপারেটর। ডাটা এন্ট্রি, মাইক্রোসফট অফিস ম্যানেজমেন্ট এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে আমার ভালো অভিজ্ঞতা রয়েছে।</p>
+                <p class="lang-text" 
+                   data-bn="আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।" 
+                   data-en="I am an experienced and professional Computer Operator specializing in freelancing and official documentation. I excel in clean data entry, high-speed typing, and managing advanced Microsoft Office operations.">
+                   আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।
+                </p>
                 
                 <h3 class="lang-text" data-bn="🎓 শিক্ষাগত যোগ্যতা" data-en="🎓 Education">🎓 শিক্ষাগত যোগ্যতা</h3>
                 <div class="inner-card">
@@ -63,48 +59,76 @@
             </div>
         </section>
 
-        <!-- 📊 Skills Section -->
+        <!-- 📊 Skills Section (বিস্তারিত কাজসমূহ যুক্ত করা হয়েছে) -->
         <section id="page-skills" class="page">
-            <h2 class="lang-text" data-bn="📊 আমার দক্ষতাসমূহ" data-en="📊 My Skills">📊 আমার দক্ষতাসমূহ</h2>
+            <h2 class="lang-text" data-bn="📊 আমার দক্ষতাসমূহ" data-en="📊 My Detailed Skills">📊 আমার দক্ষতাসমূহ</h2>
             <div class="grid">
                 <div class="card">
                     <i class="fab fa-microsoft text-word font-2"></i>
                     <h3>MS Word</h3>
-                    <p class="lang-text" data-bn="বাংলা-ইংরেজি টাইপিং ও ফরম্যাটিং" data-en="Bengali/English Typing & Formatting">বাংলা-ইংরেজি টাইপিং ও ফরম্যাটিং</p>
+                    <p class="lang-text" 
+                       data-bn="প্রশ্নপত্র তৈরি, অফিসিয়াল চিঠিপত্র ড্রাফটিং, বাংলা ও ইংরেজি দ্রুত টাইপিং, জটিল টেবিল ও প্যারাগ্রাফ ফরম্যাটিং।" 
+                       data-en="Question paper setup, official letter drafting, fast English/Bengali typing, layout formatting, and table nesting.">
+                       প্রশ্নপত্র তৈরি, অফিসিয়াল চিঠিপত্র ড্রাফটিং, বাংলা ও ইংরেজি দ্রুত টাইপিং, জটিল টেবিল ও প্যারাগ্রাফ ফরম্যাটিং।
+                    </p>
                 </div>
                 <div class="card">
                     <i class="fas fa-file-excel text-excel font-2"></i>
                     <h3>MS Excel</h3>
-                    <p class="lang-text" data-bn="অ্যাডভান্সড ফর্মুলা ও স্যালারি শিট" data-en="Advanced Formulas & Salary Sheets">অ্যাডভান্সড ফর্মুলা ও স্যালারি শিট</p>
+                    <p class="lang-text" 
+                       data-bn="অ্যাডভান্সড সূত্র বা ফর্মুলার ব্যবহার, নিখুঁত স্যালারি শিট তৈরি, ডাটা ফিল্টারিং এবং লাভ-ক্ষতির হিসাব সংরক্ষণ।" 
+                       data-en="Advanced formulas, corporate salary sheets management, dynamic data filtering, and automated profit-loss statements.">
+                       অ্যাডভান্সড সূত্র বা ফর্মুলার ব্যবহার, নিখুঁত স্যালারি শিট তৈরি, ডাটা ফিল্টারিং এবং লাভ-ক্ষতির হিসাব সংরক্ষণ।
+                    </p>
                 </div>
                 <div class="card">
                     <i class="fas fa-keyboard font-2"></i>
                     <h3>Data Entry</h3>
-                    <p class="lang-text" data-bn="ওয়েব রিসার্চ ও নির্ভুল ডাটা এন্ট্রি" data-en="Web Research & Clean Input">ওয়েব রিসার্চ ও নির্ভুল ডাটা এন্ট্রি</p>
+                    <p class="lang-text" 
+                       data-bn="অনলাইন-অফলাইন ডাটা কালেকশন, নির্ভুল কপি-পেস্ট জব, ইমেজ বা পিডিএফ থেকে এক্সেলে ডাটা কনভার্ট করা।" 
+                       data-en="Online/offline data mining, error-free copy-paste tasks, and converting data from messy PDF/Images into clean Excel sheets.">
+                       অনলাইন-অফলাইন ডাটা কালেকশন, নির্ভুল কপি-পেস্ট জব, ইমেজ বা পিডিএফ থেকে এক্সেলে ডাটা কনভার্ট করা।
+                    </p>
                 </div>
                 <div class="card">
                     <i class="fas fa-users font-2"></i>
                     <h3>Admin Task</h3>
-                    <p class="lang-text" data-bn="স্কাউট মেম্বারশিপ ও নোটিশ ড্রাফটিং" data-en="Scout Database & Notices">স্কাউট মেম্বারশিপ ও নোটিশ ড্রাফটিং</p>
+                    <p class="lang-text" 
+                       data-bn="বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর মেম্বারশিপ ডাটাবেজ হ্যান্ডেল করা এবং মিটিংয়ের অফিসিয়াল নোটিশ তৈরি।" 
+                       data-en="Managing Bangladesh Scouts (Railway Region) membership databases and official group meeting notices drafting.">
+                       বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর মেম্বারশিপ ডাটাবেজ হ্যান্ডেল করা এবং মিটিংয়ের অফিসিয়াল নোটিশ তৈরি।
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- 💼 Projects Section -->
+        <!-- 💼 Projects Section (ডিটেইল বিবরণ সহ) -->
         <section id="page-projects" class="page">
-            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Featured Projects">💼 সফল প্রজেক্টসমূহ</h2>
+            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Detailed Projects">💼 সফল প্রজেক্টসমূহ</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Excel Dashboard</h3>
-                    <p class="lang-text" data-bn="স্বয়ংক্রিয় গাণিতিক হিসাব-নিকাশ শিট।" data-en="Automated spreadsheet built dynamically.">স্বয়ংক্রিয় গাণিতিক হিসাব-নিকাশ শিট।</p>
+                    <h3>Excel Automation</h3>
+                    <p class="lang-text" 
+                       data-bn="একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।" 
+                       data-en="A fully automated accounting spreadsheet where inputting raw figures automatically outputs net profits and summaries.">
+                       একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।
+                    </p>
                 </div>
                 <div class="card">
-                    <h3>Data Scraping</h3>
-                    <p class="lang-text" data-bn="ডিরেক্টরি থেকে নির্ভুল বিটুবি লিড কালেকশন।" data-en="Accurate B2B leads mining.">ডিরেক্টরি থেকে নির্ভুল বিটুবি লিড কালেকশন।</p>
+                    <h3>Scout Member DB</h3>
+                    <p class="lang-text" 
+                       data-bn="রেলওয়ে অঞ্চলের স্কাউট সদস্যদের সমস্ত তথ্য এবং ব্যাজ অর্জনের রেকর্ড ক্রমানুসারে সাজিয়ে ডাটাবেজ তৈরি।" 
+                       data-en="Designed a clean information directory tracking regional scout member details, progress logs, and badge achievements.">
+                       রেলওয়ে অঞ্চলের স্কাউট সদস্যদের সমস্ত তথ্য এবং ব্যাজ অর্জনের রেকর্ড ক্রমানুসারে সাজিয়ে ডাটাবেজ তৈরি।
+                    </p>
                 </div>
                 <div class="card">
-                    <h3>PDF To Excel</h3>
-                    <p class="lang-text" data-bn="১০০+ হিজিবিজি পেজ ক্লিন ডেটাতে রূপান্তর।" data-en="100+ messy pages sorted perfectly.">১০০+ হিজিবিজি পেজ ক্লিন ডেটাতে রূপান্তর।</p>
+                    <h3>Clean PDF Migration</h3>
+                    <p class="lang-text" 
+                       data-bn="১০০+ পেজের হিজিবিজি ও স্ক্যান করা পিডিএফ ফাইল থেকে অত্যন্ত সূক্ষ্ম ও নিখুঁতভাবে ডাটা এক্সেলে রূপান্তর।" 
+                       data-en="Successfully migrated 100+ pages of cluttered and scanned PDF document records into clean, sortable spreadsheets.">
+                       ১০০+ পেজের হিজিবিজি ও স্ক্যান করা পিডিএফ ফাইল থেকে অত্যন্ত সূক্ষ্ম ও নিখুঁতভাবে ডাটা এক্সেলে রূপান্তর।
+                    </p>
                 </div>
             </div>
         </section>
@@ -123,15 +147,14 @@
         <section id="page-order" class="page">
             <h2 class="lang-text" data-en="Place Your Order" data-bn="সরাসরি কাজের অর্ডার দিন">সরাসরি কাজের অর্ডার দিন</h2>
             <form id="orderForm" onsubmit="sendOrder(event)" class="glass-form">
-                <div class="form-group"><input type="text" id="clientName" placeholder="Your Name" required></div>
-                <div class="form-group"><input type="tel" id="clientPhone" placeholder="Phone Number" required></div>
-                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="Task Details..." required></textarea></div>
+                <div class="form-group"><input type="text" id="clientName" placeholder="আপনার নাম / Your Name" required></div>
+                <div class="form-group"><input type="tel" id="clientPhone" placeholder="মোবাইল নম্বর / Phone Number" required></div>
+                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="কাজের বিস্তারিত বিবরণ... / Task Details..." required></textarea></div>
                 <button type="submit" class="btn btn-primary w-100">
                     <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অর্ডার কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
                 </button>
             </form>
             
-            <!-- 📞 কন্টাক্ট বাটন গ্রিডটি অর্ডারের নিচেই সুন্দর করে দেওয়া হলো -->
             <div class="contact-grid">
                 <a href="https://wa.me/8801576502490" target="_blank" class="c-box wa"><i class="fab fa-whatsapp"></i></a>
                 <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" class="c-box fb"><i class="fab fa-facebook-f"></i></a>
@@ -140,9 +163,38 @@
         </section>
     </main>
 
+    <!-- 📱 🌟 প্রফেশনাল মোবাইল বটম নেভিগেশন বার (যা স্ক্রিনশটের প্রবলেম ফিক্স করবে) -->
+    <nav class="bottom-nav">
+        <a onclick="showPage('home')" class="nav-item active" id="nav-home">
+            <i class="fas fa-home"></i>
+            <span class="lang-text" data-bn="হোম" data-en="Home">হোম</span>
+        </a>
+        <a onclick="showPage('about')" class="nav-item" id="nav-about">
+            <i class="fas fa-user"></i>
+            <span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span>
+        </a>
+        <a onclick="showPage('skills')" class="nav-item" id="nav-skills">
+            <i class="fas fa-chart-bar"></i>
+            <span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span>
+        </a>
+        <a onclick="showPage('projects')" class="nav-item" id="nav-projects">
+            <i class="fas fa-briefcase"></i>
+            <span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span>
+        </a>
+        <a onclick="showPage('shop')" class="nav-item" id="nav-shop">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span>
+        </a>
+        <a onclick="showPage('order')" class="nav-item" id="nav-order">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span>
+        </a>
+    </nav>
+
+    <!-- Floating Lang Button -->
     <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">EN</button>
 
     <script src="script.js"></script>
 </body>
-                    </html>
+</html>
 
