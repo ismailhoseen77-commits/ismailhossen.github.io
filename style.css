@@ -45,7 +45,6 @@ body {
     background-attachment: fixed;
     color: var(--text-color);
     min-height: 100vh;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,7 +62,6 @@ body {
     -webkit-backdrop-filter: var(--blur);
     border-bottom: 1px solid var(--glass-border);
     z-index: 1000;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
 
 .nav-container {
@@ -85,16 +83,18 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .nav-links a {
     color: var(--text-color);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 8px;
+    cursor: pointer;
     transition: all 0.3s;
 }
 
@@ -109,7 +109,7 @@ body {
 .main-container {
     width: 90%;
     max-width: 800px;
-    margin: 90px auto 30px auto;
+    margin: 100px auto 30px auto;
     background: var(--glass-bg);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -138,8 +138,6 @@ body {
     background: var(--glass-bg);
     color: var(--text-color);
     backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    font-weight: bold;
     cursor: pointer;
     box-shadow: var(--shadow);
     display: flex;
@@ -148,9 +146,7 @@ body {
     transition: transform 0.2s;
 }
 
-.control-btn:hover {
-    transform: scale(1.1);
-}
+.control-btn:hover { transform: scale(1.1); }
 
 /* ==========================================================================
    🎬 4. ANIMATION & LAYOUTS (SPA সিস্টেম)
@@ -160,9 +156,7 @@ body {
     animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-.page-section.active {
-    display: block;
-}
+.page-section.active { display: block; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
@@ -177,10 +171,6 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-}
-
-.hero-img-box {
-    position: relative;
 }
 
 .profile-img {
@@ -225,20 +215,14 @@ body {
     transition: all 0.3s;
 }
 
-.btn-primary { background: var(--primary-btn); color: #fff; }
+.btn-primary { background: var(--primary-btn); color: #fff; border:none; }
 .btn-primary:hover { background: var(--primary-hover); }
 .btn-secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--glass-border); }
-.btn-secondary:hover { background: rgba(255,255,255,0.2); }
 
 /* ==========================================================================
-   👨‍💻 5. INNER PAGES DESIGN (About, Skills, Projects)
+   👨‍💻 5. INNER SECTIONS & GRID DESIGNS
    ========================================================================== */
-h2 {
-    color: var(--heading-color);
-    margin-bottom: 15px;
-    font-size: 24px;
-}
-
+h2 { color: var(--heading-color); margin-bottom: 15px; font-size: 24px; }
 h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
 
 .info-card {
@@ -248,37 +232,34 @@ h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
     border: 1px solid var(--glass-border);
 }
 
-/* 📊 SKILLS PROGRESS BAR */
-.skills-container {
-    display: flex;
-    flex-direction: column;
+/* 📊 SKILLS DETAIL CARD */
+.skills-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
 
-.skill-info {
+.skill-detail-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.sd-header {
     display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    margin-bottom: 5px;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: rgba(0,0,0,0.05);
-    border-radius: 10px;
-    overflow: hidden;
-}
-.dark-mode .progress-bar { background: rgba(255,255,255,0.1); }
+.text-word { color: #2b579a; }
+.text-excel { color: #217346; }
 
-.progress {
-    height: 100%;
-    background: linear-gradient(90deg, #4f46e5, #818cf8);
-    border-radius: 10px;
-}
-
-/* 💼 PROJECTS & SERVICES GRID */
+/* 💼 PROJECTS & SERVICES */
 .projects-grid, .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -295,17 +276,58 @@ h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
     transition: transform 0.3s;
 }
 
-.project-card:hover, .service-card:hover {
-    transform: translateY(-5px);
+.project-card:hover, .service-card:hover { transform: translateY(-5px); }
+.project-icon, .service-card i { font-size: 30px; margin-bottom: 10px; color: var(--primary-btn); }
+
+/* 🛍️ SHOP PAGE GRID */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
 }
 
-.project-icon, .service-card i {
-    font-size: 30px;
-    margin-bottom: 10px;
-    color: var(--primary-btn);
+.shop-category {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    transition: 0.3s;
+}
+.shop-category:hover { transform: translateY(-4px); }
+
+/* 🛒 GLASS FORM UI */
+.glass-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    margin-top: 25px;
 }
 
-/* 📞 CONTACT SOCIAL CARDS */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--primary-btn);
+}
+.w-100 { width: 100%; justify-content: center; }
+
+/* 📞 CONTACT CARDS */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -324,7 +346,6 @@ h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
     font-weight: bold;
     transition: transform 0.2s;
 }
-
 .contact-card:hover { transform: scale(1.05); }
 .card-wa { background: #25D366; }
 .card-fb { background: #1877f2; }
@@ -356,22 +377,22 @@ h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
     cursor: pointer;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
     box-shadow: var(--shadow);
 }
 
-/* LANGUAGE TOGGLE SYSTEM */
+/* LANGUAGE SWITCH REGULATION */
 .lang-bn { display: block; }
 .lang-en { display: none; }
-.show-en .lang-bn { display: none; }
-.show-en .lang-en { display: block; }
+...show-en .lang-bn { display: none; }
+...show-en .lang-en { display: block; }
 
 /* ==========================================================================
-   📱 6. RESPONSIVE MEDIA QUERIES (মোবাইল স্ক্রিন ফিটনেস)
+   📱 6. RESPONSIVE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 600px) {
     .nav-container { flex-direction: column; gap: 8px; }
-    .main-container { padding: 20px; margin-top: 120px; }
+    .main-container { padding: 20px; margin-top: 130px; }
     .hero-wrapper { flex-direction: column; }
-    .nav-links a { font-size: 12px; padding: 4px 8px; }
-}
+    .nav-links a { font-size: 11px; padding: 4px 6px; }
+   }
+   
