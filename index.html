@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Hossen Nihad | Portfolio</title>
+    <title>Ismail Hossen Mihad | Professional Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
     <div id="welcome-screen" class="welcome-overlay">
         <div class="welcome-content">
             <h1 class="lang-text" data-bn="স্বাগতম!" data-en="Welcome!">স্বাগতম!</h1>
-            <p class="lang-text" data-bn="ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ।" data-en="Welcome to the official portfolio of Ismail Hossen Nihad.">ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ flock।</p>
+            <p class="lang-text" data-bn="ইসমাইল হোসেন মিহাদ-এর অফিসিয়াল পোরটফোলিও সাইটে আপনাকে আমন্ত্রণ।" data-en="Welcome to the official portfolio site of Ismail Hossen Mihad.">ইসমাইল হোসেন মিহাদ-এর অফিসিয়াল পোরটফোলিও সাইটে আপনাকে আমন্ত্রণ।</p>
             <button class="enter-btn" onclick="enterSite()">
                 <span class="lang-text" data-bn="প্রবেশ করুন" data-en="Enter Site">প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>
             </button>
@@ -20,37 +20,24 @@
     </div>
 
     <header class="app-header">
-        <button class="menu-toggle" onclick="openSidebar()" title="Open Menu">
-            <i class="fas fa-bars"></i>
-        </button>
-        <a href="#" onclick="showPage('home')" class="nav-logo">Nihad</a>
-        <div style="width: 40px;"></div>
+        <div class="nav-container">
+            <a onclick="showPage('home')" class="nav-item active" id="nav-home"><i class="fas fa-home"></i><span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
+            <a onclick="showPage('about')" class="nav-item" id="nav-about"><i class="fas fa-user"></i><span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
+            <a onclick="showPage('skills')" class="nav-item" id="nav-skills"><i class="fas fa-chart-bar"></i><span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
+            <a onclick="showPage('projects')" class="nav-item" id="nav-projects"><i class="fas fa-briefcase"></i><span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
+            <a onclick="showPage('shop')" class="nav-item" id="nav-shop"><i class="fas fa-shopping-bag"></i><span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
+            <a onclick="showPage('order')" class="nav-item" id="nav-order"><i class="fas fa-shopping-cart"></i><span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
+        </div>
     </header>
-
-    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
-    <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <span class="menu-title">NAVIGATION</span>
-            <button class="close-menu" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="sidebar-links">
-            <a onclick="showPage('home')" class="nav-item active" id="nav-home"><i class="fas fa-home"></i> <span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
-            <a onclick="showPage('about')" class="nav-item" id="nav-about"><i class="fas fa-user"></i> <span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
-            <a onclick="showPage('skills')" class="nav-item" id="nav-skills"><i class="fas fa-chart-bar"></i> <span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
-            <a onclick="showPage('projects')" class="nav-item" id="nav-projects"><i class="fas fa-briefcase"></i> <span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
-            <a onclick="showPage('shop')" class="nav-item" id="nav-shop"><i class="fas fa-shopping-bag"></i> <span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
-            <a onclick="showPage('order')" class="nav-item" id="nav-order"><i class="fas fa-shopping-cart"></i> <span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
-        </div>
-    </nav>
 
     <main class="container">
         
         <section id="page-home" class="page active">
             <div class="hero-card">
                 <div class="img-wrapper">
-                    <img src="IMG-20260704-WA0046.jpg" alt="Profile">
+                    <img src="IMG-20260704-WA0046.jpg" alt="Profile Profile">
                 </div>
-                <h1 class="lang-text" data-en="Ismail Hossen Nihad" data-bn="ইসমাইল হোসেন নিহাদ">ইসমাইল হোসেন নিহাদ</h1>
+                <h1 class="lang-text" data-en="Ismail Hossen Mihad" data-bn="ইসমাইল হোসেন মিহাদ">ইসমাইল হোসেন মিহাদ</h1>
                 <p class="lang-text" data-en="Professional Computer Operator & Freelancer" data-bn="পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার">পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
                 <div class="cta-buttons">
                     <button onclick="showPage('order')" class="btn btn-primary lang-text" data-bn="কাজ অর্ডার করুন" data-en="Order Now">কাজ অর্ডার করুন</button>
@@ -63,7 +50,7 @@
                 <h2 class="lang-text" data-bn="👨‍💻 আমার সম্পর্কে" data-en="👨‍💻 About Me">👨‍💻 আমার সম্পর্কে</h2>
                 <p class="lang-text" 
                    data-bn="আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।" 
-                   data-en="I am an experienced and professional Computer Operator specializing in freelancing and corporate documentation. I excel in clean data entry, high-speed typing, and managing advanced Microsoft Office operations.">
+                   data-en="I am an experienced and professional Computer Operator specializing in freelancing and corporate document management. I excel in high-speed typing, complex data entry, and advanced Microsoft Office operations.">
                    আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।
                 </p>
                 
@@ -81,66 +68,66 @@
                     <div class="card-header-icon"><i class="fab fa-microsoft text-word"></i></div>
                     <h3>MS Word</h3>
                     <p class="lang-text" 
-                       data-bn="প্রশ্নপত্র তৈরি, অফিসিয়াল চিঠিপত্র ড্রাফটিং, বাংলা ও ইংরেজি দ্রুত টাইপিং, জটিল টেবিল ও প্যারাগ্রাফ ফরম্যাটিং।" 
-                       data-en="Question paper setup, official letter drafting, fast English/Bengali typing, layout formatting, and table nesting.">
-                       প্রশ্নপত্র তৈরি, অফিসিয়াল চিঠিপত্র ড্রাফটিং, বাংলা ও ইংরেজি দ্রুত টাইপিং, জটিল টেবিল ও প্যারাগ্রাফ ফরম্যাটিং।
+                       data-bn="অফিসিয়াল চিঠিপত্র এবং নোটিশ নিখুঁত নিয়মে ড্রাফটিং, স্কুল-কলেজের জটিল প্রশ্নপত্র তৈরি, বাংলা ও ইংরেজি অত্যন্ত দ্রুত ও নির্ভুল টাইপিং, কাস্টম টেবিল ডিজাইন এবং অ্যাডভান্সড প্যারাগ্রাফ ফরম্যাটিং।" 
+                       data-en="Professional letter and legal document drafting, advanced school/college examination question setups, high-speed Bengali & English layout typing, dynamic table layout designs, and precise text formatting.">
+                       অফিসিয়াল চিঠিপত্র এবং নোটিশ নিখুঁত নিয়মে ড্রাফটিং, স্কুল-কলেজের জটিল প্রশ্নপত্র তৈরি, বাংলা ও ইংরেজি অত্যন্ত দ্রুত ও নির্ভুল টাইপিং, কাস্টম টেবিল ডিজাইন এবং অ্যাডভান্সড প্যারাগ্রাফ ফরম্যাটিং।
                     </p>
                 </div>
                 <div class="card">
                     <div class="card-header-icon"><i class="fas fa-file-excel text-excel"></i></div>
                     <h3>MS Excel</h3>
                     <p class="lang-text" 
-                       data-bn="অ্যাডভান্সড সূত্র বা ফর্মুলার ব্যবহার, নিখুঁত স্যালারি শিট তৈরি, ডাটা ফিল্টারিং এবং লাভ-ক্ষতির হিসাব সংরক্ষণ।" 
-                       data-en="Advanced formulas, corporate salary sheets management, dynamic data filtering, and automated profit-loss statements.">
-                       অ্যাডভান্সড সূত্র বা ফর্মুলার ব্যবহার, নিখুঁত স্যালারি শিট তৈরি, ডাটা ফিল্টারিং এবং লাভ-ক্ষতির হিসাব সংরক্ষণ।
+                       data-bn="অ্যাডভান্সড ফর্মুলা বা গাণিতিক সূত্রের ব্যবহার, প্রাতিষ্ঠানিক স্যালারি শিট (Salary Sheet) তৈরি, ডাটা ফিল্টারিং, অটোমেটেড লজিক কন্ট্রোল এবং যেকোনো বড় হিসাবের দৈনিক ও মাসিক রিপোর্ট তৈরি করা।" 
+                       data-en="Implementation of advanced functional formulas, building automated corporate Salary Sheets, deep data filtering, structured accounting dashboards, and managing analytical profit/loss registers.">
+                       অ্যাডভান্সড ফর্মুলা বা গাণিতিক সূত্রের ব্যবহার, প্রাতিষ্ঠানিক স্যালারি শিট (Salary Sheet) তৈরি, ডাটা ফিল্টারিং, অটোমেটেড লজিক কন্ট্রোল এবং যেকোনো বড় হিসাবের দৈনিক ও মাসিক রিপোর্ট তৈরি করা।
                     </p>
                 </div>
                 <div class="card">
                     <div class="card-header-icon"><i class="fas fa-keyboard text-accent"></i></div>
                     <h3>Data Entry</h3>
                     <p class="lang-text" 
-                       data-bn="অনলাইন-অফলাইন ডাটা কালেকশন, নির্ভুল কপি-পেস্ট জব, ইমেজ বা পিডিএফ থেকে এক্সেলে ডাটা কনভার্ট করা।" 
-                       data-en="Online/offline data mining, error-free copy-paste tasks, and converting data from messy PDF/Images into clean Excel sheets.">
-                       অনলাইন-অফলাইন ডাটা কালেকশন, নির্ভুল কপি-পেস্ট জব, ইমেজ বা পিডিএফ থেকে এক্সেলে ডাটা কনভার্ট করা।
+                       data-bn="অনলাইন এবং অফলাইন ডাটা মাইনিং, ফাইল কনভার্সন (যেমন PDF বা স্ক্যান করা ইমেজ থেকে এক্সেলে নিখুঁত কনভার্ট করা), ওয়েব রিসার্চ এবং কপি-পেস্ট প্রজেক্ট শতভাগ নির্ভুলভাবে সম্পন্ন করা।" 
+                       data-en="Comprehensive online and offline data management, file conversion architectures (PDF/Scanned Images to structured spreadsheets), systematic web research, and error-free sorting jobs.">
+                       অনলাইন এবং অফলাইন ডাটা মাইনিং, ফাইল কনভার্সন (যেমন PDF বা স্ক্যান করা ইমেজ থেকে এক্সেলে নিখুঁত কনভার্ট করা), ওয়েব রিসার্চ এবং কপি-পেস্ট প্রজেক্ট শতভাগ নির্ভুলভাবে সম্পন্ন করা।
                     </p>
                 </div>
                 <div class="card">
                     <div class="card-header-icon"><i class="fas fa-users text-scout"></i></div>
                     <h3>Admin & Scout Operations</h3>
                     <p class="lang-text" 
-                       data-bn="বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর মেম্বারশিপ ডাটাবেজ হ্যান্ডেল করা এবং মিটিংয়ের অফিসিয়াল নোটিশ তৈরি।" 
-                       data-en="Managing Bangladesh Scouts (Railway Region) membership databases and official group meeting notices drafting.">
-                       বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর মেম্বারশিপ ডাটাবেজ হ্যান্ডেল করা এবং মিটিংয়ের অফিসিয়াল নোটিশ তৈরি।
+                       data-bn="বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর বড় মেম্বারশিপ ডাটাবেজ অত্যন্ত দক্ষতার সাথে পরিচালনা করা, মিটিংয়ের অফিশিয়াল প্রসিডিংস বা নোটিশ তৈরি এবং প্রাতিষ্ঠানিক হিসাব-নিকাশ মেইনটেইন করা।" 
+                       data-en="Managing massive member databases for Bangladesh Scouts (Railway Region), drafting official meeting resolutions, scheduling notification letters, and maintaining administrative records.">
+                       বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর বড় মেম্বারশিপ ডাটাবেজ অত্যন্ত দক্ষতার সাথে পরিচালনা করা, মিটিংয়ের অফিশিয়াল প্রসিডিংস বা নোটিশ তৈরি এবং প্রাতিষ্ঠানিক হিসাব-নিকাশ মেইনটেইন করা।
                     </p>
                 </div>
             </div>
         </section>
 
         <section id="page-projects" class="page">
-            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Detailed Projects">💼 সফল প্রজেক্টসমূহ</h2>
+            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Highlighted Projects">💼 সফল প্রজেক্টসমূহ</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Excel Automation</h3>
+                    <h3>Excel Automation System</h3>
                     <p class="lang-text" 
-                       data-bn="একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।" 
-                       data-en="A fully automated accounting spreadsheet where inputting raw figures automatically outputs net profits and summaries.">
-                       একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।
+                       data-bn="একটি সম্পূর্ণ অটোমেটেড এবং লজিক্যাল অ্যাকাউন্টিং স্প্রেডশিট প্রজেক্ট, যেখানে শুধুমাত্র র ডাটা ইনপুট করলেই মোট লাভ-ক্ষতি, ট্যাক্স এবং নেট ব্যালেন্স স্বয়ংক্রিয়ভাবে ক্যালকুলেট হয়ে স্ক্রিনে চলে আসে।" 
+                       data-en="A smart, fully-automated spreadsheet engine where keying in basic financial entries instantly populates real-time sales tallies, net balances, margins, and complex corporate summaries.">
+                       একটি সম্পূর্ণ অটোমেটেড এবং লজিক্যাল অ্যাকাউন্টিং স্প্রেডশিট প্রজেক্ট, যেখানে শুধুমাত্র র ডাটা ইনপুট করলেই মোট লাভ-ক্ষতি, ট্যাক্স এবং নেট ব্যালেন্স স্বয়ংক্রিয়ভাবে ক্যালকুলেট হয়ে স্ক্রিনে চলে আসে।
                     </p>
                 </div>
                 <div class="card">
-                    <h3>Scout Member DB</h3>
+                    <h3>Scout Member Database</h3>
                     <p class="lang-text" 
-                       data-bn="রেলওয়ে অঞ্চলের স্কাউট সদস্যদের সমস্ত তথ্য এবং ব্যাজ অর্জনের রেকর্ড ক্রমানুসারে সাজিয়ে ডাটাবেজ তৈরি।" 
-                       data-en="Designed a clean information directory tracking regional scout member details, progress logs, and badge achievements.">
-                       রেলওয়ে অঞ্চলের স্কাউট সদস্যদের সমস্ত তথ্য এবং ব্যাজ অর্জনের রেকর্ড ক্রমানুসারে সাজিয়ে ডাটাবেজ তৈরি।
+                       data-bn="রেলওয়ে অঞ্চলের সমস্ত সক্রিয় স্কাউট সদস্যদের ব্যক্তিগত প্রোফাইল, রক্তের গ্রুপ, কন্টাক্ট নম্বর এবং বিভিন্ন ব্যাজ অর্জনের প্রগ্রেস ট্র্যাকিং রেকর্ড ক্রমানুসারে সাজিয়ে একটি আধুনিক এবং ইউজার-ফ্রেন্ডলি ডাটাবেজ ডিরেক্টরি তৈরি।" 
+                       data-en="Designed a clean information management directory indexing hundreds of scout profiles, blood configurations, contact streams, and earned milestone badges across the entire Railway Region.">
+                       রেলওয়ে অঞ্চলের সমস্ত সক্রিয় স্কাউট সদস্যদের ব্যক্তিগত প্রোফাইল, রক্তের গ্রুপ, কন্টাক্ট নম্বর এবং বিভিন্ন ব্যাজ অর্জনের প্রগ্রেস ট্র্যাকিং রেকর্ড ক্রমানুসারে সাজিয়ে একটি আধুনিক এবং ইউজার-ফ্রেন্ডলি ডাটাবেজ ডিরেক্টরি তৈরি।
                     </p>
                 </div>
                 <div class="card">
-                    <h3>Clean PDF Migration</h3>
+                    <h3>Complex PDF Migration</h3>
                     <p class="lang-text" 
-                       data-bn="১০০+ পেজের হিজিবিজি ও স্ক্যান করা পিডিএফ ফাইল থেকে অত্যন্ত সূক্ষ্ম ও নিখুঁতভাবে ডাটা এক্সেলে রূপান্তর।" 
-                       data-en="Successfully migrated 100+ pages of cluttered and scanned PDF document records into clean, sortable spreadsheets.">
-                       ১০০+ পেজের হিজিবিজি ও স্ক্যান করা পিডিএফ ফাইল থেকে অত্যন্ত সূক্ষ্ম ও নিখুঁতভাবে ডাটা এক্সেলে রূপান্তর।
+                       data-bn="১০০+ পেজের অত্যন্ত জটিল, হিজিবিজি এবং অস্পষ্ট স্ক্যান করা ওল্ড পিডিএফ ডকুমেন্ট থেকে অত্যন্ত সূক্ষ্মতার সাথে ম্যানুয়ালি সমস্ত ডেটা এক্সট্র্যাক্ট করে সুবিন্যস্ত ডিজিটাল এক্সেল এবং ওয়ার্ড ফাইলে রূপান্তর করার একটি বড় প্রজেক্ট।" 
+                       data-en="Successfully orchestrated the precise data extraction from over 100+ pages of faded or structurally disorganized legacy scanned documents, reorganizing the output into clean, searchable digital sheets.">
+                       ১০০+ পেজের অত্যন্ত জটিল, হিজিবিজি এবং অস্পষ্ট স্ক্যান করা ওল্ড পিডিএফ ডকুমেন্ট থেকে অত্যন্ত সূক্ষ্মতার সাথে ম্যানুয়ালি সমস্ত ডেটা এক্সট্র্যাক্ট করে সুবিন্যস্ত ডিজিটাল এক্সেল এবং ওয়ার্ড ফাইলে রূপান্তর করার একটি বড় প্রজেক্ট।
                     </p>
                 </div>
             </div>
@@ -178,5 +165,5 @@
 
     <script src="script.js"></script>
 </body>
-                                      </html>
-                                      
+    </html>
+
