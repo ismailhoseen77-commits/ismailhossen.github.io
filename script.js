@@ -4,67 +4,45 @@ function enterSite() {
     if (welcomeScreen) welcomeScreen.classList.add('fade-out');
 }
 
-// ২. 🍔 সরাসরি অন-ক্লিক মেথড (মেনু ওপেন এবং ক্লোজ করার জন্য)
-function openSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    if (sidebar && overlay) {
-        sidebar.classList.add('open');
-        overlay.classList.add('open');
-    }
-}
-
-function closeSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    if (sidebar && overlay) {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('open');
-    }
-}
-
-// ৩. 🚀 পেজ ন্যাভিগেশন কন্ট্রোল
+// ২. 🚀 পেজ ন্যাভিগেশন কন্ট্রোল (সরাসরি ক্লিক ট্র্যাকিং)
 function showPage(pageId) {
     // সব পেজ হাইড করা
     document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
     
-    // মেনুর সব লিঙ্ক ডিসঅ্যাক্টিভ করা
-    document.querySelectorAll('.sidebar-links .nav-item').forEach(link => link.classList.remove('active'));
+    // ড্যাশবোর্ডের সব মেনু ট্যাব ডিসঅ্যাক্টিভ করা
+    document.querySelectorAll('.nav-container .nav-item').forEach(link => link.classList.remove('active'));
     
     // সিলেক্টেড পেজ অ্যাক্টিভ করা
     const targetPage = document.getElementById('page-' + pageId);
     if (targetPage) targetPage.classList.add('active');
     
-    // সিলেক্টেড লিঙ্ক হাইলাইট করা
+    // সিলেক্টেড মেনু ট্যাব হাইলাইট করা
     const targetLink = document.getElementById('nav-' + pageId);
     if (targetLink) targetLink.classList.add('active');
     
-    // পেজ বদলানোর পর মেনু নিজে থেকেই ক্লোজ হয়ে যাবে
-    closeSidebar();
-    
-    // স্মুথলি স্ক্রল করে পেজের টপে যাওয়া
+    // স্মুথলি স্ক্রল করে পেজের একদম টপে নিয়ে যাওয়া
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ৪. 🌐 ল্যাঙ্গুয়েজ চেঞ্জার লজিক (রিয়েল-টাইম গ্যারান্টিড সলিউশন)
+// ৩. 🌐 রিয়েল-টাইম ল্যাঙ্গুয়েজ চেঞ্জার লজিক
 let currentLang = 'bn'; 
 
 function toggleLanguage() {
     const langBtn = document.getElementById('lang-btn');
     
-    // ভাষা টগল করা
+    // ভাষা অদলবদল করা
     currentLang = (currentLang === 'bn') ? 'en' : 'bn';
     
-    // ফ্লোটিং বাটনের ভেতরের লেখা পরিবর্তন
+    // ফ্লোটিং বাটনের টেক্সট পরিবর্তন
     if (langBtn) langBtn.innerText = (currentLang === 'bn') ? 'EN' : 'BN';
     
-    // সাইটের সমস্ত টেক্সট এক ক্লিকে পরিবর্তন
+    // সাইটের সমস্ত রেজিস্টার্ড টেক্সট এক ক্লিকে পরিবর্তন
     document.querySelectorAll('.lang-text').forEach(el => {
         const textValue = el.getAttribute('data-' + currentLang);
         if (textValue) el.innerText = textValue;
     });
     
-    // অর্ডার ফর্মের প্লেসহোল্ডারগুলো ট্রান্সলেট করা
+    // অর্ডার ফর্মের প্লেসহোল্ডারগুলো ডাইনামিক ট্রান্সলেট করা
     const nameInput = document.getElementById('clientName');
     const phoneInput = document.getElementById('clientPhone');
     const detailsInput = document.getElementById('clientDetails');
@@ -82,7 +60,7 @@ function toggleLanguage() {
     }
 }
 
-// ৫. 🛒 হোয়াটসঅ্যাপ অর্ডার সিস্টেম
+// ৪. 🛒 হোয়াটসঅ্যাপ অর্ডার প্রসেসর
 function sendOrder(event) {
     event.preventDefault();
     const name = document.getElementById('clientName').value;
