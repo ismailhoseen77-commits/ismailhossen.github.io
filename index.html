@@ -9,27 +9,34 @@
 </head>
 <body class="show-bn">
 
+    <!-- 🚪 Welcome Screen -->
     <div id="welcome-screen" class="welcome-overlay">
         <div class="welcome-content">
             <h1 class="lang-text" data-bn="স্বাগতম!" data-en="Welcome!">স্বাগতম!</h1>
             <p class="lang-text" data-bn="ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ।" data-en="Welcome to the official portfolio of Ismail Hossen Nihad.">ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ।</p>
-            
-            <button class="enter-btn" onclick="enterSite()" title="Enter Site">
+            <button class="enter-btn" onclick="enterSite()">
                 <span class="lang-text" data-bn="প্রবেশ করুন" data-en="Enter Site">প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
+    <!-- 🌐 Glassmorphism Navbar (সবগুলো মেনু ব্যাক আনা হয়েছে) -->
     <nav class="navbar">
         <a href="#" onclick="showPage('home')" class="nav-logo">Nihad</a>
         <div class="nav-links">
             <a onclick="showPage('home')" class="active" id="nav-home"><span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
+            <a onclick="showPage('about')" id="nav-about"><span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
+            <a onclick="showPage('skills')" id="nav-skills"><span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
+            <a onclick="showPage('projects')" id="nav-projects"><span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
             <a onclick="showPage('shop')" id="nav-shop"><span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
             <a onclick="showPage('order')" id="nav-order"><span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
         </div>
     </nav>
 
+    <!-- 🕋 Main Container -->
     <main class="container">
+        
+        <!-- 👤 Home Section -->
         <section id="page-home" class="page active">
             <div class="hero-card">
                 <div class="img-wrapper">
@@ -43,55 +50,99 @@
             </div>
         </section>
 
-        <section id="page-shop" class="page">
-            <h2 class="lang-text" data-en="My Collections" data-bn="আমার কালেকশন (Shop)">আমার কালেকশন (Shop)</h2>
-            <p class="subtitle lang-text" data-bn="আপাতত ক্যাটাগরিগুলো দেওয়া আছে, খুব শীঘ্রই নতুন প্রোডাক্ট অ্যাড করা হবে।" data-en="Categories are ready. Products are coming soon!">আপাতত ক্যাটাগরিগুলো দেওয়া আছে, খুব শীঘ্রই নতুন প্রোডাক্ট অ্যাড করা হবে।</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <div class="card-icon">👕</div>
-                    <h3 class="lang-text" data-bn="শার্ট" data-en="Shirts">শার্ট</h3>
-                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">👖</div>
-                    <h3 class="lang-text" data-bn="প্যান্ট" data-en="Pants">প্যান্ট</h3>
-                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">👟</div>
-                    <h3 class="lang-text" data-bn="জুতা" data-en="Shoes">জুতা</h3>
-                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">⌚</div>
-                    <h3 class="lang-text" data-bn="ঘড়ি" data-en="Watches">ঘড়ি</h3>
-                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
+        <!-- 👨‍💻 About Section -->
+        <section id="page-about" class="page">
+            <div class="hero-card text-left">
+                <h2 class="lang-text" data-bn="👨‍💻 আমার সম্পর্কে" data-en="👨‍💻 About Me">👨‍💻 আমার সম্পর্কে</h2>
+                <p class="lang-text" data-bn="আমি একজন ডেডিকেটেড এবং প্রফেশনাল কম্পিউটার অপারেটর। ডাটা এন্ট্রি, মাইক্রোসফট অফিস ম্যানেজমেন্ট এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে আমার ভালো অভিজ্ঞতা রয়েছে।" data-en="I am a dedicated and professional Computer Operator. I have solid experience in data entry, Microsoft Office management, and official documentation tasks.">আমি একজন ডেডিকেটেড এবং প্রফেশনাল কম্পিউটার অপারেটর। ডাটা এন্ট্রি, মাইক্রোসফট অফিস ম্যানেজমেন্ট এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে আমার ভালো অভিজ্ঞতা রয়েছে।</p>
+                
+                <h3 class="lang-text" data-bn="🎓 শিক্ষাগত যোগ্যতা" data-en="🎓 Education">🎓 শিক্ষাগত যোগ্যতা</h3>
+                <div class="inner-card">
+                    <p class="lang-text" data-bn="• মাধ্যমিক স্কুল সার্টিফিকেট (SSC), ব্যবসায় শিক্ষা বিভাগ, ২০২৬ পরীক্ষার্থী" data-en="• Secondary School Certificate (SSC), Business Studies, 2026 Examinee">• মাধ্যমিক স্কুল সার্টিফিকেট (SSC), ব্যবসায় শিক্ষা বিভাগ, ২০২৬ পরীক্ষার্থী</p>
                 </div>
             </div>
         </section>
 
+        <!-- 📊 Skills Section -->
+        <section id="page-skills" class="page">
+            <h2 class="lang-text" data-bn="📊 আমার দক্ষতাসমূহ" data-en="📊 My Skills">📊 আমার দক্ষতাসমূহ</h2>
+            <div class="grid">
+                <div class="card">
+                    <i class="fab fa-microsoft text-word font-2"></i>
+                    <h3>MS Word</h3>
+                    <p class="lang-text" data-bn="বাংলা-ইংরেজি টাইপিং ও ফরম্যাটিং" data-en="Bengali/English Typing & Formatting">বাংলা-ইংরেজি টাইপিং ও ফরম্যাটিং</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-file-excel text-excel font-2"></i>
+                    <h3>MS Excel</h3>
+                    <p class="lang-text" data-bn="অ্যাডভান্সড ফর্মুলা ও স্যালারি শিট" data-en="Advanced Formulas & Salary Sheets">অ্যাডভান্সড ফর্মুলা ও স্যালারি শিট</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-keyboard font-2"></i>
+                    <h3>Data Entry</h3>
+                    <p class="lang-text" data-bn="ওয়েব রিসার্চ ও নির্ভুল ডাটা এন্ট্রি" data-en="Web Research & Clean Input">ওয়েব রিসার্চ ও নির্ভুল ডাটা এন্ট্রি</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users font-2"></i>
+                    <h3>Admin Task</h3>
+                    <p class="lang-text" data-bn="স্কাউট মেম্বারশিপ ও নোটিশ ড্রাফটিং" data-en="Scout Database & Notices">স্কাউট মেম্বারশিপ ও নোটিশ ড্রাফটিং</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 💼 Projects Section -->
+        <section id="page-projects" class="page">
+            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Featured Projects">💼 সফল প্রজেক্টসমূহ</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Excel Dashboard</h3>
+                    <p class="lang-text" data-bn="স্বয়ংক্রিয় গাণিতিক হিসাব-নিকাশ শিট।" data-en="Automated spreadsheet built dynamically.">স্বয়ংক্রিয় গাণিতিক হিসাব-নিকাশ শিট।</p>
+                </div>
+                <div class="card">
+                    <h3>Data Scraping</h3>
+                    <p class="lang-text" data-bn="ডিরেক্টরি থেকে নির্ভুল বিটুবি লিড কালেকশন।" data-en="Accurate B2B leads mining.">ডিরেক্টরি থেকে নির্ভুল বিটুবি লিড কালেকশন।</p>
+                </div>
+                <div class="card">
+                    <h3>PDF To Excel</h3>
+                    <p class="lang-text" data-bn="১০০+ হিজিবিজি পেজ ক্লিন ডেটাতে রূপান্তর।" data-en="100+ messy pages sorted perfectly.">১০০+ হিজিবিজি পেজ ক্লিন ডেটাতে রূপান্তর।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🛍️ Shop Section -->
+        <section id="page-shop" class="page">
+            <h2 class="lang-text" data-en="My Collections" data-bn="আমার কালেকশন (Shop)">আমার কালেকশন (Shop)</h2>
+            <div class="grid">
+                <div class="card"><div class="card-icon">👕</div><h3 class="lang-text" data-bn="শার্ট" data-en="Shirts">শার্ট</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
+                <div class="card"><div class="card-icon">👖</div><h3 class="lang-text" data-bn="প্যান্ট" data-en="Pants">প্যান্ট</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
+                <div class="card"><div class="card-icon">👟</div><h3 class="lang-text" data-bn="জুতা" data-en="Shoes">জুতা</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
+            </div>
+        </section>
+
+        <!-- 🛒 Order Section -->
         <section id="page-order" class="page">
             <h2 class="lang-text" data-en="Place Your Order" data-bn="সরাসরি কাজের অর্ডার দিন">সরাসরি কাজের অর্ডার দিন</h2>
             <form id="orderForm" onsubmit="sendOrder(event)" class="glass-form">
-                <div class="form-group">
-                    <input type="text" id="clientName" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="clientPhone" placeholder="Phone Number" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="clientDetails" rows="4" placeholder="Task Details & Address..." required></textarea>
-                </div>
+                <div class="form-group"><input type="text" id="clientName" placeholder="Your Name" required></div>
+                <div class="form-group"><input type="tel" id="clientPhone" placeholder="Phone Number" required></div>
+                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="Task Details..." required></textarea></div>
                 <button type="submit" class="btn btn-primary w-100">
                     <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অর্ডার কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
                 </button>
             </form>
+            
+            <!-- 📞 কন্টাক্ট বাটন গ্রিডটি অর্ডারের নিচেই সুন্দর করে দেওয়া হলো -->
+            <div class="contact-grid">
+                <a href="https://wa.me/8801576502490" target="_blank" class="c-box wa"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" class="c-box fb"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:ismailhoseen77@gmail.com" class="c-box mail"><i class="fas fa-envelope"></i></a>
+            </div>
         </section>
     </main>
 
-    <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn" title="Change Language">EN</button>
+    <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">EN</button>
 
     <script src="script.js"></script>
 </body>
-</html>
+                    </html>
+
