@@ -1,0 +1,377 @@
+/* ==========================================================================
+   🎨 1. VARIABLE & THEME DESIGN (সুন্দর রঙ ও গ্লাস ইফেক্ট)
+   ========================================================================== */
+:root {
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --text-color: #1e293b;
+    --subtitle-color: #475569;
+    --heading-color: #312e81;
+    --nav-bg: rgba(255, 255, 255, 0.6);
+    --card-bg: rgba(255, 255, 255, 0.35);
+    --primary-btn: #4f46e5;
+    --primary-hover: #4338ca;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --blur: blur(12px);
+}
+
+.dark-mode {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-color: #f1f5f9;
+    --subtitle-color: #cbd5e1;
+    --heading-color: #818cf8;
+    --nav-bg: rgba(15, 23, 42, 0.7);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --primary-btn: #6366f1;
+    --primary-hover: #4f46e5;
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   📱 2. GLOBAL STYLES (রেসপনসিভ ও সাধারণ স্টাইল)
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.4s ease;
+}
+
+/* 🌐 NAVBAR DESIGN */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.nav-container {
+    max-width: 850px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+}
+
+.nav-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background: var(--primary-btn);
+    color: #fff !important;
+}
+
+/* ==========================================================================
+   🕋 3. MAIN GLASS CONTAINER
+   ========================================================================== */
+.main-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 90px auto 30px auto;
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: var(--shadow);
+}
+
+/* 🎛️ FLOATING CONTROLS */
+.floating-controls {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1001;
+}
+
+.control-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   🎬 4. ANIMATION & LAYOUTS (SPA সিস্টেম)
+   ========================================================================== */
+.page-section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.page-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 👤 HERO SECTION */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-img-box {
+    position: relative;
+}
+
+.profile-img {
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 3px solid var(--glass-border);
+    box-shadow: var(--shadow);
+}
+
+.hero-text h1 {
+    font-size: 32px;
+    color: var(--heading-color);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--subtitle-color);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btn-primary { background: var(--primary-btn); color: #fff; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--glass-border); }
+.btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+/* ==========================================================================
+   👨‍💻 5. INNER PAGES DESIGN (About, Skills, Projects)
+   ========================================================================== */
+h2 {
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
+
+.info-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+}
+
+/* 📊 SKILLS PROGRESS BAR */
+.skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.dark-mode .progress-bar { background: rgba(255,255,255,0.1); }
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #818cf8);
+    border-radius: 10px;
+}
+
+/* 💼 PROJECTS & SERVICES GRID */
+.projects-grid, .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.project-card, .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.project-card:hover, .service-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-icon, .service-card i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: var(--primary-btn);
+}
+
+/* 📞 CONTACT SOCIAL CARDS */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.contact-card:hover { transform: scale(1.05); }
+.card-wa { background: #25D366; }
+.card-fb { background: #1877f2; }
+.card-git { background: #24292e; }
+.card-mail { background: #ea4335; }
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    margin-top: 35px;
+    padding-top: 15px;
+    font-size: 13px;
+    border-top: 1px solid var(--glass-border);
+    color: var(--subtitle-color);
+}
+
+/* ⬆️ SCROLL TO TOP */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 140px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    background: var(--primary-btn);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    box-shadow: var(--shadow);
+}
+
+/* LANGUAGE TOGGLE SYSTEM */
+.lang-bn { display: block; }
+.lang-en { display: none; }
+.show-en .lang-bn { display: none; }
+.show-en .lang-en { display: block; }
+
+/* ==========================================================================
+   📱 6. RESPONSIVE MEDIA QUERIES (মোবাইল স্ক্রিন ফিটনেস)
+   ========================================================================== */
+@media (max-width: 600px) {
+    .nav-container { flex-direction: column; gap: 8px; }
+    .main-container { padding: 20px; margin-top: 120px; }
+    .hero-wrapper { flex-direction: column; }
+    .nav-links a { font-size: 12px; padding: 4px 8px; }
+}
