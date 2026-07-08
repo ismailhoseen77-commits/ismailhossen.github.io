@@ -1,16 +1,13 @@
 // ==========================================================================
-// 🚀 1. SINGLE PAGE APPLICATION (SPA) SYSTEM (ট্যাব লেআউট পরিবর্তন)
+// 🚀 1. SINGLE PAGE APPLICATION (SPA) SYSTEM (ট্যাব পরিবর্তন)
 // ==========================================================================
 function showPage(pageId) {
-    // সব পেজ সেকশন থেকে active ক্লাস রিমুভ করা
     const sections = document.querySelectorAll('.page-section');
     sections.forEach(section => section.classList.remove('active'));
     
-    // সব নেভিগেশন লিংক থেকে active ক্লাস রিমুভ করা
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => link.classList.remove('active'));
     
-    // যে পেজে ক্লিক করা হয়েছে সেটিকে active করা
     const targetPage = document.getElementById('page-' + pageId);
     const targetNavLink = document.getElementById('nav-' + pageId);
     
@@ -21,16 +18,14 @@ function showPage(pageId) {
         targetNavLink.classList.add('active');
     }
     
-    // প্রতিবার ট্যাব পরিবর্তনের পর স্মুথলি স্ক্রিনের ওপরে চলে যাওয়া
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ==========================================================================
-// 🌙 2. DARK / LIGHT MODE SWITCHER (থিম পরিবর্তন ও মনে রাখা)
+// 🌙 2. DARK / LIGHT MODE SWITCHER (থিম মেমোরি)
 // ==========================================================================
 const themeToggleBtn = document.getElementById('theme-toggle');
 
-// ব্রাউজারের মেমোরি (LocalStorage) চেক করে আগের থিম সেট করা
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
@@ -40,7 +35,6 @@ if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         
-        // বাটন আইকন পরিবর্তন এবং মেমোরিতে সেভ রাখা
         if (document.body.classList.contains('dark-mode')) {
             themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
             localStorage.setItem('theme', 'dark');
@@ -52,7 +46,7 @@ if (themeToggleBtn) {
 }
 
 // ==========================================================================
-// 🌐 3. LANGUAGE TOGGLE SYSTEM (বাংলা এবং ইংরেজি পরিবর্তন)
+// 🌐 3. LANGUAGE TOGGLE SYSTEM (বাংলা ও ইংরেজি পরিবর্তন)
 // ==========================================================================
 function toggleLanguage() {
     const langBtn = document.getElementById('lang-btn');
@@ -69,13 +63,12 @@ function toggleLanguage() {
 }
 
 // ==========================================================================
-// ⬆️ 4. SCROLL TO TOP SYSTEM (ওপরে ওঠার বোতাম)
+// ⬆️ 4. SCROLL TO TOP SYSTEM
 // ==========================================================================
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 
 window.onscroll = function() {
     if (scrollTopBtn) {
-        // স্ক্রিন ১০০ পিক্সেলের বেশি নিচে নামলে বাটনটি দৃশ্যমান হবে
         if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
             scrollTopBtn.style.display = "flex";
         } else {
@@ -88,5 +81,28 @@ if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+}
+
+// ==========================================================================
+// 🛍️ 5. WHATSAPP CUSTOM ORDER SUBMISSION SYSTEM
+// ==========================================================================
+function sendOrder(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const service = document.getElementById('serviceType').value;
+    const details = document.getElementById('clientDetails').value;
+
+    const baseText = `*New Order Received from Portfolio!* 🔥\n\n` +
+                     `👤 *Name:* ${name}\n` +
+                     `📞 *Phone:* ${phone}\n` +
+                     `💼 *Service:* ${service}\n` +
+                     `📝 *Details & Address:* ${details}`;
+
+    const encodedText = encodeURIComponent(baseText);
+    const whatsappURL = `https://wa.me/8801576502490?text=${encodedText}`;
+    
+    window.open(whatsappURL, '_blank');
 }
 
