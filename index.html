@@ -20,10 +20,31 @@
         </div>
     </div>
 
-    <!-- 🌐 Header Brand Logo Only -->
+    <!-- 🌐 🔝 Top Header with Hamburger Icon -->
     <header class="app-header">
+        <button class="menu-toggle" onclick="toggleMenu()" title="Open Menu">
+            <i class="fas fa-bars"></i>
+        </button>
         <a href="#" onclick="showPage('home')" class="nav-logo">Nihad</a>
+        <div style="width: 40px;"></div> <!-- ব্যালেন্স রাখার জন্য -->
     </header>
+
+    <!-- 🚪 🌟 Left Sidebar Drawer Navigation -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMenu()"></div>
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-menu" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a onclick="showPage('home')" class="active" id="nav-home"><i class="fas fa-home"></i> <span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
+            <a onclick="showPage('about')" id="nav-about"><i class="fas fa-user"></i> <span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
+            <a onclick="showPage('skills')" id="nav-skills"><i class="fas fa-chart-bar"></i> <span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
+            <a onclick="showPage('projects')" id="nav-projects"><i class="fas fa-briefcase"></i> <span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
+            <a onclick="showPage('shop')" id="nav-shop"><i class="fas fa-shopping-bag"></i> <span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
+            <a onclick="showPage('order')" id="nav-order"><i class="fas fa-shopping-cart"></i> <span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
+        </div>
+    </nav>
 
     <!-- 🕋 Main Container -->
     <main class="container">
@@ -42,7 +63,7 @@
             </div>
         </section>
 
-        <!-- 👨‍💻 About Section (বিস্তারিত ব্যাক আনা হয়েছে) -->
+        <!-- 👨‍💻 About Section -->
         <section id="page-about" class="page">
             <div class="hero-card text-left">
                 <h2 class="lang-text" data-bn="👨‍💻 আমার সম্পর্কে" data-en="👨‍💻 About Me">👨‍💻 আমার সম্পর্কে</h2>
@@ -59,7 +80,7 @@
             </div>
         </section>
 
-        <!-- 📊 Skills Section (বিস্তারিত কাজসমূহ যুক্ত করা হয়েছে) -->
+        <!-- 📊 Skills Section -->
         <section id="page-skills" class="page">
             <h2 class="lang-text" data-bn="📊 আমার দক্ষতাসমূহ" data-en="📊 My Detailed Skills">📊 আমার দক্ষতাসমূহ</h2>
             <div class="grid">
@@ -102,14 +123,14 @@
             </div>
         </section>
 
-        <!-- 💼 Projects Section (ডিটেইল বিবরণ সহ) -->
+        <!-- 💼 Projects Section -->
         <section id="page-projects" class="page">
             <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Detailed Projects">💼 সফল প্রজেক্টসমূহ</h2>
             <div class="grid">
                 <div class="card">
                     <h3>Excel Automation</h3>
                     <p class="lang-text" 
-                       data-bn="একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।" 
+                       data-bn="একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, where ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।" 
                        data-en="A fully automated accounting spreadsheet where inputting raw figures automatically outputs net profits and summaries.">
                        একটি সম্পূর্ণ অটোমেটেড হিসাবের স্প্রেডশিট প্রজেক্ট, যেখানে ডাটা ইনপুট দিলেই লাভ-ক্ষতি ও টোটাল হিসাব অটো বের হয়।
                     </p>
@@ -147,11 +168,11 @@
         <section id="page-order" class="page">
             <h2 class="lang-text" data-en="Place Your Order" data-bn="সরাসরি কাজের অর্ডার দিন">সরাসরি কাজের অর্ডার দিন</h2>
             <form id="orderForm" onsubmit="sendOrder(event)" class="glass-form">
-                <div class="form-group"><input type="text" id="clientName" placeholder="আপনার নাম / Your Name" required></div>
-                <div class="form-group"><input type="tel" id="clientPhone" placeholder="মোবাইল নম্বর / Phone Number" required></div>
-                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="কাজের বিস্তারিত বিবরণ... / Task Details..." required></textarea></div>
+                <div class="form-group"><input type="text" id="clientName" placeholder="Your Name" required></div>
+                <div class="form-group"><input type="tel" id="clientPhone" placeholder="Phone Number" required></div>
+                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="Task Details..." required></textarea></div>
                 <button type="submit" class="btn btn-primary w-100">
-                    <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অর্ডার কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
+                    <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অर्डर কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
                 </button>
             </form>
             
@@ -163,38 +184,9 @@
         </section>
     </main>
 
-    <!-- 📱 🌟 প্রফেশনাল মোবাইল বটম নেভিগেশন বার (যা স্ক্রিনশটের প্রবলেম ফিক্স করবে) -->
-    <nav class="bottom-nav">
-        <a onclick="showPage('home')" class="nav-item active" id="nav-home">
-            <i class="fas fa-home"></i>
-            <span class="lang-text" data-bn="হোম" data-en="Home">হোম</span>
-        </a>
-        <a onclick="showPage('about')" class="nav-item" id="nav-about">
-            <i class="fas fa-user"></i>
-            <span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span>
-        </a>
-        <a onclick="showPage('skills')" class="nav-item" id="nav-skills">
-            <i class="fas fa-chart-bar"></i>
-            <span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span>
-        </a>
-        <a onclick="showPage('projects')" class="nav-item" id="nav-projects">
-            <i class="fas fa-briefcase"></i>
-            <span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span>
-        </a>
-        <a onclick="showPage('shop')" class="nav-item" id="nav-shop">
-            <i class="fas fa-shopping-bag"></i>
-            <span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span>
-        </a>
-        <a onclick="showPage('order')" class="nav-item" id="nav-order">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span>
-        </a>
-    </nav>
-
     <!-- Floating Lang Button -->
     <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">EN</button>
 
     <script src="script.js"></script>
 </body>
 </html>
-
