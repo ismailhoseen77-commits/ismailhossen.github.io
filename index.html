@@ -3,280 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Hossen Nihad | Portfolio</title>
-    <!-- FontAwesome Font Icons -->
+    <title>Nihad | Professional Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap">
-    <!-- External CSS Link -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="show-bn">
 
-    <!-- 🌐 Glassmorphism Navbar -->
+    <div id="welcome-screen" class="welcome-overlay">
+        <div class="welcome-content">
+            <h1 class="lang-text" data-bn="স্বাগতম!" data-en="Welcome!">স্বাগতম!</h1>
+            <p class="lang-text" data-bn="ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ।" data-en="Welcome to the official portfolio of Ismail Hossen Nihad.">ইসমাইল হোসেন নিহাদ-এর অফিসিয়াল সাইটে আপনাকে আমন্ত্রণ।</p>
+            
+            <button class="enter-btn" onclick="enterSite()" title="Enter Site">
+                <span class="lang-text" data-bn="প্রবেশ করুন" data-en="Enter Site">প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo" onclick="showPage('home')">Nihad</a>
-            <ul class="nav-links">
-                <li><a id="nav-home" onclick="showPage('home')" class="active"><span class="lang-bn">হোম</span><span class="lang-en">Home</span></a></li>
-                <li><a id="nav-about" onclick="showPage('about')"><span class="lang-bn">সম্পর্কে</span><span class="lang-en">About</span></a></li>
-                <li><a id="nav-skills" onclick="showPage('skills')"><span class="lang-bn">দক্ষতা</span><span class="lang-en">Skills</span></a></li>
-                <li><a id="nav-projects" onclick="showPage('projects')"><span class="lang-bn">প্রজেক্ট</span><span class="lang-en">Projects</span></a></li>
-                <li><a id="nav-shop" onclick="showPage('shop')"><span class="lang-bn">শপ</span><span class="lang-en">Shop</span></a></li>
-                <li><a id="nav-order" onclick="showPage('order')"><span class="lang-bn">অর্ডার</span><span class="lang-en">Order</span></a></li>
-                <li><a id="nav-contact" onclick="showPage('contact')"><span class="lang-bn">যোগাযোগ</span><span class="lang-en">Contact</span></a></li>
-            </ul>
+        <a href="#" onclick="showPage('home')" class="nav-logo">Nihad</a>
+        <div class="nav-links">
+            <a onclick="showPage('home')" class="active" id="nav-home"><span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
+            <a onclick="showPage('shop')" id="nav-shop"><span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
+            <a onclick="showPage('order')" id="nav-order"><span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
         </div>
     </nav>
 
-    <!-- 🎛️ Global Floating Controls (Theme & Language) -->
-    <div class="floating-controls">
-        <button class="control-btn" id="theme-toggle" title="Toggle Theme">
-            <i class="fas fa-moon"></i>
-        </button>
-        <button class="control-btn" onclick="toggleLanguage()" id="lang-btn" title="Change Language">
-            EN
-        </button>
-    </div>
-
-    <!-- 🕋 Main Glass Container -->
-    <main class="main-container">
-
-        <!-- 👤 Section 1: Home / Hero Section -->
-        <section id="page-home" class="page-section active">
-            <div class="hero-wrapper">
-                <div class="hero-img-box">
-                    <img src="IMG-20260704-WA0046.jpg" alt="Ismail Hossen Nihad" class="profile-img">
+    <main class="container">
+        <section id="page-home" class="page active">
+            <div class="hero-card">
+                <div class="img-wrapper">
+                    <img src="IMG-20260704-WA0046.jpg" alt="Profile">
                 </div>
-                <div class="hero-text">
-                    <span class="greeting lang-bn">আসসালামু আলাইকুম 👋</span>
-                    <span class="greeting lang-en">Assalamu Alaikum 👋</span>
-                    <h1>Ismail Hossen Nihad</h1>
-                    <p class="subtitle lang-bn">পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
-                    <p class="subtitle lang-en">Professional Computer Operator & Freelancer</p>
-                    
-                    <div class="hero-buttons">
-                        <a onclick="showPage('order')" class="btn btn-primary lang-bn"><i class="fas fa-shopping-cart"></i> কাজ অর্ডার করুন</a>
-                        <a onclick="showPage('order')" class="btn btn-primary lang-en"><i class="fas fa-shopping-cart"></i> Order Now</a>
-                        
-                        <a href="cv.pdf" download class="btn btn-secondary lang-bn"><i class="fas fa-download"></i> সিভি ডাউনলোড</a>
-                        <a href="cv.pdf" download class="btn btn-secondary lang-en"><i class="fas fa-download"></i> Download CV</a>
-                    </div>
+                <h1 class="lang-text" data-en="Ismail Hossen Nihad" data-bn="ইসমাইল হোসেন নিহাদ">ইসমাইল হোসেন নিহাদ</h1>
+                <p class="lang-text" data-en="Professional Computer Operator & Freelancer" data-bn="পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার">পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
+                <div class="cta-buttons">
+                    <button onclick="showPage('order')" class="btn btn-primary lang-text" data-bn="কাজ অর্ডার করুন" data-en="Order Now">কাজ অর্ডার করুন</button>
                 </div>
             </div>
         </section>
 
-        <!-- 👨‍💻 Section 2: About Me -->
-        <section id="page-about" class="page-section">
-            <div class="lang-bn">
-                <h2><i class="fas fa-user"></i> আমার সম্পর্কে</h2>
-                <p>আমি ইসমাইল হোসেন নিহাদ। আমি একজন ডেডিকেটেড এবং প্রফেশনাল কম্পিউটার অপারেটর। ডাটা এন্ট্রি, মাইক্রোসফট অফিস ম্যানেজমেন্ট এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে আমার ভালো অভিজ্ঞতা রয়েছে। আমি নিয়মানুবর্তিতা এবং নিখুঁত কাজে বিশ্বাসী।</p>
-                
-                <h3>🎓 শিক্ষাগত যোগ্যতা</h3>
-                <div class="info-card">
-                    <p><strong>মাধ্যমিক স্কুল সার্টিফিকেট (SSC)</strong><br>ব্যবসায় শিক্ষা বিভাগ (Commerce)<br>পরীক্ষার্থী ২০২৬</p>
-                </div>
-
-                <h3>🏆 সেবাসমূহ (Services)</h3>
-                <p>আমি ক্লায়েন্টদের সর্বোচ্চ মানের সেবা প্রদান করতে নিচে দেওয়া কাজগুলো অত্যন্ত দক্ষতার সাথে সম্পন্ন করি:</p>
-            </div>
-            <div class="lang-en">
-                <h2><i class="fas fa-user"></i> About Me</h2>
-                <p>I am Ismail Hossen Nihad. I am a dedicated and professional Computer Operator. I have solid experience in data entry, Microsoft Office management, and official documentation tasks. I believe in punctuality and accuracy.</p>
-                
-                <h3>🎓 Education</h3>
-                <div class="info-card">
-                    <p><strong>Secondary School Certificate (SSC)</strong><br>Business Studies Group (Commerce)<br>Examinee 2026</p>
-                </div>
-
-                <h3>🏆 Services</h3>
-                <p>I provide high-quality services to my clients, specializing in the following areas:</p>
-            </div>
-
-            <!-- সার্ভিস কার্ড গ্রিড -->
-            <div class="services-grid">
-                <div class="service-card">
-                    <i class="fas fa-file-word icon-word" style="color: #2b579a;"></i>
-                    <h4 class="lang-bn">ওয়ার্ড প্রসেসিং</h4>
-                    <h4 class="lang-en">MS Word Processing</h4>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-file-excel icon-excel" style="color: #217346;"></i>
-                    <h4 class="lang-bn">এক্সেল ডাটা অ্যানালাইসিস</h4>
-                    <h4 class="lang-en">MS Excel Analysis</h4>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-database icon-data"></i>
-                    <h4 class="lang-bn">নিখুঁত ডাটা এন্ট্রি</h4>
-                    <h4 class="lang-en">Accurate Data Entry</h4>
-                </div>
-            </div>
-        </section>
-
-        <!-- 📊 Section 3: Skills (বিস্তারিত কার্ড আকারে) -->
-        <section id="page-skills" class="page-section">
-            <h2 class="lang-bn"><i class="fas fa-chart-bar"></i> আমার দক্ষতাসমূহ (বিস্তারিত)</h2>
-            <h2 class="lang-en"><i class="fas fa-chart-bar"></i> Detailed Skills</h2>
+        <section id="page-shop" class="page">
+            <h2 class="lang-text" data-en="My Collections" data-bn="আমার কালেকশন (Shop)">আমার কালেকশন (Shop)</h2>
+            <p class="subtitle lang-text" data-bn="আপাতত ক্যাটাগরিগুলো দেওয়া আছে, খুব শীঘ্রই নতুন প্রোডাক্ট অ্যাড করা হবে।" data-en="Categories are ready. Products are coming soon!">আপাতত ক্যাটাগরিগুলো দেওয়া আছে, খুব শীঘ্রই নতুন প্রোডাক্ট অ্যাড করা হবে।</p>
             
-            <div class="skills-detail-grid">
-                <!-- Word Card -->
-                <div class="skill-detail-card">
-                    <div class="sd-header"><i class="fab fa-microsoft text-word"></i> <h4>MS Word</h4></div>
-                    <p class="lang-bn">যেকোনো বাংলা ও ইংরেজি টাইপিং, প্রফেশনাল সিভি মেকিং, অফিসিয়াল নোটিশ ও রিপোর্টের লেআউট নিখুঁত ফরম্যাটিং করা।</p>
-                    <p class="lang-en">Fast Bengali & English typing, professional CV drafting, clean layouts for official letters and report formatting.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">👕</div>
+                    <h3 class="lang-text" data-bn="শার্ট" data-en="Shirts">শার্ট</h3>
+                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
                 </div>
-                <!-- Excel Card -->
-                <div class="skill-detail-card">
-                    <div class="sd-header"><i class="fas fa-file-excel text-excel"></i> <h4>MS Excel</h4></div>
-                    <p class="lang-bn">অ্যাডভান্সড ফর্মুলা (VLOOKUP, IF), গাণিতিক হিসাব-নিকাশ, ডাটা ফিল্টারিং এবং কাস্টম সেলিং ও সেলারি শিট তৈরি করা।</p>
-                    <p class="lang-en">Advanced formulas (VLOOKUP, IF functions), arithmetic automated sheets, data filtering, and salary sheets setup.</p>
+                <div class="card">
+                    <div class="card-icon">👖</div>
+                    <h3 class="lang-text" data-bn="প্যান্ট" data-en="Pants">প্যান্ট</h3>
+                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
                 </div>
-                <!-- Data Entry Card -->
-                <div class="skill-detail-card">
-                    <div class="sd-header"><i class="fas fa-keyboard"></i> <h4>Data Entry</h4></div>
-                    <p class="lang-bn">ওয়েব রিসার্চ করে তথ্য সংগ্রহ, ই-কমার্স প্রোডাক্ট লিস্টিং, পিডিএফ থেকে এক্সেল বা ওয়ার্ড ফাইলে নির্ভুল কনভার্সন।</p>
-                    <p class="lang-en">Web research, directory extraction, e-commerce product listings, and flawless PDF to Excel/Word conversions.</p>
+                <div class="card">
+                    <div class="card-icon">👟</div>
+                    <h3 class="lang-text" data-bn="জুতা" data-en="Shoes">জুতা</h3>
+                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
                 </div>
-                <!-- Scouting & Admin Card -->
-                <div class="skill-detail-card">
-                    <div class="sd-header"><i class="fas fa-users"></i> <h4>Admin & Coordination</h4></div>
-                    <p class="lang-bn">গ্রুপ নোটিশ তৈরি, মিটিং এজেন্ডা ড্রাফটিং এবং স্কাউটিং মেম্বার ডাটাবেজ প্রফেশনালি ফাইল ম্যানেজমেন্ট করা।</p>
-                    <p class="lang-en">Drafting group announcements, structural meeting notes, and handling administrative scout database management.</p>
+                <div class="card">
+                    <div class="card-icon">⌚</div>
+                    <h3 class="lang-text" data-bn="ঘড়ি" data-en="Watches">ঘড়ি</h3>
+                    <p class="lang-text" data-bn="নতুন কালেকশন আসছে..." data-en="Coming Soon...">নতুন কালেকশন আসছে...</p>
                 </div>
             </div>
         </section>
 
-        <!-- 💼 Section 4: Projects -->
-        <section id="page-projects" class="page-section">
-            <h2 class="lang-bn"><i class="fas fa-briefcase"></i> আমার প্রজেক্টসমূহ</h2>
-            <h2 class="lang-en"><i class="fas fa-briefcase"></i> Featured Projects</h2>
-            
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-icon"><i class="fas fa-calculator"></i></div>
-                    <h3 class="lang-bn">অটোমেটেড এক্সেল ড্যাশবোর্ড</h3>
-                    <h3 class="lang-en">Automated Excel Dashboard</h3>
-                    <p class="lang-bn">হিসাব-নিকাশ সহজ করার জন্য ফর্মুলা ব্যবহার করে তৈরি স্বয়ংক্রিয় ড্যাশবোর্ড।</p>
-                    <p class="lang-en">An automated sheet built to calculate corporate daily calculations dynamically.</p>
-                </div>
-                <div class="project-card">
-                    <div class="project-icon"><i class="fas fa-paste"></i></div>
-                    <h3 class="lang-bn">ওয়েব ডাটা স্ক্র্যাপিং</h3>
-                    <h3 class="lang-en">B2B Directory Data Scraping</h3>
-                    <p class="lang-bn">বিভিন্ন বিজনেস ডিরেক্টরি থেকে ক্লায়েন্টের চাহিদা অনুযায়ী লিড এবং ইমেইল কালেকশন।</p>
-                    <p class="lang-en">Mining targeted accurate client information, email collection from yellowpages/directories.</p>
-                </div>
-                <div class="project-card">
-                    <div class="project-icon"><i class="fas fa-file-pdf"></i></div>
-                    <h3 class="lang-bn">পিডিএফ টু এক্সেল কনভার্সন</h3>
-                    <h3 class="lang-en">PDF to Sheet Formatting</h3>
-                    <p class="lang-bn">১০০+ পেজের হিজিবিজি স্ক্যান করা পিডিএফ থেকে টেক্সট কনভার্ট করে ক্লিয়ার এক্সেল ফাইল তৈরি।</p>
-                    <p class="lang-en">Converted 100+ messy scanned PDF tables into cleanly structured filterable sheets.</p>
-                </div>
-                <div class="project-card">
-                    <div class="project-icon"><i class="fas fa-user-shield"></i></div>
-                    <h3 class="lang-bn">মেম্বারশিপ ডাটাবেজ সিস্টেম</h3>
-                    <h3 class="lang-en">Membership Records Project</h3>
-                    <p class="lang-bn">১০০+ মেম্বারদের স্কাউট রেকর্ড ও ব্যাজ অর্জনের ডেটা ট্র্যাক রাখার প্রফেশনাল শিট।</p>
-                    <p class="lang-en">Structured excel database to manage scout member records, active details cleanly.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🛍️ Section 5: Shop Page (খালি ক্যাটাগরি সেকশন) -->
-        <section id="page-shop" class="page-section">
-            <h2 class="lang-bn"><i class="fas fa-shopping-bag"></i> আমার শপ (Shop)</h2>
-            <h2 class="lang-en"><i class="fas fa-shopping-bag"></i> My Shop</h2>
-            <p class="subtitle lang-bn">আপাতত শপটি খালি আছে, খুব শীঘ্রই নতুন প্রোডাক্ট ও কালেকশন আপডেট করা হবে।</p>
-            <p class="subtitle lang-en">The shop is currently empty. New collections are coming soon!</p>
-
-            <div class="shop-grid">
-                <div class="shop-category"><h3>👕 শার্ট (Shirts)</h3><p>Design coming soon...</p></div>
-                <div class="shop-category"><h3>👖 প্যান্ট (Pants)</h3><p>Design coming soon...</p></div>
-                <div class="shop-category"><h3>👟 জুতা (Shoes)</h3><p>Design coming soon...</p></div>
-                <div class="shop-category"><h3>⌚ ঘড়ি (Watches)</h3><p>Design coming soon...</p></div>
-            </div>
-        </section>
-
-        <!-- 🛒 Section 6: E-Commerce / Custom Order Page -->
-        <section id="page-order" class="page-section">
-            <h2 class="lang-bn"><i class="fas fa-shopping-cart"></i> সরাসরি কাজের অর্ডার দিন</h2>
-            <h2 class="lang-en"><i class="fas fa-shopping-cart"></i> Place a Custom Order</h2>
-            <p class="subtitle lang-bn">ফর্মটি পূরণ করে সাবমিট করুন, সরাসরি আমার WhatsApp-এ অর্ডার চলে আসবে!</p>
-            <p class="subtitle lang-en">Fill the form and submit. It will directly send details to my WhatsApp!</p>
-
+        <section id="page-order" class="page">
+            <h2 class="lang-text" data-en="Place Your Order" data-bn="সরাসরি কাজের অর্ডার দিন">সরাসরি কাজের অর্ডার দিন</h2>
             <form id="orderForm" onsubmit="sendOrder(event)" class="glass-form">
                 <div class="form-group">
-                    <label class="lang-bn">আপনার নাম:</label>
-                    <label class="lang-en">Your Name:</label>
-                    <input type="text" id="clientName" required placeholder="Name">
+                    <input type="text" id="clientName" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <label class="lang-bn">মোবাইল নম্বর:</label>
-                    <label class="lang-en">Phone Number:</label>
-                    <input type="tel" id="clientPhone" required placeholder="017XXXXXXXX">
+                    <input type="tel" id="clientPhone" placeholder="Phone Number" required>
                 </div>
                 <div class="form-group">
-                    <label class="lang-bn">কাজের ধরন নির্বাচন করুন:</label>
-                    <label class="lang-en">Select Service Type:</label>
-                    <select id="serviceType">
-                        <option value="MS Word Typing">MS Word Typing / Documenting</option>
-                        <option value="MS Excel Sheet Design">MS Excel Automated Sheet Design</option>
-                        <option value="Data Entry Work">Flawless Data Entry Work</option>
-                        <option value="Other Computer Operation">Other Computer Operations</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="lang-bn">বিস্তারিত ঠিকানা ও কাজের বিবরণ:</label>
-                    <label class="lang-en">Address & Task Details:</label>
-                    <textarea id="clientDetails" rows="4" required placeholder="Write details..."></textarea>
+                    <textarea id="clientDetails" rows="4" placeholder="Task Details & Address..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
-                    <i class="fab fa-whatsapp"></i> <span class="lang-bn">অর্ডার কনফার্ম করুন (WhatsApp)</span><span class="lang-en">Confirm Order via WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অর্ডার কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
                 </button>
             </form>
         </section>
-
-        <!-- 📞 Section 7: Contact & Social Cards -->
-        <section id="page-contact" class="page-section">
-            <div class="lang-bn">
-                <h2><i class="fas fa-envelope"></i> যোগাযোগ করুন</h2>
-                <p>যেকোনো প্রজেক্ট বা কাজের প্রয়োজনে সরাসরি নিচের মাধ্যমগুলোতে আমার সাথে যোগাযোগ করতে পারেন:</p>
-            </div>
-            <div class="lang-en">
-                <h2><i class="fas fa-envelope"></i> Contact Me</h2>
-                <p>Feel free to reach out to me for any projects or official assistance via the links below:</p>
-            </div>
-
-            <!-- সোশ্যাল মিডিয়া বাটন গ্রিড -->
-            <div class="contact-grid">
-                <a href="https://wa.me/8801576502490?text=Hello%20Ismail,%20I%20have%20an%20order%20for%20MS%20Word/Excel%20work." target="_blank" class="contact-card card-wa">
-                    <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
-                </a>
-                <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" class="contact-card card-fb">
-                    <i class="fab fa-facebook-f"></i><span>Facebook</span>
-                </a>
-                <a href="https://github.com/ismailhossen77-commits" target="_blank" class="contact-card card-git">
-                    <i class="fab fa-github"></i><span>GitHub</span>
-                </a>
-                <a href="mailto:ismailhoseen77@gmail.com?subject=Inquiry%20from%20Portfolio" class="contact-card card-mail">
-                    <i class="fas fa-envelope"></i><span>Email</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- 📝 Footer -->
-        <footer class="footer">
-            <p>© 2026 Ismail Hossen Nihad. All Rights Reserved.</p>
-        </footer>
-
     </main>
 
-    <!-- ⬆️ Scroll to Top Button -->
-    <button id="scrollTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+    <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn" title="Change Language">EN</button>
 
-    <!-- External JavaScript Link -->
     <script src="script.js"></script>
 </body>
-            </html>
-
+</html>
