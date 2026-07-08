@@ -1,38 +1,17 @@
 /* ==========================================================================
-   🎨 1. VARIABLE & THEME DESIGN (সুন্দর রঙ ও গ্লাস ইফেক্ট)
+   🎨 1. THEME VARIABLES
    ========================================================================== */
 :root {
-    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --glass-bg: rgba(255, 255, 255, 0.45);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --text-color: #1e293b;
-    --subtitle-color: #475569;
-    --heading-color: #312e81;
-    --nav-bg: rgba(255, 255, 255, 0.6);
-    --card-bg: rgba(255, 255, 255, 0.35);
-    --primary-btn: #4f46e5;
-    --primary-hover: #4338ca;
-    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-    --blur: blur(12px);
-}
-
-.dark-mode {
     --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.07);
     --glass-border: rgba(255, 255, 255, 0.1);
     --text-color: #f1f5f9;
-    --subtitle-color: #cbd5e1;
     --heading-color: #818cf8;
-    --nav-bg: rgba(15, 23, 42, 0.7);
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --primary-btn: #6366f1;
-    --primary-hover: #4f46e5;
-    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --primary-btn: #4f46e5;
+    --primary-hover: #6366f1;
+    --blur: blur(16px);
 }
 
-/* ==========================================================================
-   📱 2. GLOBAL STYLES (রেসপনসিভ ও সাধারণ স্টাইল)
-   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -40,359 +19,289 @@
 }
 
 body {
-    font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg-gradient);
     background-attachment: fixed;
     color: var(--text-color);
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   🚪 2. WELCOME SCREEN DESIGN (ফুল স্ক্রিন ওভারলে)
+   ========================================================================== */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #090d16;
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background 0.4s ease;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🌐 NAVBAR DESIGN */
+.welcome-content {
+    text-align: center;
+    padding: 30px;
+    max-width: 500px;
+    animation: zoomIn 0.8s ease;
+}
+
+.welcome-content h1 {
+    font-size: 48px;
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.welcome-content p {
+    font-size: 16px;
+    color: #94a3b8;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* ডানমুখী অ্যারো বাটন */
+.enter-btn {
+    background: var(--primary-btn);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+    transition: all 0.3s ease;
+}
+
+.enter-btn i {
+    transition: transform 0.3s ease;
+}
+
+.enter-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.6);
+}
+
+/* অ্যারো এনিমেশন (ডানদিকে বাউন্স করবে) */
+.enter-btn:hover i {
+    transform: translateX(6px);
+}
+
+/* স্ক্রিন চলে যাওয়ার এনিমেশন */
+.welcome-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   🌐 3. MAIN WEB UI (অ্যাপ লাইক লুক)
+   ========================================================================== */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: var(--nav-bg);
+    background: rgba(15, 23, 42, 0.8);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
     border-bottom: 1px solid var(--glass-border);
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 850px;
-    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    padding: 16px 24px;
+    z-index: 1000;
 }
 
 .nav-logo {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--text-color);
+    color: #fff;
     text-decoration: none;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
 }
 
 .nav-links a {
-    color: var(--text-color);
+    color: #94a3b8;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
     cursor: pointer;
+    margin-left: 5px;
     transition: all 0.3s;
 }
 
 .nav-links a:hover, .nav-links a.active {
     background: var(--primary-btn);
-    color: #fff !important;
+    color: #fff;
 }
 
-/* ==========================================================================
-   🕋 3. MAIN GLASS CONTAINER
-   ========================================================================== */
-.main-container {
-    width: 90%;
-    max-width: 800px;
-    margin: 100px auto 30px auto;
+.container {
+    max-width: 700px;
+    margin: 110px auto 40px auto;
+    padding: 0 20px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+/* HERO / PRODUCTS CARD */
+.hero-card {
     background: var(--glass-bg);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
-    padding: 35px;
-    box-shadow: var(--shadow);
-}
-
-/* 🎛️ FLOATING CONTROLS */
-.floating-controls {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 1001;
-}
-
-.control-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    color: var(--text-color);
-    backdrop-filter: var(--blur);
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-}
-
-.control-btn:hover { transform: scale(1.1); }
-
-/* ==========================================================================
-   🎬 4. ANIMATION & LAYOUTS (SPA সিস্টেম)
-   ========================================================================== */
-.page-section {
-    display: none;
-    animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-.page-section.active { display: block; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* 👤 HERO SECTION */
-.hero-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
+    padding: 40px 20px;
     text-align: center;
+    backdrop-filter: var(--blur);
 }
 
-.profile-img {
-    width: 160px;
-    height: 200px;
+.img-wrapper img {
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    border-radius: 20px;
-    border: 3px solid var(--glass-border);
-    box-shadow: var(--shadow);
-}
-
-.hero-text h1 {
-    font-size: 32px;
-    color: var(--heading-color);
-    margin: 10px 0;
-}
-
-.subtitle {
-    color: var(--subtitle-color);
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 50%;
+    border: 4px solid var(--glass-border);
     margin-bottom: 20px;
 }
 
-/* BUTTONS */
-.hero-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+.hero-card h1 {
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 10px;
 }
 
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+/* PRODUCT SHOP GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    padding: 24px 15px;
+    border-radius: 20px;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.card p {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* BUTTONS */
 .btn {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 12px;
-    text-decoration: none;
     font-weight: 600;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    border: none;
     transition: all 0.3s;
 }
 
-.btn-primary { background: var(--primary-btn); color: #fff; border:none; }
+.btn-primary { background: var(--primary-btn); color: #fff; }
 .btn-primary:hover { background: var(--primary-hover); }
-.btn-secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--glass-border); }
+.w-100 { width: 100%; }
 
-/* ==========================================================================
-   👨‍💻 5. INNER SECTIONS & GRID DESIGNS
-   ========================================================================== */
-h2 { color: var(--heading-color); margin-bottom: 15px; font-size: 24px; }
-h3 { margin-top: 25px; margin-bottom: 10px; color: var(--text-color); }
-
-.info-card {
-    background: var(--card-bg);
-    padding: 15px;
-    border-radius: 14px;
-    border: 1px solid var(--glass-border);
-}
-
-/* 📊 SKILLS DETAIL CARD */
-.skills-detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.skill-detail-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    padding: 20px;
-    border-radius: 16px;
-}
-
-.sd-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.text-word { color: #2b579a; }
-.text-excel { color: #217346; }
-
-/* 💼 PROJECTS & SERVICES */
-.projects-grid, .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.project-card, .service-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    padding: 20px;
-    border-radius: 16px;
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.project-card:hover, .service-card:hover { transform: translateY(-5px); }
-.project-icon, .service-card i { font-size: 30px; margin-bottom: 10px; color: var(--primary-btn); }
-
-/* 🛍️ SHOP PAGE GRID */
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.shop-category {
-    background: var(--card-bg);
+/* FORM */
+.glass-form {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
     padding: 25px;
-    border-radius: 16px;
-    text-align: center;
-    transition: 0.3s;
-}
-.shop-category:hover { transform: translateY(-4px); }
-
-/* 🛒 GLASS FORM UI */
-.glass-form {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid var(--glass-border);
-    margin-top: 25px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 15px;
-}
-
-.form-group input, .form-group select, .form-group textarea {
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    color: var(--text-color);
-    font-family: inherit;
-    outline: none;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--primary-btn);
-}
-.w-100 { width: 100%; justify-content: center; }
-
-/* 📞 CONTACT CARDS */
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
+    border-radius: 20px;
     margin-top: 20px;
 }
 
-.contact-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    border-radius: 14px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: transform 0.2s;
-}
-.contact-card:hover { transform: scale(1.05); }
-.card-wa { background: #25D366; }
-.card-fb { background: #1877f2; }
-.card-git { background: #24292e; }
-.card-mail { background: #ea4335; }
-
-/* FOOTER */
-.footer {
-    text-align: center;
-    margin-top: 35px;
-    padding-top: 15px;
-    font-size: 13px;
-    border-top: 1px solid var(--glass-border);
-    color: var(--subtitle-color);
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.6);
+    color: #fff;
+    margin-bottom: 15px;
+    outline: none;
 }
 
-/* ⬆️ SCROLL TO TOP */
-#scrollTopBtn {
-    display: none;
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--heading-color);
+}
+
+/* FLOATING LANG BUTTON */
+.lang-btn {
     position: fixed;
-    bottom: 140px;
+    bottom: 25px;
     right: 25px;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     background: var(--primary-btn);
     color: white;
     border: none;
-    border-radius: 50%;
+    font-weight: bold;
     cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    box-shadow: var(--shadow);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.lang-btn:hover { transform: scale(1.1); }
+
+/* KEYFRAMES ANIMATION */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* LANGUAGE SWITCH REGULATION */
-.lang-bn { display: block; }
-.lang-en { display: none; }
-...show-en .lang-bn { display: none; }
-...show-en .lang-en { display: block; }
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-/* ==========================================================================
-   📱 6. RESPONSIVE MEDIA QUERIES
-   ========================================================================== */
-@media (max-width: 600px) {
-    .nav-container { flex-direction: column; gap: 8px; }
-    .main-container { padding: 20px; margin-top: 130px; }
-    .hero-wrapper { flex-direction: column; }
-    .nav-links a { font-size: 11px; padding: 4px 6px; }
-   }
-   
+/* RESPONSIVE */
+@media (max-width: 500px) {
+    .navbar { padding: 12px; }
+    .nav-links a { font-size: 12px; padding: 6px 10px; }
+    .grid { grid-template-columns: 1fr 1fr; }
+}
