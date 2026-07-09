@@ -3,207 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Hossen Mihad | Professional Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Ismail Mihad | Portfolio & Shop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="welcome-screen" class="welcome-overlay">
-        <div class="welcome-content">
-            <h1 class="lang-text" data-bn="স্বাগতম!" data-en="Welcome!">স্বাগতম!</h1>
-            <p class="lang-text" data-bn="ইসমাইল হোসেন মিহাদ-এর অফিসিয়াল পোরটফোলিও সাইটে আপনাকে আমন্ত্রণ।" data-en="Welcome to the official portfolio site of Ismail Hossen Mihad.">ইসমাইল হোসেন মিহাদ-এর অফিসিয়াল পোরটফোলিও সাইটে আপনাকে আমন্ত্রণ।</p>
-            <button class="enter-btn" onclick="enterSite()">
-                <span class="lang-text" data-bn="প্রবেশ করুন" data-en="Enter Site">প্রবেশ করুন</span> <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <header class="app-header">
-        <div class="nav-container">
-            <a onclick="showPage('home')" class="nav-item active" id="nav-home"><i class="fas fa-home"></i><span class="lang-text" data-bn="হোম" data-en="Home">হোম</span></a>
-            <a onclick="showPage('about')" class="nav-item" id="nav-about"><i class="fas fa-user"></i><span class="lang-text" data-bn="সম্পর্কে" data-en="About">সম্পর্কে</span></a>
-            <a onclick="showPage('skills')" class="nav-item" id="nav-skills"><i class="fas fa-chart-bar"></i><span class="lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</span></a>
-            <a onclick="showPage('projects')" class="nav-item" id="nav-projects"><i class="fas fa-briefcase"></i><span class="lang-text" data-bn="প্রজেক্ট" data-en="Projects">প্রজেক্ট</span></a>
-            <a onclick="showPage('shop')" class="nav-item" id="nav-shop"><i class="fas fa-shopping-bag"></i><span class="lang-text" data-bn="শপ" data-en="Shop">শপ</span></a>
-            <a onclick="showPage('order')" class="nav-item" id="nav-order"><i class="fas fa-shopping-cart"></i><span class="lang-text" data-bn="অর্ডার" data-en="Order">অর্ডার</span></a>
+    <!-- হেডার ও নেভিগেশন -->
+    <header>
+        <div class="navbar">
+            <div class="logo">MihadX</div>
+            <nav>
+                <a href="#home" class="lang-text" data-bn="হোম" data-en="Home">হোম</a>
+                <a href="#portfolio" class="lang-text" data-bn="পোর্টফোলিও" data-en="Portfolio">পোর্টফোলিও</a>
+                <a href="#drop-shoulder-sec" class="lang-text" data-bn="ড্রপ শোল্ডার" data-en="Drop Shoulder">ড্রপ শোল্ডার</a>
+                <a href="#shop" class="lang-text" data-bn="শপ" data-en="Shop">শপ</a>
+            </nav>
+            <button id="lang-btn">English</button>
         </div>
     </header>
 
-    <main class="container">
+    <!-- হোম / হিরো সেকশন -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="profile-img-container">
+                <img src="my-profile.jpg" alt="Ismail Mihad">
+            </div>
+            <h1 class="lang-text" data-bn="হাই, আমি ইসমাইল মিহাদ" data-en="Hi, I am Ismail Mihad">হাই, আমি ইসমাইল মিহাদ</h1>
+            <p class="lang-text" data-bn="এক্সেল অটোমেশন এক্সপার্ট এবং ডিজিটাল সার্ভিস প্রোভাইডার।" data-en="Excel Automation Expert & Digital Service Provider.">এক্সেল অটোমেশন এক্সপার্ট এবং ডিজিটাল সার্ভিস প্রোভাইডার।</p>
+        </div>
+    </section>
+
+    <!-- পোর্টফোলিও গ্যালারি সেকশন -->
+    <section id="portfolio" class="portfolio-section">
+        <h2 class="lang-text" data-bn="আমার কাজের নমুনা" data-en="My Portfolio Works">আমার কাজের নমুনা</h2>
         
-        <section id="page-home" class="page active">
-            <div class="hero-card">
-                <div class="img-wrapper">
-                    <img src="my-profile.jpg" alt="Profile Profile">
+        <div class="portfolio-gallery">
+            <!-- ১. বিদ্যুৎ বিল -->
+            <div class="gallery-item">
+                <img src="electricity-bill.jpg" alt="Electricity Bill Work">
+                <div class="gallery-info">
+                    <h4 class="lang-text" data-bn="বিদ্যুৎ বিল ডাটা এন্ট্রি" data-en="Electricity Bill Data Entry">বিদ্যুৎ বিল ডাটা এন্ট্রি</h4>
+                    <a href="electricity-bill.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
                 </div>
-                <h1 class="lang-text" data-en="Ismail Hossen Mihad" data-bn="ইসমাইল হোসেন মিহাদ">ইসমাইল হোসেন মিহাদ</h1>
-                <p class="lang-text" data-en="Professional Computer Operator & Freelancer" data-bn="পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার">পেশাদার কম্পিউটার অপারেটর এবং ফ্রিল্যান্সার</p>
-                <div class="cta-buttons">
-                    <button onclick="showPage('order')" class="btn btn-primary lang-text" data-bn="কাজ অর্ডার করুন" data-en="Order Now">কাজ অর্ডার করুন</button>
-                </div>
-            <!-- 📸 আমার কাজের বাস্তব নমুনা (গ্যালারি) -->
-<h2 class="lang-text" style="margin-top: 40px; text-align: center;" data-bn="🖼️ আমার কাজের বাস্তব নমুনা" data-en="🖼️ My Work Samples">🖼️ আমার কাজের বাস্তব নমুনা</h2>
-<p class="lang-text" style="color: #94a3b8; font-size: 14px; text-align: center; margin-bottom: 20px;" data-bn="নিচে আমার করা কিছু কাজের আসল ডেমো বা স্ক্রিনশট দেওয়া হলো:" data-en="Here are some real screenshots of my previous works:">নিচে আমার করা কিছু কাজের আসল ডেমো বা স্ক্রিনশট দেওয়া হলো:</p>
+            </div>
 
-<div class="portfolio-gallery">
-    <!-- ১. বিদ্যুৎ বিলের কাজ -->
-    <div class="gallery-item">
-        <img src="electricity-bill.jpg" alt="Electricity Bill Work">
-        <div class="gallery-info">
-            <h4 class="lang-text" data-bn="বিদ্যুৎ বিল ডাটা এন্ট্রি" data-en="Electricity Bill Data Entry">বিদ্যুৎ বিল ডাটা এন্ট্রি</h4>
-            <a href="electricity-bill.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+            <!-- ২. স্যালারি শিট -->
+            <div class="gallery-item">
+                <img src="salary-sheet.jpg" alt="Salary Sheet Work">
+                <div class="gallery-info">
+                    <h4 class="lang-text" data-bn="অ্যাডভান্সড স্যালারি শিট" data-en="Advanced Salary Sheet">অ্যাডভান্সড স্যালারি শিট</h4>
+                    <a href="salary-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+                </div>
+            </div>
+
+            <!-- ৩. ওয়েজ শিট -->
+            <div class="gallery-item">
+                <img src="wage-sheet.jpg" alt="Wage Sheet Work">
+                <div class="gallery-info">
+                    <h4 class="lang-text" data-bn="শ্রমিক মজুরি শিট" data-en="Labor Wage Sheet">শ্রমিক মজুরি শিট</h4>
+                    <a href="wage-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+                </div>
+            </div>
+
+            <!-- ۴. রেজাল্ট শিট -->
+            <div class="gallery-item">
+                <img src="result-sheet.jpg" alt="Result Sheet Work">
+                <div class="gallery-info">
+                    <h4 class="lang-text" data-bn="স্কুল/কলেজ রেজাল্ট শিট" data-en="School/College Result Sheet">স্কুল/কলেজ রেজাল্ট শিট</h4>
+                    <a href="result-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ২. স্যালারি শিটের কাজ -->
-    <div class="gallery-item">
-        <img src="salary-sheet.jpg" alt="Salary Sheet Work">
-        <div class="gallery-info">
-            <h4 class="lang-text" data-bn="অ্যাডভান্সড স্যালারি শিট" data-en="Advanced Salary Sheet">অ্যাডভান্সড স্যালারি শিট</h4>
-            <a href="salary-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+    <!-- 👕 স্পেশাল ড্রপ শোল্ডার সেকশন -->
+    <section id="drop-shoulder-sec" class="shop-section" style="background-color: #f0fdf4; padding: 40px 20px; border-radius: 10px;">
+        <h2 class="lang-text" data-bn="ড্রপ শোল্ডার কালেকশন" data-en="Drop Shoulder Collection">ড্রপ শোল্ডার কালেকশন</h2>
+        
+        <div class="product-grid">
+            <!-- Money-Era ড্রপ শোল্ডার শার্ট -->
+            <div class="product-card">
+                <img src="Money-Era.jpg" alt="Money Era Drop Shoulder">
+                <h3 class="lang-text" data-bn="মানি-এরা ড্রপ শোল্ডার শার্ট" data-en="Money-Era Drop Shoulder Shirt">মানি-এরা ড্রপ শোল্ডার শার্ট</h3>
+                <p class="price">৳ ৪৯০</p>
+                <button class="order-btn lang-text" data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ৩. রেজাল্ট শিটের কাজ -->
-    <div class="gallery-item">
-        <img src="result-sheet.jpg" alt="Result Sheet Work">
-        <div class="gallery-info">
-            <h4 class="lang-text" data-bn="স্কুল রেজাল্ট শিট অটোমেশন" data-en="School Result Sheet Automation">স্কুল রেজাল্ট শিট অটোমেশন</h4>
-            <a href="result-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
+    <!-- ই-কমার্স সাধারণ অনলাইন শপ সেকশন -->
+    <section id="shop" class="shop-section">
+        <h2 class="lang-text" data-bn="আমাদের অন্যান্য প্রোডাক্ট" data-en="Our Other Products">আমাদের অন্যান্য প্রোডাক্ট</h2>
+        
+        <div class="product-grid">
+            <!-- ২. স্টাইলিশ প্যান্ট -->
+            <div class="product-card">
+                <img src="my-pant.jpg" alt="Stylish Pant">
+                <h3 class="lang-text" data-bn="ক্যাজুয়াল স্টাইলিশ প্যান্ট" data-en="Casual Stylish Pant">ক্যাজুয়াল স্টাইলিশ প্যান্ট</h3>
+                <p class="price">৳ ৬৫০</p>
+                <button class="order-btn lang-text" data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ৪. ওয়েজ শিটের কাজ -->
-    <div class="gallery-item">
-        <img src="wage-sheet.jpg" alt="Wage Sheet Work">
-        <div class="gallery-info">
-            <h4 class="lang-text" data-bn="শ্রমিক মজুরি শিট (Wage Sheet)" data-en="Labor Wage Sheet Automation">শ্রমিক মজুরি শিট (Wage Sheet)</h4>
-            <a href="wage-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
-        </div>
-    </div>
-</div>
-
-            </div>
-        </section>
-
-        <section id="page-about" class="page">
-            <div class="hero-card text-left">
-                <h2 class="lang-text" data-bn="👨‍💻 আমার সম্পর্কে" data-en="👨‍💻 About Me">👨‍💻 আমার সম্পর্কে</h2>
-                <p class="lang-text" 
-                   data-bn="আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।" 
-                   data-en="I am an experienced and professional Computer Operator specializing in freelancing and corporate document management. I excel in high-speed typing, complex data entry, and advanced Microsoft Office operations.">
-                   আমি ফ্রিল্যান্সিং এবং প্রাতিষ্ঠানিক কাজের ক্ষেত্রে একজন অভিজ্ঞ এবং প্রফেশনাল কম্পিউটার অপারেটর। নিখুঁতভাবে ডাটা এন্ট্রি, দ্রুত গতিতে টাইপিং এবং মাইক্রোসফট অফিসের যেকোনো অ্যাডভান্সড কাজ সম্পূর্ণ করতে আমি পারদর্শী।
-                </p>
-                
-                <h3 class="lang-text" data-bn="🎓 শিক্ষাগত যোগ্যতা" data-en="🎓 Education">🎓 শিক্ষাগত যোগ্যতা</h3>
-                <div class="inner-card">
-                    <p class="lang-text" data-bn="• মাধ্যমিক স্কুল সার্টিফিকেট (SSC), ব্যবসায় শিক্ষা বিভাগ, ২০২৬ পরীক্ষার্থী" data-en="• Secondary School Certificate (SSC), Business Studies, 2026 Examinee">• মাধ্যমিক স্কুল সার্টিফিকেট (SSC), ব্যবসায় শিক্ষা বিভাগ, ২০২৬ পরীক্ষার্থী</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="page-skills" class="page">
-            <h2 class="lang-text" data-bn="📊 আমার দক্ষতাসমূহ" data-en="📊 My Detailed Skills">📊 আমার দক্ষতাসমূহ</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-header-icon"><i class="fab fa-microsoft text-word"></i></div>
-                    <h3>MS Word</h3>
-                    <p class="lang-text" 
-                       data-bn="অফিসিয়াল চিঠিপত্র এবং নোটিশ নিখুঁত নিয়মে ড্রাফটিং, স্কুল-কলেজের জটিল প্রশ্নপত্র তৈরি, বাংলা ও ইংরেজি অত্যন্ত দ্রুত ও নির্ভুল টাইপিং, কাস্টম টেবিল ডিজাইন এবং অ্যাডভান্সড প্যারাগ্রাফ ফরম্যাটিং।" 
-                       data-en="Professional letter and legal document drafting, advanced school/college examination question setups, high-speed Bengali & English layout typing, dynamic table layout designs, and precise text formatting.">
-                       অফিসিয়াল চিঠিপত্র এবং নোটিশ নিখুঁত নিয়মে ড্রাফটিং, স্কুল-কলেজের জটিল প্রশ্নপত্র তৈরি, বাংলা ও ইংরেজি অত্যন্ত দ্রুত ও নির্ভুল টাইপিং, কাস্টম টেবিল ডিজাইন এবং অ্যাডভান্সড প্যারাগ্রাফ ফরম্যাটিং।
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="card-header-icon"><i class="fas fa-file-excel text-excel"></i></div>
-                    <h3>MS Excel</h3>
-                    <p class="lang-text" 
-                       data-bn="অ্যাডভান্সড ফর্মুলা বা গাণিতিক সূত্রের ব্যবহার, প্রাতিষ্ঠানিক স্যালারি শিট (Salary Sheet) তৈরি, ডাটা ফিল্টারিং, অটোমেটেড লজিক কন্ট্রোল এবং যেকোনো বড় হিসাবের দৈনিক ও মাসিক রিপোর্ট তৈরি করা।" 
-                       data-en="Implementation of advanced functional formulas, building automated corporate Salary Sheets, deep data filtering, structured accounting dashboards, and managing analytical profit/loss registers.">
-                       অ্যাডভান্সড ফর্মুলা বা গাণিতিক সূত্রের ব্যবহার, প্রাতিষ্ঠানিক স্যালারি শিট (Salary Sheet) তৈরি, ডাটা ফিল্টারিং, অটোমেটেড লজিক কন্ট্রোল এবং যেকোনো বড় হিসাবের দৈনিক ও মাসিক রিপোর্ট তৈরি করা।
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="card-header-icon"><i class="fas fa-keyboard text-accent"></i></div>
-                    <h3>Data Entry</h3>
-                    <p class="lang-text" 
-                       data-bn="অনলাইন এবং অফলাইন ডাটা মাইনিং, ফাইল কনভার্সন (যেমন PDF বা স্ক্যান করা ইমেজ থেকে এক্সেলে নিখুঁত কনভার্ট করা), ওয়েব রিসার্চ এবং কপি-পেস্ট প্রজেক্ট শতভাগ নির্ভুলভাবে সম্পন্ন করা।" 
-                       data-en="Comprehensive online and offline data management, file conversion architectures (PDF/Scanned Images to structured spreadsheets), systematic web research, and error-free sorting jobs.">
-                       অনলাইন এবং অফলাইন ডাটা মাইনিং, ফাইল কনভার্সন (যেমন PDF বা স্ক্যান করা ইমেজ থেকে এক্সেলে নিখুঁত কনভার্ট করা), ওয়েব রিসার্চ এবং কপি-পেস্ট প্রজেক্ট শতভাগ নির্ভুলভাবে সম্পন্ন করা।
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="card-header-icon"><i class="fas fa-users text-scout"></i></div>
-                    <h3>Admin & Scout Operations</h3>
-                    <p class="lang-text" 
-                       data-bn="বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর বড় মেম্বারশিপ ডাটাবেজ অত্যন্ত দক্ষতার সাথে পরিচালনা করা, মিটিংয়ের অফিশিয়াল প্রসিডিংস বা নোটিশ তৈরি এবং প্রাতিষ্ঠানিক হিসাব-নিকাশ মেইনটেইন করা।" 
-                       data-en="Managing massive member databases for Bangladesh Scouts (Railway Region), drafting official meeting resolutions, scheduling notification letters, and maintaining administrative records.">
-                       বাংলাদেশ স্কাউটস (রেলওয়ে অঞ্চল)-এর বড় মেম্বারশিপ ডাটাবেজ অত্যন্ত দক্ষতার সাথে পরিচালনা করা, মিটিংয়ের অফিশিয়াল প্রসিডিংস বা নোটিশ তৈরি এবং প্রাতিষ্ঠানিক হিসাব-নিকাশ মেইনটেইন করা।
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="page-projects" class="page">
-            <h2 class="lang-text" data-bn="💼 সফল প্রজেক্টসমূহ" data-en="💼 Highlighted Projects">💼 সফল প্রজেক্টসমূহ</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Excel Automation System</h3>
-                    <p class="lang-text" 
-                       data-bn="একটি সম্পূর্ণ অটোমেটেড এবং লজিক্যাল অ্যাকাউন্টিং স্প্রেডশিট প্রজেক্ট, যেখানে শুধুমাত্র র ডাটা ইনপুট করলেই মোট লাভ-ক্ষতি, ট্যাক্স এবং নেট ব্যালেন্স স্বয়ংক্রিয়ভাবে ক্যালকুলেট হয়ে স্ক্রিনে চলে আসে।" 
-                       data-en="A smart, fully-automated spreadsheet engine where keying in basic financial entries instantly populates real-time sales tallies, net balances, margins, and complex corporate summaries.">
-                       একটি সম্পূর্ণ অটোমেটেড এবং লজিক্যাল অ্যাকাউন্টিং স্প্রেডশিট প্রজেক্ট, যেখানে শুধুমাত্র র ডাটা ইনপুট করলেই মোট লাভ-ক্ষতি, ট্যাক্স এবং নেট ব্যালেন্স স্বয়ংক্রিয়ভাবে ক্যালকুলেট হয়ে স্ক্রিনে চলে আসে।
-                    </p>
-                </div>
-                <div class="card">
-                    <h3>Scout Member Database</h3>
-                    <p class="lang-text" 
-                       data-bn="রেলওয়ে অঞ্চলের সমস্ত সক্রিয় স্কাউট সদস্যদের ব্যক্তিগত প্রোফাইল, রক্তের গ্রুপ, কন্টাক্ট নম্বর এবং বিভিন্ন ব্যাজ অর্জনের প্রগ্রেস ট্র্যাকিং রেকর্ড ক্রমানুসারে সাজিয়ে একটি আধুনিক এবং ইউজার-ফ্রেন্ডলি ডাটাবেজ ডিরেক্টরি তৈরি।" 
-                       data-en="Designed a clean information management directory indexing hundreds of scout profiles, blood configurations, contact streams, and earned milestone badges across the entire Railway Region.">
-                       রেলওয়ে অঞ্চলের সমস্ত সক্রিয় স্কাউট সদস্যদের ব্যক্তিগত প্রোফাইল, রক্তের গ্রুপ, কন্টাক্ট নম্বর এবং বিভিন্ন ব্যাজ অর্জনের প্রগ্রেস ট্র্যাকিং রেকর্ড ক্রমানুসারে সাজিয়ে একটি আধুনিক এবং ইউজার-ফ্রেন্ডলি ডাটাবেজ ডিরেক্টরি তৈরি।
-                    </p>
-                </div>
-                <div class="card">
-                    <h3>Complex PDF Migration</h3>
-                    <p class="lang-text" 
-                       data-bn="১০০+ পেজের অত্যন্ত জটিল, হিজিবিজি এবং অস্পষ্ট স্ক্যান করা ওল্ড পিডিএফ ডকুমেন্ট থেকে অত্যন্ত সূক্ষ্মতার সাথে ম্যানুয়ালি সমস্ত ডেটা এক্সট্র্যাক্ট করে সুবিন্যস্ত ডিজিটাল এক্সেল এবং ওয়ার্ড ফাইলে রূপান্তর করার একটি বড় প্রজেক্ট।" 
-                       data-en="Successfully orchestrated the precise data extraction from over 100+ pages of faded or structurally disorganized legacy scanned documents, reorganizing the output into clean, searchable digital sheets.">
-                       ১০০+ পেজের অত্যন্ত জটিল, হিজিবিজি এবং অস্পষ্ট স্ক্যান করা ওল্ড পিডিএফ ডকুমেন্ট থেকে অত্যন্ত সূক্ষ্মতার সাথে ম্যানুয়ালি সমস্ত ডেটা এক্সট্র্যাক্ট করে সুবিন্যস্ত ডিজিটাল এক্সেল এবং ওয়ার্ড ফাইলে রূপান্তর করার একটি বড় প্রজেক্ট।
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="page-shop" class="page">
-            <h2 class="lang-text" data-en="My Collections" data-bn="আমার কালেকশন (Shop)">আমার কালেকশন (Shop)</h2>
-            <div class="grid">
-                <div class="card"><div class="card-icon">👕</div><h3 class="lang-text" data-bn="শার্ট" data-en="Shirts">শার্ট</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
-                <div class="card"><div class="card-icon">👖</div><h3 class="lang-text" data-bn="প্যান্ট" data-en="Pants">প্যান্ট</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
-                <div class="card"><div class="card-icon">👟</div><h3 class="lang-text" data-bn="জুতা" data-en="Shoes">জুতা</h3><p class="lang-text" data-bn="কামিং সুন..." data-en="Coming Soon...">কামিং সুন...</p></div>
-            </div>
-        </section>
-
-        <section id="page-order" class="page">
-            <h2 class="lang-text" data-en="Place Your Order" data-bn="সরাসরি কাজের অর্ডার দিন">সরাসরি কাজের অর্ডার দিন</h2>
-            <form id="orderForm" onsubmit="sendOrder(event)" class="glass-form">
-                <div class="form-group"><input type="text" id="clientName" placeholder="আপনার নাম / Your Name" required></div>
-                <div class="form-group"><input type="tel" id="clientPhone" placeholder="মোবাইল নম্বর / Phone Number" required></div>
-                <div class="form-group"><textarea id="clientDetails" rows="4" placeholder="কাজের বিস্তারিত বিবরণ... / Task Details..." required></textarea></div>
-                <button type="submit" class="btn btn-primary w-100">
-                    <i class="fab fa-whatsapp"></i> <span class="lang-text" data-bn="অর্ডার কনফার্ম করুন (WhatsApp)" data-en="Confirm Order (WhatsApp)">অর্ডার কনফার্ম করুন (WhatsApp)</span>
-                </button>
-            </form>
-            
-            <div class="contact-grid">
-                <a href="https://wa.me/8801576502490" target="_blank" class="c-box wa"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" class="c-box fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:ismailhoseen77@gmail.com" class="c-box mail"><i class="fas fa-envelope"></i></a>
-            </div>
-        </section>
-    </main>
-
-    <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">EN</button>
+    <!-- ফুটার -->
+    <footer>
+        <p>&copy; 2026 MihadX. All Rights Reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
