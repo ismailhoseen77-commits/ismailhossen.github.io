@@ -11,12 +11,11 @@ body, html {
     background-color: #f4f6f9;
 }
 
-.hidden {
-    display: none !important;
-}
-
 /* 🚪 স্বাগতম ফুল পেজ ভিউ */
 .full-page-view {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
     background: #0f172a;
@@ -25,6 +24,15 @@ body, html {
     align-items: center;
     color: white;
     padding: 20px;
+    z-index: 9999; /* যেন মেইন সাইটের উপরে থাকে */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+}
+
+/* স্বাগতম পেজ হাইড করার জন্য বিশেষ কোড */
+.full-page-view.hidden-page {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .welcome-container {
@@ -77,11 +85,18 @@ body, html {
     cursor: pointer;
 }
 
-/* 📱 মেইন সাইট লেআউট */
+/* 📱 মেইন সাইট লেআউট (শুরুতে অপাসিটি ০ থাকবে) */
 .site-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* যখন মেইন সাইট একটিভ হবে */
+.site-wrapper.show-site {
+    opacity: 1;
 }
 
 header {
@@ -121,10 +136,9 @@ nav a:hover, nav a.active {
     border-bottom: 2px solid #25d366;
 }
 
-/* 🎞️ সেকশন কন্ট্রোল (কোনো স্ক্রলিং হবে না, একদম নতুন পেজের মতো ওপেন হবে) */
+/* 🎞️ সেকশন কন্ট্রোল */
 .content-area {
     flex: 1;
-    position: relative;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
@@ -132,13 +146,12 @@ nav a:hover, nav a.active {
 }
 
 .page-section {
-    display: none; /* সব পেজ ডিফল্টভাবে বন্ধ */
+    display: none; /* সব পেজ বন্ধ থাকবে */
     width: 100%;
-    height: 100%;
 }
 
 .page-section.active {
-    display: block; /* শুধুমাত্র একটি পেজই একবারে ওপেন থাকবে */
+    display: block; /* শুধুমাত্র একটিভ পেজটাই ডিসপ্লে হবে */
 }
 
 /* হোমপেজ স্টাইল */
@@ -247,5 +260,6 @@ h2 { font-size: 28px; color: #111; margin-bottom: 30px; text-align: center; }
 }
 @media (max-width: 600px) {
     .grid-layout, .grid-layout.cols-4 { grid-template-columns: 1fr; }
-    nav a { margin-left: 10px; font-size: 12px; }
+    nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    nav a { margin-left: 0; font-size: 12px; }
 }
