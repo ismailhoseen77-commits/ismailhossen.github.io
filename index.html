@@ -3,246 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Mihad | Professional Portfolio & Mega Shop</title>
+    <title>Ismail Mihad | Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- 🚪 ওয়েলকাম / তথ্য নেওয়ার প্রিমিয়াম পপ-আপ পেজ -->
-    <div id="welcome-modal" class="modal-overlay">
-        <div class="modal-box">
-            <h2 class="lang-text" data-bn="স্বাগতম! আপনার তথ্য দিন" data-en="Welcome! Please Share Your Info">স্বাগতম! আপনার তথ্য দিন</h2>
-            <p class="lang-text" data-bn="আমাদের প্রিমিয়াম সাইটে আপনাকে স্বাগতম। নিচে আপনার সঠিক তথ্য দিন।" data-en="Welcome to our premium site. Please provide your correct information below.">আমাদের প্রিমিয়াম সাইটে আপনাকে স্বাগতম। নিচে আপনার সঠিক তথ্য দিন।</p>
+    <!-- 🚪 পেজ ১: সম্পূর্ণ আলাদা স্বাগতম ও তথ্য নেওয়ার পেজ -->
+    <div id="welcome-page" class="full-page-view">
+        <div class="welcome-container">
+            <h2>স্বাগতম! আপনার তথ্য দিন</h2>
+            <p>আমাদের প্রিমিয়াম সাইটে আপনাকে স্বাগতম। নিচে আপনার সঠিক তথ্য দিন।</p>
             
-            <form id="user-info-form">
-                <div class="input-group">
-                    <input type="text" id="user-name" placeholder="আপনার নাম / Your Name" required>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="user-address" placeholder="আপনার ঠিকানা / Your Address" required>
-                </div>
-                <div class="input-group">
-                    <input type="tel" id="user-phone" placeholder="মোবাইল নাম্বার / Mobile Number" required>
-                </div>
-                <button type="submit" class="submit-btn lang-text" data-bn="জমা দিন" data-en="Submit">জমা দিন</button>
+            <form id="info-form">
+                <input type="text" id="username" placeholder="আপনার নাম / Your Name" required>
+                <input type="text" id="useraddress" placeholder="আপনার ঠিকানা / Your Address" required>
+                <input type="tel" id="userphone" placeholder="মোবাইল নাম্বার / Mobile Number" required>
+                <button type="submit" class="primary-btn">জমা দিন</button>
             </form>
 
-            <div class="divider"><span>বা / OR</span></div>
+            <div class="or-divider">বা / OR</div>
 
-            <!-- চালিয়ে যান (Continue) বাটন ডানদিকের অ্যারো কি সহ -->
-            <button id="skip-btn" class="skip-btn">
-                <span class="lang-text" data-bn="চালিয়ে যান" data-en="Continue">চালিয়ে যান</span> &rarr;
-            </button>
+            <button id="continue-btn" class="continue-btn">চালিয়ে যান &rarr;</button>
         </div>
     </div>
 
-    <!-- 📱 মূল ওয়েবসাইট কন্টেইনার -->
-    <div class="main-wrapper">
+    <!-- 📱 মূল ওয়েবসাইট কন্টেইনার (শুরুতে লুকানো থাকবে) -->
+    <div id="main-site" class="site-wrapper hidden">
         
-        <!-- হেডার ও নেভিগেশন বার -->
+        <!-- হেডার ও নির্দিষ্ট নেভিগেশন বার -->
         <header>
             <div class="navbar">
-                <div class="logo">
-                    <span class="logo-circle">MihadX</span>
-                </div>
-                <nav id="nav-links">
-                    <a href="#home" class="nav-link active lang-text" data-bn="হোম" data-en="Home">হোম</a>
-                    <a href="#about" class="nav-link lang-text" data-bn="আমার সম্পর্কে" data-en="About Me">আমার সম্পর্কে</a>
-                    <a href="#skills" class="nav-link lang-text" data-bn="দক্ষতা" data-en="Skills">দক্ষতা</a>
-                    <a href="#services" class="nav-link lang-text" data-bn="সার্ভিস" data-en="Services">সার্ভিস</a>
-                    <a href="#portfolio" class="nav-link lang-text" data-bn="পোর্টফোলিও" data-en="Portfolio">পোর্টফোলিও</a>
-                    <a href="#genji-sec" class="nav-link lang-text" data-bn="গেঞ্জি" data-en="T-Shirt">গেঞ্জি</a>
-                    <a href="#shop" class="nav-link lang-text" data-bn="শপ" data-en="Shop">শপ</a>
-                    <button id="lang-btn">English</button>
+                <div class="logo" id="logo-home">MihadX</div>
+                <nav>
+                    <a href="#" class="nav-btn active" data-target="home">হোম</a>
+                    <a href="#" class="nav-btn" data-target="skills">আমার দক্ষতা</a>
+                    <a href="#" class="nav-btn" data-target="works">আমার কাজগুলো</a>
+                    <a href="#" class="nav-btn" data-target="shop">শপ</a>
+                    <a href="#" class="nav-btn" data-target="genji">গেঞ্জি</a>
+                    <a href="#" class="nav-btn" data-target="order">অর্ডার</a>
                 </nav>
             </div>
         </header>
 
-        <!-- 🎞️ স্লাইডার উইন্ডো (যেখানে সব পেজ ডানপাশে স্লাইড হবে) -->
-        <div class="slider-container">
+        <!-- মূল কন্টেন্ট এরিয়া (আলাদা আলাদা পেজ ভিউ) -->
+        <main class="content-area">
 
-            <!-- ১. হোম সেকশন -->
-            <section id="home" class="slide-section active">
-                <div class="hero-content">
-                    <div class="profile-img-container">
-                        <img src="my-profile.jpg" alt="Ismail Mihad">
+            <!-- পেজ ২: হোম সেকশন -->
+            <section id="home" class="page-section active">
+                <div class="profile-box">
+                    <img src="my-profile.jpg" alt="Ismail Mihad" class="profile-img">
+                    <h1>হাই, আমি ইসমাইল মিহাদ</h1>
+                    <p class="bio-text">অ্যাডভান্সড এক্সেল অটোমেশন এক্সপার্ট 🛠️ ডাটা এন্ট্রি স্পেশালিস্ট 💻 ডিজিটাল এন্টারপ্রেনার</p>
+                </div>
+            </section>
+
+            <!-- পেজ ৩: আমার দক্ষতা সেকশন -->
+            <section id="skills" class="page-section">
+                <h2>আমার দক্ষতা</h2>
+                <div class="grid-layout">
+                    <div class="card">
+                        <h3>📊 MS Excel Automation</h3>
+                        <p>অ্যাডভান্সড ফর্মুলা, পিভট টেবিল, ম্যাক্রো এবং সম্পূর্ণ অটোমেটেড ড্যাশবোর্ড তৈরি।</p>
                     </div>
-                    <h1 class="lang-text" data-bn="হাই, আমি ইসমাইল মিহাদ" data-en="Hi, I am Ismail Mihad">হাই, আমি ইসমাইল মিহাদ</h1>
-                    <p class="hero-tag lang-text" data-bn="অ্যাডভান্সড এক্সেল অটোমেশন এক্সপার্ট 🛠️ ডাটা এন্ট্রি স্পেশালিস্ট 💻 ডিজিটাল এন্টারপ্রেনার" data-en="Advanced Excel Automation Expert 🛠️ Data Entry Specialist 💻 Digital Entrepreneur">অ্যাডভান্সড এক্সেল অটোমেশন এক্সপার্ট 🛠️ ডাটা এন্ট্রি স্পেশালিস্ট 💻 ডিজিটাল এন্টারপ্রেনার</p>
-                    <div class="hero-buttons">
-                        <a href="#portfolio" class="btn-primary lang-text" data-bn="কাজের নমুনা দেখুন" data-en="View My Works">কাজের নমুনা দেখুন</a>
-                        <a href="#genji-sec" class="btn-secondary lang-text" data-bn="শপ ভিজিট করুন" data-en="Visit Shop">শপ ভিজিট করুন</a>
+                    <div class="card">
+                        <h3>📝 MS Word Documenting</h3>
+                        <p>অফিশিয়াল রিপোর্ট, বায়োডাটা, ইনভয়েস এবং প্রফেশনাল ডকুমেন্ট ফরম্যাটিং।</p>
+                    </div>
+                    <div class="card">
+                        <h3>💾 Data Entry & Cleaning</h3>
+                        <p>১০০% নির্ভুলভাবে যেকোনো র-ডাটা এন্ট্রি এবং সাজানোর কাজ।</p>
                     </div>
                 </div>
             </section>
 
-            <!-- ২. আমার সম্পর্কে সেকশন -->
-            <section id="about" class="slide-section">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="আমার সম্পর্কে জানুন" data-en="About Me">আমার সম্পর্কে জানুন</h2>
-                    <div class="about-container">
-                        <p class="about-desc lang-text" data-bn="আমি ইসমাইল হোসেন মিহাদ। একজন পেশাদার ডাটা অ্যানালিস্ট এবং এক্সেল অটোমেশন ডেভেলপার। আমি ব্যবসার জটিল হিসাব-নিকাশ, ডাটাবেজ ম্যানেজমেন্ট এবং দৈনন্দিন ডকুমেন্টেশনের কাজ সহজ করতে কাস্টম সফটওয়্যার লেভেলের এক্সেল ফাইল ডিজাইন করি। এছাড়াও আমি ড্রপ শোল্ডার টি-শার্ট ও গ্যাজেটের একটি সফল অনলাইন বিজনেস পরিচালনা করছি।" data-en="I am Ismail Hossen Mihad, a professional Data Analyst and Excel Automation Developer. I build macro-powered automated solutions to simplify business data management, invoice systems, and heavy calculations. Alongside, I manage a successful online business specializing in premium clothing like drop-shoulder t-shirts.">আমি ইসমাইল হোসেন মিহাদ। একজন পেশাদার ডাটা অ্যানালিস্ট এবং এক্সেল অটোমেশন ডেভেলপার। আমি ব্যবসার জটিল হিসাব-নিকাশ, ডাটাবেজ ম্যানেজমেন্ট এবং দৈনন্দিন ডকুমেন্টেশনের কাজ সহজ করতে কাস্টম সফটওয়্যার লেভেলের এক্সেল ফাইল ডিজাইন করি। এছাড়াও আমি ড্রপ শোল্ডার টি-শার্ট ও গ্যাজেটের একটি সফল অনলাইন বিজনেস পরিচালনা করছি।</p>
-                        
-                        <!-- স্ট্যাটিস্টিক্স কাউন্টার কার্ড -->
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <h3>৫০+</h3>
-                                <p class="lang-text" data-bn="সফল প্রজেক্ট" data-en="Projects Done">সফল প্রজেক্ট</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3>১০০%</h3>
-                                <p class="lang-text" data-bn="সঠিক ডাটা" data-en="Data Accuracy">সঠিক ডাটা</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3>২৪/৭</h3>
-                                <p class="lang-text" data-bn="অনলাইন সাপোর্ট" data-en="Active Support">অনলাইন সাপোর্ট</p>
-                            </div>
-                        </div>
+            <!-- পেজ ৪: আমার কাজগুলো সেকশন -->
+            <section id="works" class="page-section">
+                <h2>আমার কাজগুলো</h2>
+                <div class="grid-layout cols-4">
+                    <div class="work-card">
+                        <img src="electricity-bill.jpg" alt="Work 1">
+                        <h4>বিদ্যুৎ বিল ডাটা এন্ট্রি</h4>
+                    </div>
+                    <div class="work-card">
+                        <img src="salary-sheet.jpg" alt="Work 2">
+                        <h4>অ্যাডভান্সড স্যালারি শিট</h4>
+                    </div>
+                    <div class="work-card">
+                        <img src="wage-sheet.jpg" alt="Work 3">
+                        <h4>শ্রমিক মজুরি শিট</h4>
+                    </div>
+                    <div class="work-card">
+                        <img src="result-sheet.jpg" alt="Work 4">
+                        <h4>স্কুল রেজাল্ট শিট</h4>
                     </div>
                 </div>
             </section>
 
-            <!-- ৩. দক্ষতা সেকশন (ডিটেইলস কার্ড সহ) -->
-            <section id="skills" class="slide-section">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="আমার টেকনিক্যাল স্কিলস" data-en="My Technical Skills">আমার টেকনিক্যাল স্কিলস</h2>
-                    <div class="skills-detailed-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">📊</div>
-                            <h3>MS Excel Automation</h3>
-                            <p class="lang-text" data-bn="অ্যাডভান্সড ফর্মুলা (VLOOKUP, INDEX-MATCH), পিভট টেবিল, ম্যাক্রো এবং ড্যাশবোর্ড অটোমেশন।" data-en="Advanced formulas, Pivot tables, interactive data dashboards, Macros, and automated workflows.">অ্যাডভান্সড ফর্মুলা (VLOOKUP, INDEX-MATCH), পিভট টেবিল, ম্যাক্রো এবং ড্যাশবোর্ড অটোমেশন।</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">📝</div>
-                            <h3>MS Word Documenting</h3>
-                            <p class="lang-text" data-bn="অফিশিয়াল রিপোর্ট রাইটিং, ইনভয়েস ক্রিয়েশন, বায়োডাটা, এবং প্রফেশনাল লেটার ফরম্যাটিং।" data-en="Official reports, formatting, high-quality documentation, corporate resumes, and templates.">অফিশিয়াল রিপোর্ট রাইটিং, ইনভয়েস ক্রিয়েশন, বায়োডাটা, এবং প্রফেশনাল লেটার ফরম্যাটিং।</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">💾</div>
-                            <h3>Data Entry & Cleaning</h3>
-                            <p class="lang-text" data-bn="দ্রুত গতিতে এবং ১০০% নির্ভুলভাবে যেকোনো র-ডাটা এন্ট্রি, ক্লিনিং এবং সাজানোর কাজ।" data-en="High-speed data scraping, processing, sorting, and systematic organizing with zero errors.">দ্রুত গতিতে এবং ১০০% নির্ভুলভাবে যেকোনো র-ডাটা এন্ট্রি, ক্লিনিং এবং সাজানোর কাজ।</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">🚀</div>
-                            <h3>E-commerce Management</h3>
-                            <p class="lang-text" data-bn="অনলাইন শপ বা বিজনেস হ্যান্ডলিং, কাস্টমার ডিলিং এবং প্রোডাক্ট সোর্সিং ম্যানেজমেন্ট।" data-en="Product sourcing, inventory tracking, order management, and effective customer communication.">অনলাইন শপ বা বিজনেস হ্যান্ডলিং, কাস্টমার ডিলিং এবং প্রোডাক্ট সোর্সিং ম্যানেজমেন্ট।</p>
-                        </div>
+            <!-- পেজ ৫: শপ সেকশন (শার্ট ও প্যান্ট) -->
+            <section id="shop" class="page-section">
+                <h2>শপ</h2>
+                <div class="grid-layout">
+                    <div class="product-card">
+                        <img src="my-shirt.jpg" alt="Premium Shirt">
+                        <h3>প্রিমিয়াম ক্যাজুয়াল শার্ট</h3>
+                        <p class="price">৳ ৫৫০</p>
+                        <button class="buy-now" data-item="প্রিমিয়াম ক্যাজুয়াল শার্ট">অর্ডার করুন</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="my-pant.jpg" alt="Stylish Pant">
+                        <h3>ক্যাজুয়াল স্টাইলিশ প্যান্ট</h3>
+                        <p class="price">৳ ৬৫০</p>
+                        <button class="buy-now" data-item="ক্যাজুয়াল স্টাইলিশ প্যান্ট">অর্ডার করুন</button>
                     </div>
                 </div>
             </section>
 
-            <!-- ৪. সার্ভিস সেকশন (নতুন যোগ করা আকর্ষণীয় সেকশন) -->
-            <section id="services" class="slide-section">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="আমি যেসকল সার্ভিস প্রদান করি" data-en="Services I Offer">আমি যেসকল সার্ভিস প্রদান করি</h2>
-                    <div class="services-grid">
-                        <div class="service-item">
-                            <h3>⚡ Automated Salary Sheets</h3>
-                            <p class="lang-text" data-bn="কোম্পানি বা স্কুলের কর্মচারীদের বেতন, ওভারটাইম এবং বোনাস হিসাবের সম্পূর্ণ অটোমেটেড শিট।" data-en="Smart automated calculation sheets for tracking employee salary, attendance, and bonuses.">কোম্পানি বা স্কুলের কর্মচারীদের বেতন, ওভারটাইম এবং বোনাস হিসাবের সম্পূর্ণ অটোমেটেড শিট।</p>
-                        </div>
-                        <div class="service-item">
-                            <h3>⚡ Electricity Bill Generators</h3>
-                            <p class="lang-text" data-bn="ইউনিট হিসাব অনুযায়ী স্বয়ংক্রিয়ভাবে বিদ্যুৎ বিলের হিসাব এবং রসিদ প্রিন্ট করার সিস্টেম।" data-en="Automated electricity bill calculator based on power unit consumption data.">ইউনিট হিসাব অনুযায়ী স্বয়ংক্রিয়ভাবে বিদ্যুৎ বিলের হিসাব এবং রসিদ প্রিন্ট করার সিস্টেম।</p>
-                        </div>
-                        <div class="service-item">
-                            <h3>⚡ School Result Sheets</h3>
-                            <p class="lang-text" data-bn="জিপিএ (GPA) এবং গ্রেড পয়েন্টসহ নিখুঁতভাবে পরীক্ষার রেজাল্ট শিট ও প্রগতিপত্র তৈরি।" data-en="Automated institutional report card generators with GPA, grading, and rank system.">জিপিএ (GPA) এবং গ্রেড পয়েন্টসহ নিখুঁতভাবে পরীক্ষার রেজাল্ট শিট ও প্রগতিপত্র তৈরি।</p>
-                        </div>
+            <!-- পেজ ৬: গেঞ্জি সেকশন (শুধুমাত্র ড্রপ শোল্ডার) -->
+            <section id="genji" class="page-section">
+                <h2>গেঞ্জি</h2>
+                <div class="single-product-container">
+                    <div class="product-card premium-card">
+                        <img src="Money-Era.jpg" alt="Drop Shoulder T-Shirt">
+                        <h3>মানি-এরা ড্রপ শোল্ডার টি-শার্ট</h3>
+                        <p class="desc">100% Cotton • 240+ GSM • Premium Quality</p>
+                        <p class="price">৳ ৪৯০</p>
+                        <button class="buy-now" data-item="মানি-এরা ড্রপ শোল্ডার টি-শার্ট">অর্ডার করুন</button>
                     </div>
                 </div>
             </section>
 
-            <!-- ৫. পোর্টফোলিও সেকশন -->
-            <section id="portfolio" class="slide-section">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="আমার কাজের লাইভ ডেমো" data-en="My Portfolio Works">আমার কাজের লাইভ ডেমো</h2>
-                    <div class="portfolio-gallery">
-                        <div class="gallery-item">
-                            <img src="electricity-bill.jpg" alt="Electricity Bill Work">
-                            <div class="gallery-info">
-                                <h4 class="lang-text" data-bn="বিদ্যুৎ বিল ডাটা এন্ট্রি" data-en="Electricity Bill Data Entry">বিদ্যুৎ বিল ডাটা এন্ট্রি</h4>
-                                <a href="electricity-bill.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
-                            </div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="salary-sheet.jpg" alt="Salary Sheet Work">
-                            <div class="gallery-info">
-                                <h4 class="lang-text" data-bn="অ্যাডভান্সড স্যালারি শিট" data-en="Advanced Salary Sheet">অ্যাডভান্সড স্যালারি শিট</h4>
-                                <a href="salary-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
-                            </div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="wage-sheet.jpg" alt="Wage Sheet Work">
-                            <div class="gallery-info">
-                                <h4 class="lang-text" data-bn="শ্রমিক মজুরি শিট" data-en="Labor Wage Sheet">শ্রমিক মজুরি শিট</h4>
-                                <a href="wage-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
-                            </div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="result-sheet.jpg" alt="Result Sheet Work">
-                            <div class="gallery-info">
-                                <h4 class="lang-text" data-bn="স্কুল/কলেজ রেজাল্ট শিট" data-en="School/College Result Sheet">স্কুল/কলেজ রেজাল্ট শিট</h4>
-                                <a href="result-sheet.jpg" target="_blank" class="view-btn lang-text" data-bn="বড় করে দেখুন" data-en="View Full Image">বড় করে দেখুন</a>
-                            </div>
-                        </div>
-                    </div>
+            <!-- পেজ ৭: অর্ডার সেকশন -->
+            <section id="order" class="page-section">
+                <h2>সরাসরি অর্ডার করুন</h2>
+                <div class="order-box">
+                    <p>আপনার পছন্দের প্রোডাক্টটি নিশ্চিত করতে নিচের বাটনে ক্লিক করে সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন।</p>
+                    <a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="whatsapp-btn">💬 হোয়াটসঅ্যাপে অর্ডার করুন</a>
                 </div>
             </section>
 
-            <!-- ৬. গেঞ্জি সেকশন (ড্রপ শোল্ডার) -->
-            <section id="genji-sec" class="slide-section" style="background-color: #f0fdf4;">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="প্রিমিয়াম ড্রপ শোল্ডার গেঞ্জি" data-en="Premium Drop Shoulder T-Shirts">প্রিমিয়াম ড্রপ শোল্ডার গেঞ্জি</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <span class="badge-hot">HOT</span>
-                            <img src="Money-Era.jpg" alt="Money Era Drop Shoulder">
-                            <h3 class="lang-text" data-bn="মানি-এরা ড্রপ শোল্ডার শার্ট" data-en="Money-Era Drop Shoulder Shirt">মানি-এরা ড্রপ শোল্ডার শার্ট</h3>
-                            <p class="product-features">100% Cotton • 240+ GSM • Premium Print</p>
-                            <p class="price">৳ ৪৯০ <span class="old-price">৳ ৬৮০</span></p>
-                            <button class="order-btn lang-text" data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ৭. শপ সেকশন -->
-            <section id="shop" class="slide-section">
-                <div class="content-box">
-                    <h2 class="section-title lang-text" data-bn="আমাদের অন্যান্য প্রোডাক্ট গ্যালারি" data-en="Our Other Products Gallery">আমাদের অন্যান্য প্রোডাক্ট গ্যালারি</h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <img src="my-pant.jpg" alt="Stylish Pant">
-                            <h3 class="lang-text" data-bn="ক্যাজুয়াল স্টাইলিশ প্যান্ট" data-en="Casual Stylish Pant">ক্যাজুয়াল স্টাইলিশ প্যান্ট</h3>
-                            <p class="product-features">Stretchable Fabric • Slim Fit • Multi-pocket</p>
-                            <p class="price">৳ ৬৫০ <span class="old-price">৳ ৮৫০</span></p>
-                            <button class="order-btn lang-text" data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- কাস্টমার রিভিউ / টেস্টমোনিয়াল সেকশন (মেগা লুক দেওয়ার জন্য) -->
-        <div class="testimonials-bar">
-            <h3 class="lang-text" data-bn="গ্রাহকদের মতামত" data-en="Client Reviews">গ্রাহকদের মতামত</h3>
-            <div class="review-slider">
-                <div class="review-item">"মিহাদ ভাইয়ের তৈরি করা স্যালারি শিটটা আমাদের অফিসের হিসাব অনেক সহজ করে দিয়েছে।" - <b>তানভীর রহমান</b></div>
-            </div>
-        </div>
-
-        <!-- ফুটার -->
-        <footer>
-            <div class="footer-content">
-                <p>&copy; 2026 MihadX. Crafted with Passion.</p>
-                <p style="font-size: 12px; margin-top: 5px; color: #555;">Designed for Ismail Mihad Portfolio</p>
-            </div>
-        </footer>
-
+        </main>
     </div>
 
     <script src="script.js"></script>
 </body>
-                                    </html>
-    
+</html>
