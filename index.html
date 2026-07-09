@@ -2,32 +2,33 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Mihad | Portfolio</title>
+    <title>MihadX | Professional Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- ওয়েলকাম ও রেজিস্ট্রেশন পেজ -->
     <div id="welcome-page">
         <div class="welcome-container">
             <h2>স্বাগতম! আপনার তথ্য দিন</h2>
             <form id="info-form">
-                <input type="text" id="username" placeholder="আপনার নাম" required>
-                <input type="text" id="useraddress" placeholder="আপনার ঠিকানা" required>
-                <input type="tel" id="userphone" placeholder="মোবাইল নাম্বার" required>
+                <input type="text" id="name" placeholder="আপনার নাম" required>
+                <input type="text" id="address" placeholder="আপনার ঠিকানা" required>
+                <input type="text" id="phone" placeholder="মোবাইল নাম্বার" required>
                 <button type="submit" class="primary-btn">জমা দিন</button>
             </form>
             <div class="or-divider">বা</div>
-            <button id="continue-btn" class="continue-btn">চালিয়ে যান &rarr;</button>
+            <button id="continue-btn" class="continue-btn">চালিয়ে যান →</button>
         </div>
     </div>
 
+    <!-- মেইন ওয়েবসাইট -->
     <div id="main-site" style="display:none;">
         <header>
             <div class="navbar">
-                <div class="logo" id="logo-home">MihadX</div>
+                <div class="logo">MihadX</div>
                 <nav>
-                    <a href="#" class="nav-btn active" data-target="home">হোম</a>
+                    <a href="#" class="nav-btn" data-target="home">হোম</a>
                     <a href="#" class="nav-btn" data-target="skills">আমার দক্ষতা</a>
                     <a href="#" class="nav-btn" data-target="works">আমার কাজগুলো</a>
                     <a href="#" class="nav-btn" data-target="shop">শপ</a>
@@ -35,23 +36,16 @@
                 </nav>
             </div>
         </header>
-
+        
         <main class="content-area">
-            <section id="home" class="page-section"><h1>হাই, আমি ইসমাইল মিহাদ</h1></section>
-            <section id="skills" class="page-section"><h2>আমার দক্ষতা</h2></section>
-            <section id="works" class="page-section"><h2>আমার কাজগুলো</h2></section>
-            
+            <!-- শপ সেকশন (এখানে শার্ট, প্যান্ট, গেঞ্জি সব থাকবে) -->
             <section id="shop" class="page-section">
-                <h2>আমাদের শপ কালেকশন</h2>
-                <div class="grid-layout">
-                    <div class="product-card"><h3>শার্ট</h3><button class="buy-now" data-item="শার্ট">অর্ডার করুন</button></div>
-                    <div class="product-card"><h3>প্যান্ট</h3><button class="buy-now" data-item="প্যান্ট">অর্ডার করুন</button></div>
-                    <div class="product-card"><h3>গেঞ্জি</h3><button class="buy-now" data-item="গেঞ্জি">অর্ডার করুন</button></div>
+                <h2>আমাদের শপ</h2>
+                <div class="product-grid">
+                    <div class="card"><h3>শার্ট</h3><button class="whatsapp-order" data-item="শার্ট">অর্ডার করুন</button></div>
+                    <div class="card"><h3>প্যান্ট</h3><button class="whatsapp-order" data-item="প্যান্ট">অর্ডার করুন</button></div>
+                    <div class="card"><h3>গেঞ্জি</h3><button class="whatsapp-order" data-item="গেঞ্জি">অর্ডার করুন</button></div>
                 </div>
-            </section>
-
-            <section id="order" class="page-section">
-                <button id="main-whatsapp-btn" class="whatsapp-btn">💬 হোয়াটসঅ্যাপে অর্ডার করুন</button>
             </section>
         </main>
     </div>
