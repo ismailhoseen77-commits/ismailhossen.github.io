@@ -1,105 +1,68 @@
-// ১. পপ-আপ ফর্ম ডেটা ও ক্লোজিং সিস্টেম
-const welcomeModal = document.getElementById('welcome-modal');
-const skipBtn = document.getElementById('skip-btn');
-const userInfoForm = document.getElementById('user-info-form');
+// ১. স্বাগতম পেজ কন্ট্রোল (ক্লিক করলে মূল সাইট ওপেন হবে)
+const welcomePage = document.getElementById('welcome-page');
+const mainSite = document.getElementById('main-site');
+const continueBtn = document.getElementById('continue-btn');
+const infoForm = document.getElementById('info-form');
 
-skipBtn.addEventListener('click', () => {
-    welcomeModal.style.display = 'none';
-});
+function showMainSite() {
+    welcomePage.classList.add('hidden');
+    mainSite.classList.remove('hidden');
+}
 
-userInfoForm.addEventListener('submit', (e) => {
+continueBtn.addEventListener('click', showMainSite);
+
+infoForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('user-name').value;
-    const address = document.getElementById('user-address').value;
-    const phone = document.getElementById('user-phone').value;
-    
-    console.log("Customer Information Captured:", { name, address, phone });
-    welcomeModal.style.display = 'none';
+    // এখানে চাইলে ডাটা সেভ করার লজিক রাখতে পারিস
+    showMainSite();
 });
 
+// ২. পিওর নেভিগেশন ও পেজ পরিবর্তন সিস্টেম (স্ক্রল হবে না, নতুন পেজ খুলবে)
+const navButtons = document.querySelectorAll('.nav-btn');
+const pageSections = document.querySelectorAll('.page-section');
+const logoHome = document.getElementById('logo-home');
 
-// ২. 🎞️ অলিম্পিক স্মুথনেস সহ ডানপাশ থেকে বামপাশে পেজ স্লাইড করার লজিক
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.slide-section');
+function switchPage(targetId) {
+    // সব সেকশন থেকে active ক্লাস রিমুভ করা
+    pageSections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // নির্দিষ্ট সেকশনটি অন করা
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        const currentActiveSection = document.querySelector('.slide-section.active');
-
-        if (targetSection !== currentActiveSection) {
-            if (currentActiveSection) {
-                currentActiveSection.style.left = '-100%';
-                currentActiveSection.style.opacity = '0';
-                setTimeout(() => {
-                    currentActiveSection.classList.remove('active');
-                    currentActiveSection.style.display = 'none';
-                }, 700);
-            }
-
-            targetSection.style.display = 'block';
-            targetSection.style.left = '100%';
-            targetSection.style.opacity = '0';
-            
-            setTimeout(() => {
-                targetSection.classList.add('active');
-                targetSection.style.left = '0';
-                targetSection.style.opacity = '1';
-            }, 50);
+    // বরের একটিভ বাটন চেঞ্জ করা
+    navButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-target') === targetId) {
+            btn.classList.add('active');
         }
+    });
+}
+
+navButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = button.getAttribute('data-target');
+        switchPage(target);
     });
 });
 
-
-// ৩. মেগা ল্যাঙ্গুয়েজ ট্রান্সলেটর সুইচ (বাংলা <-> ইংলিশ)
-const langBtn = document.getElementById('lang-btn');
-const langTexts = document.querySelectorAll('.lang-text');
-let currentLang = 'bn';
-
-langBtn.addEventListener('click', () => {
-    if (currentLang === 'bn') {
-        langTexts.forEach(text => {
-            text.textContent = text.getAttribute('data-en');
-        });
-        langBtn.textContent = 'বাংলা';
-        currentLang = 'en';
-    } else {
-        langTexts.forEach(text => {
-            text.textContent = text.getAttribute('data-bn');
-        });
-        langBtn.textContent = 'English';
-        currentLang = 'bn';
-    }
+logoHome.addEventListener('click', () => {
+    switchPage('home');
 });
 
-
-// ৪. অটোমেটেড হোয়াটসঅ্যাপ ইন্টেলিজেন্ট অর্ডার জেনারেটর
-const orderButtons = document.querySelectorAll('.order-btn');
-orderButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        const productCard = e.target.closest('.product-card');
-        const productName = productCard.querySelector('h3').textContent;
-        const productPrice = productCard.querySelector('.price').textContent.split(' ')[0]; // শুধুমাত্র অফার প্রাইজ নেবে
+// ৩. ঝটপট হোয়াটসঅ্যাপ অর্ডার সিস্টেম
+const buyButtons = document.querySelectorAll('.buy-now');
+buyButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const itemName = btn.getAttribute('data-item');
+        const whatsappNumber = "8801XXXXXXXXX"; // তোর নিজের নাম্বার এখানে দিবি
+        const message = `হ্যালো মিহাদ ভাই, আমি আপনার সাইট থেকে "${itemName}" প্রোডাক্টটি অর্ডার করতে চাই।`;
         
-        const productImageSrc = productCard.querySelector('img').getAttribute('src');
-        const liveImageLink = `https://mihadx.pro.bd/${productImageSrc}`;
-
-        // 📝 এখানে তোর নিজের হোয়াটসঅ্যাপ নাম্বারটি দেশের কোডসহ টাইপ করবি
-        const whatsappNumber = "8801XXXXXXXXX"; 
-
-        const message = `হ্যালো ইসমাইল মিহাদ, আমি আপনার ওয়েবসাইট ভিজিট করে এই প্রোডাক্টটি সরাসরি অর্ডার করতে চাচ্ছি:\n\n` +
-                        `📦 প্রোডাক্টের নাম: ${productName}\n` +
-                        `💰 অফার মূল্য: ${productPrice}\n` +
-                        `🖼️ প্রোডাক্টের ছবি: ${liveImageLink}\n\n` +
-                        `অনুগ্রহ করে অর্ডারটি দ্রুত কনফার্ম করার প্রসেসটি আমাকে জানান। ধন্যবাদ!`;
-
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
     });
 });
