@@ -1,326 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ismail Hossen | Portfolio</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Ismail Hossen Nihad - Excel, Word, Data Entry, Shop এবং WhatsApp Order Website" />
+  <title>Ismail Hossen | Digital Services & Shop</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-<body>
-
-<!-- Welcome Page -->
-
-<div id="welcomePage">
-
-<div class="welcome-box">
-
-<h1>WELCOME</h1>
-
-<input type="text" id="name" placeholder="Your Name">
-
-<input type="number" id="phone" placeholder="Mobile Number">
-
-<input type="text" id="address" placeholder="Address">
-
-<button onclick="continueWebsite()">
-Continue
-</button>
-
-</div>
-
-</div>
-
-<!-- Home -->
-<!-- About Section -->
-
-<section id="about">
-
-<div class="title">
-<h1>About Me</h1>
-</div>
-
-<div class="about-container">
-
-<div class="about-image">
-<img src="images/my-profile.jpg" alt="Profile">
-</div>
-
-<div class="about-text">
-
-<h2>I'm Ismail Hossen</h2>
-
-<p>
-
-আমি একজন Professional Excel, Word এবং Data Entry Service Provider।
-
-আমি দ্রুত, নির্ভুল এবং সুন্দরভাবে কাজ সম্পন্ন করি।
-
-এছাড়াও আমার একটি ছোট E-Commerce Shop রয়েছে যেখানে Premium T-Shirt বিক্রি করি।
-
-</p>
-
-<a href="#contact">
-<button class="about-btn">
-Contact Me
-</button>
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- Skills -->
-
-<section id="skills">
-
-<div class="title">
-
-<h1>My Skills</h1>
-
-<p>
-আমি যেসব কাজে দক্ষ
-</p>
-
-</div>
-
-<div class="skill-box">
-
-<div class="card">
-
-<h2>Excel</h2>
-
-<p>
-
-✔ Salary Sheet
-
-<br>
-
-✔ Wage Sheet
-
-<br>
-
-✔ Money Report
-
-<br>
-
-✔ Formula
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h2>Word</h2>
-
-<p>
-
-✔ Typing
-
-<br>
-
-✔ CV
-
-<br>
-
-✔ Letter
-
-<br>
-
-✔ PDF to Word
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h2>Data Entry</h2>
-
-<p>
-
-✔ Copy Paste
-
-<br>
-
-✔ Online Data Entry
-
-<br>
-
-✔ Excel Entry
-
-<br>
-
-✔ Web Research
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-<div id="mainWebsite">
-
-<header>
-
-<div class="logo">
-
-Ismail Hossen
-
-</div>
-
-<nav>
-
-<a href="#home">Home</a>
-
-<a href="#about">About</a>
-
-<a href="#skills">Skills</a>
-
-<a href="#work">Work</a>
-
-<a href="#shop">Shop</a>
-
-<a href="#order">Order</a>
-
-</nav>
-
-</header>
-
-<section id="home">
-
-<div class="left">
-
-<h1>Hello I'm</h1>
-
-<h2>Ismail Hossen</h2>
-
-<p>
-
-Professional Excel,
-
-Word,
-
-Data Entry
-
-Expert.
-
-</p>
-
-<a href="#order">
-
-<button>
-
-Order Now
-
-</button>
-
-</a>
-
-</div>
-
-<div class="right">
-
-<img src="images/my-profile.jpg">
-
-</div>
-
-</section>
-<!-- ================= ORDER ================= -->
-
-<section id="order">
-
-<div class="title">
-<h1>Order Service</h1>
-<p>আপনার প্রয়োজনীয় সার্ভিস অর্ডার করুন</p>
-</div>
-
-<div class="order-container">
-
-<div class="order-card">
-<h2>Excel Service</h2>
-<button onclick="orderService('Excel Service')">
-Order Now
-</button>
-</div>
-
-<div class="order-card">
-<h2>Word Service</h2>
-<button onclick="orderService('Word Service')">
-Order Now
-</button>
-</div>
-
-<div class="order-card">
-<h2>Data Entry</h2>
-<button onclick="orderService('Data Entry Service')">
-Order Now
-</button>
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= CONTACT ================= -->
-
-<section id="contact">
-
-<div class="title">
-<h1>Contact Me</h1>
-</div>
-
-<div class="contact-box">
-
-<p><b>📱 WhatsApp:</b> 01576502490</p>
-
-<p><b>📧 Email:</b> ismailhoseen77@gmail.com</p>
-
-<p><b>📍 Address:</b> Chattogram, Bangladesh</p>
-
-<p>
-<b>🌐 Facebook:</b>
-<a href="https://www.facebook.com/ismailhossen.nihad" target="_blank">
-Visit Profile
-</a>
-</p>
-
-</div>
-
-</section>
-
-<!-- Footer -->
-
-<footer>
-
-<p>
-© 2026 Ismail Hossen.
-All Rights Reserved.
-</p>
-
-</footer>
-
-</div>
-
-<script src="script.js"></script>
-
+<body data-theme="dark">
+  <!-- Welcome Screen -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-card">
+      <div class="welcome-badge">WELCOME</div>
+      <h1>WELCOME</h1>
+      <p class="welcome-subtitle">আপনার নাম, মোবাইল নম্বর আর ঠিকানা দিন।</p>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>নাম</span>
+          <input id="welcomeName" type="text" placeholder="আপনার নাম লিখুন" />
+        </label>
+
+        <label class="field">
+          <span>মোবাইল নম্বর</span>
+          <input id="welcomePhone" type="tel" placeholder="01XXXXXXXXX" />
+        </label>
+
+        <label class="field full">
+          <span>ঠিকানা</span>
+          <input id="welcomeAddress" type="text" placeholder="আপনার ঠিকানা লিখুন" />
+        </label>
+      </div>
+
+      <button class="primary-btn" id="continueBtn">Continue</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="app-hidden">
+    <header class="topbar">
+      <a class="brand" href="#home">Ismail <span>Portfolio</span></a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#home">হোম</a>
+        <a href="#about">আমার সম্পর্কে</a>
+        <a href="#skills">দক্ষতা</a>
+        <a href="#work">কাজ</a>
+        <a href="#shop">শপ</a>
+        <a href="#order">অর্ডার</a>
+        <a href="#contact">কন্টাক্ট</a>
+      </nav>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Theme toggle">🌙</button>
+        <button class="icon-btn" id="langToggle" aria-label="Language toggle">EN</button>
+        <button class="icon-btn menu-btn" id="menuToggle" aria-label="Menu toggle">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Home -->
+      <section class="hero section" id="home">
+        <div class="hero-text">
+          <div class="eyebrow">ডিজিটাল সার্ভিস ও ই-কমার্স</div>
+          <h1 class="hero-title">
+            <span>আমি</span>
+            <span id="userNameInline">Ismail Hossen Nihad</span>
+          </h1>
+          <p class="lead">
+            আমি Excel, Word, Data Entry এবং অনলাইন সার্ভিস দিই। দ্রুত কাজ, পরিষ্কার ডেলিভারি, আর প্রফেশনাল উপস্থাপনাই আমার লক্ষ্য।
+          </p>
+
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span>ঠিকানা</span>
+              <strong id="userAddress">চট্টগ্রাম, বাংলাদেশ</strong>
+            </div>
+            <div class="meta-item">
+              <span>ফোন</span>
+              <strong id="userPhone">01576502490</strong>
+            </div>
+            <div class="meta-item">
+              <span>ইমেইল</span>
+              <strong>ismailhoseen77@gmail.com</strong>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="primary-btn" href="#order">অর্ডার করুন</a>
+            <a class="ghost-btn" href="#contact">যোগাযোগ</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <img src="images/my-profile.jpg" alt="Profile Photo" class="hero-image" loading="lazy" />
+          <div class="hero-card-footer">
+            <div>
+              <div class="small-label">প্রোফাইল</div>
+              <h3 id="profileNameCard">Ismail Hossen Nihad</h3>
+            </div>
+            <div class="status-pill">Available</div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>3+</strong>
+              <span>সার্ভিস</span>
+            </div>
+            <div class="stat">
+              <strong>4</strong>
+              <span>নমুনা</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>সাপোর্ট</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="section" id="about">
+        <div class="section-head">
+          <div class="eyebrow">আমার সম্পর্কে</div>
+          <h2>কে আমি এবং কী করি</h2>
+        </div>
+
+        <div class="section-card about-grid">
+          <div class="about-text">
+            <p>
+              আমি ডকুমেন্ট কাজ, Excel Sheet, Word ফাইল, Data Entry এবং ছোটখাটো ডিজিটাল সার্ভিস নিয়ে কাজ করি।
+            </p>
+            <p>
+              আমার লক্ষ্য হলো ক্লায়েন্টকে পরিষ্কার, নির্ভুল এবং সময়মতো কাজ দেওয়া। পাশাপাশি আমি ই-কমার্স শপেও প্রোডাক্ট আপডেট রাখি।
+            </p>
+          </div>
+
+          <div class="about-side">
+            <div class="about-chip">দ্রুত কাজ</div>
+            <div class="about-chip">পরিষ্কার ডেলিভারি</div>
+            <div class="about-chip">WhatsApp Order</div>
+            <div class="about-chip">Mobile Friendly</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section" id="skills">
+        <div class="section-head">
+          <div class="eyebrow">দক্ষতা</div>
+          <h2>আমি যেসব কাজে পারদর্শী</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="skill-card">
+            <div class="skill-icon">📊</div>
+            <h3>Excel Sheet</h3>
+            <p>ডাটা সাজানো, টেবিল, ফর্মুলা, রিপোর্ট এবং সুন্দর শিট তৈরি।</p>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-icon">📄</div>
+            <h3>Word Processor</h3>
+            <p>পেশাদার ডকুমেন্ট, লেটার, টাইপিং এবং ফরম্যাটিং।</p>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-icon">⌨️</div>
+            <h3>Data Entry</h3>
+            <p>দ্রুত ও নির্ভুল ডাটা এন্ট্রি, কপি-পেস্ট, সাজানো ডাটা।</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Work -->
+      <section class="section" id="work">
+        <div class="section-head">
+          <div class="eyebrow">কাজের নমুনা</div>
+          <h2>আমার কিছু কাজের প্রমাণ</h2>
+        </div>
+
+        <div class="grid-3 gallery">
+          <article class="work-card">
+            <img src="images/salary-sheet.jpg" alt="Salary Sheet" loading="lazy" />
+            <h3>Salary Sheet</h3>
+          </article>
+
+          <article class="work-card">
+            <img src="images/wage-sheet.jpg" alt="Wage Sheet" loading="lazy" />
+            <h3>Wage Sheet</h3>
+          </article>
+
+          <article class="work-card">
+            <img src="images/electricity-bill.jpg" alt="Electricity Bill" loading="lazy" />
+            <h3>Electricity Bill</h3>
+          </article>
+        </div>
+      </section>
+
+      <!-- Shop -->
+      <section class="section" id="shop">
+        <div class="section-head">
+          <div class="eyebrow">শপ</div>
+          <h2>আমার ই-কমার্স প্রোডাক্ট</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="product-card">
+            <img src="images/Money-Era.jpg" alt="Money Era Premium T-Shirt" loading="lazy" />
+            <div class="card-body">
+              <div class="product-top">
+                <h3>Money Era Premium T-Shirt</h3>
+                <div class="price">৳650</div>
+              </div>
+              <p>Premium cotton, clean design, comfortable fit.</p>
+              <button class="order-btn" data-product="shirt">অর্ডার করুন</button>
+            </div>
+          </article>
+
+          <article class="product-card coming">
+            <div class="coming-box">
+              <div class="coming-tag">Coming Soon</div>
+              <h3>Shirt</h3>
+              <p>নতুন প্রোডাক্ট খুব শীঘ্রই আসছে।</p>
+            </div>
+          </article>
+
+          <article class="product-card coming">
+            <div class="coming-box">
+              <div class="coming-tag">Coming Soon</div>
+              <h3>Pant</h3>
+              <p>নতুন প্রোডাক্ট খুব শীঘ্রই আসছে।</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Order -->
+      <section class="section" id="order">
+        <div class="section-head">
+          <div class="eyebrow">অর্ডার</div>
+          <h2>সার্ভিস অর্ডার করুন</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="order-card">
+            <h3>Excel Service</h3>
+            <p>Sheet, formula, report, data organization.</p>
+            <button class="order-btn" data-service="excel">অর্ডার করুন</button>
+          </article>
+
+          <article class="order-card">
+            <h3>Word Service</h3>
+            <p>Typing, formatting, document work.</p>
+            <button class="order-btn" data-service="word">অর্ডার করুন</button>
+          </article>
+
+          <article class="order-card">
+            <h3>Data Entry Service</h3>
+            <p>Fast and accurate data entry support.</p>
+            <button class="order-btn" data-service="dataentry">অর্ডার করুন</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="section" id="contact">
+        <div class="section-head">
+          <div class="eyebrow">যোগাযোগ</div>
+          <h2>আমার সাথে যোগাযোগ করুন</h2>
+        </div>
+
+        <div class="grid-2">
+          <div class="section-card contact-card">
+            <h3>কন্টাক্ট তথ্য</h3>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/8801576502490" target="_blank" rel="noopener">01576502490</a></p>
+            <p><strong>Facebook:</strong> <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" rel="noopener">ismailhossen.nihad</a></p>
+            <p><strong>Email:</strong> <a href="mailto:ismailhoseen77@gmail.com">ismailhoseen77@gmail.com</a></p>
+            <p><strong>ঠিকানা:</strong> <span id="contactAddress">চট্টগ্রাম, বাংলাদেশ</span></p>
+          </div>
+
+          <div class="section-card contact-card">
+            <h3>দ্রুত অর্ডার</h3>
+            <div class="quick-buttons">
+              <button class="ghost-btn" data-service="excel">Excel</button>
+              <button class="ghost-btn" data-service="word">Word</button>
+              <button class="ghost-btn" data-service="dataentry">Data Entry</button>
+              <button class="ghost-btn" data-product="shirt">T-Shirt</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© <span id="year"></span> Ismail Hossen Nihad. সব অধিকার সংরক্ষিত।</p>
+      </footer>
+    </main>
+
+    <button class="floating-whatsapp" id="floatingWhatsapp" aria-label="WhatsApp">
+      <span>💬</span>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
-</html>
-</div>
-
-<script src="script.js"></script>
-
-</body>
-
-</html>
+  </html>
