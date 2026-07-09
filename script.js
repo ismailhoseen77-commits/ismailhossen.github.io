@@ -1,75 +1,83 @@
-// এলিমেন্টগুলো সিলেক্ট করা
-const welcomePage = document.getElementById('welcome-page');
-const mainSite = document.getElementById('main-site');
-const continueBtn = document.getElementById('continue-btn');
-const infoForm = document.getElementById('info-form');
+// ডকুমেন্ট রেডি হওয়ার পর রান হবে
+document.addEventListener("DOMContentLoaded", function() {
 
-// ১. স্বাগতম পেজ বন্ধ করে মেইন সাইট খোলার পারফেক্ট ফাংশন
-function entryToMainSite() {
-    // স্বাগতম পেজকে হাইড করা
-    welcomePage.classList.add('hidden-page');
-    // মেইন সাইট শো করা
-    mainSite.classList.add('show-site');
-}
+    // এলিমেন্ট রেফারেন্স নেওয়া
+    const welcomePage = document.getElementById('welcome-page');
+    const mainSite = document.getElementById('main-site');
+    const continueBtn = document.getElementById('continue-btn');
+    const infoForm = document.getElementById('info-form');
 
-// চালিয়ে যান বাটনে ক্লিক করলে
-continueBtn.addEventListener('click', entryToMainSite);
-
-// ফর্ম সাবমিট করলেও মেইন সাইটে নিয়ে যাবে
-infoForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    entryToMainSite();
-});
-
-// ২. ট্যাব ভিত্তিক আলাদা পেজ ওপেন করার রিয়েল লজিক (স্ক্রল হবে না)
-const navButtons = document.querySelectorAll('.nav-btn');
-const pageSections = document.querySelectorAll('.page-section');
-const logoHome = document.getElementById('logo-home');
-
-function switchPage(targetId) {
-    // প্রথমে সব সেকশন থেকে active ক্লাস রিমুভ করে হাইড করা
-    pageSections.forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // যে ট্যাব এ ক্লিক করা হয়েছে শুধু সেই নির্দিষ্ট সেকশনটি অন করা
-    const targetSection = document.getElementById(targetId);
-    if (targetSection) {
-        targetSection.classList.add('active');
+    // ১. স্বাগতম উইন্ডো বন্ধ করে হোমপেজ ওপেন করার রিয়েল মেকানিজম
+    function activateMainWebsite() {
+        // স্বাগতম পেজ একদম বন্ধ
+        welcomePage.style.display = 'none';
+        // মেইন সাইট একদম চালু
+        mainSite.style.display = 'block';
+        // ডিফল্টভাবে হোম সেকশন ওপেন নিশ্চিত করা
+        showRequestedSection('home');
     }
 
-    // নেভিগেশন বারের একটিভ ডিজাইন ঠিক করা
-    navButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-target') === targetId) {
-            btn.classList.add('active');
-        }
-    });
-}
+    // বাটনে ক্লিক করলে কাজ করবে
+    continueBtn.addEventListener('click', activateMainWebsite);
 
-// প্রতিটা নেভিগেশন বাটনে ক্লিক লজিক
-navButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
+    // ফর্ম সাবমিট করলেও কাজ করবে
+    infoForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const target = button.getAttribute('data-target');
-        switchPage(target);
+        activateMainWebsite();
     });
-});
 
-// লোগোতে ক্লিক করলে হোমে নিয়ে যাবে
-logoHome.addEventListener('click', () => {
-    switchPage('home');
-});
 
-// ৩. হোয়াটসঅ্যাপ অর্ডার প্রসেসিং
-const buyButtons = document.querySelectorAll('.buy-now');
-buyButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const itemName = btn.getAttribute('data-item');
-        const whatsappNumber = "8801XXXXXXXXX"; // তোর নাম্বার দিবি এখানে
-        const message = `হ্যালো মিহাদ ভাই, আমি আপনার সাইট থেকে "${itemName}" প্রোডাক্টটি অর্ডার করতে চাই।`;
-        
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    // ২. ট্যাব ভিত্তিক পেইজ চেঞ্জ লজিক (কোনো স্ক্রলিং বা ওভারল্যাপ হবে না)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const allSections = document.querySelectorAll('.page-section');
+    const logoButton = document.getElementById('logo-home');
+
+    function showRequestedSection(sectionId) {
+        // সব সেকশন সম্পূর্ণ অদৃশ্য করে দেওয়া
+        allSections.forEach(sec => {
+            sec.style.display = 'none';
+        });
+
+        // শুধুমাত্র ক্লিক করা নির্দিষ্ট সেকশনটি অন করা
+        const activeSec = document.getElementById(sectionId);
+        if (activeSec) {
+            activeSec.style.display = 'block';
+        }
+
+        // নেভিগেশন বারের একটিভ বর্ডার কালার রিমুভ ও অ্যাড করা
+        navButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-target') === sectionId) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // প্রতিটা বাটনের ক্লিকের ইভেন্ট লিসেনার
+    navButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetPage = this.getAttribute('data-target');
+            showRequestedSection(targetPage);
+        });
     });
-});
 
+    // লোগোতে চাপ দিলে ডাইরেক্ট হোমপেজে ব্যাক করবে
+    logoButton.addEventListener('click', function() {
+        showRequestedSection('home');
+    });
+
+
+    // ৩. কাস্টম অটোমেটেড হোয়াটসঅ্যাপ মেসেজ
+    const orderButtons = document.querySelectorAll('.buy-now');
+    orderButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const selectedItem = this.getAttribute('data-item');
+            const targetPhone = "8801XXXXXXXXX"; // এখানে তোর রিয়েল নাম্বার দিবি ভাই
+            const customMsg = `হ্যালো মিহাদ ভাই, আমি আপনার ওয়েবসাইট ব্রাউজ করে "${selectedItem}" প্রোডাক্টটি অর্ডার করতে চাচ্ছি। দয়া করে প্রসেসটি জানাবেন।`;
+            
+            window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(customMsg)}`, '_blank');
+        });
+    });
+
+});
