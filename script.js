@@ -1,66 +1,29 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const MY_NUMBER = "8801576502490";
 
-    // ✅ এখানে তোমার হোয়াটসঅ্যাপ নাম্বারটি সেট করা আছে
-    const MY_WHATSAPP_NUMBER = "8801576502490"; 
-
-    const welcomePage = document.getElementById('welcome-page');
-    const mainSite = document.getElementById('main-site');
-    const continueBtn = document.getElementById('continue-btn');
-    const infoForm = document.getElementById('info-form');
-
-    function activateMainWebsite() {
-        welcomePage.style.display = 'none';
-        mainSite.style.display = 'block';
-        showRequestedSection('home');
-    }
-
-    continueBtn.addEventListener('click', activateMainWebsite);
-    infoForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        activateMainWebsite();
+    // থিম টগল
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
     });
 
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const allSections = document.querySelectorAll('.page-section');
-    const logoButton = document.getElementById('logo-home');
-
-    function showRequestedSection(sectionId) {
-        allSections.forEach(sec => sec.style.display = 'none');
-        const activeSec = document.getElementById(sectionId);
-        if (activeSec) activeSec.style.display = 'block';
-        navButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-target') === sectionId) btn.classList.add('active');
-        });
-    }
-
-    navButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetPage = this.getAttribute('data-target');
-            showRequestedSection(targetPage);
+    // ল্যাঙ্গুয়েজ টগল
+    let isBn = true;
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+        isBn = !isBn;
+        document.querySelectorAll('[data-bn]').forEach(el => {
+            el.innerText = isBn ? el.getAttribute('data-bn') : el.getAttribute('data-en');
         });
     });
 
-    logoButton.addEventListener('click', () => showRequestedSection('home'));
+    // পেজ সুইচিং এবং হোয়াটসঅ্যাপ লজিক
+    document.getElementById('continue-btn').addEventListener('click', () => {
+        document.getElementById('welcome-page').style.display = 'none';
+        document.getElementById('main-site').style.display = 'block';
+    });
 
-    // ✅ সব প্রোডাক্ট অর্ডারের জন্য হোয়াটসঅ্যাপ লজিক
-    const orderButtons = document.querySelectorAll('.buy-now');
-    orderButtons.forEach(btn => {
+    document.querySelectorAll('.buy-now').forEach(btn => {
         btn.addEventListener('click', function() {
-            const selectedItem = this.getAttribute('data-item');
-            const customMsg = `হ্যালো মিহাদ ভাই, আমি আপনার ওয়েবসাইট থেকে "${selectedItem}" প্রোডাক্টটি অর্ডার করতে চাচ্ছি।`;
-            window.open(`https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(customMsg)}`, '_blank');
+            window.open(`https://wa.me/${MY_NUMBER}?text=আমি ${this.getAttribute('data-item')} নিতে চাই`, '_blank');
         });
     });
-
-    // ✅ মেইন অর্ডার বাটনের জন্য লজিক
-    const mainWhatsappBtn = document.getElementById('main-whatsapp-btn');
-    if (mainWhatsappBtn) {
-        mainWhatsappBtn.addEventListener('click', function() {
-            const customMsg = "হ্যালো মিহাদ ভাই, আমি আপনার ওয়েবসাইট ব্রাউজ করে সরাসরি অর্ডারের জন্য যোগাযোগ করছি।";
-            window.open(`https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(customMsg)}`, '_blank');
-        });
-    }
 });
-                
