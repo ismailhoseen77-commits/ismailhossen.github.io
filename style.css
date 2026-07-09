@@ -12,7 +12,7 @@ body {
     color: #333;
 }
 
-/* 🟢 নেভিগেশন বার (সম্পূর্ণ ফিক্সড ও প্রিমিয়াম ডিজাইন) */
+/* নেভিগেশন বার ফিক্সড ডিজাইন */
 header {
     background: #111;
     color: white;
@@ -30,11 +30,11 @@ header {
     padding: 10px 15px;
 }
 
-/* লোগোকে গোল বৃত্তের ভেতরে আনা */
+/* লোগো বৃত্ত শেইপ */
 .logo {
     display: table-cell;
     vertical-align: middle;
-    width: 1%; /* কনটেন্ট অনুযায়ী জায়গা নিবে */
+    width: 1%;
     white-space: nowrap;
 }
 
@@ -45,18 +45,16 @@ header {
     font-size: 18px;
     font-weight: bold;
     padding: 8px 14px;
-    border-radius: 50px; /* একদম গোল ক্যাপসুল/বৃত্ত শেইপ */
+    border-radius: 50px;
     box-shadow: 0 2px 5px rgba(37, 211, 102, 0.4);
 }
 
-/* মেনু এবং ল্যাঙ্গুয়েজ বাটনের কন্টেইনার */
 nav {
     display: table-cell;
     vertical-align: middle;
     text-align: right;
 }
 
-/* মেনু আইটেমগুলোর সুন্দর স্পেসিং */
 nav a {
     color: white;
     text-decoration: none;
@@ -71,7 +69,6 @@ nav a:hover {
     color: #25d366;
 }
 
-/* ইংলিশ/বাংলা বাটন */
 #lang-btn {
     background: transparent;
     color: #25d366;
@@ -92,7 +89,7 @@ nav a:hover {
     color: white;
 }
 
-/* 📱 ছোট ফোনের জন্য বিশেষ স্পেসিং (যাতে ভেঙে নিচে না নামে) */
+/* মোবাইল রেসপন্সিভ গাদাগাদি এড়ানোর জন্য */
 @media (max-width: 480px) {
     .navbar {
         padding: 10px 8px;
@@ -134,7 +131,7 @@ nav a:hover {
     margin-bottom: 10px;
 }
 
-/* পোর্টফোলিও গ্যালারি */
+/* পোর্টফোলিও এবং শপ সেকশন */
 .portfolio-section, .shop-section {
     max-width: 1200px;
     margin: 50px auto;
@@ -147,7 +144,7 @@ nav a:hover {
     margin-bottom: 35px;
 }
 
-.portfolio-gallery {
+.portfolio-gallery, .product-grid {
     display: block;
     text-align: center;
 }
@@ -196,12 +193,7 @@ nav a:hover {
     font-size: 14px;
 }
 
-/* ই-কমার্স প্রোডাক্ট গ্রিড */
-.product-grid {
-    display: block;
-    text-align: center;
-}
-
+/* প্রোডাক্ট কার্ড ডিজাইন */
 .product-card {
     display: inline-block;
     background: white;
@@ -252,7 +244,6 @@ nav a:hover {
     font-size: 16px;
 }
 
-/* ফুটার */
 footer {
     background: #111;
     color: #777;
@@ -260,4 +251,3 @@ footer {
     padding: 20px;
     margin-top: 60px;
 }
-
