@@ -2,54 +2,168 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>MihadX | Professional Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismail Mihad | Professional Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ওয়েলকাম ও রেজিস্ট্রেশন পেজ -->
     <div id="welcome-page">
         <div class="welcome-container">
             <h2>স্বাগতম! আপনার তথ্য দিন</h2>
+            <p>আমাদের প্রিমিয়াম সাইটে আপনাকে স্বাগতম। নিচে আপনার সঠিক তথ্য দিন।</p>
+            
             <form id="info-form">
-                <input type="text" id="name" placeholder="আপনার নাম" required>
-                <input type="text" id="address" placeholder="আপনার ঠিকানা" required>
-                <input type="text" id="phone" placeholder="মোবাইল নাম্বার" required>
+                <input type="text" id="username" placeholder="আপনার নাম / Your Name" required>
+                <input type="text" id="useraddress" placeholder="আপনার ঠিকানা / Your Address" required>
+                <input type="tel" id="userphone" placeholder="মোবাইল নাম্বার / Mobile Number" required>
                 <button type="submit" class="primary-btn">জমা দিন</button>
             </form>
-            <div class="or-divider">বা</div>
-            <button id="continue-btn" class="continue-btn">চালিয়ে যান →</button>
+
+            <div class="or-divider">বা / OR</div>
+
+            <button id="continue-btn" class="continue-btn">চালিয়ে যান &rarr;</button>
         </div>
     </div>
 
-    <!-- মেইন ওয়েবসাইট -->
-    <div id="main-site" style="display:none;">
+    <div id="main-site">
+        
         <header>
             <div class="navbar">
-                <div class="logo">MihadX</div>
+                <div class="logo" id="logo-home">MihadX</div>
                 <nav>
-                    <a href="#" class="nav-btn" data-target="home">হোম</a>
+                    <a href="#" class="nav-btn active" data-target="home">হোম</a>
                     <a href="#" class="nav-btn" data-target="skills">আমার দক্ষতা</a>
                     <a href="#" class="nav-btn" data-target="works">আমার কাজগুলো</a>
                     <a href="#" class="nav-btn" data-target="shop">শপ</a>
+                    <a href="#" class="nav-btn" data-target="genji">গেঞ্চী</a>
                     <a href="#" class="nav-btn" data-target="order">অর্ডার</a>
                 </nav>
             </div>
         </header>
-        
+
         <main class="content-area">
-            <!-- শপ সেকশন (এখানে শার্ট, প্যান্ট, গেঞ্জি সব থাকবে) -->
-            <section id="shop" class="page-section">
-                <h2>আমাদের শপ</h2>
-                <div class="product-grid">
-                    <div class="card"><h3>শার্ট</h3><button class="whatsapp-order" data-item="শার্ট">অর্ডার করুন</button></div>
-                    <div class="card"><h3>প্যান্ট</h3><button class="whatsapp-order" data-item="প্যান্ট">অর্ডার করুন</button></div>
-                    <div class="card"><h3>গেঞ্জি</h3><button class="whatsapp-order" data-item="গেঞ্জি">অর্ডার করুন</button></div>
+
+            <section id="home" class="page-section">
+                <div class="profile-box">
+                    <img src="my-profile.jpg" alt="Ismail Mihad" class="profile-img">
+                    <h1>হাই, আমি ইসমাইল মিহাদ</h1>
+                    <p class="bio-text">অ্যাডভান্সড এক্সেল অটোমেশন এক্সপার্ট 🛠️ ডাটা এন্ট্রি স্পেশালিস্ট 💻 ডিজিটাল এন্টারপ্রেনার</p>
+                    <div class="intro-details">
+                        <p>আমি কাস্টম এক্সেল সফটওয়্যার সলিউশন তৈরি করি যা ব্যবসার হিসাব-নিকাশ এবং ডাটা ম্যানেজমেন্টকে ১০০% স্বয়ংক্রিয় করে তোলে। এর পাশাপাশি আমি একটি প্রিমিয়াম ই-কমার্স ব্র্যান্ড পরিচালনা করছি। আমার কাজের নমুনা এবং প্রিমিয়াম কালেকশন দেখতে উপরের নেভিগেশন মেনুগুলো ব্রাউজ করুন।</p>
+                    </div>
                 </div>
             </section>
+
+            <section id="skills" class="page-section">
+                <div class="section-header">
+                    <h2>আমার দক্ষতা</h2>
+                    <p class="sub-title">নিচে আমার প্রধান টেকনিক্যাল স্কিল এবং কাজের ক্ষেত্রগুলো বিস্তারিত দেওয়া হলো:</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="card">
+                        <div class="icon">📊</div>
+                        <h3>MS Excel Automation</h3>
+                        <p>জটিল গাণিতিক হিসাব, VLOOKUP, INDEX-MATCH, এবং পিভট টেবিলের অ্যাডভান্সড ব্যবহার। ম্যাক্রো (VBA) কোডিংয়ের মাধ্যমে যেকোনো ম্যানুয়াল কাজকে এক ক্লিকে অটোমেট করার বিশেষ অভিজ্ঞতা।</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">📝</div>
+                        <h3>MS Word Documenting</h3>
+                        <p>যেকোনো করপোরেট রিপোর্ট ফরম্যাটিং, প্রফেশনাল বায়োডাটা (Resume) মেকিং, কাস্টম ইনভয়েস ডিজাইন এবং প্রাতিষ্ঠানিক ডকুমেন্টেশন অত্যন্ত নিখুঁত ও আকর্ষণীয়ভাবে তৈরি করা।</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">💾</div>
+                        <h3>Data Entry & Cleaning</h3>
+                        <p>বিশাল র-ডাটাবেজ থেকে অগোছালো ডাটা স্ক্র্যাপ করা, ডুপ্লিকেট রিমুভ করা এবং কাস্টমারের চাহিদা অনুযায়ী ১০০% নির্ভুল ও গোছানো এক্সেল বা গুগল শিট ফরমেটে রূপান্তর করা।</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="works" class="page-section">
+                <div class="section-header">
+                    <h2>আমার কাজগুলো</h2>
+                    <p class="sub-title">বাস্তব ক্ষেত্রে সফলভাবে সম্পন্ন করা কিছু প্রজেক্টের নমুনা:</p>
+                </div>
+                <div class="grid-layout cols-4">
+                    <div class="work-card">
+                        <img src="electricity-bill.jpg" alt="Electricity Bill">
+                        <h4>বিদ্যুৎ বিল ডাটা এন্ট্রি</h4>
+                        <p class="work-desc">গ্রাহকদের ইউনিট ব্যবহার হিসাব করে স্বয়ংক্রিয়ভাবে বিল জেনারেট করার অটোমেটেড শিট।</p>
+                    </div>
+                    <div class="work-card">
+                        <img src="salary-sheet.jpg" alt="Salary Sheet">
+                        <h4>অ্যাডভান্সড স্যালারি শিট</h4>
+                        <p class="work-desc">কর্মচারীদের উপস্থিতি, ওভারটাইম, বোনাস এবং ট্যাক্স কেটে স্বয়ংক্রিয় নেট সেলারি হিসাবের ড্যাশবোর্ড।</p>
+                    </div>
+                    <div class="work-card">
+                        <img src="wage-sheet.jpg" alt="Wage Sheet">
+                        <h4>শ্রমিক মজুরি শিট</h4>
+                        <p class="work-desc">দৈনিক এবং সাপ্তাহিক চুক্তিতে কাজ করা শ্রমিকদের কাজের ঘণ্টা অনুযায়ী নিখুঁত মজুরি ক্যালকুলেটর।</p>
+                    </div>
+                    <div class="work-card">
+                        <img src="result-sheet.jpg" alt="Result Sheet">
+                        <h4>স্কুল রেজাল্ট শিট</h4>
+                        <p class="work-desc">টোটাল মার্কস ইনপুট দিলে স্বয়ংক্রিয়ভাবে জিপিএ (GPA) এবং গ্রেড লেটার বের করার প্রাতিষ্ঠানিক শিট।</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shop" class="page-section">
+                <div class="section-header">
+                    <h2>আমাদের শপ কালেকশন</h2>
+                    <p class="sub-title">প্রিমিয়াম কোয়ালিটির আকর্ষণীয় শার্ট এবং প্যান্টের মেগা কালেকশন:</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="product-card">
+                        <img src="my-shirt.jpg" alt="Premium Shirt">
+                        <h3>প্রিমিয়াম ক্যাজুয়াল কটন শার্ট</h3>
+                        <p class="prod-details">১০০% প্রিমিয়াম কটন ফেব্রিক, আরামদায়ক ফিটিং এবং কলার ও কাফে আধুনিক স্টিচিং। ক্যাজুয়াল বা সেমি-ফরমাল সব আউটফিটেই মানানসই।</p>
+                        <p class="price">৳ ৫৫০</p>
+                        <button class="buy-now" data-item="প্রিমিয়াম ক্যাজুয়াল কটন শার্ট">অর্ডার করুন</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="my-pant.jpg" alt="Stylish Pant">
+                        <h3>ক্যাজুয়াল স্টাইলিশ গ্যাবার্ডিন প্যান্ট</h3>
+                        <p class="prod-details">স্ট্রেচেবল এবং টেকসই এক্সপোর্ট কোয়ালিটি ফেব্রিক। স্লিম ফিট ডিজাইনের সাথে চমৎকার কালার গ্যারান্টি এবং মাল্টিপল পকেট সুবিধা।</p>
+                        <p class="price">৳ ৬৫০</p>
+                        <button class="buy-now" data-item="ক্যাজুয়াল স্টাইলিশ গ্যাবার্ডিন প্যান্ট">অর্ডার করুন</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="genji" class="page-section">
+                <div class="section-header">
+                    <h2>গেঞ্চী কালেকশন</h2>
+                    <p class="sub-title">তরুণদের ট্রেন্ডি ফ্যাশনের একমাত্র হট কেক প্রোডাক্ট:</p>
+                </div>
+                <div class="single-product-container">
+                    <div class="product-card premium-card">
+                        <div class="hot-badge">HOT PRODUCT</div>
+                        <img src="Money-Era.jpg" alt="Drop Shoulder T-Shirt">
+                        <h3>মানি-এরা ড্রপ শোল্ডার টি-শার্ট</h3>
+                        <p class="prod-details">240+ GSM থিকনেস সহ ১০০% পিওর কটন কম্বড সুতা। ওভারসাইজড লুক এবং আন্তর্জাতিক মানের প্রিমিয়াম লং-লাস্টিং রাবার প্রিন্ট। ধোয়ার পরেও কালার বা প্রিন্ট নষ্ট হবে না।</p>
+                        <p class="price">৳ ৪৯০</p>
+                        <button class="buy-now" data-item="মানি-এরা ড্রপ শোল্ডার টি-শার্ট">অর্ডার করুন</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="order" class="page-section">
+                <div class="section-header">
+                    <h2>সরাসরি অর্ডার করুন</h2>
+                </div>
+                <div class="order-box">
+                    <div class="order-icon">🛒</div>
+                    <h3>অর্ডার কনফার্ম করার নিয়ম</h3>
+                    <p>আপনার কাঙ্ক্ষিত প্রোডাক্টটির সাইজ এবং আপনার নাম-ঠিকানা দিয়ে সরাসরি নিচে থাকা হোয়াটসঅ্যাপ বাটনে ক্লিক করুন। আমি ২৪ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করে ডেলিভারি নিশ্চিত করব।</p>
+                    <button id="main-whatsapp-btn" class="whatsapp-btn">💬 হোয়াটসঅ্যাপে অর্ডার করুন</button>
+                </div>
+            </section>
+
         </main>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
+    
