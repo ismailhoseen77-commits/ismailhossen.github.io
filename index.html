@@ -1,77 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ismail Mihad | Professional Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Ismail Hossen Nihad - Excel, Word, Data Entry, Shop এবং WhatsApp Order Website" />
+  <title>Ismail Hossen | Digital Services & Shop</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-theme="dark">
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-card">
+      <div class="welcome-badge">WELCOME</div>
+      <h1>WELCOME</h1>
+      <p class="welcome-subtitle" data-i18n="welcomeSubtitle">আপনার নাম, মোবাইল নম্বর আর ঠিকানা দিন।</p>
 
-    <div class="controls">
-        <button id="theme-toggle">🌙 মোড</button>
-        <button id="lang-toggle">🌐 EN/BN</button>
+      <div class="form-grid">
+        <label class="field">
+          <span data-i18n="nameLabel">নাম</span>
+          <input id="welcomeName" type="text" placeholder="আপনার নাম লিখুন" data-placeholder="phName" />
+        </label>
+
+        <label class="field">
+          <span data-i18n="mobileLabel">মোবাইল নম্বর</span>
+          <input id="welcomePhone" type="tel" placeholder="01XXXXXXXXX" data-placeholder="phPhone" />
+        </label>
+
+        <label class="field full">
+          <span data-i18n="addressLabel">ঠিকানা</span>
+          <input id="welcomeAddress" type="text" placeholder="আপনার ঠিকানা লিখুন" data-placeholder="phAddress" />
+        </label>
+      </div>
+
+      <button class="primary-btn" id="continueBtn" data-i18n="continueBtn">Continue</button>
     </div>
+  </div>
 
-    <div id="welcome-page">
-        <div class="welcome-container">
-            <h2 data-bn="স্বাগতম! আপনার তথ্য দিন" data-en="Welcome! Enter your details">স্বাগতম! আপনার তথ্য দিন</h2>
-            <form id="info-form">
-                <input type="text" id="username" placeholder="আপনার নাম" required>
-                <input type="text" id="useraddress" placeholder="আপনার ঠিকানা" required>
-                <input type="tel" id="userphone" placeholder="মোবাইল নাম্বার" required>
-                <button type="submit" class="primary-btn">জমা দিন</button>
-            </form>
-            <button id="continue-btn" class="continue-btn">চালিয়ে যান &rarr;</button>
-        </div>
-    </div>
+  <div id="app" class="app-hidden">
+    <header class="topbar">
+      <a class="brand" href="#home">Ismail <span>Portfolio</span></a>
 
-    <div id="main-site" style="display:none;">
-        <header>
-            <div class="navbar">
-                <div class="logo" id="logo-home">MihadX</div>
-                <nav>
-                    <a href="#" class="nav-btn active" data-target="home" data-bn="হোম" data-en="Home">হোম</a>
-                    <a href="#" class="nav-btn" data-target="skills" data-bn="আমার দক্ষতা" data-en="Skills">আমার দক্ষতা</a>
-                    <a href="#" class="nav-btn" data-target="works" data-bn="আমার কাজগুলো" data-en="Works">আমার কাজগুলো</a>
-                    <a href="#" class="nav-btn" data-target="shop" data-bn="শপ" data-en="Shop">শপ</a>
-                    <a href="#" class="nav-btn" data-target="order" data-bn="অর্ডার" data-en="Order">অর্ডার</a>
-                </nav>
+      <nav class="nav-menu" id="navMenu">
+        <a href="#home" data-i18n="navHome">হোম</a>
+        <a href="#about" data-i18n="navAbout">আমার সম্পর্কে</a>
+        <a href="#skills" data-i18n="navSkills">দক্ষতা</a>
+        <a href="#work" data-i18n="navWork">কাজ</a>
+        <a href="#shop" data-i18n="navShop">শপ</a>
+        <a href="#order" data-i18n="navOrder">অর্ডার</a>
+        <a href="#contact" data-i18n="navContact">কন্টাক্ট</a>
+      </nav>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Theme toggle">🌙</button>
+        <button class="icon-btn" id="langToggle" aria-label="Language toggle">EN</button>
+        <button class="icon-btn menu-btn" id="menuToggle" aria-label="Menu toggle">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section" id="home">
+        <div class="hero-text">
+          <div class="eyebrow" data-i18n="eyebrow">ডিজিটাল সার্ভিস ও ই-কমার্স</div>
+          <h1 class="hero-title">
+            <span data-i18n="heroHello">আমি</span>
+            <span id="userNameInline">Ismail Hossen Nihad</span>
+          </h1>
+          <p class="lead" data-i18n="heroDesc">
+            আমি Excel, Word, Data Entry এবং অনলাইন সার্ভিস দিই। দ্রুত কাজ, পরিষ্কার ডেলিভারি, আর প্রফেশনাল উপস্থাপনাই আমার লক্ষ্য।
+          </p>
+
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span data-i18n="metaLocation">ঠিকানা</span>
+              <strong id="userAddress">চট্টগ্রাম, বাংলাদেশ</strong>
             </div>
-        </header>
+            <div class="meta-item">
+              <span data-i18n="metaPhone">ফোন</span>
+              <strong id="userPhone">01576502490</strong>
+            </div>
+            <div class="meta-item">
+              <span data-i18n="metaEmail">ইমেইল</span>
+              <strong>ismailhoseen77@gmail.com</strong>
+            </div>
+          </div>
 
-        <main class="content-area">
-            <section id="home" class="page-section">
-                <h1>হাই, আমি ইসমাইল মিহাদ</h1>
-                <p>অ্যাডভান্সড এক্সেল অটোমেশন ও ডিজিটাল এন্টারপ্রেনার।</p>
-            </section>
-            
-            <section id="skills" class="page-section" style="display:none;">
-                <h2>আমার দক্ষতা</h2>
-                <div class="grid-layout">
-                    <div class="card"><h3>Excel Automation</h3><button class="buy-now" data-item="Excel সার্ভিস">অর্ডার করুন</button></div>
-                    <div class="card"><h3>Word Document</h3><button class="buy-now" data-item="Word সার্ভিস">অর্ডার করুন</button></div>
-                    <div class="card"><h3>Data Entry</h3><button class="buy-now" data-item="Data Entry সার্ভিস">অর্ডার করুন</button></div>
-                </div>
-            </section>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#order" data-i18n="ctaOrder">অর্ডার করুন</a>
+            <a class="ghost-btn" href="#contact" data-i18n="ctaContact">যোগাযোগ</a>
+          </div>
+        </div>
 
-            <section id="works" class="page-section" style="display:none;"><h2>আমার কাজগুলো</h2></section>
+        <div class="hero-card">
+          <img src="my-profile.jpg" alt="Profile Photo" class="hero-image" loading="lazy" />
+          <div class="hero-card-footer">
+            <div>
+              <div class="small-label" data-i18n="profileCardLabel">প্রোফাইল</div>
+              <h3 id="profileNameCard">Ismail Hossen Nihad</h3>
+            </div>
+            <div class="status-pill" data-i18n="statusOpen">Available</div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>3+</strong>
+              <span data-i18n="statServices">সার্ভিস</span>
+            </div>
+            <div class="stat">
+              <strong>4</strong>
+              <span data-i18n="statSamples">নমুনা</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span data-i18n="statSupport">সাপোর্ট</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <section id="shop" class="page-section" style="display:none;">
-                <h2>শপ</h2>
-                <div class="grid-layout">
-                    <div class="card"><h3>শার্ট</h3><button class="buy-now" data-item="শার্ট">অর্ডার</button></div>
-                    <div class="card"><h3>প্যান্ট</h3><button class="buy-now" data-item="প্যান্ট">অর্ডার</button></div>
-                    <div class="card"><h3>টি-শার্ট</h3><button class="buy-now" data-item="টি-শার্ট">অর্ডার</button></div>
-                </div>
-            </section>
+      <section class="section" id="about">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="aboutEyebrow">আমার সম্পর্কে</div>
+          <h2 data-i18n="aboutTitle">কে আমি এবং কী করি</h2>
+        </div>
 
-            <section id="order" class="page-section" style="display:none;">
-                <h2>সরাসরি অর্ডার করুন</h2>
-                <button id="main-whatsapp-btn" class="whatsapp-btn">💬 হোয়াটসঅ্যাপে অর্ডার করুন</button>
-            </section>
-        </main>
-    </div>
-    <script src="script.js"></script>
+        <div class="section-card about-grid">
+          <div class="about-text">
+            <p data-i18n="aboutDesc1">
+              আমি ডকুমেন্ট কাজ, Excel Sheet, Word ফাইল, Data Entry এবং ছোটখাটো ডিজিটাল সার্ভিস নিয়ে কাজ করি।
+            </p>
+            <p data-i18n="aboutDesc2">
+              আমার লক্ষ্য হলো ক্লায়েন্টকে পরিষ্কার, নির্ভুল এবং সময়মতো কাজ দেওয়া। পাশাপাশি আমি ই-কমার্স শপেও প্রোডাক্ট আপডেট রাখি।
+            </p>
+          </div>
+
+          <div class="about-side">
+            <div class="about-chip" data-i18n="aboutChip1">দ্রুত কাজ</div>
+            <div class="about-chip" data-i18n="aboutChip2">পরিষ্কার ডেলিভারি</div>
+            <div class="about-chip" data-i18n="aboutChip3">WhatsApp Order</div>
+            <div class="about-chip" data-i18n="aboutChip4">Mobile Friendly</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="skillsEyebrow">দক্ষতা</div>
+          <h2 data-i18n="skillsTitle">আমি যেসব কাজে পারদর্শী</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="skill-card">
+            <div class="skill-icon">📊</div>
+            <h3 data-i18n="skill1Title">Excel Sheet</h3>
+            <p data-i18n="skill1Desc">ডাটা সাজানো, টেবিল, ফর্মুলা, রিপোর্ট এবং সুন্দর শিট তৈরি।</p>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-icon">📄</div>
+            <h3 data-i18n="skill2Title">Word Processor</h3>
+            <p data-i18n="skill2Desc">পেশাদার ডকুমেন্ট, লেটার, টাইপিং এবং ফরম্যাটিং।</p>
+          </article>
+
+          <article class="skill-card">
+            <div class="skill-icon">⌨️</div>
+            <h3 data-i18n="skill3Title">Data Entry</h3>
+            <p data-i18n="skill3Desc">দ্রুত ও নির্ভুল ডাটা এন্ট্রি, কপি-পেস্ট, সাজানো ডাটা।</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="workEyebrow">কাজের নমুনা</div>
+          <h2 data-i18n="workTitle">আমার কিছু কাজের প্রমাণ</h2>
+        </div>
+
+        <div class="grid-3 gallery">
+          <article class="work-card">
+            <img src="salary-sheet.jpg" alt="Salary Sheet" loading="lazy" />
+            <h3 data-i18n="work1Title">Salary Sheet</h3>
+          </article>
+
+          <article class="work-card">
+            <img src="wage-sheet.jpg" alt="Wage Sheet" loading="lazy" />
+            <h3 data-i18n="work2Title">Wage Sheet</h3>
+          </article>
+
+          <article class="work-card">
+            <img src="electricity-bill.jpg" alt="Electricity Bill" loading="lazy" />
+            <h3 data-i18n="work3Title">Electricity Bill</h3>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="shop">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="shopEyebrow">শপ</div>
+          <h2 data-i18n="shopTitle">আমার ই-কমার্স প্রোডাক্ট</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="product-card">
+            <img src="Money-Era.jpg" alt="Money Era Premium T-Shirt" loading="lazy" />
+            <div class="card-body">
+              <div class="product-top">
+                <h3 data-i18n="product1Title">Money Era Premium T-Shirt</h3>
+                <div class="price">৳650</div>
+              </div>
+              <p data-i18n="product1Desc">Premium cotton, clean design, comfortable fit.</p>
+              <button class="order-btn" data-product="shirt" data-i18n="orderBtn">অর্ডার করুন</button>
+            </div>
+          </article>
+
+          <article class="product-card coming">
+            <div class="coming-box">
+              <div class="coming-tag" data-i18n="comingSoon">Coming Soon</div>
+              <h3 data-i18n="product2Title">Shirt</h3>
+              <p data-i18n="comingDesc">নতুন প্রোডাক্ট খুব শীঘ্রই আসছে।</p>
+            </div>
+          </article>
+
+          <article class="product-card coming">
+            <div class="coming-box">
+              <div class="coming-tag" data-i18n="comingSoon">Coming Soon</div>
+              <h3 data-i18n="product3Title">Pant</h3>
+              <p data-i18n="comingDesc">নতুন প্রোডাক্ট খুব শীঘ্রই আসছে।</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="order">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="orderEyebrow">অর্ডার</div>
+          <h2 data-i18n="orderTitle">সার্ভিস অর্ডার করুন</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="order-card">
+            <h3 data-i18n="service1Title">Excel Service</h3>
+            <p data-i18n="service1Desc">Sheet, formula, report, data organization.</p>
+            <button class="order-btn" data-service="excel" data-i18n="orderBtn">অর্ডার করুন</button>
+          </article>
+
+          <article class="order-card">
+            <h3 data-i18n="service2Title">Word Service</h3>
+            <p data-i18n="service2Desc">Typing, formatting, document work.</p>
+            <button class="order-btn" data-service="word" data-i18n="orderBtn">অর্ডার করুন</button>
+          </article>
+
+          <article class="order-card">
+            <h3 data-i18n="service3Title">Data Entry Service</h3>
+            <p data-i18n="service3Desc">Fast and accurate data entry support.</p>
+            <button class="order-btn" data-service="dataentry" data-i18n="orderBtn">অর্ডার করুন</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-head">
+          <div class="eyebrow" data-i18n="contactEyebrow">যোগাযোগ</div>
+          <h2 data-i18n="contactTitle">আমার সাথে যোগাযোগ করুন</h2>
+        </div>
+
+        <div class="grid-2">
+          <div class="section-card contact-card">
+            <h3 data-i18n="contactCardTitle">কন্টাক্ট তথ্য</h3>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/8801576502490" target="_blank" rel="noopener">01576502490</a></p>
+            <p><strong>Facebook:</strong> <a href="https://www.facebook.com/ismailhossen.nihad" target="_blank" rel="noopener">ismailhossen.nihad</a></p>
+            <p><strong>Email:</strong> <a href="mailto:ismailhoseen77@gmail.com">ismailhoseen77@gmail.com</a></p>
+            <p><strong data-i18n="metaLocation">ঠিকানা</strong>: <span id="contactAddress">চট্টগ্রাম, বাংলাদেশ</span></p>
+          </div>
+
+          <div class="section-card contact-card">
+            <h3 data-i18n="quickOrderTitle">দ্রুত অর্ডার</h3>
+            <div class="quick-buttons">
+              <button class="ghost-btn" data-service="excel" data-i18n="quickExcel">Excel</button>
+              <button class="ghost-btn" data-service="word" data-i18n="quickWord">Word</button>
+              <button class="ghost-btn" data-service="dataentry" data-i18n="quickDataEntry">Data Entry</button>
+              <button class="ghost-btn" data-product="shirt" data-i18n="quickTshirt">T-Shirt</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© <span id="year"></span> Ismail Hossen Nihad. <span data-i18n="footerText">সব অধিকার সংরক্ষিত।</span></p>
+      </footer>
+    </main>
+
+    <button class="floating-whatsapp" id="floatingWhatsapp" aria-label="WhatsApp">
+      <span>💬</span>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
