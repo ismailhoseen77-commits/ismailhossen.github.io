@@ -197,3 +197,8 @@ behavior:"smooth"
 });
 
 });
+
+document.getElementById("continueBtn").onclick = function () {
+    document.getElementById("welcomeScreen").style.display = "none";
+    document.getElementById("app").classList.remove("app-hidden");
+};
