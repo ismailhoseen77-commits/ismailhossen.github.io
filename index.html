@@ -8,109 +8,68 @@
 </head>
 <body>
 
-    <!-- স্বাগতম পেজ -->
+    <div class="controls">
+        <button id="theme-toggle">🌙 মোড</button>
+        <button id="lang-toggle">🌐 EN/BN</button>
+    </div>
+
     <div id="welcome-page">
         <div class="welcome-container">
-            <h2>স্বাগতম! আপনার তথ্য দিন</h2>
+            <h2 data-bn="স্বাগতম! আপনার তথ্য দিন" data-en="Welcome! Enter your details">স্বাগতম! আপনার তথ্য দিন</h2>
             <form id="info-form">
                 <input type="text" id="username" placeholder="আপনার নাম" required>
                 <input type="text" id="useraddress" placeholder="আপনার ঠিকানা" required>
                 <input type="tel" id="userphone" placeholder="মোবাইল নাম্বার" required>
                 <button type="submit" class="primary-btn">জমা দিন</button>
             </form>
-            <div class="or-divider">বা / OR</div>
             <button id="continue-btn" class="continue-btn">চালিয়ে যান &rarr;</button>
         </div>
     </div>
 
-    <!-- মূল সাইট -->
-    <div id="main-site">
+    <div id="main-site" style="display:none;">
         <header>
             <div class="navbar">
                 <div class="logo" id="logo-home">MihadX</div>
                 <nav>
-                    <a href="#" class="nav-btn active" data-target="home">হোম</a>
-                    <a href="#" class="nav-btn" data-target="skills">আমার দক্ষতা</a>
-                    <a href="#" class="nav-btn" data-target="works">আমার কাজগুলো</a>
-                    <a href="#" class="nav-btn" data-target="shop">শপ</a>
-                    <a href="#" class="nav-btn" data-target="order">অর্ডার</a>
+                    <a href="#" class="nav-btn active" data-target="home" data-bn="হোম" data-en="Home">হোম</a>
+                    <a href="#" class="nav-btn" data-target="skills" data-bn="আমার দক্ষতা" data-en="Skills">আমার দক্ষতা</a>
+                    <a href="#" class="nav-btn" data-target="works" data-bn="আমার কাজগুলো" data-en="Works">আমার কাজগুলো</a>
+                    <a href="#" class="nav-btn" data-target="shop" data-bn="শপ" data-en="Shop">শপ</a>
+                    <a href="#" class="nav-btn" data-target="order" data-bn="অর্ডার" data-en="Order">অর্ডার</a>
                 </nav>
             </div>
         </header>
 
         <main class="content-area">
             <section id="home" class="page-section">
-                <!-- হোম কন্টেন্ট -->
-            </section>
-
-            <section id="skills" class="page-section">
-                <!-- স্কিল কন্টেন্ট -->
-            </section>
-
-            <section id="works" class="page-section">
-                <!-- ওয়ার্কস কন্টেন্ট -->
-            </section>
-
-            <!-- শপ সেকশন: এখানে শার্ট, প্যান্ট এবং গেঞ্জি একসাথে থাকবে -->
-            <section id="shop" class="page-section">
-                <div class="section-header">
-                    <h2>আমাদের শপ কালেকশন</h2>
-                </div>
-                <div class="grid-layout">
-                    <!-- শার্ট -->
-                    <div class="product-card">
-                        <h3>প্রিমিয়াম ক্যাজুয়াল কটন শার্ট</h3>
-                        <p class="price">৳ ৫৫০</p>
-                        <button class="buy-now" data-item="প্রিমিয়াম ক্যাজুয়াল কটন শার্ট">অর্ডার করুন</button>
-                    </div>
-                    <!-- প্যান্ট -->
-                    <div class="product-card">
-                        <h3>ক্যাজুয়াল স্টাইলিশ গ্যাবার্ডিন প্যান্ট</h3>
-                        <p class="price">৳ ৬৫০</p>
-                        <button class="buy-now" data-item="ক্যাজুয়াল স্টাইলিশ গ্যাবার্ডিন প্যান্ট">অর্ডার করুন</button>
-                    </div>
-                    <!-- গেঞ্জি (শপের ভিতরেই চলে এসেছে) -->
-                    <div class="product-card premium-card">
-                        <div class="hot-badge">HOT PRODUCT</div>
-                        <h3>মানি-এরা ড্রপ শোল্ডার টি-শার্ট</h3>
-                        <p class="price">৳ ৪৯০</p>
-                        <button class="buy-now" data-item="মানি-এরা ড্রপ শোল্ডার টি-শার্ট">অর্ডার করুন</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="order" class="page-section">
-    <div class="section-header">
-        <h2>সরাসরি অর্ডার করুন</h2>
-        <p class="sub-title">আপনার প্রয়োজনীয় সার্ভিসটি সিলেক্ট করে হোয়াটসঅ্যাপে যোগাযোগ করুন:</p>
-    </div>
-    
-    <div class="grid-layout" style="margin-top: 20px;">
-        <!-- এক্সেল সার্ভিস অর্ডার -->
-        <div class="card">
-            <h3>Excel Automation</h3>
-            <button class="buy-now" data-item="Excel Automation সার্ভিস" style="background:#25d366; color:white; border:none; padding:10px; width:100%; border-radius:5px; cursor:pointer;">অর্ডার করুন</button>
-        </div>
-        
-        <!-- ওয়ার্ড সার্ভিস অর্ডার -->
-        <div class="card">
-            <h3>MS Word Documenting</h3>
-            <button class="buy-now" data-item="MS Word Documenting সার্ভিস" style="background:#25d366; color:white; border:none; padding:10px; width:100%; border-radius:5px; cursor:pointer;">অর্ডার করুন</button>
-        </div>
-        
-        <!-- ডাটা এন্ট্রি সার্ভিস অর্ডার -->
-        <div class="card">
-            <h3>Data Entry Service</h3>
-            <button class="buy-now" data-item="Data Entry সার্ভিস" style="background:#25d366; color:white; border:none; padding:10px; width:100%; border-radius:5px; cursor:pointer;">অর্ডার করুন</button>
-        </div>
-    </div>
-
-    <!-- জেনারেল হোয়াটসঅ্যাপ বাটন -->
-    <div class="order-box" style="margin-top:30px;">
-        <button id="main-whatsapp-btn" class="whatsapp-btn">💬 অন্য কোনো কাজের জন্য হোয়াটসঅ্যাপে যোগাযোগ করুন</button>
-    </div>
+                <h1>হাই, আমি ইসমাইল মিহাদ</h1>
+                <p>অ্যাডভান্সড এক্সেল অটোমেশন ও ডিজিটাল এন্টারপ্রেনার।</p>
             </section>
             
+            <section id="skills" class="page-section" style="display:none;">
+                <h2>আমার দক্ষতা</h2>
+                <div class="grid-layout">
+                    <div class="card"><h3>Excel Automation</h3><button class="buy-now" data-item="Excel সার্ভিস">অর্ডার করুন</button></div>
+                    <div class="card"><h3>Word Document</h3><button class="buy-now" data-item="Word সার্ভিস">অর্ডার করুন</button></div>
+                    <div class="card"><h3>Data Entry</h3><button class="buy-now" data-item="Data Entry সার্ভিস">অর্ডার করুন</button></div>
+                </div>
+            </section>
+
+            <section id="works" class="page-section" style="display:none;"><h2>আমার কাজগুলো</h2></section>
+
+            <section id="shop" class="page-section" style="display:none;">
+                <h2>শপ</h2>
+                <div class="grid-layout">
+                    <div class="card"><h3>শার্ট</h3><button class="buy-now" data-item="শার্ট">অর্ডার</button></div>
+                    <div class="card"><h3>প্যান্ট</h3><button class="buy-now" data-item="প্যান্ট">অর্ডার</button></div>
+                    <div class="card"><h3>টি-শার্ট</h3><button class="buy-now" data-item="টি-শার্ট">অর্ডার</button></div>
+                </div>
+            </section>
+
+            <section id="order" class="page-section" style="display:none;">
+                <h2>সরাসরি অর্ডার করুন</h2>
+                <button id="main-whatsapp-btn" class="whatsapp-btn">💬 হোয়াটসঅ্যাপে অর্ডার করুন</button>
+            </section>
         </main>
     </div>
     <script src="script.js"></script>
