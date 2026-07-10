@@ -1,9 +1,8 @@
 /**
  * ================================
- * ISMAIL HOSSEN - FIXED JAVASCRIPT
+ * ISMAIL HOSSEN - SIMPLE SCRIPT
  * ================================
- * FIXED: Loading Screen Issue
- * Dark Mode | Language Switch | Navigation | Animations
+ * NO Loading Screen - Direct to Home
  */
 
 // ================================
@@ -27,80 +26,22 @@ const TRANSLATIONS = {
         'হোম': 'হোম',
         'আমার কাজ': 'আমার কাজ',
         'ই-কমার্স': 'ই-কমার্স',
-        'সেবা অর্ডার': 'সেবা অর্ডার',
-        'লোড হচ্ছে...': 'লোড হচ্ছে...',
-        'IsmaIL': 'IsmaIL',
-        'যোগাযোগ করুন': 'যোগাযোগ করুন',
-        'আমার দক্ষতা দেখুন': 'আমার দক্ষতা দেখুন',
-        'আমার কাজ ও দক্ষতা': 'আমার কাজ ও দক্ষতা',
-        'আমাদের পণ্য': 'আমাদের পণ্য',
-        'আমার সেবা অর্ডার করুন': 'আমার সেবা অর্ডার করুন',
-        'আমাদের সাথে যোগাযোগ করুন': 'আমাদের সাথে যোগাযোগ করুন',
-        'সেবা': 'সেবা',
-        'পেজ': 'পেজ',
-        'যোগাযোগ': 'যোগাযোগ',
-        'অবস্থান': 'অবস্থান',
-        'সর্বাধিকার সংরক্ষিত': 'সর্বাধিকার সংরক্ষিত'
+        'সেবা অর্ডার': 'সেবা অর্ডার'
     },
     en: {
         'হোম': 'Home',
         'আমার কাজ': 'My Work',
         'ই-কমার্স': 'E-Commerce',
-        'সেবা অর্ডার': 'Order Services',
-        'লোড হচ্ছে...': 'Loading...',
-        'IsmaIL': 'IsmaIL',
-        'যোগাযোগ করুন': 'Contact Me',
-        'আমার দক্ষতা দেখুন': 'View My Skills',
-        'আমার কাজ ও দক্ষতা': 'My Work & Skills',
-        'আমাদের পণ্য': 'Our Products',
-        'আমার সেবা অর্ডার করুন': 'Order My Services',
-        'আমাদের সাথে যোগাযোগ করুন': 'Contact Us',
-        'সেবা': 'Services',
-        'পেজ': 'Pages',
-        'যোগাযোগ': 'Contact',
-        'অবস্থান': 'Location',
-        'সর্বাধিকার সংরক্ষিত': 'All Rights Reserved'
+        'সেবা অর্ডার': 'Order Services'
     }
 };
 
 // ================================
-// LOADING SCREEN - IMMEDIATE FIX
-// ================================
-
-// Function to hide loading screen
-function hideLoadingScreenNow() {
-    const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
-        loadingScreen.style.opacity = '0';
-        loadingScreen.style.visibility = 'hidden';
-        loadingScreen.style.pointerEvents = 'none';
-        loadingScreen.style.transition = 'opacity 0.5s ease';
-        
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
-    }
-}
-
-// Hide loading screen after 1.5 seconds
-setTimeout(hideLoadingScreenNow, 1500);
-
-// Also hide when page fully loads
-window.addEventListener('load', function() {
-    hideLoadingScreenNow();
-});
-
-// Hide on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    hideLoadingScreenNow();
-});
-
-// ================================
-// MAIN INITIALIZATION
+// INITIALIZATION
 // ================================
 
 window.addEventListener('load', function() {
-    console.log('🚀 ইসমাইল পোর্টফোলিও লোড হচ্ছে...');
+    console.log('🚀 পোর্টফোলিও লোড হচ্ছে...');
     
     // Initialize theme
     initializeTheme();
@@ -122,9 +63,6 @@ window.addEventListener('load', function() {
     
     // Add event listeners
     addEventListeners();
-    
-    // Final loading screen hide
-    hideLoadingScreenNow();
     
     console.log('✅ পোর্টফোলিও সফলভাবে লোড হয়েছে!');
 });
@@ -207,22 +145,6 @@ function setLanguage(language) {
     
     // Store current language
     window.currentLanguage = lang;
-    
-    // Update all translations
-    updateAllTranslations(lang);
-}
-
-function updateAllTranslations(language) {
-    const elements = document.querySelectorAll('[data-translate]');
-    
-    elements.forEach(element => {
-        const key = element.getAttribute('data-translate');
-        const translation = TRANSLATIONS[language] && TRANSLATIONS[language][key];
-        
-        if (translation) {
-            element.textContent = translation;
-        }
-    });
 }
 
 function toggleLanguage() {
@@ -320,7 +242,6 @@ function addNavbarActiveState() {
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
             
             if (scrollY >= sectionTop - 200) {
                 currentSection = section.getAttribute('id');
@@ -349,124 +270,6 @@ function getCurrentLanguage() {
     return window.currentLanguage || CONFIG.DEFAULT_LANGUAGE;
 }
 
-/**
- * Debounce function for performance optimization
- */
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-/**
- * Throttle function for performance optimization
- */
-function throttle(func, limit) {
-    let lastFunc;
-    let lastRan;
-    return function(...args) {
-        if (!lastRan) {
-            func.apply(this, args);
-            lastRan = Date.now();
-        } else {
-            clearTimeout(lastFunc);
-            lastFunc = setTimeout(function() {
-                if ((Date.now() - lastRan) >= limit) {
-                    func.apply(this, args);
-                    lastRan = Date.now();
-                }
-            }, limit - (Date.now() - lastRan));
-        }
-    };
-}
-
-// ================================
-// SHOW NOTIFICATION
-// ================================
-
-function showNotification(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-4 rounded-lg shadow-lg fixed bottom-24 right-4 z-50`;
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        toast.remove();
-    }, 4000);
-}
-
-// ================================
-// PERFORMANCE MONITORING
-// ================================
-
-function logPerformanceMetrics() {
-    if (window.performance && window.performance.timing) {
-        const timing = window.performance.timing;
-        const loadTime = timing.loadEventEnd - timing.navigationStart;
-        const connectTime = timing.responseEnd - timing.requestStart;
-        
-        console.log(`⏱️ পেজ লোড টাইম: ${loadTime}ms`);
-        console.log(`🌐 সংযোগ টাইম: ${connectTime}ms`);
-    }
-}
-
-// Log metrics when page is fully loaded
-window.addEventListener('load', function() {
-    setTimeout(logPerformanceMetrics, 0);
-});
-
-// ================================
-// LAZY LOADING
-// ================================
-
-function initializeLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
-                    observer.unobserve(img);
-                }
-            });
-        });
-        
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', initializeLazyLoading);
-
-// ================================
-// SCROLL TO TOP BUTTON
-// ================================
-
-function handleScrollToTop() {
-    window.addEventListener('scroll', function() {
-        const scrollTopBtn = document.querySelector('.scroll-to-top');
-        if (window.pageYOffset > 300) {
-            if (scrollTopBtn) scrollTopBtn.style.display = 'block';
-        } else {
-            if (scrollTopBtn) scrollTopBtn.style.display = 'none';
-        }
-    });
-}
-
-handleScrollToTop();
-
 // ================================
 // EXPORT FOR DEBUGGING
 // ================================
@@ -476,10 +279,9 @@ window.ismailDebug = {
     getCurrentLanguage,
     toggleTheme,
     toggleLanguage,
-    hideLoadingScreenNow,
     CONFIG,
-    TRANSLATIONS,
-    showNotification
+    TRANSLATIONS
 };
 
-console.log('💡 ডিবাগ ইনফো উপলব্ধ: window.ismailDebug');
+console.log('✅ সাইট সম্পূর্ণভাবে প্রস্তুত এবং লাইভ!');
+        
