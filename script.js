@@ -1,13 +1,8 @@
 /**
  * ================================
- * ISMAIL HOSSEN - MOBILE SCRIPT
+ * ISMAIL HOSSEN - FIXED SCRIPT
  * ================================
- * Simple Theme Toggle + Language Support
  */
-
-// ================================
-// CONFIGURATION
-// ================================
 
 const CONFIG = {
     THEME_KEY: 'ismail_theme',
@@ -16,15 +11,12 @@ const CONFIG = {
     DEFAULT_LANGUAGE: 'bn'
 };
 
-// ================================
-// INITIALIZATION
-// ================================
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ মোবাইল সাইট লোড হয়েছে!');
     
-    // Initialize theme
+    // Initialize Theme and Language
     initializeTheme();
+    initializeLanguage();
     
     // Add event listeners
     addEventListeners();
@@ -36,10 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeTheme() {
     const savedTheme = localStorage.getItem(CONFIG.THEME_KEY) || CONFIG.DEFAULT_THEME;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    const theme = savedTheme || (prefersDark ? 'dark' : CONFIG.DEFAULT_THEME);
-    applyTheme(theme);
+    applyTheme(savedTheme);
 }
 
 function applyTheme(theme) {
@@ -52,7 +41,6 @@ function applyTheme(theme) {
     }
     
     localStorage.setItem(CONFIG.THEME_KEY, theme);
-    updateThemeButton(theme);
 }
 
 function toggleTheme() {
@@ -62,19 +50,8 @@ function toggleTheme() {
     applyTheme(newTheme);
 }
 
-function updateThemeButton(theme) {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    
-    if (theme === 'dark') {
-        btn.innerHTML = '<i class="fas fa-moon hidden dark:block"></i><i class="fas fa-sun dark:hidden"></i>';
-    } else {
-        btn.innerHTML = '<i class="fas fa-sun dark:hidden"></i><i class="fas fa-moon hidden dark:block"></i>';
-    }
-}
-
 // ================================
-// LANGUAGE MANAGEMENT
+// LANGUAGE MANAGEMENT (FIXED)
 // ================================
 
 function initializeLanguage() {
@@ -86,10 +63,24 @@ function setLanguage(lang) {
     localStorage.setItem(CONFIG.LANGUAGE_KEY, lang);
     document.documentElement.lang = lang;
     
+    // Change button text indicator
     const langText = document.getElementById('lang-text');
     if (langText) {
-        langText.textContent = lang.toUpperCase();
+        langText.textContent = lang === 'bn' ? 'EN' : 'BN';
     }
+    
+    // Update all elements with translations
+    document.querySelectorAll('[data-bn]').forEach(el => {
+        if (lang === 'en') {
+            if (el.getAttribute('data-en')) {
+                el.innerHTML = el.getAttribute('data-en');
+            }
+        } else {
+            if (el.getAttribute('data-bn')) {
+                el.innerHTML = el.getAttribute('data-bn');
+            }
+        }
+    });
 }
 
 function toggleLanguage() {
@@ -114,60 +105,5 @@ function addEventListeners() {
     if (langBtn) {
         langBtn.addEventListener('click', toggleLanguage);
     }
-    
-    // Smooth scroll for links
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#') {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-    });
 }
 
-// ================================
-// PERFORMANCE
-// ================================
-
-// Log when page is fully loaded
-window.addEventListener('load', function() {
-    console.log('🚀 সব কিছু সফলভাবে লোড হয়েছে!');
-    
-    // Show performance metrics
-    if (window.performance) {
-        const perfData = window.performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log('⏱️ পেজ লোড সময়: ' + pageLoadTime + 'ms');
-    }
-});
-
-// ================================
-// UTILITY FUNCTIONS
-// ================================
-
-function getCurrentTheme() {
-    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-}
-
-function getCurrentLanguage() {
-    return localStorage.getItem(CONFIG.LANGUAGE_KEY) || CONFIG.DEFAULT_LANGUAGE;
-}
-
-// ================================
-// EXPORT DEBUG
-// ================================
-
-window.ismailDebug = {
-    getCurrentTheme,
-    getCurrentLanguage,
-    toggleTheme,
-    toggleLanguage,
-    CONFIG
-};
-
-console.log('💡 ডিবাগ: window.ismailDebug ব্যবহার করুন');
