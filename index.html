@@ -136,6 +136,234 @@
             </div>
         </section>
 
+        <!-- TopUp Section -->
+        <section class="w-full bg-slate-100 dark:bg-gray-900 py-10 px-4 border-t border-b border-gray-200 dark:border-gray-800">
+            <h2 class="text-3xl font-extrabold text-center mb-8 text-orange-500 flex items-center justify-center gap-2">
+                <i class="fas fa-gamepad"></i> <span class="lang-topup-main-title">টপআপ সেন্টার</span>
+            </h2>
+
+            <div class="max-w-2xl mx-auto space-y-6">
+                <!-- Game Category Selector -->
+                <div class="grid grid-cols-2 gap-4">
+                    <button id="btn-ff" onclick="showTopupCategory('ff')" class="p-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-2xl shadow-lg flex flex-col items-center justify-center font-bold text-sm sm:text-base border-2 border-orange-400 transition transform hover:scale-105">
+                        <img src="free-fire-logo.png" alt="Free Fire" class="w-12 h-12 object-contain mb-2 drop-shadow-md">
+                        <span class="lang-ff-btn text-center">ফ্রি ফায়ার ইউআইডি (BD Server)</span>
+                    </button>
+                    
+                    <button id="btn-ef" onclick="showTopupCategory('ef')" class="p-4 bg-gray-300 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-2xl shadow flex flex-col items-center justify-center font-bold text-sm sm:text-base relative overflow-hidden transition">
+                        <div class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-[10px] px-2 py-0.5 rounded-full font-bold lang-coming">শীঘ্রই আসছে</div>
+                        <img src="EFootball_logo.png" alt="eFootball" class="w-12 h-12 object-contain mb-2 drop-shadow-md">
+                        <span class="lang-ef-btn text-center">ই ফুটবল (Japan & BD Server)</span>
+                    </button>
+                </div>
+
+                <!-- Free Fire Multi-Step TopUp Box -->
+                <div id="ff-topup-box" class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-xl border border-orange-200 dark:border-gray-700">
+                    
+                    <!-- STEP 1: Package & UID Selection -->
+                    <div id="ff-step-1">
+                        <h3 class="text-xl font-bold mb-4 text-orange-600 flex items-center gap-2">
+                            <i class="fas fa-gem"></i> <span class="lang-ff-head">ফ্রি ফায়ার ইউআইডি টপআপ</span>
+                        </h3>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold mb-3 text-gray-700 dark:text-gray-300 lang-step1">১. রিচার্জ প্যাকেজ সিলেক্ট করুন:</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="package-list">
+                                <button type="button" onclick="selectPkg(this, '25 Diamond', 27)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">25 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">27 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '50 Diamond', 42)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">50 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">42 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '100 Diamond', 77)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">100 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">77 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '115 Diamond', 85)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">115 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">85 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '240 Diamond', 162)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">240 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">162 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '355 Diamond', 242)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">355 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">242 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '505 Diamond', 337)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">505 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">337 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '610 Diamond', 397)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">610 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">397 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '850 Diamond', 552)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">850 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">552 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '1090 Diamond', 717)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">1090 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">717 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '1240 Diamond', 787)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">1240 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">787 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '2530 Diamond', 1597)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">2530 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">1597 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '5060 Diamond', 3187)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">5060 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">3187 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '10120 Diamond', 6357)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">10120 Diamond</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">6357 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, 'Weekly', 160)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">Weekly</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">160 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, 'Monthly', 767)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">Monthly</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">767 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '2x Weekly', 313)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">2x Weekly</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">313 TK</div>
+                                </button>
+                                <button type="button" onclick="selectPkg(this, '3x Weekly', 465)" class="pkg-btn border-2 border-gray-200 dark:border-gray-700 p-3 rounded-xl text-center hover:border-orange-500 transition">
+                                    <div class="font-bold text-sm">3x Weekly</div>
+                                    <div class="text-orange-500 font-extrabold text-sm">465 TK</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300 lang-step2">২. প্লেয়ার আইডি (Player UID):</label>
+                            <input type="text" id="player-uid" placeholder="উদাহরণ: 123456789" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+
+                        <button type="button" onclick="goToStep2()" class="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-bold text-lg shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                            <span>পেমেন্ট করতে এগিয়ে যান</span> <i class="fas fa-arrow-right"></i>
+                                        </button>
+                    </div>
+
+                    <!-- STEP 2: Payment Method Selection -->
+                    <div id="ff-step-2" class="hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <button onclick="goToStep1()" class="text-sm font-bold text-gray-500 hover:text-orange-500 flex items-center gap-1">
+                                <i class="fas fa-arrow-left"></i> পেছনে যান
+                            </button>
+                            <span class="text-xs bg-orange-100 text-orange-600 font-bold px-3 py-1 rounded-full">Secure Checkout</span>
+                        </div>
+
+                        <div class="bg-blue-600 text-white text-center py-2.5 rounded-lg font-bold text-sm mb-6">
+                            মোবাইল ব্যাংকিং
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                            <button type="button" onclick="selectPaymentMethod('bKash')" class="border-2 border-pink-500 bg-pink-50/50 dark:bg-gray-700/50 p-4 rounded-xl flex flex-col items-center justify-center hover:shadow-lg transition">
+                                <span class="text-2xl font-black text-pink-600">bKash</span>
+                                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 mt-1">বিকাশ পার্সোনাল</span>
+                            </button>
+                            
+                            <button type="button" onclick="selectPaymentMethod('Nagad')" class="border-2 border-orange-400 bg-orange-50/50 dark:bg-gray-700/50 p-4 rounded-xl flex flex-col items-center justify-center opacity-70 cursor-not-allowed">
+                                <span class="text-2xl font-black text-orange-600">নগদ</span>
+                                <span class="text-xs font-bold text-gray-500 mt-1">(সাময়িক বন্ধ)</span>
+                            </button>
+
+                            <button type="button" onclick="selectPaymentMethod('Rocket')" class="border-2 border-purple-400 bg-purple-50/50 dark:bg-gray-700/50 p-4 rounded-xl flex flex-col items-center justify-center opacity-70 cursor-not-allowed">
+                                <span class="text-2xl font-black text-purple-600">রকেট</span>
+                                <span class="text-xs font-bold text-gray-500 mt-1">(সাময়িক বন্ধ)</span>
+                            </button>
+                        </div>
+
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-center text-sm font-bold text-gray-700 dark:text-gray-200">
+                            মোট দেয় টাকা: <span id="checkout-amount" class="text-orange-500 font-extrabold text-lg">0</span> BDT
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: bKash Payment Instructions & TrxID -->
+                    <div id="ff-step-3" class="hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <button onclick="goToStep2()" class="text-xs font-bold text-white bg-gray-600 hover:bg-gray-700 px-3 py-1.5 rounded-lg flex items-center gap-1">
+                                <i class="fas fa-arrow-left"></i> পেছনে
+                            </button>
+                            <span class="text-sm font-bold text-pink-600 dark:text-pink-400">bKash Payment</span>
+                        </div>
+
+                        <div class="bg-[#D12053] text-white p-5 rounded-2xl shadow-xl space-y-4">
+                            <h4 class="text-xl font-extrabold text-center tracking-wide">ট্রান্সজেকশন আইডি দিন</h4>
+                            
+                            <div class="space-y-1">
+                                <input type="text" id="user-trxid" placeholder="ট্রান্সজেকশন আইডি দিন" class="w-full p-3 rounded-lg text-gray-900 font-semibold focus:outline-none text-center bg-white shadow-inner placeholder-gray-400">
+                            </div>
+
+                            <ul class="text-xs sm:text-sm space-y-2.5 pt-2 border-t border-pink-400/50 font-medium">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span>*247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান।</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span><b class="text-yellow-300">"Send Money"</b> -এ ক্লিক করুন।</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <div class="flex-1 flex flex-wrap items-center gap-2">
+                                        <span>প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন:</span>
+                                        <div class="inline-flex items-center gap-2 bg-pink-800/80 px-2.5 py-1 rounded border border-pink-300">
+                                            <b class="text-yellow-300 font-mono text-base">01309735129</b>
+                                            <button type="button" onclick="copyBkashNumber('01309735129')" class="bg-white text-pink-700 text-xs px-2 py-0.5 rounded font-bold hover:bg-gray-100 flex items-center gap-1">
+                                                <i class="fas fa-copy"></i> <span id="copy-text">Copy</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span>টাকার পরিমাণ: <b id="bkash-pay-amount" class="text-yellow-300 font-bold text-base">0</b> BDT</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span>নিশ্চিত করতে এখন আপনার bKash মোবাইল মেনু পিন লিখুন।</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span>সবকিছু ঠিক থাকলে, আপনি bKash থেকে একটি নিশ্চিতকরণ বার্তা পাবেন।</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-yellow-300">●</span>
+                                    <span>এখন উপরের বক্সে আপনার <b class="text-yellow-300">Transaction ID</b> দিন এবং নিচে <b class="text-yellow-300">VERIFY</b> বাটনে ক্লিক করুন।</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <button type="button" onclick="submitTopupOrder()" class="w-full mt-4 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-extrabold text-lg shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 tracking-wider">
+                            <i class="fab fa-whatsapp text-xl"></i> VERIFY / WhatsApp এ অর্ডার দিন
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- eFootball TopUp Box (Coming Soon) -->
+                <div id="ef-topup-box" class="hidden bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center border border-blue-200 dark:border-gray-700">
+                    <img src="EFootball_logo.png" alt="eFootball Logo" class="w-20 h-20 mx-auto mb-4 object-contain">
+                    <h3 class="text-2xl font-bold mb-2 text-blue-600 lang-ef-head">ই ফুটবল টপআপ (Japan & BD Server)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 lang-ef-desc">এই সার্ভারটির কাজ বর্তমানে চলছে। খুব শীঘ্রই ফুটবল কয়েন টপআপ চালু করা হবে।</p>
+                    <div class="inline-block bg-yellow-400 text-yellow-900 font-extrabold px-4 py-2 rounded-full text-sm shadow lang-coming">
+                        শীঘ্রই আসছে (Coming Soon)
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Skills Section -->
         <section class="w-full bg-white dark:bg-gray-900 py-8 px-4">
             <h2 class="text-3xl font-bold text-center mb-8 lang-skills-title">আমার দক্ষতা ও কাজ</h2>
@@ -173,10 +401,110 @@
 
     </main>
 
-    <!-- Accurate Script for Theme & Language Toggle -->
+    <!-- JavaScript Logic -->
     <script>
+        let selectedPackage = null;
+        let selectedPrice = 0;
+        let selectedPaymentMethod = "bKash";
+
+        function showTopupCategory(type) {
+            const ffBox = document.getElementById('ff-topup-box');
+            const efBox = document.getElementById('ef-topup-box');
+            const btnFf = document.getElementById('btn-ff');
+            const btnEf = document.getElementById('btn-ef');
+
+            if (type === 'ff') {
+                ffBox.classList.remove('hidden');
+                efBox.classList.add('hidden');
+                btnFf.className = "p-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-2xl shadow-lg flex flex-col items-center justify-center font-bold text-sm sm:text-base border-2 border-orange-400 transition transform hover:scale-105";
+                btnEf.className = "p-4 bg-gray-300 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-2xl shadow flex flex-col items-center justify-center font-bold text-sm sm:text-base relative overflow-hidden transition";
+            } else {
+                efBox.classList.remove('hidden');
+                ffBox.classList.add('hidden');
+                btnEf.className = "p-4 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-2xl shadow-lg flex flex-col items-center justify-center font-bold text-sm sm:text-base border-2 border-blue-400 transition transform hover:scale-105 relative overflow-hidden";
+                btnFf.className = "p-4 bg-gray-300 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-2xl shadow flex flex-col items-center justify-center font-bold text-sm sm:text-base transition";
+            }
+        }
+
+        function selectPkg(element, packageName, price) {
+            document.querySelectorAll('.pkg-btn').forEach(btn => {
+                btn.classList.remove('border-orange-500', 'bg-orange-50', 'dark:bg-gray-700');
+                btn.classList.add('border-gray-200', 'dark:border-gray-700');
+            });
+            element.classList.remove('border-gray-200', 'dark:border-gray-700');
+            element.classList.add('border-orange-500', 'bg-orange-50', 'dark:bg-gray-700');
+            
+            selectedPackage = packageName;
+            selectedPrice = price;
+        }
+
+        function goToStep1() {
+            document.getElementById('ff-step-1').classList.remove('hidden');
+            document.getElementById('ff-step-2').classList.add('hidden');
+            document.getElementById('ff-step-3').classList.add('hidden');
+        }
+
+        function goToStep2() {
+            const uid = document.getElementById('player-uid').value.trim();
+            if (!selectedPackage) {
+                alert("অনুগ্রহ করে একটি টপআপ প্যাকেজ নির্বাচন করুন!");
+                return;
+            }
+            if (!uid) {
+                alert("অনুগ্রহ করে আপনার Free Fire Player UID বসান!");
+                return;
+            }
+
+            document.getElementById('checkout-amount').textContent = selectedPrice;
+            document.getElementById('ff-step-1').classList.add('hidden');
+            document.getElementById('ff-step-2').classList.remove('hidden');
+            document.getElementById('ff-step-3').classList.add('hidden');
+        }
+
+        function selectPaymentMethod(method) {
+            if (method !== 'bKash') {
+                alert("দুঃখিত, বর্তমানে শুধুমাত্র বিকাশ পেমেন্ট চালু আছে।");
+                return;
+            }
+            selectedPaymentMethod = method;
+            document.getElementById('bkash-pay-amount').textContent = selectedPrice;
+            
+            document.getElementById('ff-step-1').classList.add('hidden');
+            document.getElementById('ff-step-2').classList.add('hidden');
+            document.getElementById('ff-step-3').classList.remove('hidden');
+        }
+
+        function copyBkashNumber(num) {
+            navigator.clipboard.writeText(num);
+            const copyText = document.getElementById('copy-text');
+            copyText.textContent = "Copied!";
+            setTimeout(() => {
+                copyText.textContent = "Copy";
+            }, 2000);
+        }
+
+        function submitTopupOrder() {
+            const uid = document.getElementById('player-uid').value.trim();
+            const trxid = document.getElementById('user-trxid').value.trim();
+
+            if (!trxid) {
+                alert("অনুগ্রহ করে আপনার বিকাশের Transaction ID (TrxID) বসান!");
+                return;
+            }
+
+            const message = `*--- নতুন টপআপ অর্ডার ---*%0A%0A` +
+                            `*প্যাকেজ:* ${selectedPackage}%0A` +
+                            `*মূল্য:* ${selectedPrice} BDT%0A` +
+                            `*Player UID:* ${uid}%0A` +
+                            `*পেমেন্ট মেথড:* ${selectedPaymentMethod}%0A` +
+                            `*TrxID:* ${trxid}%0A%0A` +
+                            `ধন্যবাদ! অনুগ্রহ করে দ্রুত টপআপ সম্পন্ন করুন।`;
+
+            window.open(`https://wa.me/8801576502490?text=${message}`, '_blank');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Dark/Light Mode Toggle ---
+            // Dark/Light Mode
             const themeToggleBtn = document.getElementById('theme-toggle');
             const htmlElement = document.documentElement;
 
@@ -194,7 +522,7 @@
                 }
             });
 
-            // --- Language Toggle (BN / EN) ---
+            // Language Toggle
             const langToggleBtn = document.getElementById('lang-toggle');
             const langText = document.getElementById('lang-text');
 
@@ -226,7 +554,15 @@
                     compTitle: "কম্পিউটার",
                     compDesc: "ফাইল, ইন্টারনেট, সফটওয়্যার",
                     compLvl: "দক্ষতা ৯০%",
-                    toggleBtn: "EN"
+                    toggleBtn: "EN",
+                    topupMainTitle: "টপআপ সেন্টার",
+                    ffBtn: "ফ্রি ফায়ার ইউআইডি (BD Server)",
+                    efBtn: "ই ফুটবল (Japan & BD Server)",
+                    ffHead: "ফ্রি ফায়ার ইউআইডি টপআপ",
+                    step1: "১. রিচার্জ প্যাকেজ সিলেক্ট করুন:",
+                    step2: "২. প্লেয়ার আইডি (Player UID):",
+                    efHead: "ই ফুটবল টপআপ (Japan & BD Server)",
+                    efDesc: "এই সার্ভারটির কাজ বর্তমানে চলছে। খুব শীঘ্রই ফুটবল কয়েন টপআপ চালু করা হবে।"
                 },
                 en: {
                     title: "Ismail Hossen",
@@ -241,7 +577,7 @@
                     mailText: "Send Email",
                     productsTitle: "Our Products",
                     shirt: "Shirt",
-                    pants: "Pants",
+                     pants: "Pants",
                     shoes: "Shoes",
                     tshirt: "T-Shirt",
                     coming: "Coming Soon",
@@ -255,7 +591,15 @@
                     compTitle: "Computer",
                     compDesc: "Files, Internet, Software",
                     compLvl: "Skill 90%",
-                    toggleBtn: "BN"
+                    toggleBtn: "BN",
+                    topupMainTitle: "TopUp Center",
+                    ffBtn: "Free Fire UID (BD Server)",
+                    efBtn: "eFootball (Japan & BD Server)",
+                    ffHead: "Free Fire UID TopUp",
+                    step1: "1. Select Recharge Package:",
+                    step2: "2. Player UID:",
+                    efHead: "eFootball TopUp (Japan & BD Server)",
+                    efDesc: "This section is currently under development. Coin top-up will be available soon."
                 }
             };
 
@@ -298,6 +642,15 @@
                 document.querySelector('.lang-comp-desc').textContent = translations[lang].compDesc;
                 document.querySelector('.lang-comp-lvl').textContent = translations[lang].compLvl;
                 
+                document.querySelector('.lang-topup-main-title').textContent = translations[lang].topupMainTitle;
+                document.querySelector('.lang-ff-btn').textContent = translations[lang].ffBtn;
+                document.querySelector('.lang-ef-btn').textContent = translations[lang].efBtn;
+                document.querySelector('.lang-ff-head').textContent = translations[lang].ffHead;
+                document.querySelector('.lang-step1').textContent = translations[lang].step1;
+                document.querySelector('.lang-step2').textContent = translations[lang].step2;
+                document.querySelector('.lang-ef-head').textContent = translations[lang].efHead;
+                document.querySelector('.lang-ef-desc').textContent = translations[lang].efDesc;
+
                 langText.textContent = translations[lang].toggleBtn;
             }
         });
