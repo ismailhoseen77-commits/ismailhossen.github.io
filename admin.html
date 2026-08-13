@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Legend Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-3xl shadow-sm">
+    <h1 class="text-2xl font-bold mb-6 text-indigo-600">⚡ Admin Panel</h1>
+    <div id="adminOrders" class="space-y-4"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+      authDomain: "mihadx-pro-bd.firebaseapp.com",
+      projectId: "mihadx-pro-bd",
+      storageBucket: "mihadx-pro-bd.firebasestorage.app",
+      messagingSenderId: "478391400367",
+      appId: "1:478391400367:web:86012d35014ee7350a215a",
+      measurementId: "G-E8Y80PDVDD"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    onSnapshot(collection(db, "orders"), (snapshot) => {
+      const adminOrders = document.getElementById('adminOrders');
+      adminOrders.innerHTML = '';
+
+      snapshot.forEach((documentObj) => {
+        const data = documentObj.data();
+        const id = documentObj.id;
+        const isCompleted = data.status === "Completed";
+
+        const item = `
+          <div class="p-4 border rounded-2xl flex items-center justify-between bg-gray-50">
+            <div>
+              <p class="font-bold text-gray-800">Order #${data.orderId} (${data.package})</p>
+              <p class="text-xs text-gray-500">Player ID: <b>${data.playerId}</b> | Price: <b>${data.price}</b></p>
+              <p class="text-[10px] text-gray-400">${data.userEmail}</p>
+            </div>
+            <div>
+              ${isCompleted ? 
+                '<span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold">Done</span>' : 
+                `<button onclick="completeOrder('${id}')" class="bg-indigo-600 text-white text-xs px-3 py-2 rounded-xl font-bold shadow hover:bg-indigo-700">1-Click Complete</button>`
+              }
+            </div>
+          </div>
+        `;
+        adminOrders.innerHTML += item;
+      });
+    });
+
+    window.completeOrder = async (docId) => {
+      const now = new Date();
+      await updateDoc(doc(db, "orders", docId), {
+        status: "Completed",
+        updatedDate: now.toLocaleDateString('en-GB'),
+        updatedTime: now.toLocaleTimeString()
+      });
+      alert("অর্ডার সাকসেসফুলি কমপ্লিট করা হয়েছে!");
+    };
+  </script>
+</body>
+</html>
