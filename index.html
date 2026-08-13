@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mihadx Pro BD Shop</title>
-  <!-- Google Fonts & Tailwind CSS -->
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,15 +15,15 @@
 </head>
 <body class="text-slate-800 pb-20">
 
-  <!-- 1. Google Auth Screen (লগইন না থাকলে দেখাবে) -->
+  <!-- 1. Google Auth Screen Screen -->
   <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-95 p-4">
     <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
       <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
         <i class="fa-solid fa-gamepad"></i>
       </div>
       <h2 class="text-2xl font-bold text-slate-800 mb-2">Welcome!</h2>
-      <p class="text-slate-500 text-sm mb-6">Mihadx Pro BD Shop-এ প্রবেশ করতে আপনার গুগল অ্যাকাউন্ট দিয়ে লগইন করুন।</p>
-      <button id="btn-login" class="w-full py-3.5 px-4 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 shadow-sm flex items-center justify-center gap-3 hover:bg-slate-50 transition active:scale-95">
+      <p class="text-slate-500 text-sm mb-6">Mihadx Pro BD Shop-এ প্রবেশ করতে আপনার গুগল অ্যাকাউন্ট দিয়ে সাইন ইন করুন।</p>
+      <button id="btn-login" class="w-full py-3.5 px-4 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 shadow-sm flex items-center justify-center gap-3 hover:bg-slate-50 transition active:scale-95 cursor-pointer">
         <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
         Google দিয়ে সাইন ইন
       </button>
@@ -129,7 +129,7 @@
 
             <!-- TrxID Input -->
             <div>
-              <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Transaction ID (TrxID) বা প্রেরক নম্বর</label>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Transaction ID (TrxID) বা নম্বর</label>
               <input type="text" id="trx-id" placeholder="উদাহরণ: 9J87X6K12" class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition">
             </div>
 
@@ -209,15 +209,15 @@
     </button>
   </nav>
 
-  <!-- Firebase Scripts Logic -->
+  <!-- Firebase Scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Firebase Config
+    // ⚠️ তোর ফায়ারবেস কনসোল থেকে নেওয়া আসল কনফিগ এখানে দে (apiKey সঠিক হতে হবে)
     const firebaseConfig = {
-      apiKey: "AIzaSyC...", // তোর আগের এপিআই কি ফায়ারবেস কনসোল থেকে নেওয়া আছে
+      apiKey: "AIzaSyC...", // তোর আসল API Key টা এখানে থাকবে
       authDomain: "mihadx-pro-bd.firebaseapp.com",
       projectId: "mihadx-pro-bd",
       storageBucket: "mihadx-pro-bd.appspot.com",
@@ -234,10 +234,16 @@
 
     // Google Login Trigger
     document.getElementById('btn-login').addEventListener('click', () => {
-      signInWithPopup(auth, provider).catch(err => alert("Login Error: " + err.message));
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          console.log("Logged in:", result.user);
+        })
+        .catch((err) => {
+          alert("Login Failed: " + err.message);
+        });
     });
 
-    // Logout
+    // Logout Trigger
     document.getElementById('btn-logout').addEventListener('click', () => {
       signOut(auth);
     });
@@ -248,10 +254,10 @@
         currentUser = user;
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('user-info').classList.remove('hidden');
-        document.getElementById('user-avatar').src = user.photoURL;
-        document.getElementById('profile-img-large').src = user.photoURL;
-        document.getElementById('profile-name').innerText = user.displayName;
-        document.getElementById('profile-email').innerText = user.email;
+        document.getElementById('user-avatar').src = user.photoURL || 'https://via.placeholder.com/40';
+        document.getElementById('profile-img-large').src = user.photoURL || 'https://via.placeholder.com/80';
+        document.getElementById('profile-name').innerText = user.displayName || 'User';
+        document.getElementById('profile-email').innerText = user.email || '';
 
         loadUserOrders(user.uid);
       } else {
@@ -264,12 +270,10 @@
     // Step Navigation Function
     window.goToStep = function(step) {
       if (step === 2) {
-        // Validate Step 1
         const pkg = document.getElementById('package-select').value;
         if (!pkg) return alert('প্যাকেজ নির্বাচন করুন');
       }
       if (step === 3) {
-        // Validate Step 2
         const uid = document.getElementById('player-id').value;
         if (!uid || uid.length < 5) return alert('সঠিক প্লেয়ার আইডি (UID) প্রবেশ করান!');
       }
@@ -304,7 +308,6 @@
       btn.innerHTML = "অর্ডার প্রসেস হচ্ছে...";
 
       try {
-        // 1. Save to Firebase Database
         await addDoc(collection(db, "orders"), {
           userId: currentUser.uid,
           userName: currentUser.displayName,
@@ -317,9 +320,7 @@
           timestamp: serverTimestamp()
         });
 
-        // 2. Open WhatsApp with formatted Message
-        const whatsappNumber = "8801576502490"; // তোর হোয়াটসঅ্যাপ নম্বর (Country code সহ)
-        
+        const whatsappNumber = "8801576502490";
         const message = `🛒 *NEW ORDER - MIHADX PRO BD SHOP*\n\n` +
                         `👤 *Name:* ${currentUser.displayName}\n` +
                         `🆔 *Player ID (UID):* ${playerId}\n` +
@@ -331,17 +332,15 @@
         const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
         alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে! এখন হোয়াটসঅ্যাপে মেসেজটি পাঠিয়ে দিন।");
-        
         window.open(waUrl, '_blank');
 
-        // Reset Form
         document.getElementById('player-id').value = '';
         document.getElementById('trx-id').value = '';
         goToStep(1);
         switchTab('orders');
       } catch (err) {
         alert("সমস্যা হয়েছে: " + err.message);
-      } font-bold {
+      } finally {
         btn.disabled = false;
         btn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> <span>অর্ডার কনফার্ম করুন</span>`;
       }
