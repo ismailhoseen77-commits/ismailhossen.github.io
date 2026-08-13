@@ -1,493 +1,208 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mihadx Pro BD Shop</title>
-  <!-- Tailwind CSS & Google Fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mihadx Pro BD Shop - Trusted Top Up Center</title>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background-color: #f1f5f9; }
-    .bKash-pink { background-color: #e2136e; }
-    .bKash-bg-light { background-color: #fdf2f8; }
-    .brand-orange { background-color: #f57c00; }
+    .selected-package {
+      border-color: #8b5cf6 !important;
+      background-color: rgba(139, 92, 246, 0.15) !important;
+      transform: scale(1.02);
+      transition: all 0.2s ease-in-out;
+    }
+    .package-card {
+      transition: all 0.2s ease-in-out;
+    }
   </style>
 </head>
-<body class="text-slate-800 pb-20">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-16 selection:bg-violet-500 selection:text-white">
 
-  <!-- 1. Google Auth Overlay (লগইন না থাকলে দেখাবে) -->
-  <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-95 p-4">
-    <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
-      <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-        <i class="fa-solid fa-gem"></i>
+  <!-- Navbar -->
+  <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center font-black text-2xl text-white shadow-lg shadow-violet-600/40">
+          M
+        </div>
+        <span class="text-xl md:text-2xl font-black tracking-wide text-white">
+          Mihadx Pro <span class="text-violet-500">BD Shop</span>
+        </span>
       </div>
-      <h2 class="text-2xl font-bold text-slate-800 mb-2">Welcome!</h2>
-      <p class="text-slate-500 text-sm mb-6">Mihadx Pro BD Shop-এ প্রবেশ করতে আপনার গুগল অ্যাকাউন্ট দিয়ে সাইন ইন করুন।</p>
-      <button id="btn-login" class="w-full py-3.5 px-4 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 shadow-sm flex items-center justify-center gap-3 hover:bg-slate-50 transition active:scale-95 cursor-pointer">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
-        Google দিয়ে সাইন ইন
-      </button>
-    </div>
-  </div>
-
-  <!-- Header Bar -->
-  <header class="brand-orange text-white sticky top-0 z-40 px-4 py-3 flex justify-between items-center shadow-md">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-amber-300 rounded-lg flex items-center justify-center text-slate-900 font-black">
-        💎
+      <div class="flex items-center gap-3">
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleGoogleLogin"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="filled_blue"></div>
       </div>
-      <span class="text-lg font-black tracking-wider uppercase">MIHADX PRO BD</span>
     </div>
-    <div id="user-info" class="hidden flex items-center gap-2">
-      <div class="bg-amber-600/50 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-        <span>👛</span> ৳<span id="user-balance">0</span>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 mt-8 space-y-8">
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-slate-900 via-violet-950 to-slate-900 p-6 md:p-8 rounded-2xl border border-violet-500/30 shadow-2xl relative overflow-hidden">
+      <div class="relative z-10 text-center md:text-left">
+        <span class="bg-violet-500/20 text-violet-300 text-xs px-3 py-1.5 rounded-full font-bold border border-violet-500/30 uppercase tracking-wider">
+          <i class="fa-solid fa-bolt mr-1"></i> Instant Delivery
+        </span>
+        <h1 class="text-2xl md:text-4xl font-extrabold text-white mt-4 leading-snug">
+          সবচেয়ে বিশ্বস্ত গেম টপ-আপ!
+        </h1>
+        <p class="text-slate-300 text-sm md:text-base mt-2">
+          Player ID দিয়ে নিরাপদে ডায়মন্ড ও অফার কিনুন। পেমেন্ট করার সাথে সাথেই ডেলিভারি।
+        </p>
       </div>
-      <img id="user-avatar" class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="" alt="Profile">
     </div>
-  </header>
 
-  <!-- Main App Container -->
-  <main class="max-w-md mx-auto p-3 space-y-4">
+    <!-- Step 1: Player ID -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-8 h-8 bg-violet-600 text-white font-bold rounded-full flex items-center justify-center text-sm shadow-md shadow-violet-600/30">১</div>
+        <h2 class="text-lg font-bold text-white">প্লেয়ার আইডি (Player ID)</h2>
+      </div>
+      <input type="number" id="playerIdInput" placeholder="এখানে আপনার গেম আইডি দিন (যেমন: 123456789)" 
+             class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition text-lg tracking-widest font-mono">
+    </section>
 
-    <!-- PAGE 1: RECHARGE SELECTION GRID -->
-    <section id="step-1-page" class="space-y-4">
-      
-      <!-- Top Banner/Logos -->
-      <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4 rounded-2xl text-white shadow-sm flex justify-between items-center">
+    <!-- Step 2: Select Package -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-8 h-8 bg-violet-600 text-white font-bold rounded-full flex items-center justify-center text-sm shadow-md shadow-violet-600/30">২</div>
+        <h2 class="text-lg font-bold text-white">প্যাকেজ নির্বাচন করুন</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="packagesGrid">
+        
+        <!-- Package 1 (Small + 5 BDT) -->
+        <div onclick="selectPackage(this, '115 Diamonds', 80)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center">
+          <i class="fa-regular fa-gem text-cyan-400 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">115 Diamonds</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ৮০</p>
+        </div>
+
+        <!-- Package 2 (Medium + 10 BDT) -->
+        <div onclick="selectPackage(this, '240 Diamonds', 160)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center">
+          <i class="fa-regular fa-gem text-cyan-400 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">240 Diamonds</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ১৬০</p>
+        </div>
+
+        <!-- Package 3 (Medium + 10 BDT) -->
+        <div onclick="selectPackage(this, '355 Diamonds', 235)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center">
+          <i class="fa-regular fa-gem text-cyan-400 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">355 Diamonds</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ২৩৫</p>
+        </div>
+
+        <!-- Package 4 (Medium + 10 BDT) -->
+        <div onclick="selectPackage(this, 'Weekly Membership', 170)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">HOT</div>
+          <i class="fa-solid fa-crown text-yellow-400 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">Weekly Mem.</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ১৭০</p>
+        </div>
+
+        <!-- Package 5 (Large + 15 BDT) -->
+        <div onclick="selectPackage(this, 'Monthly Membership', 765)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center">
+          <i class="fa-solid fa-crown text-yellow-500 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">Monthly Mem.</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ৭৬৫</p>
+        </div>
+
+        <!-- Package 6 (Medium + 10 BDT) -->
+        <div onclick="selectPackage(this, 'Level Up Pass', 170)" class="package-card cursor-pointer border border-slate-700 bg-slate-950 p-4 rounded-xl hover:border-violet-500/50 flex flex-col items-center text-center">
+          <i class="fa-solid fa-level-up-alt text-emerald-400 text-2xl mb-2"></i>
+          <p class="font-bold text-white text-sm md:text-base">Level Up Pass</p>
+          <p class="text-violet-400 font-extrabold text-lg mt-1">৳ ১৭০</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Step 3: Checkout & Order -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-8 h-8 bg-violet-600 text-white font-bold rounded-full flex items-center justify-center text-sm shadow-md shadow-violet-600/30">৩</div>
+        <h2 class="text-lg font-bold text-white">পেমেন্ট ও অর্ডার কনফার্ম করুন</h2>
+      </div>
+
+      <!-- bKash Payment Instruction -->
+      <div class="bg-pink-500/10 border border-pink-500/30 p-5 rounded-xl mb-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 class="font-bold text-lg">Free Fire Diamond Top Up</h2>
-          <p class="text-xs opacity-90">Instant & Fast Delivery System</p>
+          <p class="text-pink-400 font-bold mb-1"><i class="fa-solid fa-building-columns mr-1"></i> বিকাশ পার্সোনাল (Send Money):</p>
+          <p class="text-white text-2xl font-mono tracking-wider font-bold">01309735129</p>
+          <p class="text-xs text-slate-400 mt-1">উপরের নাম্বারে সেন্ড মানি করে, লাস্ট নাম্বার বা TrxID হোয়াটসঅ্যাপে দিন।</p>
         </div>
-        <img src="free-fire-logo.png" alt="Free Fire" class="w-12 h-12 rounded-xl border border-white/30 object-cover">
-      </div>
-
-      <!-- Player UID Input -->
-      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-        <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 flex items-center gap-1">
-          <i class="fa-solid fa-id-card text-amber-500"></i> প্লেয়ার আইডি (UID)
-        </label>
-        <input type="number" id="player-id" placeholder="উদাহরণ: 10287325563" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 font-mono font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500">
-      </div>
-
-      <!-- Diamond Packages Grid (Prices updated with profit) -->
-      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 space-y-3">
-        <h3 class="font-bold text-sm text-slate-700 flex items-center gap-1">
-          <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs">1</span> 
-          Select Recharge
-        </h3>
-
-        <div class="grid grid-cols-2 gap-2.5" id="package-grid">
-          
-          <!-- Small Packages (+5 Tk Profit) -->
-          <div onclick="selectPkg(this, '25 Diamond', 25)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">25 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">25 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '50 Diamond', 40)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">50 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">40 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '100 Diamond', 75)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">100 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">75 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '115 Diamond', 83)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">115 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">83 TK</span>
-          </div>
-
-          <!-- Medium Packages (+10 Tk Profit) -->
-          <div onclick="selectPkg(this, '240 Diamond', 165)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">240 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">165 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '355 Diamond', 245)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">355 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">245 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '505 Diamond', 340)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">505 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">340 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '610 Diamond', 400)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">610 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">400 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '850 Diamond', 555)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">850 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">555 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, 'Weekly', 163)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">Weekly</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">163 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '2x Weekly', 316)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">2x Weekly</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">316 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '3x Weekly', 470)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">3x Weekly</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">470 TK</span>
-          </div>
-
-          <!-- Large Packages (+15 Tk Profit) -->
-          <div onclick="selectPkg(this, '1090 Diamond', 725)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">1090 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">725 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '1240 Diamond', 795)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">1240 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">795 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, 'Monthly', 775)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">Monthly</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">775 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '2530 Diamond', 1605)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">2530 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">1605 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '5060 Diamond', 3195)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">5060 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">3195 TK</span>
-          </div>
-
-          <div onclick="selectPkg(this, '10120 Diamond', 6365)" class="pkg-card p-3 rounded-xl border-2 border-slate-100 bg-slate-50 hover:border-amber-500 cursor-pointer transition flex items-center justify-between">
-            <div>
-              <p class="text-xs font-bold text-slate-700">10120 Diamond</p>
-            </div>
-            <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded-md">6365 TK</span>
-          </div>
-
+        <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 text-center min-w-[150px]">
+          <span class="block text-slate-400 text-sm font-medium mb-1">সর্বমোট মূল্য</span>
+          <span id="displayTotal" class="text-2xl font-black text-violet-400">৳ ০</span>
         </div>
       </div>
 
-      <!-- Continue Button -->
-      <button onclick="goToPage(2)" class="w-full py-3.5 brand-orange hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition flex items-center justify-center gap-2">
-        <span>পরবর্তী ধাপে যান</span>
-        <i class="fa-solid fa-arrow-right text-sm"></i>
+      <!-- WhatsApp Button -->
+      <button onclick="processOrder()" class="w-full py-4 bg-[#25D366] hover:bg-[#1DA851] text-white font-bold rounded-xl shadow-lg shadow-[#25D366]/20 transition-all duration-200 flex items-center justify-center gap-2 text-lg">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        WhatsApp-এ অর্ডার দিন
       </button>
-    </section>
-
-    <!-- PAGE 2: ADD MONEY AMOUNT PAGE (Matching 1st screenshot) -->
-    <section id="step-2-page" class="hidden space-y-4">
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="p-4 border-b">
-          <h2 class="font-bold text-slate-800 text-base">Add Money</h2>
-        </div>
-        <div class="p-4 space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Enter the amount</label>
-            <input type="number" id="checkout-amount" readonly class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 text-lg focus:outline-none">
-            <p class="text-[11px] text-slate-400 mt-1">Selected Package: <span id="summary-pkg-name" class="font-bold text-slate-600">-</span></p>
-          </div>
-
-          <button onclick="goToPage(3)" class="w-full py-3.5 brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-md transition text-sm">
-            Click Here To Add Money
-          </button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-        <h3 class="font-bold text-sm text-slate-700 mb-2 flex items-center gap-2">
-          📺 How to add money
-        </h3>
-        <div class="bg-slate-100 h-32 rounded-xl flex items-center justify-center text-slate-400 text-xs">
-          <i class="fa-regular fa-file-image text-2xl mr-2"></i> Tutorial Coming Soon
-        </div>
-      </div>
-
-      <button onclick="goToPage(1)" class="w-full py-2.5 bg-slate-200 text-slate-600 font-bold rounded-xl text-xs">
-        ❮ পেছনে যান
-      </button>
-    </section>
-
-    <!-- PAGE 3: PAYMENT METHOD SELECTION (Matching 2nd screenshot) -->
-    <section id="step-3-page" class="hidden space-y-4">
-      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 text-center space-y-6">
-        
-        <!-- Logo -->
-        <div class="inline-flex items-center gap-2 text-orange-500 font-black text-xl tracking-wider">
-          💎 MIHADX TOP UP
-        </div>
-
-        <div class="space-y-3">
-          <div class="bg-blue-800 text-white py-2 rounded-lg text-sm font-bold tracking-wide">
-            মোবাইল ব্যাংকিং
-          </div>
-
-          <!-- Payment Options Grid -->
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            
-            <!-- bKash (Active) -->
-            <div onclick="goToPage(4)" class="p-4 border-2 border-pink-500 rounded-xl bg-pink-50/50 hover:bg-pink-100 cursor-pointer transition flex items-center justify-center shadow-sm">
-              <span class="text-pink-600 font-black text-xl tracking-tighter">bKash</span>
-            </div>
-
-            <!-- Nagad (Disabled) -->
-            <div class="p-4 border border-slate-200 rounded-xl bg-slate-50 opacity-50 flex items-center justify-center relative cursor-not-allowed">
-              <span class="text-orange-600 font-bold text-lg">নগদ</span>
-              <span class="absolute top-1 right-1 bg-slate-300 text-slate-700 text-[8px] font-bold px-1 rounded">অফ</span>
-            </div>
-
-            <!-- Rocket (Disabled) -->
-            <div class="p-4 border border-slate-200 rounded-xl bg-slate-50 opacity-50 flex items-center justify-center relative cursor-not-allowed">
-              <span class="text-purple-600 font-bold text-lg">রকেট</span>
-              <span class="absolute top-1 right-1 bg-slate-300 text-slate-700 text-[8px] font-bold px-1 rounded">অফ</span>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="pt-4 border-t">
-          <button onclick="goToPage(4)" class="w-full py-3 bg-blue-100 text-blue-700 font-bold rounded-xl text-sm">
-            Pay <span id="pay-btn-amount">0.00</span> BDT
-          </button>
-        </div>
-      </div>
-
-      <button onclick="goToPage(2)" class="w-full py-2.5 bg-slate-200 text-slate-600 font-bold rounded-xl text-xs">
-        ❮ পেছনে যান
-      </button>
-    </section>
-
-    <!-- PAGE 4: BKASH TRANSACTION ID INPUT (Matching 3rd screenshot) -->
-    <section id="step-4-page" class="hidden space-y-4">
-      
-      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-        
-        <!-- Header -->
-        <div class="p-4 border-b flex justify-between items-center">
-          <span class="font-bold text-slate-700 text-sm">bKash Payment</span>
-          <span class="text-lg font-bold text-pink-600">৳ <span id="bkash-page-amount">0</span></span>
-        </div>
-
-        <!-- Main Pink Instruction Box -->
-        <div class="bKash-pink text-white p-5 space-y-4">
-          <h3 class="text-center font-bold text-base border-b border-pink-400 pb-2">
-            ট্রান্সজেকশন আইডি দিন
-          </h3>
-
-          <!-- TrxID Input Field -->
-          <div>
-            <input type="text" id="trx-id" placeholder="ট্রান্সজেকশন আইডি দিন" class="w-full px-4 py-3 rounded-xl bg-white text-slate-900 font-mono font-bold placeholder-slate-400 focus:outline-none shadow-inner text-center">
-          </div>
-
-          <!-- Instructions List -->
-          <ul class="text-xs space-y-2.5 opacity-95">
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span>*247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান।</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span class="font-bold underline">"Send Money"</span>-এ ক্লিক করুন।
-            </li>
-            <li class="flex items-center justify-between bg-pink-700/50 p-2 rounded-lg border border-pink-400">
-              <span class="font-mono font-bold text-sm">01309735129</span>
-              <button onclick="copyNumber()" class="bg-white text-pink-600 font-bold text-[11px] px-2.5 py-1 rounded shadow hover:bg-pink-50">
-                <i class="fa-regular fa-copy"></i> Copy
-              </button>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span>টাকার পরিমাণ: <strong id="instruction-amount" class="text-amber-300">0</strong></span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span>নিশ্চিত করতে এখন আপনার bKash মোবাইল মেনু পিন লিখুন।</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span>সবকিছু ঠিক থাকলে, আপনি bKash থেকে একটি নিশ্চিতকরণ বার্তা পাবেন।</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span>•</span>
-              <span>এখন উপরের বাক্সে আপনার <strong>Transaction ID</strong> দিন এবং নিচের <strong>VERIFY</strong> বাটনে ক্লিক করুন।</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Submit VERIFY Button -->
-        <div class="p-4 bg-slate-50">
-          <button id="btn-submit" class="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold text-base rounded-xl shadow-md transition tracking-wider">
-            VERIFY
-          </button>
-                  </div>
-
-      </div>
-
-      <button onclick="goToPage(3)" class="w-full py-2.5 bg-slate-200 text-slate-600 font-bold rounded-xl text-xs">
-        ❮ পেছনে যান
-      </button>
-    </section>
-
-    <!-- TAB: MY ORDERS LIST -->
-    <section id="tab-orders" class="hidden space-y-4">
-      <h2 class="text-lg font-bold text-slate-800">My Orders History</h2>
-      <div id="orders-list" class="space-y-3">
-        <p class="text-center text-slate-400 py-8 text-sm">কোনো অর্ডার পাওয়া যায়নি</p>
-      </div>
     </section>
 
   </main>
 
-  <!-- Bottom Navigation Bar -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around py-2 z-40 max-w-md mx-auto shadow-lg">
-    <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-0.5 text-amber-600 font-semibold text-[11px]">
-      <i class="fa-solid fa-house text-base"></i>
-      <span>Home</span>
-    </button>
-    <button onclick="switchTab('orders')" id="nav-orders" class="flex flex-col items-center gap-0.5 text-slate-400 font-semibold text-[11px]">
-      <i class="fa-solid fa-clipboard-list text-base"></i>
-      <span>My Orders</span>
-    </button>
-  </nav>
+  <!-- JavaScript Logic -->
+  <script>
+    let currentPackage = '';
+    let currentPrice = 0;
 
-  <!-- Firebase Integration -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    function selectPackage(element, packageName, packagePrice) {
+      const allCards = document.querySelectorAll('.package-card');
+      allCards.forEach(card => card.classList.remove('selected-package'));
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyC...", 
-      authDomain: "mihadx-pro-bd.firebaseapp.com",
-      projectId: "mihadx-pro-bd",
-      storageBucket: "mihadx-pro-bd.appspot.com",
-      messagingSenderId: "956322049102",
-      appId: "1:956322049102:web:..."
-    };
+      element.classList.add('selected-package');
+      
+      currentPackage = packageName;
+      currentPrice = packagePrice;
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
-
-    let currentUser = null;
-    let selectedPackageName = "";
-    let selectedPackagePrice = 0;
-
-    document.getElementById('btn-login').addEventListener('click', () => signInWithRedirect(auth, provider));
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        currentUser = user;
-        document.getElementById('auth-screen').classList.add('hidden');
-        document.getElementById('user-info').classList.remove('hidden');
-        loadUserOrders(user.uid);
-      } else {
-        currentUser = null;
-        document.getElementById('auth-screen').classList.remove('hidden');
-      }
-    });
-
-    window.selectPkg = function(element, name, price) {
-      selectedPackageName = name;
-      selectedPackagePrice = price;
-      document.getElementById('checkout-amount').value = price;
-      document.getElementById('summary-pkg-name').innerText = name;
-      document.getElementById('pay-btn-amount').innerText = price.toFixed(2);
-      document.getElementById('bkash-page-amount').innerText = price;
-      document.getElementById('instruction-amount').innerText = price + " TK";
-      document.querySelectorAll('.pkg-card').forEach(el => el.classList.remove('border-amber-500'));
-      element.classList.add('border-amber-500');
-    };
-
-    window.goToPage = function(pageNumber) {
-      ['step-1-page', 'step-2-page', 'step-3-page', 'step-4-page', 'tab-orders'].forEach(id => document.getElementById(id).classList.add('hidden'));
-      document.getElementById('step-' + pageNumber + '-page').classList.remove('hidden');
-    };
-
-    window.switchTab = function(tab) {
-      ['step-1-page', 'step-2-page', 'step-3-page', 'step-4-page', 'tab-orders'].forEach(id => document.getElementById(id).classList.add('hidden'));
-      if (tab === 'home') document.getElementById('step-1-page').classList.remove('hidden');
-      else document.getElementById('tab-orders').classList.remove('hidden');
-    };
-
-    document.getElementById('btn-submit').addEventListener('click', async () => {
-      const trxId = document.getElementById('trx-id').value;
-      if (!trxId) return alert("TrxID দিন!");
-      await addDoc(collection(db, "orders"), {
-        userId: currentUser.uid,
-        userName: currentUser.displayName,
-        package: selectedPackageName,
-        amount: selectedPackagePrice,
-        trxId: trxId,
-        status: "Pending",
-        timestamp: serverTimestamp()
-      });
-      alert("অর্ডার সাবমিট হয়েছে!");
-      goToPage(1);
-    });
-
-    function loadUserOrders(uid) {
-      const q = query(collection(db, "orders"), where("userId", "==", uid));
-      onSnapshot(q, (snapshot) => {
-        let html = '';
-        snapshot.forEach(doc => {
-          const d = doc.data();
-          html += `<div class="bg-white p-4 rounded-xl border border-slate-200">
-            <p class="font-bold text-sm">${d.package} - ৳${d.amount}</p>
-            <p class="text-xs text-slate-500">TrxID: ${d.trxId}</p>
-          </div>`;
-        });
-        document.getElementById('orders-list').innerHTML = html || '<p class="text-center text-slate-400">কোনো অর্ডার নেই</p>';
-      });
+      document.getElementById('displayTotal').innerText = `৳ ${currentPrice}`;
     }
 
-    window.copyNumber = function() { navigator.clipboard.writeText("01309735129"); alert("কপি হয়েছে"); };
+    function processOrder() {
+      const playerId = document.getElementById('playerIdInput').value.trim();
+      const adminWhatsApp = "8801576502490"; // Updated correct WhatsApp Number
+      const bkashNumber = "01309735129"; // Updated correct bKash Number
+
+      if (playerId === "") {
+        alert("অনুগ্রহ করে আপনার গেমের Player ID দিন!");
+        document.getElementById('playerIdInput').focus();
+        return;
+      }
+      if (currentPackage === "") {
+        alert("অনুগ্রহ করে একটি টপ-আপ প্যাকেজ নির্বাচন করুন!");
+        return;
+      }
+
+      const messageText = `হ্যালো Mihadx Pro BD Shop,\n\nআমি একটি টপ-আপ অর্ডার করতে চাই।\n\n📌 *অর্ডার ডিটেইলস:*\n- Player ID: ${playerId}\n- প্যাকেজ: ${currentPackage}\n- মূল্য: ৳${currentPrice}\n\nআমি আপনাদের বিকাশ (${bkashNumber}) নাম্বারে টাকা পাঠিয়েছি। দয়া করে অর্ডারটি কনফার্ম করুন।`;
+      
+      const whatsappURL = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(messageText)}`;
+      window.open(whatsappURL, '_blank');
+    }
+
+    function handleGoogleLogin(response) {
+      console.log("Google JWT Credential: ", response.credential);
+      alert("গুগল অ্যাকাউন্ট দিয়ে সাইন-ইন সফল হয়েছে!");
+    }
   </script>
+
 </body>
 </html>
