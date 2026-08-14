@@ -16,100 +16,352 @@
 
   <!-- Auth Overlay -->
   <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 text-white p-4">
-    <div class="text-center">
-      <h1 class="text-3xl font-bold mb-4">স্বাগতম!</h1>
-      <button id="btn-login" class="bg-orange-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-orange-700">Google লগইন করুন</button>
+    <div class="text-center max-w-sm w-full bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+      <h1 class="text-2xl font-bold mb-2">স্বাগতম!</h1>
+      <p class="mb-6 text-sm text-slate-300">MIHADX PRO BD SHOP-এ প্রবেশ করতে লগইন করুন</p>
+      <button id="btn-login" class="w-full bg-white text-slate-900 py-3 px-4 rounded-xl font-bold shadow-lg hover:bg-slate-100 transition-all flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.14C3.15 21.32 7.22 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.18C.43 8.13 0 9.83 0 12s.43 3.87 1.18 5.38l4.09-3.14z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.15 2.68 1.18 6.62l4.09 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/>
+        </svg>
+        Continue with Google
+      </button>
     </div>
   </div>
 
   <!-- App Content -->
   <div id="app-content" class="hidden">
     <!-- Header -->
-    <header class="sticky top-0 bg-white dark:bg-slate-800 shadow p-4 flex justify-between items-center z-40">
+    <header class="sticky top-0 bg-white dark:bg-slate-800 shadow p-4 flex justify-between items-center z-40 max-w-md mx-auto">
       <h1 class="text-xl font-bold text-orange-600">MIHADX PRO BD</h1>
-      <div class="flex gap-3">
-        <button onclick="toggleTheme()" class="p-2 bg-slate-100 dark:bg-slate-700 rounded-full">🌙</button>
-        <button onclick="toggleLang()" class="font-bold text-sm">EN/BN</button>
-      </div>
+      <button onclick="toggleTheme()" class="p-2 bg-slate-100 dark:bg-slate-700 rounded-full">🌙</button>
     </header>
 
-    <main class="p-4 pb-24 space-y-8">
+    <!-- Main Container -->
+    <main class="max-w-md mx-auto p-4 pb-24">
       
-      <!-- Topup Center -->
-      <section>
-        <h2 class="text-xl font-bold mb-4">টপআপ সেন্টার</h2>
-        <div class="flex gap-2 mb-4">
-          <button onclick="showTopup('ff')" class="flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold">Free Fire</button>
-          <button onclick="showTopup('ef')" class="flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold">eFootball</button>
-        </div>
+      <!-- 1. HOME VIEW -->
+      <div id="view-home" class="space-y-6">
+        <!-- Topup Section -->
+        <section>
+          <h2 class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">টপআপ সেন্টার</h2>
+          <div class="flex gap-2 mb-4">
+            <button onclick="showTopup('ff')" id="btn-ff" class="flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2">
+              <span>🔥</span> Free Fire
+            </button>
+            <button onclick="showTopup('ef')" id="btn-ef" class="flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2">
+              <span>⚽</span> eFootball
+            </button>
+          </div>
 
-        <div id="ff-grid" class="grid grid-cols-2 gap-3">
-          <!-- Prices: Small (+5), Medium (+10), Large (+15) -->
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('25 Dia: 30 TK')">25 Dia - 30 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('50 Dia: 50 TK')">50 Dia - 50 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('100 Dia: 85 TK')">100 Dia - 85 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('115 Dia: 93 TK')">115 Dia - 93 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('240 Dia: 175 TK')">240 Dia - 175 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('610 Dia: 415 TK')">610 Dia - 415 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('Monthly: 790 TK')">Monthly - 790 TK</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center" onclick="alert('10120 Dia: 6385 TK')">10120 Dia - 6385 TK</div>
-        </div>
+          <!-- Free Fire Grid -->
+          <div id="ff-grid" class="grid grid-cols-2 gap-3">
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('25 Diamond (Free Fire)', 30)">
+              <div class="text-2xl mb-1">💎</div>
+              <div class="font-bold text-sm">25 Diamonds</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">৩০ TK</div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('50 Diamond (Free Fire)', 45)">
+              <div class="text-2xl mb-1">💎</div>
+              <div class="font-bold text-sm">50 Diamonds</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">৪৫ TK</div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('100 Diamond (Free Fire)', 80)">
+              <div class="text-2xl mb-1">💎</div>
+              <div class="font-bold text-sm">100 Diamonds</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">৮০ TK</div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('Weekly Membership', 173)">
+              <div class="text-2xl mb-1">👑</div>
+              <div class="font-bold text-sm">Weekly Pass</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">১৭৩ TK</div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('Monthly Membership', 790)">
+              <div class="text-2xl mb-1">👑</div>
+              <div class="font-bold text-sm">Monthly Pass</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">৭৯০ TK</div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('610 Diamond (Free Fire)', 415)">
+              <div class="text-2xl mb-1">💎</div>
+              <div class="font-bold text-sm">610 Diamonds</div>
+              <div class="text-orange-600 font-bold text-sm mt-1">৪১৫ TK</div>
+            </div>
+          </div>
 
-        <div id="ef-grid" class="hidden-section bg-slate-200 dark:bg-slate-800 p-6 rounded-lg text-center">
-          <p class="font-bold">ই-ফুটবল (Coming Soon)</p>
-        </div>
-      </section>
+          <!-- eFootball Grid -->
+          <div id="ef-grid" class="hidden-section bg-white dark:bg-slate-800 p-6 rounded-xl text-center shadow">
+            <div class="text-3xl mb-2">⚽</div>
+            <h3 class="font-bold text-lg mb-1">ই-ফুটবল কয়েন/প্যাক</h3>
+            <p class="text-orange-600 font-bold text-sm">খুব শীঘ্রই আসছে...</p>
+          </div>
+        </section>
+      </div>
 
-      <!-- Ecommerce -->
-      <section>
-        <h2 class="text-xl font-bold mb-4">ই-কমার্স</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">শার্ট</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">প্যান্ট</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">জুতা</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">অন্যান্য</div>
+      <!-- 2. MY ORDERS VIEW -->
+      <div id="view-orders" class="hidden-section space-y-4">
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">আমার অর্ডারসমূহ</h2>
+        <div id="my-orders-list" class="space-y-3">
+          <p class="text-center text-slate-400 py-6">লোড হচ্ছে...</p>
         </div>
-      </section>
+      </div>
 
-      <!-- Services -->
-      <section>
-        <h2 class="text-xl font-bold mb-4">সেবা</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">MS Excel</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">Word</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">PowerPoint</div>
-          <div class="bg-white dark:bg-slate-800 p-3 rounded-lg shadow text-center">Data Entry</div>
+      <!-- 3. PROFILE VIEW -->
+      <div id="view-profile" class="hidden-section space-y-4">
+        <h2 class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">প্রোফাইল</h2>
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow text-center space-y-3">
+          <div class="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto" id="profile-initial">M</div>
+          <h3 id="profile-name" class="font-bold text-lg">User</h3>
+          <p id="profile-email" class="text-sm text-slate-400"></p>
+          <button onclick="logout()" class="mt-4 w-full bg-red-500 text-white py-2 rounded-xl font-bold hover:bg-red-600 transition-all">লগআউট করুন</button>
         </div>
-      </section>
+      </div>
+
     </main>
 
-    <!-- Bottom Nav -->
-    <nav class="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-200 p-3 flex justify-around">
-      <button class="font-bold text-orange-600">Home</button>
-      <button class="font-bold">Orders</button>
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-3 flex justify-around z-40 max-w-md mx-auto right-0 shadow-lg">
+      <button onclick="switchTab('home')" id="nav-home" class="font-bold text-orange-600 flex flex-col items-center">
+        <span class="text-lg">🏠</span>
+        <span class="text-xs">Home</span>
+      </button>
+      <button onclick="switchTab('orders')" id="nav-orders" class="font-bold text-slate-400 flex flex-col items-center">
+        <span class="text-lg">📦</span>
+        <span class="text-xs">My Orders</span>
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="font-bold text-slate-400 flex flex-col items-center">
+        <span class="text-lg">👤</span>
+        <span class="text-xs">Profile</span>
+      </button>
     </nav>
   </div>
 
+  <!-- ORDER & bKash PAYMENT MODAL -->
+  <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+      
+      <h3 id="modal-title" class="font-bold text-lg text-orange-600">অর্ডার নিশ্চিতকরণ</h3>
+      
+      <!-- Step 1: UID Input -->
+      <div id="step-uid" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">আপনার গেম UID দিন</label>
+          <input type="text" id="game-uid" placeholder="যেমন: 123456789" class="w-full p-3 rounded-xl border dark:bg-slate-700 dark:border-slate-600 text-sm focus:outline-none focus:border-orange-500">
+        </div>
+        <button onclick="proceedToPayment()" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold shadow hover:bg-orange-700 transition-all">পরবর্তী ধাপ (পেমেন্ট)</button>
+      </div>
+
+      <!-- Step 2: bKash Payment Section -->
+      <div id="step-bkash" class="hidden-section space-y-4">
+        <div class="bg-pink-50 dark:bg-pink-950/40 p-4 rounded-xl border border-pink-200 dark:border-pink-900 text-center space-y-2">
+          <div class="inline-block bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">বিকাশ পার্সোনাল নম্বর</div>
+          <p class="text-xl font-extrabold text-pink-600 tracking-wider">01309735129</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            ১. বিকাশ অ্যাপ বা ডায়াল করে এই নম্বরে <b>Send Money</b> করুন।<br>
+            ২. টাকা পাঠানোর পর নিচের বক্সে আপনার পেমেন্টের <b>TrxID</b> দিন।
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">ট্রানজেকশন আইডি (TrxID)</label>
+          <input type="text" id="trx-id" placeholder="যেমন: 9J7K2L8M..." class="w-full p-3 rounded-xl border dark:bg-slate-700 dark:border-slate-600 text-sm focus:outline-none focus:border-orange-500 uppercase font-mono">
+        </div>
+
+        <div class="flex gap-2">
+          <button onclick="backToUid()" class="w-1/3 bg-slate-200 dark:bg-slate-700 py-3 rounded-xl font-bold text-sm">পেছনের</button>
+          <button onclick="submitFinalOrder()" class="w-2/3 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold shadow text-sm">ভেরিফাই ও অর্ডার কনফার্ম</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase Scripts & Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithRedirect, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    
-    // Firebase Config (Replace with yours)
-    const firebaseConfig = { apiKey: "YOUR_API_KEY", projectId: "YOUR_PROJECT_ID", ... };
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+      authDomain: "mihadx-pro-bd.firebaseapp.com",
+      projectId: "mihadx-pro-bd",
+      storageBucket: "mihadx-pro-bd.firebasestorage.app",
+      messagingSenderId: "478391400367",
+      appId: "1:478391400367:web:86012d35014ee7350a215a",
+      measurementId: "G-E8Y80PDVDD"
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
+    let currentUser = null;
+    let selectedItemData = {};
 
-    // Login
-    document.getElementById('btn-login').onclick = () => signInWithRedirect(auth, new GoogleAuthProvider());
-    onAuthStateChanged(auth, (user) => { if (user) document.getElementById('app-content').classList.remove('hidden'); });
+    // Admin WhatsApp Number (Updated with user's number)
+    const adminWhatsAppNumber = "8801576502490";
 
-    // UI Helpers
+    document.getElementById('btn-login').addEventListener('click', async () => {
+      try {
+        await signInWithPopup(auth, new GoogleAuthProvider());
+      } catch (error) {
+        alert("লগইন করতে সমস্যা হয়েছে: " + error.message);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('app-content').classList.remove('hidden');
+        
+        document.getElementById('profile-name').innerText = user.displayName || 'User';
+        document.getElementById('profile-email').innerText = user.email;
+        document.getElementById('profile-initial').innerText = (user.displayName || 'U').charAt(0).toUpperCase();
+      } else {
+        document.getElementById('auth-screen').classList.remove('hidden');
+        document.getElementById('app-content').classList.add('hidden');
+      }
+    });
+
+    window.logout = () => signOut(auth);
     window.toggleTheme = () => document.documentElement.classList.toggle('dark');
+
     window.showTopup = (type) => {
-      document.getElementById('ff-grid').classList.toggle('hidden-section', type !== 'ff');
-      document.getElementById('ef-grid').classList.toggle('hidden-section', type !== 'ef');
+      const ffGrid = document.getElementById('ff-grid');
+      const efGrid = document.getElementById('ef-grid');
+      const btnFf = document.getElementById('btn-ff');
+      const btnEf = document.getElementById('btn-ef');
+
+      if (type === 'ff') {
+        ffGrid.classList.remove('hidden-section');
+        efGrid.classList.add('hidden-section');
+        btnFf.className = "flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2";
+        btnEf.className = "flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2";
+      } else {
+        ffGrid.classList.add('hidden-section');
+        efGrid.classList.remove('hidden-section');
+        btnEf.className = "flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2";
+        btnFf.className = "flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2";
+      }
+    };
+
+    window.switchTab = (tab) => {
+      const views = ['home', 'orders', 'profile'];
+      views.forEach(v => {
+        document.getElementById(`view-${v}`).classList.add('hidden-section');
+        document.getElementById(`nav-${v}`).className = "font-bold text-slate-400 flex flex-col items-center";
+      });
+
+      document.getElementById(`view-${tab}`).classList.remove('hidden-section');
+      document.getElementById(`nav-${tab}`).className = "font-bold text-orange-600 flex flex-col items-center";
+
+      if (tab === 'orders') loadMyOrders();
+    };
+
+    window.openOrderModal = (itemName, price) => {
+      selectedItemData = { itemName, price };
+      document.getElementById('modal-title').innerText = `${itemName} (${price} TK)`;
+      document.getElementById('game-uid').value = '';
+      document.getElementById('trx-id').value = '';
+      document.getElementById('step-uid').classList.remove('hidden-section');
+      document.getElementById('step-bkash').classList.add('hidden-section');
+      document.getElementById('order-modal').classList.remove('hidden');
+    };
+
+    window.closeModal = () => {
+      document.getElementById('order-modal').classList.add('hidden');
+    };
+
+    window.proceedToPayment = () => {
+      const uid = document.getElementById('game-uid').value.trim();
+      if (!uid) return alert('দয়া করে আপনার গেম UID লিখুন!');
+      
+      document.getElementById('step-uid').classList.add('hidden-section');
+      document.getElementById('step-bkash').classList.remove('hidden-section');
+    };
+
+    window.backToUid = () => {
+      document.getElementById('step-bkash').classList.add('hidden-section');
+      document.getElementById('step-uid').classList.remove('hidden-section');
+    };
+
+    window.submitFinalOrder = async () => {
+      const uid = document.getElementById('game-uid').value.trim();
+      const trxId = document.getElementById('trx-id').value.trim();
+
+      if (!trxId) return alert('দয়া করে বিকাশ ট্রানজেকশন আইডি (TrxID) দিন!');
+
+      try {
+        const orderDetails = {
+          userId: currentUser.uid,
+          userEmail: currentUser.email,
+          itemName: selectedItemData.itemName,
+          price: selectedItemData.price,
+          gameUid: uid,
+          trxId: trxId,
+          status: "Pending",
+          date: new Date().toLocaleString('bn-BD')
+        };
+
+        await addDoc(collection(db, "orders"), orderDetails);
+
+        closeModal();
+        alert('অর্ডার সফলভাবে সাবমিট হয়েছে! এখন WhatsApp এ চলে যাচ্ছে...');
+
+        const message = `새 New Order!%0A👤 User: ${currentUser.email}%0A🎮 Item: ${selectedItemData.itemName}%0A💰 Price: ${selectedItemData.price} TK%0A🆔 UID: ${uid}%0A💳 TrxID: ${trxId}%0A📌 Status: Pending`;
+        
+        window.open(`https://wa.me/${adminWhatsAppNumber}?text=${message}`, '_blank');
+        
+        switchTab('orders');
+      } catch (error) {
+        console.error(error);
+        alert('অর্ডার সাবমিট করতে সমস্যা হয়েছে।');
+      }
+    };
+
+    window.loadMyOrders = async () => {
+      const container = document.getElementById('my-orders-list');
+      container.innerHTML = `<p class="text-center text-slate-400 py-4">লোড হচ্ছে...</p>`;
+
+      try {
+        const q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
+        const querySnapshot = await getDocs(q);
+        
+        let html = '';
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const isCompleted = data.status === 'Completed';
+          const badgeColor = isCompleted ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
+
+          html += `
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow border border-slate-100 dark:border-slate-700 flex justify-between items-center">
+              <div>
+                <h4 class="font-bold">${data.itemName}</h4>
+                <p class="text-xs text-slate-500 mt-0.5">UID: <span class="font-mono font-semibold">${data.gameUid}</span></p>
+                <p class="text-xs text-slate-500">TrxID: <span class="font-mono font-semibold">${data.trxId}</span></p>
+                <p class="text-sm text-orange-600 font-semibold mt-1">${data.price} TK</p>
+                <p class="text-xs text-slate-400 mt-1">${data.date}</p>
+              </div>
+              <div>
+                <span class="px-3 py-1 rounded-full text-xs font-bold ${badgeColor}">${data.status || 'Pending'}</span>
+              </div>
+            </div>
+          `;
+        });
+
+        if (!html) {
+          container.innerHTML = `<p class="text-center text-slate-400 py-6">আপনার কোনো অর্ডার নেই।</p>`;
+        } else {
+          container.innerHTML = html;
+        }
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = `<p class="text-center text-red-500 py-4">অর্ডার লোড করা যায়নি।</p>`;
+      }
     };
   </script>
 </body>
 </html>
-
