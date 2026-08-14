@@ -3,202 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIHADX PRO BD - Topup Shop</title>
+    <title>MIHADX BD SHOP</title>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --bg-color: #0d1322;
-            --card-bg: #172033;
-            --text-color: #ffffff;
-            --accent-color: #f97316;
-            --secondary-bg: #232f48;
-            --border-color: #2e3e5e;
-        }
-
-        body.light-mode {
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-color: #0f172a;
-            --secondary-bg: #e2e8f0;
-            --border-color: #cbd5e1;
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --card-bg: #334155;
+            --accent-color: #f59e0b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --bkash-pink: #d12053;
+            --verify-red: #cc0000;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Hind Siliguri', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--primary-bg);
             color: var(--text-color);
-            padding-bottom: 80px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        /* Header */
-        header {
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--primary-bg);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        header {
+            background-color: var(--secondary-bg);
             padding: 15px 20px;
-            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .logo {
+        .brand-title {
             font-size: 1.2rem;
-            font-weight: 700;
+            font-weight: bold;
             color: var(--accent-color);
         }
 
-        .header-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn-icon {
-            background: var(--secondary-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .btn-login-nav {
-            background: var(--accent-color);
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* Main Container */
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Game Tabs */
-        .game-tabs {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 10px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .tab-btn.active {
-            border-color: var(--accent-color);
-        }
-
-        .tab-btn img {
-            height: 40px;
-            object-fit: contain;
-        }
-
-        /* Packages Grid */
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 15px 0 12px 0;
-        }
-
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .package-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .package-card:hover {
-            border-color: var(--accent-color);
-        }
-
-        .pkg-title { font-weight: 700; font-size: 1rem; }
-        .pkg-price { color: var(--accent-color); font-weight: 600; margin-top: 5px; }
-
-        /* Modal Popups */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+        .screen {
             display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
             padding: 15px;
+            flex: 1;
         }
 
-        .modal-card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
+        .screen.active {
+            display: block;
+        }
+
+        #auth-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        .auth-card {
+            background-color: var(--secondary-bg);
             padding: 20px;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: 12px;
             border: 1px solid var(--border-color);
         }
 
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: none; border: none;
-            color: var(--text-color); font-size: 1.2rem; cursor: pointer;
-        }
-
-        .step-content { display: none; }
-        .step-content.active { display: block; }
-
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
+        .auth-title {
             text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
             color: var(--accent-color);
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
+            font-size: 0.85rem;
             margin-bottom: 5px;
-            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
         .form-control {
@@ -206,10 +110,10 @@
             padding: 12px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            background: var(--secondary-bg);
-            color: var(--text-color);
-            font-size: 1rem;
+            background-color: #ffffff;
+            color: #000000;
             outline: none;
+            font-size: 0.95rem;
         }
 
         .btn-action {
@@ -217,434 +121,788 @@
             padding: 12px;
             border: none;
             border-radius: 8px;
-            background: var(--accent-color);
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
+            background-color: var(--accent-color);
+            color: #000;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
         }
 
         .btn-google {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
+            padding: 10px;
             border-radius: 8px;
-            background: #ffffff;
+            border: 1px solid var(--border-color);
+            background-color: #fff;
             color: #333;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            cursor: pointer;
             margin-bottom: 15px;
         }
 
-        .divider {
+        .auth-toggle {
             text-align: center;
-            margin: 15px 0;
-            position: relative;
+            margin-top: 15px;
             font-size: 0.85rem;
-            opacity: 0.7;
+            color: var(--text-muted);
         }
 
-        /* 4 Mobile Banking Buttons */
-        .payment-method-btn {
+        .auth-toggle span {
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        .game-tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--secondary-bg);
             border: 1px solid var(--border-color);
-            background: var(--secondary-bg);
-            color: var(--text-color);
-            font-weight: 700;
+            border-radius: 8px;
+            text-align: center;
             cursor: pointer;
-        }
-
-        .payment-method-btn.disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-
-        .badge-disabled {
-            background: #ef4444;
-            color: white;
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 12px;
-        }
-
-        /* Copy Box */
-        .copy-box {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background: var(--secondary-bg);
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px dashed var(--accent-color);
-            margin: 12px 0;
+            justify-content: center;
         }
 
-        .copy-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
+        .tab-btn.active {
+            border-color: var(--accent-color);
+            background: var(--card-bg);
+        }
+
+        .tab-btn img {
+            max-height: 35px;
+            object-fit: contain;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .package-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .package-card:hover {
+            border-color: var(--accent-color);
+        }
+
+        .pkg-title {
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
-        /* Bottom Nav */
+        .pkg-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
         .bottom-nav {
             position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background: var(--card-bg);
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--secondary-bg);
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
             border-top: 1px solid var(--border-color);
+            z-index: 100;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--text-color);
-            text-decoration: none;
+            color: var(--text-muted);
             font-size: 0.75rem;
             cursor: pointer;
         }
 
-        .nav-item.active { color: var(--accent-color); }
-        .nav-item i { font-size: 1.2rem; margin-bottom: 2px; }
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-color);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .modal-card {
+            background: #f4f6f9;
+            color: #333;
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: #e2e8f0;
+            border: none;
+            color: #333;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Screen Shot Matching bKash Card Style */
+        .summary-header-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .summary-price-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .bkash-pink-container {
+            background-color: var(--bkash-pink);
+            border-radius: 16px;
+            padding: 18px 15px;
+            color: #ffffff;
+        }
+
+        .bkash-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .bkash-input-box {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            background: #ffffff;
+            color: #333;
+        }
+
+        .bkash-instruction-list {
+            list-style: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .bkash-instruction-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 8px;
+        }
+
+        .bkash-instruction-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .text-yellow {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        .copy-btn-inline {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #ffffff;
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-left: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-verify-red {
+            width: 100%;
+            background-color: var(--verify-red);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .payment-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 14px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .payment-btn.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .badge-off {
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .order-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .status-pending { color: #f59e0b; font-weight: bold; }
+        .status-completed { color: #22c55e; font-weight: bold; }
     </style>
 </head>
-    <body>
+<body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">MIHADX PRO BD</div>
-        <div class="header-controls">
-            <button class="btn-icon" id="langToggle">EN</button>
-            <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
-            <button class="btn-login-nav" id="loginNavBtn" onclick="openAuthModal()"><span data-lang="loginBtn">লগইন</span></button>
-        </div>
-    </header>
+    <div class="app-container">
 
-    <!-- Main Content Container -->
-    <div class="container">
-        <!-- Game Tabs -->
-        <div class="game-tabs">
-            <div class="tab-btn active" id="tab-ff" onclick="switchTab('freefire')">
-                <img src="free-fire-logo.png" alt="Free Fire" onerror="this.src='https://via.placeholder.com/100x40?text=Free+Fire'">
-            </div>
-            <div class="tab-btn" id="tab-ef" onclick="switchTab('efootball')">
-                <img src="EFootball_logo.png" alt="eFootball" onerror="this.src='https://via.placeholder.com/100x40?text=eFootball'">
-            </div>
-        </div>
+        <!-- AUTH SCREEN (LOGIN & REGISTER) -->
+        <div id="auth-screen" class="screen active">
+            <div class="auth-card">
+                <div class="auth-title">MIHADX BD SHOP</div>
 
-        <!-- Free Fire Section -->
-        <div id="freefire-section">
-            <div class="section-title" data-lang="topupCenter">টপআপ সেন্টার</div>
-            <div class="packages-grid">
-                <div class="package-card" onclick="startPurchase('25 Diamond', 20)">
-                    <div class="pkg-title">25 Diamond</div>
-                    <div class="pkg-price">২০ TK</div>
-                </div>
-                <div class="package-card" onclick="startPurchase('50 Diamond', 39)">
-                    <div class="pkg-title">50 Diamond</div>
-                    <div class="pkg-price">৩৯ TK</div>
-                </div>
-                <div class="package-card" onclick="startPurchase('115 Diamond', 78)">
-                    <div class="pkg-title">115 Diamond</div>
-                    <div class="pkg-price">৭৮ TK</div>
-                </div>
-                <div class="package-card" onclick="startPurchase('240 Diamond', 155)">
-                    <div class="pkg-title">240 Diamond</div>
-                    <div class="pkg-price">১৫৫ TK</div>
-                </div>
-            </div>
+                <!-- Google Login Button -->
+                <button class="btn-google" onclick="handleGoogleLogin()">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+                    <span>Continue with Google</span>
+                </button>
 
-            <!-- Other Services -->
-            <div class="section-title" data-lang="otherServices">অন্যান্য সার্ভিসসমূহ</div>
-            <div class="packages-grid">
-                <div class="package-card" onclick="openWhatsAppService('MS Word Work')">
-                    <i class="fa-solid fa-file-word" style="font-size: 2rem; color: #2b579a; margin-bottom: 8px;"></i>
-                    <div class="pkg-title">MS Word Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
-                </div>
+                <!-- LOGIN FORM -->
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">ইমেইল এড্রেস:</label>
+                        <input type="email" id="loginEmail" class="form-control" required placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">পাসওয়ার্ড:</label>
+                        <input type="password" id="loginPass" class="form-control" required placeholder="******">
+                    </div>
+                    <button type="submit" class="btn-action">লগইন করুন</button>
+                    <div class="auth-toggle">
+                        একাউন্ট নেই? <span onclick="toggleAuthForm('register')">রেজিস্ট্রেশন করুন</span>
+                    </div>
+                </form>
 
-                <div class="package-card" onclick="openWhatsAppService('MS Excel Work')">
-                    <i class="fa-solid fa-file-excel" style="font-size: 2rem; color: #217346; margin-bottom: 8px;"></i>
-                    <div class="pkg-title">MS Excel Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
-                </div>
+                <!-- REGISTRATION FORM -->
+                <form id="register-form" style="display: none;" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">আপনার নাম:</label>
+                        <input type="text" id="regName" class="form-control" required placeholder="আপনার নাম লিখুন">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">ইমেইল এড্রেস:</label>
+                        <input type="email" id="regEmail" class="form-control" required placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">মোবাইল নম্বর:</label>
+                        <input type="tel" id="regMobile" class="form-control" required placeholder="017XXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">পাসওয়ার্ড:</label>
+                        <input type="password" id="regPass" class="form-control" required placeholder="******">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: var(--text-muted);">কনফার্ম পাসওয়ার্ড:</label>
+                        <input type="password" id="regConfirmPass" class="form-control" required placeholder="******">
+                    </div>
+                    <button type="submit" class="btn-action">রেজিস্ট্রেশন করুন</button>
+                    <div class="auth-toggle">
+                        আগে থেকেই একাউন্ট আছে? <span onclick="toggleAuthForm('login')">লগইন করুন</span>
+                    </div>
+                </form>
 
-                <div class="package-card" onclick="openWhatsAppService('Data Entry Work')">
-                    <i class="fa-solid fa-keyboard" style="font-size: 2rem; color: #f97316; margin-bottom: 8px;"></i>
-                    <div class="pkg-title">Data Entry Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
-                </div>
             </div>
         </div>
 
-        <!-- eFootball Section -->
-        <div id="efootball-section" style="display: none; text-align: center; padding: 40px 0;">
-            <h3 data-lang="comingSoon">খুব শীঘ্রই আসছে...</h3>
+        <!-- MAIN APP SCREEN -->
+        <div id="app-screen" style="display: none; flex-direction: column; flex: 1;">
+            
+            <header>
+                <div class="brand-title">MIHADX BD SHOP</div>
+            </header>
+
+            <!-- HOME PAGE -->
+            <div id="home-page" class="screen active">
+                
+                <div class="section-title">টপআপ সেন্টার</div>
+                
+                <div class="game-tabs">
+                    <div class="tab-btn active" id="tab-ff" onclick="switchGameTab('ff')">
+                        <img src="free-fire-logo.png" alt="Free Fire" onerror="this.src='https://via.placeholder.com/100x35?text=Free+Fire'">
+                    </div>
+                    <div class="tab-btn" id="tab-ef" onclick="switchGameTab('ef')">
+                        <img src="EFootball_logo.png" alt="eFootball" onerror="this.src='https://via.placeholder.com/100x35?text=eFootball'">
+                    </div>
+                </div>
+
+                <!-- Free Fire Packages -->
+                <div id="ff-packages" class="packages-grid">
+                    <div class="package-card" onclick="openOrderModal('25 Diamond', 25)">
+                        <div class="pkg-title">25 Diamond</div>
+                        <div class="pkg-price">২৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('50 Diamond', 40)">
+                        <div class="pkg-title">50 Diamond</div>
+                        <div class="pkg-price">৪০ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('100 Diamond', 75)">
+                        <div class="pkg-title">100 Diamond</div>
+                        <div class="pkg-price">৭৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('115 Diamond', 83)">
+                        <div class="pkg-title">115 Diamond</div>
+                        <div class="pkg-price">৮৩ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('Weekly Membership', 163)">
+                        <div class="pkg-title">Weekly</div>
+                        <div class="pkg-price">১৬৩ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('240 Diamond', 165)">
+                        <div class="pkg-title">240 Diamond</div>
+                        <div class="pkg-price">১৬৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('355 Diamond', 245)">
+                        <div class="pkg-title">355 Diamond</div>
+                        <div class="pkg-price">২৪৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('2x Weekly', 316)">
+                        <div class="pkg-title">2x Weekly</div>
+                        <div class="pkg-price">৩১৬ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('505 Diamond', 340)">
+                        <div class="pkg-title">505 Diamond</div>
+                        <div class="pkg-price">৩৪০ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('610 Diamond', 400)">
+                        <div class="pkg-title">610 Diamond</div>
+                        <div class="pkg-price">৪০০ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('3x Weekly', 469)">
+                        <div class="pkg-title">3x Weekly</div>
+                        <div class="pkg-price">৪৬৯ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('850 Diamond', 555)">
+                        <div class="pkg-title">850 Diamond</div>
+                        <div class="pkg-price">৫৫৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('1090 Diamond', 725)">
+                        <div class="pkg-title">1090 Diamond</div>
+                        <div class="pkg-price">৭২৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('Monthly Membership', 775)">
+                        <div class="pkg-title">Monthly</div>
+                        <div class="pkg-price">৭৭৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('1240 Diamond', 795)">
+                        <div class="pkg-title">1240 Diamond</div>
+                        <div class="pkg-price">৭৯৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('2530 Diamond', 1605)">
+                        <div class="pkg-title">2530 Diamond</div>
+                        <div class="pkg-price">১৬০৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('5060 Diamond', 3195)">
+                        <div class="pkg-title">5060 Diamond</div>
+                        <div class="pkg-price">৩১৯৫ TK</div>
+                    </div>
+                    <div class="package-card" onclick="openOrderModal('10120 Diamond', 6365)">
+                        <div class="pkg-title">10120 Diamond</div>
+                        <div class="pkg-price">৬৩৬৫ TK</div>
+                    </div>
+                </div>
+
+                <!-- eFootball Section (Coming Soon) -->
+                <div id="ef-packages" style="display: none; text-align: center; padding: 30px 0;">
+                    <h3>খুব শীঘ্রই আসছে... (Coming Soon)</h3>
+                </div>
+
+                <!-- E-COMMERCE SECTION -->
+                <div class="section-title" style="margin-top: 25px;">ই-কমার্স (E-Commerce)</div>
+                <div class="packages-grid">
+                    <div class="package-card" style="opacity: 0.7;">
+                        <i class="fa-solid fa-shirt" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">শার্ট (Shirt)</div>
+                        <div class="pkg-price" style="font-size: 0.75rem; color: #ef4444;">Coming Soon</div>
+                    </div>
+                    <div class="package-card" style="opacity: 0.7;">
+                        <i class="fa-solid fa-user-ninja" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">প্যান্ট (Pant)</div>
+                        <div class="pkg-price" style="font-size: 0.75rem; color: #ef4444;">Coming Soon</div>
+                    </div>
+                    <div class="package-card" style="opacity: 0.7; grid-column: span 2;">
+                        <i class="fa-solid fa-bag-shopping" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">অন্যান্য (Others)</div>
+                        <div class="pkg-price" style="font-size: 0.75rem; color: #ef4444;">Coming Soon</div>
+                    </div>
+                </div>
+
+                <!-- COMPUTER SECTION -->
+                <div class="section-title" style="margin-top: 25px;">কম্পিউটার (Computer Services)</div>
+                <div class="packages-grid">
+                    <div class="package-card" onclick="sendServiceMsg('MS Word Work')">
+                        <i class="fa-solid fa-file-word" style="font-size: 1.5rem; color: #2b579a; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">MS Word Work</div>
+                    </div>
+                    <div class="package-card" onclick="sendServiceMsg('MS Excel Work')">
+                        <i class="fa-solid fa-file-excel" style="font-size: 1.5rem; color: #217346; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">MS Excel Work</div>
+                    </div>
+                    <div class="package-card" onclick="sendServiceMsg('MS PowerPoint Work')">
+                        <i class="fa-solid fa-file-powerpoint" style="font-size: 1.5rem; color: #d24726; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">MS PowerPoint</div>
+                    </div>
+                    <div class="package-card" onclick="sendServiceMsg('Data Entry Work')">
+                        <i class="fa-solid fa-keyboard" style="font-size: 1.5rem; color: #f97316; margin-bottom: 5px;"></i>
+                        <div class="pkg-title">Data Entry Work</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MY ORDERS PAGE -->
+            <div id="orders-page" class="screen">
+                <div class="section-title">আমার অর্ডারসমূহ</div>
+                <div id="orders-container" style="margin-top: 10px;"></div>
+
+                <div style="margin-top: 30px; padding: 10px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--accent-color);">
+                    <div style="font-size: 0.8rem; color: var(--accent-color); font-weight: bold; margin-bottom: 5px;">[অ্যাডমিন কন্ট্রোল ডেমো]</div>
+                    <button class="btn-action" style="padding: 6px; font-size: 0.75rem;" onclick="adminCompleteLastOrder()">সর্বশেষ অর্ডার 'Completed' করুন</button>
+                </div>
+            </div>
+
+            <!-- PROFILE PAGE -->
+            <div id="profile-page" class="screen">
+                <div class="section-title">প্রোফাইল</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent-color);"></i>
+                    <h3 id="profName" style="margin-top: 10px;">User Name</h3>
+                    <p id="profEmail" style="color: var(--text-muted); font-size: 0.85rem;"></p>
+                    <p id="profMobile" style="color: var(--text-muted); font-size: 0.85rem;"></p>
+
+                    <button class="btn-action" style="background: #ef4444; color: #fff; margin-top: 30px;" onclick="handleLogout()">লগআউট করুন</button>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="bottom-nav">
+                <div class="nav-item active" id="nav-home" onclick="showScreen('home-page', 'nav-home')">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" id="nav-orders" onclick="showScreen('orders-page', 'nav-orders')">
+                    <i class="fa-solid fa-box"></i>
+                    <span>My Orders</span>
+                </div>
+                <div class="nav-item" id="nav-profile" onclick="showScreen('profile-page', 'nav-profile')">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Orders Section -->
-        <div id="orders-section" style="display: none;">
-            <div class="section-title" data-lang="myOrders">আমার অর্ডারসমূহ</div>
-            <div id="orders-list" style="margin-top: 15px;"></div>
-        </div>
     </div>
 
-    <!-- Login / Auth Modal (Google & Email/Password Only) -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal-card">
-            <button class="close-btn" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title" data-lang="loginTitle">অ্যাকাউন্টে লগইন করুন</div>
-
-            <!-- Continue with Google Button -->
-            <button class="btn-google" onclick="handleGoogleLogin()">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
-                <span>Continue with Google</span>
-            </button>
-
-            <div class="divider">অথবা ইমেইল দিয়ে লগইন করুন</div>
-
-            <form onsubmit="handleEmailLogin(event)">
-                <div class="form-group">
-                    <label data-lang="emailLabel">ইমেইল এড্রেস:</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="example@gmail.com" required>
-                </div>
-                <div class="form-group">
-                    <label data-lang="passLabel">পাসওয়ার্ড:</label>
-                    <input type="password" id="loginPass" class="form-control" placeholder="******" required>
-                </div>
-                <button type="submit" class="btn-action" data-lang="loginSubmitBtn">লগইন করুন</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Multi-Step Topup Purchase Modal -->
+    <!-- PURCHASE MODAL -->
     <div class="modal-overlay" id="purchaseModal">
         <div class="modal-card">
             <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 
-            <!-- STEP 1: Player UID -->
-            <div class="step-content active" id="step1">
-                <div class="modal-title" data-lang="step1Title">প্লেয়ার UID দিন</div>
-                <div class="form-group">
-                    <label data-lang="uidLabel">আপনার গেমের Player UID:</label>
+            <!-- STEP 1: PLAYER UID -->
+            <div id="step-1" class="step-content">
+                <div class="section-title" style="color:#000;">প্লেয়ার UID দিন</div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label style="color:#555;">আপনার Game Player UID:</label>
                     <input type="number" id="playerUid" class="form-control" placeholder="যেমন: 123456789">
                 </div>
-                <button class="btn-action" onclick="goToStep(2)" data-lang="nextBtn">পরবর্তী ধাপ</button>
+                <button class="btn-action" onclick="goToStep(2)">পরবর্তী ধাপ</button>
             </div>
 
-            <!-- STEP 2: Confirm Order -->
-            <div class="step-content" id="step2">
-                <div class="modal-title" data-lang="step2Title">অর্ডার নিশ্চিতকরণ</div>
-                <div style="background: var(--secondary-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p><span data-lang="pkgLabel">প্যাকেজ:</span> <b id="selectedPkgName">-</b></p>
-                    <p style="margin-top: 5px;"><span data-lang="priceLabel">মোট মূল্য:</span> <b id="selectedPkgPrice" style="color: var(--accent-color);">-</b> TK</p>
+            <!-- STEP 2: AMOUNT CONFIRMATION -->
+            <div id="step-2" class="step-content" style="display: none;">
+                <div class="section-title" style="color:#000;">অর্ডার নিশ্চিতকরণ</div>
+                <div style="background: #ffffff; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #e2e8f0;">
+                    <p style="margin-bottom: 5px;">প্যাকেজ: <strong id="modalPkgName">-</strong></p>
+                    <p>মোট মূল্য: <strong id="modalPkgPrice" style="color: var(--bkash-pink);">-</strong> TK</p>
                 </div>
-                <button class="btn-action" onclick="goToStep(3)" data-lang="nextPayBtn">নেক্সট (পেমেন্ট)</button>
-                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(1)" data-lang="backBtn">পেছনে</button>
+                <button class="btn-action" onclick="goToStep(3)">নেক্সট (পেমেন্ট)</button>
             </div>
 
-            <!-- STEP 3: Payment Options (4 Methods) -->
-            <div class="step-content" id="step3">
-                <div class="modal-title" data-lang="step3Title">মোবাইল ব্যাংকিং সিলেক্ট করুন</div>
-                
-                <div class="payment-method-btn" onclick="goToStep(4)">
-                    <span><i class="fa-solid fa-wallet" style="color: #d12053; margin-right: 8px;"></i> বিকাশ (bKash)</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
-
-                <div class="payment-method-btn disabled">
-                    <span><i class="fa-solid fa-wallet" style="color: #f7931e; margin-right: 8px;"></i> নগদ (Nagad)</span>
-                    <span class="badge-disabled">সাময়িক বন্ধ</span>
-                </div>
-
-                <div class="payment-method-btn disabled">
-                    <span><i class="fa-solid fa-wallet" style="color: #8c3494; margin-right: 8px;"></i> রকেট (Rocket)</span>
-                    <span class="badge-disabled">সাময়িক বন্ধ</span>
-                </div>
-
-                <div class="payment-method-btn disabled">
-                    <span><i class="fa-solid fa-wallet" style="color: #ffc107; margin-right: 8px;"></i> উপায় (Upay)</span>
-                    <span class="badge-disabled">সাময়িক বন্ধ</span>
-                </div>
-
-                <button class="btn-action" style="background: var(--secondary-bg);" onclick="goToStep(2)" data-lang="backBtn">পেছনে</button>
-            </div>
-
-            <!-- STEP 4: bKash Details & TrxID -->
-            <div class="step-content" id="step4">
-                <div class="modal-title">বিকাশ পেমেন্ট</div>
-                
-                <div style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.9;">
-                    *247# ডায়াল করে অথবা বিকাশ অ্যাপ থেকে <b>Send Money</b> করুন।
-                </div>
-
-                <div class="copy-box">
-                    <div>
-                        <div style="font-size: 0.75rem; opacity: 0.8;">বিকাশ পার্সোনাল নম্বর:</div>
-                        <strong id="bkashNumber">01309735129</strong>
+            <!-- STEP 3: MOBILE BANKING SELECTION -->
+            <div id="step-3" class="step-content" style="display: none;">
+                <div class="section-title" style="color:#000; margin-bottom: 15px;">মোবাইল ব্যাংকিং</div>
+                <div>
+                    <div class="payment-btn" onclick="goToStep(4)">
+                        <span><i class="fa-solid fa-wallet" style="color: var(--bkash-pink);"></i> বিকাশ (bKash)</span>
+                        <i class="fa-solid fa-chevron-right"></i>
                     </div>
-                    <button class="copy-btn" onclick="copyBkashNumber()"><i class="fa-regular fa-copy"></i> Copy</button>
+                    <div class="payment-btn disabled">
+                        <span><i class="fa-solid fa-wallet" style="color: #f7931e;"></i> নগদ (Nagad)</span>
+                        <span class="badge-off">বন্ধ</span>
+                    </div>
+                    <div class="payment-btn disabled">
+                        <span><i class="fa-solid fa-wallet" style="color: #8c3494;"></i> রকেট (Rocket)</span>
+                        <span class="badge-off">বন্ধ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4: bKash & TrxID (SCREENSHOT MATCHING VERIFY PAGE) -->
+            <div id="step-4" class="step-content" style="display: none;">
+                
+                <!-- Item Summary Box -->
+                <div class="summary-header-card">
+                    <span id="summaryPkgName">Package Name</span>
+                </div>
+                <div class="summary-price-card">
+                    ৳ <span id="summaryPkgPrice">0</span>
                 </div>
 
-                <div class="form-group" style="margin-top: 15px;">
-                    <label>ট্রানজেকশন আইডি (TrxID) দিন:</label>
-                    <input type="text" id="trxIdInput" class="form-control" placeholder="যেমন: 8N7A6D5C">
+                <!-- Main Pink Container -->
+                <div class="bkash-pink-container">
+                    <div class="bkash-title">ট্রান্সজেকশন আইডি দিন</div>
+
+                    <input type="text" id="trxId" class="bkash-input-box" placeholder="ট্রান্সজেকশন আইডি দিন">
+
+                    <ul class="bkash-instruction-list">
+                        <li>*247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান।</li>
+                        <li><span class="text-yellow">"Send Money"</span> -এ ক্লিক করুন।</li>
+                        <li>
+                            প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন: 
+                            <span class="text-yellow" id="bkashNumDisplay">01309735129</span>
+                            <button class="copy-btn-inline" onclick="copyBkash()"><i class="fa-regular fa-copy"></i> Copy</button>
+                        </li>
+                        <li>টাকার পরিমাণঃ <span class="text-yellow" id="bkashAmountDisplay">0</span></li>
+                        <li>নিশ্চিত করতে এখন আপনার bKash মোবাইল মেনু পিন লিখুন।</li>
+                        <li>সবকিছু ঠিক থাকলে, আপনি bKash থেকে একটি নিশ্চিতকরণ বার্তা পাবেন।</li>
+                        <li>এখন উপরের বক্সে আপনার <span class="text-yellow">Transaction ID</span> দিন এবং নিচের <span class="text-yellow">VERIFY</span> বাটনে ক্লিক করুন।</li>
+                    </ul>
                 </div>
 
-                <button class="btn-action" onclick="submitOrderToWhatsApp()">VERIFY</button>
-                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(3)" data-lang="backBtn">পেছনে</button>
+                <!-- Verify Red Button -->
+                <button class="btn-verify-red" onclick="submitOrder()">VERIFY</button>
+
             </div>
 
         </div>
-    </div>
+                            </div>
+                        <script>
+        const ADMIN_WHATSAPP = "8801576502490";
+        const BKASH_NUMBER = "01309735129";
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-item active" id="nav-home" onclick="showSection('home')">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
-        </div>
-        <div class="nav-item" id="nav-orders" onclick="showSection('orders')">
-            <i class="fa-solid fa-box"></i>
-            <span>My Orders</span>
-        </div>
-        <div class="nav-item" id="nav-profile" onclick="openAuthModal()">
-            <i class="fa-solid fa-user"></i>
-            <span>Profile</span>
-        </div>
-        </div>
-            <script>
-        // আপনার সঠিক হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোড সহ)
-        const ADMIN_WHATSAPP = "8801576502490"; 
+        let currentUser = null;
+        let selectedOrder = { pkgName: '', price: 0, uid: '', trxId: '' };
 
-        let currentOrder = { pkgName: '', price: 0, uid: '', trxId: '' };
-        let currentLang = 'BN';
-
-        // ==========================================
-        // ১. বাংলা / English ল্যাঙ্গুয়েজ সুইচ
-        // ==========================================
-        const translations = {
-            BN: {
-                loginBtn: "লগইন",
-                topupCenter: "টপআপ সেন্টার",
-                otherServices: "অন্যান্য সার্ভিসসমূহ",
-                waMsg: "WhatsApp এ মেসেজ দিন",
-                comingSoon: "খুব শীঘ্রই আসছে...",
-                myOrders: "আমার অর্ডারসমূহ",
-                loginTitle: "অ্যাকাউন্টে লগইন করুন",
-                emailLabel: "ইমেইল এড্রেস:",
-                passLabel: "পাসওয়ার্ড:",
-                loginSubmitBtn: "লগইন করুন",
-                step1Title: "প্লেয়ার UID দিন",
-                uidLabel: "আপনার গেমের Player UID:",
-                nextBtn: "পরবর্তী ধাপ",
-                step2Title: "অর্ডার নিশ্চিতকরণ",
-                pkgLabel: "প্যাকেজ:",
-                priceLabel: "মোট মূল্য:",
-                nextPayBtn: "নেক্সট (পেমেন্ট)",
-                backBtn: "পেছনে",
-                step3Title: "মোবাইল ব্যাংকিং সিলেক্ট করুন"
-            },
-            EN: {
-                loginBtn: "Login",
-                topupCenter: "Topup Center",
-                otherServices: "Other Services",
-                waMsg: "Message on WhatsApp",
-                comingSoon: "Coming Soon...",
-                myOrders: "My Orders",
-                loginTitle: "Login to Account",
-                emailLabel: "Email Address:",
-                passLabel: "Password:",
-                loginSubmitBtn: "Login Now",
-                step1Title: "Enter Player UID",
-                uidLabel: "Your Game Player UID:",
-                nextBtn: "Next Step",
-                step2Title: "Order Confirmation",
-                pkgLabel: "Package:",
-                priceLabel: "Total Price:",
-                nextPayBtn: "Next (Payment)",
-                backBtn: "Back",
-                step3Title: "Select Mobile Banking"
-            }
-        };
-
-        document.getElementById('langToggle').addEventListener('click', () => {
-            currentLang = currentLang === 'BN' ? 'EN' : 'BN';
-            document.getElementById('langToggle').innerText = currentLang === 'BN' ? 'EN' : 'BN';
-            
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                const key = el.getAttribute('data-lang');
-                if (translations[currentLang][key]) {
-                    el.innerText = translations[currentLang][key];
-                }
-            });
-        });
-
-        // ==========================================
-        // ২. Dark / Light থিম টগল
-        // ==========================================
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const icon = document.querySelector('#themeToggle i');
-            if(document.body.classList.contains('light-mode')) {
-                icon.className = 'fa-solid fa-sun';
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showAppScreen();
             } else {
-                icon.className = 'fa-solid fa-moon';
+                showAuthScreen();
             }
         });
 
-        // ==========================================
-        // ৩. Auth Modal (Google / Email Login)
-        // ==========================================
-        function openAuthModal() {
-            document.getElementById('authModal').style.display = 'flex';
+        function toggleAuthForm(type) {
+            if (type === 'register') {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+            } else {
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('login-form').style.display = 'block';
+            }
         }
 
-        function closeAuthModal() {
-            document.getElementById('authModal').style.display = 'none';
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            currentUser = {
+                name: email.split('@')[0],
+                email: email,
+                mobile: 'N/A'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showAppScreen();
         }
 
         function handleGoogleLogin() {
-            alert('Google দিয়ে সফলভাবে লগইন হয়েছে!');
-            document.getElementById('loginNavBtn').innerText = 'Profile';
-            closeAuthModal();
+            currentUser = {
+                name: 'Google User',
+                email: 'user@gmail.com',
+                mobile: 'N/A'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showAppScreen();
         }
 
-        function handleEmailLogin(e) {
+        function handleRegister(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            alert(`${email} দিয়ে সফলভাবে লগইন করা হয়েছে!`);
-            document.getElementById('loginNavBtn').innerText = 'Profile';
-            closeAuthModal();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const mobile = document.getElementById('regMobile').value;
+            const pass = document.getElementById('regPass').value;
+            const confirmPass = document.getElementById('regConfirmPass').value;
+
+            if (pass !== confirmPass) {
+                alert('পাসওয়ার্ড মিলছে না!');
+                return;
+            }
+
+            currentUser = { name, email, mobile };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showAppScreen();
         }
 
-        // ==========================================
-        // ৪. Multi-step Purchase Mechanism
-        // ==========================================
-        function startPurchase(pkgName, price) {
-            currentOrder.pkgName = pkgName;
-            currentOrder.price = price;
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            location.reload();
+        }
+
+        function showAuthScreen() {
+            document.getElementById('auth-screen').style.display = 'flex';
+            document.getElementById('app-screen').style.display = 'none';
+        }
+
+        function showAppScreen() {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-screen').style.display = 'flex';
             
-            document.getElementById('selectedPkgName').innerText = pkgName;
-            document.getElementById('selectedPkgPrice').innerText = price;
+            document.getElementById('profName').innerText = currentUser.name;
+            document.getElementById('profEmail').innerText = currentUser.email;
+            document.getElementById('profMobile').innerText = "মোবাইল: " + currentUser.mobile;
+            
+            loadOrders();
+        }
+
+        function showScreen(screenId, navId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(screenId).classList.add('active');
+            document.getElementById(navId).classList.add('active');
+
+            if(screenId === 'orders-page') {
+                loadOrders();
+            }
+        }
+
+        function switchGameTab(tab) {
+            document.getElementById('tab-ff').classList.remove('active');
+            document.getElementById('tab-ef').classList.remove('active');
+            document.getElementById('ff-packages').style.display = 'none';
+            document.getElementById('ef-packages').style.display = 'none';
+
+            if (tab === 'ff') {
+                document.getElementById('tab-ff').classList.add('active');
+                document.getElementById('ff-packages').style.display = 'grid';
+            } else {
+                document.getElementById('tab-ef').classList.add('active');
+                document.getElementById('ef-packages').style.display = 'block';
+            }
+        }
+
+        function openOrderModal(pkgName, price) {
+            selectedOrder = { pkgName, price, uid: '', trxId: '' };
+            
+            // Set values in elements
+            document.getElementById('modalPkgName').innerText = pkgName;
+            document.getElementById('modalPkgPrice').innerText = price;
+            
+            document.getElementById('summaryPkgName').innerText = pkgName;
+            document.getElementById('summaryPkgPrice').innerText = price;
+            document.getElementById('bkashAmountDisplay').innerText = price;
+            document.getElementById('bkashNumDisplay').innerText = BKASH_NUMBER;
             
             document.getElementById('purchaseModal').style.display = 'flex';
             goToStep(1);
@@ -653,130 +911,86 @@
         function closeModal() {
             document.getElementById('purchaseModal').style.display = 'none';
             document.getElementById('playerUid').value = '';
-            document.getElementById('trxIdInput').value = '';
+            document.getElementById('trxId').value = '';
         }
 
-        function goToStep(stepNumber) {
-            if (stepNumber === 2) {
-                const uid = document.getElementById('playerUid').value.trim();
-                if (!uid) {
-                    alert('দয়া করে আপনার Player UID দিন!');
-                    return;
-                }
-                currentOrder.uid = uid;
+        function goToStep(stepNum) {
+            if (stepNum === 2) {
+                const uid = document.getElementById('playerUid').value;
+                if (!uid) { alert('Player UID দিন!'); return; }
+                selectedOrder.uid = uid;
             }
 
-            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + stepNumber).classList.add('active');
+            document.querySelectorAll('.step-content').forEach(s => s.style.display = 'none');
+            document.getElementById('step-' + stepNum).style.display = 'block';
         }
 
-        function copyBkashNumber() {
-            const num = document.getElementById('bkashNumber').innerText;
-            navigator.clipboard.writeText(num);
-            alert('বিকাশ নম্বর কপি হয়েছে: ' + num);
+        function copyBkash() {
+            navigator.clipboard.writeText(BKASH_NUMBER);
+            alert('বিকাশ নম্বর কপি হয়েছে: ' + BKASH_NUMBER);
         }
 
-        // ==========================================
-        // ৫. WhatsApp Redirect for Topup & Services
-        // ==========================================
-        function submitOrderToWhatsApp() {
-            const trxId = document.getElementById('trxIdInput').value.trim();
-            if (!trxId) {
-                alert('দয়া করে বিকাশ Send Money-এর TrxID টি দিন!');
-                return;
-            }
-            currentOrder.trxId = trxId;
+        function submitOrder() {
+            const trx = document.getElementById('trxId').value;
+            if (!trx) { alert('ট্রান্সজেকশন আইডি দিন!'); return; }
+            selectedOrder.trxId = trx;
 
-            const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n` +
-                            `🎮 *প্যাকেজ:* ${currentOrder.pkgName}\n` +
-                            `💰 *মূল্য:* ${currentOrder.price} TK\n` +
-                            `🆔 *Player UID:* ${currentOrder.uid}\n` +
-                            `💳 *পেমেন্ট মেথড:* bKash (Personal)\n` +
-                            `🧾 *TrxID:* ${currentOrder.trxId}\n\n` +
-                            `দয়া করে আমার অর্ডারটি কনফার্ম করুন।`;
+            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
+            orders.unshift({
+                ...selectedOrder,
+                userEmail: currentUser.email,
+                date: new Date().toLocaleDateString('bn-BD'),
+                status: 'Pending'
+            });
+            localStorage.setItem('user_orders', JSON.stringify(orders));
 
-            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
-            
-            saveOrderToHistory(currentOrder);
+            const msg = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedOrder.pkgName}\n💰 *মূল্য:* ${selectedOrder.price} TK\n🆔 *Player UID:* ${selectedOrder.uid}\n💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${selectedOrder.trxId}\n👤 *ইউজার:* ${currentUser.email}`;
+            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
             closeModal();
             window.location.href = waUrl;
         }
 
-        function openWhatsAppService(serviceName) {
-            const text = `হ্যালো! আমি আপনার ওয়েবসাইট থেকে "${serviceName}" সার্ভিসটি নিতে আগ্রহী। এই বিষয়ে বিস্তারিত জানতে চাই।`;
-            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
-            window.location.href = waUrl;
-        }
-
-        // ==========================================
-        // ৬. Tabs & Navigation
-        // ==========================================
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('freefire-section').style.display = 'none';
-            document.getElementById('efootball-section').style.display = 'none';
-
-            if(tab === 'freefire') {
-                document.getElementById('freefire-section').style.display = 'block';
-                document.getElementById('tab-ff').classList.add('active');
-            } else if(tab === 'efootball') {
-                document.getElementById('efootball-section').style.display = 'block';
-                document.getElementById('tab-ef').classList.add('active');
-            }
-        }
-
-        function showSection(section) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        function loadOrders() {
+            const container = document.getElementById('orders-container');
+            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
             
-            if(section === 'home') {
-                document.getElementById('freefire-section').style.display = 'block';
-                document.getElementById('orders-section').style.display = 'none';
-                document.getElementById('nav-home').classList.add('active');
-            } else if(section === 'orders') {
-                document.getElementById('freefire-section').style.display = 'none';
-                document.getElementById('efootball-section').style.display = 'none';
-                document.getElementById('orders-section').style.display = 'block';
-                document.getElementById('nav-orders').classList.add('active');
-                loadOrderHistory();
-            }
-        }
+            let myOrders = orders.filter(o => o.userEmail === currentUser.email);
 
-        // ==========================================
-        // ৭. Save Order History in LocalStorage
-        // ==========================================
-        function saveOrderToHistory(order) {
-            let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
-            orders.unshift({
-                ...order,
-                date: new Date().toLocaleDateString('bn-BD'),
-                status: 'Processing'
-            });
-            localStorage.setItem('my_orders', JSON.stringify(orders));
-        }
-
-        function loadOrderHistory() {
-            const listContainer = document.getElementById('orders-list');
-            let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
-            
-            if(orders.length === 0) {
-                listContainer.innerHTML = '<p style="text-align:center; opacity:0.7; margin-top:20px;">কোনো অর্ডার হিস্ট্রি পাওয়া যায়নি।</p>';
+            if (myOrders.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">কোনো অর্ডার পাওয়া যায়নি।</p>';
                 return;
             }
 
-            listContainer.innerHTML = orders.map(o => `
-                <div style="background: var(--card-bg); padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);">
+            container.innerHTML = myOrders.map(o => `
+                <div class="order-card">
                     <div style="display:flex; justify-content:space-between;">
-                        <b>${o.pkgName}</b>
-                        <span style="color: var(--accent-color);">${o.price} TK</span>
+                        <strong>${o.pkgName}</strong>
+                        <span style="color:var(--accent-color);">${o.price} TK</span>
                     </div>
-                    <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px;">
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">
                         UID: ${o.uid} | TrxID: ${o.trxId}
                     </div>
-                    <div style="font-size: 0.75rem; margin-top: 5px; color: #3b82f6;">
-                        স্ট্যাটাস: ${o.status} (${o.date})
+                    <div style="font-size:0.8rem; margin-top:5px;">
+                        স্ট্যাটাস: <span class="${o.status === 'Completed' ? 'status-completed' : 'status-pending'}">${o.status}</span>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function sendServiceMsg(serviceName) {
+            const msg = `হ্যালো! আমি MIHADX BD SHOP থেকে "${serviceName}" সার্ভিসটি নিতে চাচ্ছি।`;
+            window.location.href = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+        }
+
+        function adminCompleteLastOrder() {
+            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
+            if (orders.length > 0) {
+                orders[0].status = 'Completed';
+                localStorage.setItem('user_orders', JSON.stringify(orders));
+                loadOrders();
+                alert("সর্বশেষ অর্ডারের স্ট্যাটাস 'Completed' করা হয়েছে!");
+            }
         }
     </script>
 </body>
