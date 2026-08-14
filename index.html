@@ -9,7 +9,8 @@
   <style>
     body { font-family: 'Hind Siliguri', sans-serif; }
     .dark body { background-color: #1a202c; color: white; }
-    .hidden-section { display: none; }
+    .hidden-section { display: none !important; }
+    .tab-btn-active { border: 2px solid #ea580c; background-color: rgba(234, 88, 12, 0.1); }
   </style>
 </head>
 <body class="bg-slate-50 transition-colors duration-300">
@@ -51,16 +52,18 @@
         <!-- Topup Section -->
         <section>
           <h2 id="lbl-topup" class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">টপআপ সেন্টার</h2>
-          <div class="flex gap-2 mb-4">
-            <button onclick="showTopup('ff')" id="btn-ff" class="flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm">
-              <span>🔥</span> Free Fire
+          
+          <!-- Game Logo Toggle Buttons (Only Image Logos) -->
+          <div class="flex gap-3 mb-4">
+            <button onclick="showTopup('ff')" id="btn-ff" class="flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16">
+              <img src="free-fire-logo.png" alt="Free Fire" class="h-12 object-contain">
             </button>
-            <button onclick="showTopup('ef')" id="btn-ef" class="flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm">
-              <span>⚽</span> eFootball
+            <button onclick="showTopup('ef')" id="btn-ef" class="flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70">
+              <img src="EFootball_logo.png" alt="eFootball" class="h-12 object-contain">
             </button>
           </div>
 
-          <!-- Free Fire Expanded Grid (Updated Prices as per Screenshot) -->
+          <!-- Free Fire Grid -->
           <div id="ff-grid" class="grid grid-cols-2 gap-3">
             <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('25 Diamond', 20)">
               <div class="text-2xl mb-1">💎</div>
@@ -154,9 +157,9 @@
             </div>
           </div>
 
-          <!-- eFootball Grid -->
+          <!-- eFootball Grid (Swaps seamlessly with FF) -->
           <div id="ef-grid" class="hidden-section bg-white dark:bg-slate-800 p-6 rounded-xl text-center shadow">
-            <div class="text-3xl mb-2">⚽</div>
+            <img src="EFootball_logo.png" alt="eFootball" class="h-16 mx-auto mb-3 object-contain">
             <h3 id="lbl-ef-title" class="font-bold text-lg mb-1">ই-ফুটবল কয়েন/প্যাক</h3>
             <p id="lbl-ef-sub" class="text-orange-600 font-bold text-sm">খুব শীঘ্রই আসছে...</p>
           </div>
@@ -274,8 +277,7 @@
       </button>
     </nav>
   </div>
-
-  <!-- ORDER & bKash PAYMENT MODAL (Only bKash Active as requested) -->
+    <!-- ORDER & bKash PAYMENT MODAL -->
   <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden p-4">
     <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4 relative">
       <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
@@ -291,7 +293,7 @@
         <button onclick="proceedToPayment()" id="btn-next-payment" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold shadow hover:bg-orange-700 transition-all">পরবর্তী ধাপ (পেমেন্ট)</button>
       </div>
 
-      <!-- Step 2: bKash Payment Section (Nagad & Rocket Disabled) -->
+      <!-- Step 2: bKash Payment Section -->
       <div id="step-bkash" class="hidden-section space-y-4">
         <div class="bg-pink-50 dark:bg-pink-950/40 p-4 rounded-xl border border-pink-200 dark:border-pink-900 text-center space-y-2">
           <div id="lbl-bkash-personal" class="inline-block bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">বিকাশ পার্সোনাল নম্বর</div>
@@ -320,7 +322,7 @@
     </div>
   </div>
 
-  <!-- Firebase Scripts & Logic -->
+  <!-- Firebase Scripts & App Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -470,6 +472,7 @@
     window.logout = () => signOut(auth);
     window.toggleTheme = () => document.documentElement.classList.toggle('dark');
 
+    // Smooth Game Toggle Logic
     window.showTopup = (type) => {
       const ffGrid = document.getElementById('ff-grid');
       const efGrid = document.getElementById('ef-grid');
@@ -479,13 +482,13 @@
       if (type === 'ff') {
         ffGrid.classList.remove('hidden-section');
         efGrid.classList.add('hidden-section');
-        btnFf.className = "flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm";
-        btnEf.className = "flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm";
+        btnFf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16";
+        btnEf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70";
       } else {
         ffGrid.classList.add('hidden-section');
         efGrid.classList.remove('hidden-section');
-        btnEf.className = "flex-1 bg-orange-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm";
-        btnFf.className = "flex-1 bg-slate-200 dark:bg-slate-700 py-2 rounded-lg font-bold flex items-center justify-center gap-2 text-sm";
+        btnEf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16";
+        btnFf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70";
       }
     };
 
@@ -575,7 +578,6 @@
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           const isCompleted = data.status === 'Completed';
-          // Status badge matching screenshot style
           const badgeClass = isCompleted 
             ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 font-bold px-3 py-1 rounded-full text-xs' 
             : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 font-bold px-3 py-1 rounded-full text-xs';
