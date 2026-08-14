@@ -1,613 +1,658 @@
 <!DOCTYPE html>
-<html lang="bn" class="light" id="html-root">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mihadx Pro BD Shop</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Hind Siliguri', sans-serif; }
-    .dark body { background-color: #1a202c; color: white; }
-    .hidden-section { display: none !important; }
-    .tab-btn-active { border: 2px solid #ea580c; background-color: rgba(234, 88, 12, 0.1); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIHADX PRO BD - Topup Shop</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0d1322;
+            --card-bg: #172033;
+            --text-color: #ffffff;
+            --accent-color: #f97316;
+            --secondary-bg: #232f48;
+            --border-color: #2e3e5e;
+        }
+
+        body.light-mode {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --secondary-bg: #e2e8f0;
+            --border-color: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Game Tabs */
+        .game-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            border-color: var(--accent-color);
+        }
+
+        .tab-btn img {
+            height: 40px;
+            object-fit: contain;
+        }
+
+        /* Packages Grid */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .package-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .package-card:hover {
+            border-color: var(--accent-color);
+        }
+
+        .pkg-title { font-weight: 700; font-size: 1rem; }
+        .pkg-price { color: var(--accent-color); font-weight: 600; margin-top: 5px; }
+
+        /* Multi-Step Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none; border: none;
+            color: var(--text-color); font-size: 1.2rem; cursor: pointer;
+        }
+
+        .step-content { display: none; }
+        .step-content.active { display: block; }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-color);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* 4 Mobile Banking Options */
+        .payment-method-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 14px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .payment-method-btn.disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .badge-disabled {
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        /* Copy Box */
+        .copy-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--secondary-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--accent-color);
+            margin: 12px 0;
+        }
+
+        .copy-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Instructions */
+        .instruction-list {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active { color: var(--accent-color); }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 2px; }
+    </style>
 </head>
-<body class="bg-slate-50 transition-colors duration-300">
+<body>
 
-  <!-- Auth Overlay -->
-  <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 text-white p-4">
-    <div class="text-center max-w-sm w-full bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
-      <h1 id="txt-welcome" class="text-2xl font-bold mb-2">স্বাগতম!</h1>
-      <p id="txt-login-sub" class="mb-6 text-sm text-slate-300">MIHADX PRO BD SHOP-এ প্রবেশ করতে লগইন করুন</p>
-      <button id="btn-login" class="w-full bg-white text-slate-900 py-3 px-4 rounded-xl font-bold shadow-lg hover:bg-slate-100 transition-all flex items-center justify-center gap-2">
-        <svg class="w-5 h-5" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.14C3.15 21.32 7.22 24 12 24z"/>
-          <path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.18C.43 8.13 0 9.83 0 12s.43 3.87 1.18 5.38l4.09-3.14z"/>
-          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.15 2.68 1.18 6.62l4.09 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/>
-        </svg>
-        Continue with Google
-      </button>
-    </div>
-  </div>
-
-  <!-- App Content -->
-  <div id="app-content" class="hidden">
     <!-- Header -->
-    <header class="sticky top-0 bg-white dark:bg-slate-800 shadow p-4 flex justify-between items-center z-40 max-w-md mx-auto">
-      <h1 class="text-xl font-bold text-orange-600">MIHADX PRO BD</h1>
-      <div class="flex items-center gap-2">
-        <button onclick="toggleLanguage()" id="btn-lang" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-xs font-bold rounded-lg">EN</button>
-        <button onclick="toggleTheme()" class="p-2 bg-slate-100 dark:bg-slate-700 rounded-full">🌙</button>
-      </div>
+    <header>
+        <div class="logo">MIHADX PRO BD</div>
+        <div class="header-controls">
+            <button class="btn-icon" id="langToggle">EN</button>
+            <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+        </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto p-4 pb-24 space-y-8">
-      
-      <!-- 1. HOME VIEW -->
-      <div id="view-home" class="space-y-8">
-        
-        <!-- Topup Section -->
-        <section>
-          <h2 id="lbl-topup" class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">টপআপ সেন্টার</h2>
-          
-          <!-- Game Logo Toggle Buttons (Only Image Logos) -->
-          <div class="flex gap-3 mb-4">
-            <button onclick="showTopup('ff')" id="btn-ff" class="flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16">
-              <img src="free-fire-logo.png" alt="Free Fire" class="h-12 object-contain">
-            </button>
-            <button onclick="showTopup('ef')" id="btn-ef" class="flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70">
-              <img src="EFootball_logo.png" alt="eFootball" class="h-12 object-contain">
-            </button>
-          </div>
-
-          <!-- Free Fire Grid -->
-          <div id="ff-grid" class="grid grid-cols-2 gap-3">
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('25 Diamond', 20)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">25 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">২০ TK</div>
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Game Tabs -->
+        <div class="game-tabs">
+            <div class="tab-btn active" id="tab-ff" onclick="switchTab('freefire')">
+                <img src="free-fire-logo.png" alt="Free Fire">
             </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('50 Diamond', 35)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">50 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৩৫ TK</div>
+            <div class="tab-btn" id="tab-ef" onclick="switchTab('efootball')">
+                <img src="EFootball_logo.png" alt="eFootball">
             </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('115 Diamond', 78)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">115 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৭৮ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('100 Diamond', 70)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">100 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৭০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('240 Diamond', 155)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">240 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">১৫৫ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('610 Diamond', 390)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">610 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৩৯০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('Weekly', 153)">
-              <div class="text-2xl mb-1">👑</div>
-              <div class="font-bold text-sm">Weekly</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">১৫৩ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('Monthly', 760)">
-              <div class="text-2xl mb-1">👑</div>
-              <div class="font-bold text-sm">Monthly</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৭৬০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('355 Diamond', 235)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">355 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">২৩৫ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('850 Diamond', 545)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">850 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৫৪৫ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('1240 Diamond', 780)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">1240 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৭৮০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('505 Diamond', 330)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">505 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৩৩০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('2530 Diamond', 1590)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">2530 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">১৫৯০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('5060 Diamond', 3180)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">5060 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৩১৮০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('10120 Diamond', 6350)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">10120 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৬৩৫০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('1090 Diamond', 710)">
-              <div class="text-2xl mb-1">💎</div>
-              <div class="font-bold text-sm">1090 Diamond</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৭১০ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('2x Weekly', 306)">
-              <div class="text-2xl mb-1">👑</div>
-              <div class="font-bold text-sm">2x Weekly</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৩০৬ TK</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="openOrderModal('3x Weekly', 459)">
-              <div class="text-2xl mb-1">👑</div>
-              <div class="font-bold text-sm">3x Weekly</div>
-              <div class="text-orange-600 font-bold text-sm mt-1">৪৫৯ TK</div>
-            </div>
-          </div>
-
-          <!-- eFootball Grid (Swaps seamlessly with FF) -->
-          <div id="ef-grid" class="hidden-section bg-white dark:bg-slate-800 p-6 rounded-xl text-center shadow">
-            <img src="EFootball_logo.png" alt="eFootball" class="h-16 mx-auto mb-3 object-contain">
-            <h3 id="lbl-ef-title" class="font-bold text-lg mb-1">ই-ফুটবল কয়েন/প্যাক</h3>
-            <p id="lbl-ef-sub" class="text-orange-600 font-bold text-sm">খুব শীঘ্রই আসছে...</p>
-          </div>
-        </section>
-
-        <!-- E-Commerce Section -->
-        <section>
-          <h2 id="lbl-ecommerce" class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">ই-কমার্স শপ</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="alert('শার্ট কালেকশন শীঘ্রই আসছে!')">
-              <div class="text-3xl mb-2">👕</div>
-              <div class="font-bold text-sm" id="cat-shirt">শার্ট (Shirts)</div>
-              <div class="text-xs text-slate-400 mt-1">স্টাইলিশ কালেকশন</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="alert('প্যান্ট কালেকশন শীঘ্রই আসছে!')">
-              <div class="text-3xl mb-2">👖</div>
-              <div class="font-bold text-sm" id="cat-pant">প্যান্ট (Pants)</div>
-              <div class="text-xs text-slate-400 mt-1">প্রিমিয়াম কোয়ালিটি</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="alert('জুতা কালেকশন শীঘ্রই আসছে!')">
-              <div class="text-3xl mb-2">👟</div>
-              <div class="font-bold text-sm" id="cat-shoe">জুতা (Shoes)</div>
-              <div class="text-xs text-slate-400 mt-1">আরামদায়ক ও টেকসই</div>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow text-center cursor-pointer hover:border-orange-500 border border-transparent transition-all" onclick="alert('অন্যান্য প্রোডাক্ট শীঘ্রই আসছে!')">
-              <div class="text-3xl mb-2">🛍️</div>
-              <div class="font-bold text-sm" id="cat-other">অন্যান্য (Others)</div>
-              <div class="text-xs text-slate-400 mt-1">বিবিধ পণ্য</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Computer Skills & Services Section -->
-        <section class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow space-y-4">
-          <h2 id="lbl-computer" class="text-xl font-bold border-l-4 border-orange-600 pl-2">কম্পিউটার সেবা ও দক্ষতা</h2>
-          <p id="lbl-computer-desc" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            আমি কম্পিউটারের বিভিন্ন প্রফেশনাল কাজে অত্যন্ত দক্ষ। নিচে আমার প্রধান সেবাসমূহ দেওয়া হলো:
-          </p>
-
-          <div class="space-y-3">
-            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-700">
-              <div class="flex items-center gap-2 font-bold text-sm text-orange-600 mb-1">
-                <span>📊</span> MS Excel
-              </div>
-              <p id="skill-excel" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                অ্যাডভান্সড ফর্মুলা, পাইভট টেবিল, চার্ট, ডাটা অ্যানালিসিস এবং হিসাব-নিকাশের কাজ অত্যন্ত নিখুঁতভাবে করতে পারি।
-              </p>
-            </div>
-
-            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-700">
-              <div class="flex items-center gap-2 font-bold text-sm text-orange-600 mb-1">
-                <span>📝</span> MS Word
-              </div>
-              <p id="skill-word" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                প্রফেশনাল ডকুমেন্ট তৈরি, ফরম্যাটিং, সিভি ডিজাইন, এবং দ্রুত গতিতে বাংলা ও ইংরেজি টাইপিং-এ পারদর্শী।
-              </p>
-            </div>
-
-            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-700">
-              <div class="flex items-center gap-2 font-bold text-sm text-orange-600 mb-1">
-                <span>📽️</span> MS PowerPoint
-              </div>
-              <p id="skill-ppt" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                আকর্ষণীয় স্লাইড প্রেজেন্টেশন, অ্যানিমেশন এবং প্রজেক্ট বা ব্যবসায়িক প্রচারের জন্য চমৎকার ডিজাইন তৈরি করতে পারি।
-              </p>
-            </div>
-
-            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-700">
-              <div class="flex items-center gap-2 font-bold text-sm text-orange-600 mb-1">
-                <span>⌨️</span> Data Entry
-              </div>
-              <p id="skill-de" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                অনলাইন ও অফলাইন উভয় মাধ্যমে বড় পরিসরে নিখুঁত ডাটা এন্ট্রি ও ম্যানেজমেন্টের কাজ সফলভাবে সম্পন্ন করে থাকি।
-              </p>
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- 2. MY ORDERS VIEW -->
-      <div id="view-orders" class="hidden-section space-y-4">
-        <h2 id="lbl-my-orders" class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">আমার অর্ডারসমূহ</h2>
-        <div id="my-orders-list" class="space-y-3">
-          <p class="text-center text-slate-400 py-6">লোড হচ্ছে...</p>
-        </div>
-      </div>
-
-      <!-- 3. PROFILE VIEW -->
-      <div id="view-profile" class="hidden-section space-y-4">
-        <h2 id="lbl-profile" class="text-xl font-bold mb-4 border-l-4 border-orange-600 pl-2">প্রোফাইল</h2>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow text-center space-y-3">
-          <div class="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto" id="profile-initial">M</div>
-          <h3 id="profile-name" class="font-bold text-lg">User</h3>
-          <p id="profile-email" class="text-sm text-slate-400"></p>
-          <button onclick="logout()" id="btn-logout" class="mt-4 w-full bg-red-500 text-white py-2 rounded-xl font-bold hover:bg-red-600 transition-all">লগআউট করুন</button>
-        </div>
-      </div>
-
-    </main>
-
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-3 flex justify-around z-40 max-w-md mx-auto right-0 shadow-lg">
-      <button onclick="switchTab('home')" id="nav-home" class="font-bold text-orange-600 flex flex-col items-center">
-        <span class="text-lg">🏠</span>
-        <span id="nav-home-text" class="text-xs">Home</span>
-      </button>
-      <button onclick="switchTab('orders')" id="nav-orders" class="font-bold text-slate-400 flex flex-col items-center">
-        <span class="text-lg">📦</span>
-        <span id="nav-orders-text" class="text-xs">My Orders</span>
-      </button>
-      <button onclick="switchTab('profile')" id="nav-profile" class="font-bold text-slate-400 flex flex-col items-center">
-        <span class="text-lg">👤</span>
-        <span id="nav-profile-text" class="text-xs">Profile</span>
-      </button>
-    </nav>
-  </div>
-    <!-- ORDER & bKash PAYMENT MODAL -->
-  <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden p-4">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4 relative">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
-      
-      <h3 id="modal-title" class="font-bold text-lg text-orange-600">অর্ডার নিশ্চিতকরণ</h3>
-      
-      <!-- Step 1: UID Input -->
-      <div id="step-uid" class="space-y-3">
-        <div>
-          <label id="lbl-uid-input" class="block text-xs font-semibold text-slate-500 mb-1">আপনার গেম UID দিন</label>
-          <input type="text" id="game-uid" placeholder="যেমন: 123456789" class="w-full p-3 rounded-xl border dark:bg-slate-700 dark:border-slate-600 text-sm focus:outline-none focus:border-orange-500">
-        </div>
-        <button onclick="proceedToPayment()" id="btn-next-payment" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold shadow hover:bg-orange-700 transition-all">পরবর্তী ধাপ (পেমেন্ট)</button>
-      </div>
-
-      <!-- Step 2: bKash Payment Section -->
-      <div id="step-bkash" class="hidden-section space-y-4">
-        <div class="bg-pink-50 dark:bg-pink-950/40 p-4 rounded-xl border border-pink-200 dark:border-pink-900 text-center space-y-2">
-          <div id="lbl-bkash-personal" class="inline-block bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">বিকাশ পার্সোনাল নম্বর</div>
-          <p class="text-xl font-extrabold text-pink-600 tracking-wider">01891623379</p>
-          <p id="lbl-bkash-instruction" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed text-left space-y-1">
-            • *247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান。<br>
-            • <b>"Send Money"</b>-এ ক্লিক করুন。<br>
-            • প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন: <b class="text-pink-600">01891623379</b><br>
-            • নিশ্চিত করতে এখন আপনার bKash মোবাইল মেনু পিন লিখুন。<br>
-            • সবকিছু ঠিক থাকলে, আপনি bKash থেকে একটি নিশ্চিতকরণ বার্তা পাবেন。<br>
-            • এখন উপরের বক্সে আপনার <b>Transaction ID</b> দিন এবং নিচের <b>VERIFY</b> বাটনে ক্লিক করুন।
-          </p>
         </div>
 
-        <div>
-          <label id="lbl-trx-input" class="block text-xs font-semibold text-slate-500 mb-1">ট্রানজেকশন আইডি (TrxID)</label>
-          <input type="text" id="trx-id" placeholder="ট্রানজেকশন আইডি দিন" class="w-full p-3 rounded-xl border dark:bg-slate-700 dark:border-slate-600 text-sm focus:outline-none focus:border-orange-500 uppercase font-mono">
+        <!-- Free Fire Section -->
+        <div id="freefire-section">
+            <div class="section-title">টপআপ সেন্টার</div>
+            <div class="packages-grid">
+                <div class="package-card" onclick="startPurchase('25 Diamond', 20)">
+                    <div class="pkg-title">25 Diamond</div>
+                    <div class="pkg-price">২০ TK</div>
+                </div>
+                <div class="package-card" onclick="startPurchase('50 Diamond', 39)">
+                    <div class="pkg-title">50 Diamond</div>
+                    <div class="pkg-price">৩৯ TK</div>
+                </div>
+                <div class="package-card" onclick="startPurchase('115 Diamond', 78)">
+                    <div class="pkg-title">115 Diamond</div>
+                    <div class="pkg-price">৭৮ TK</div>
+                </div>
+                <div class="package-card" onclick="startPurchase('240 Diamond', 155)">
+                    <div class="pkg-title">240 Diamond</div>
+                    <div class="pkg-price">১৫৫ TK</div>
+                </div>
+            </div>
+
+            <!-- Other Services (MS Word, Excel, Data Entry) -->
+            <div class="section-title">অন্যান্য সার্ভিসসমূহ</div>
+            <div class="packages-grid">
+                <div class="package-card" onclick="openWhatsAppService('MS Word Work')">
+                    <i class="fa-solid fa-file-word" style="font-size: 2rem; color: #2b579a; margin-bottom: 8px;"></i>
+                    <div class="pkg-title">MS Word Work</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                </div>
+
+                <div class="package-card" onclick="openWhatsAppService('MS Excel Work')">
+                    <i class="fa-solid fa-file-excel" style="font-size: 2rem; color: #217346; margin-bottom: 8px;"></i>
+                    <div class="pkg-title">MS Excel Work</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                </div>
+
+                <div class="package-card" onclick="openWhatsAppService('Data Entry Work')">
+                    <i class="fa-solid fa-keyboard" style="font-size: 2rem; color: #f97316; margin-bottom: 8px;"></i>
+                    <div class="pkg-title">Data Entry Work</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                </div>
+            </div>
         </div>
 
-        <div class="flex gap-2">
-          <button onclick="backToUid()" id="btn-back" class="w-1/3 bg-slate-200 dark:bg-slate-700 py-3 rounded-xl font-bold text-sm">পেছনের</button>
-          <button onclick="submitFinalOrder()" id="btn-verify-order" class="w-2/3 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold shadow text-sm">VERIFY</button>
+        <!-- eFootball Section -->
+        <div id="efootball-section" style="display: none; text-align: center; padding: 40px 0;">
+            <h3>খুব শীঘ্রই আসছে...</h3>
         </div>
-      </div>
 
+        <!-- Orders Section -->
+        <div id="orders-section" style="display: none;">
+            <div class="section-title">আমার অর্ডারসমূহ</div>
+            <div id="orders-list" style="margin-top: 15px;">
+                <!-- Live Orders Load Here -->
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Firebase Scripts & App Logic -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- Multi-Step Modal (Sleek Clean Slide) -->
+    <div class="modal-overlay" id="purchaseModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
-      authDomain: "mihadx-pro-bd.firebaseapp.com",
-      projectId: "mihadx-pro-bd",
-      storageBucket: "mihadx-pro-bd.firebasestorage.app",
-      messagingSenderId: "478391400367",
-      appId: "1:478391400367:web:86012d35014ee7350a215a",
-      measurementId: "G-E8Y80PDVDD"
-    };
+            <!-- STEP 1: Player UID -->
+            <div class="step-content active" id="step1">
+                <div class="step-title">প্লেয়ার UID দিন</div>
+                <div class="form-group">
+                    <label>আপনার গেমের Player UID:</label>
+                    <input type="number" id="playerUid" class="form-control" placeholder="যেমন: 123456789">
+                </div>
+                <button class="btn-action" onclick="goToStep(2)">পরবর্তী ধাপ</button>
+            </div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    let currentUser = null;
-    let selectedItemData = {};
-    let currentLang = 'bn';
+            <!-- STEP 2: Amount Confirmation -->
+            <div class="step-content" id="step2">
+                <div class="step-title">অর্ডার নিশ্চিতকরণ</div>
+                <div style="background: var(--secondary-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <p>প্যাকেজ: <b id="selectedPkgName">-</b></p>
+                    <p style="margin-top: 5px;">মোট মূল্য: <b id="selectedPkgPrice" style="color: var(--accent-color);">-</b> TK</p>
+                </div>
+                <button class="btn-action" onclick="goToStep(3)">নেক্সট (পেমেন্ট)</button>
+                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(1)">পেছনে</button>
+            </div>
 
-    const adminWhatsAppNumber = "8801576502490";
+            <!-- STEP 3: Mobile Banking Selection (4 Methods) -->
+            <div class="step-content" id="step3">
+                <div class="step-title">মোবাইল ব্যাংকিং সিলেক্ট করুন</div>
+                
+                <!-- bKash -->
+                <div class="payment-method-btn" onclick="goToStep(4)">
+                    <span><i class="fa-solid fa-wallet" style="color: #d12053; margin-right: 8px;"></i> বিকাশ (bKash)</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
 
-    const translations = {
-      bn: {
-        welcome: "স্বাগতম!",
-        loginSub: "MIHADX PRO BD SHOP-এ প্রবেশ করতে লগইন করুন",
-        topup: "টপআপ সেন্টার",
-        efTitle: "ই-ফুটবল কয়েন/প্যাক",
-        efSub: "খুব শীঘ্রই আসছে...",
-        ecommerce: "ই-কমার্স শপ",
-        shirt: "শার্ট (Shirts)",
-        pant: "প্যান্ট (Pants)",
-        shoe: "জুতা (Shoes)",
-        other: "অন্যান্য (Others)",
-        computer: "কম্পিউটার সেবা ও দক্ষতা",
-        computerDesc: "আমি কম্পিউটারের বিভিন্ন প্রফেশনাল কাজে অত্যন্ত দক্ষ। নিচে আমার প্রধান সেবাসমূহ দেওয়া হলো:",
-        skillExcel: "অ্যাডভান্সড ফর্মুলা, পাইভট টেবিল, চার্ট, ডাটা অ্যানালিসিস এবং হিসাব-নিকাশের কাজ অত্যন্ত নিখুঁতভাবে করতে পারি।",
-        skillWord: "প্রফেশনাল ডকুমেন্ট তৈরি, ফরম্যাটিং, সিভি ডিজাইন, এবং দ্রুত গতিতে বাংলা ও ইংরেজি টাইপিং-এ পারদর্শী।",
-        skillPpt: "আকর্ষণীয় স্লাইড প্রেজেন্টেশন, অ্যানিমেশন এবং প্রজেক্ট বা ব্যবসায়িক প্রচারের জন্য চমৎকার ডিজাইন তৈরি করতে পারি।",
-        skillDe: "অনলাইন ও অফলাইন উভয় মাধ্যমে বড় পরিসরে নিখুঁত ডাটা এন্ট্রি ও ম্যানেজমেন্টের কাজ সফলভাবে সম্পন্ন করে থাকি।",
-        myOrders: "আমার অর্ডারসমূহ",
-        profile: "প্রোফাইল",
-        logout: "লগআউট করুন",
-        navHome: "Home",
-        navOrders: "My Orders",
-        navProfile: "Profile",
-        uidInput: "আপনার গেম UID দিন",
-        nextPayment: "পরবর্তী ধাপ (পেমেন্ট)",
-        bkashPersonal: "বিকাশ পার্সোনাল নম্বর",
-        trxInput: "ট্রানজেকশন আইডি (TrxID)",
-        back: "পেছনের",
-        verifyOrder: "VERIFY"
-      },
-      en: {
-        welcome: "Welcome!",
-        loginSub: "Please log in to enter MIHADX PRO BD SHOP",
-        topup: "Top-up Center",
-        efTitle: "eFootball Coins/Packs",
-        efSub: "Coming soon...",
-        ecommerce: "E-Commerce Shop",
-        shirt: "Shirts",
-        pant: "Pants",
-        shoe: "Shoes",
-        other: "Others",
-        computer: "Computer Skills & Services",
-        computerDesc: "I am highly skilled in professional computer tasks. Here are my primary services:",
-        skillExcel: "Expert in advanced formulas, pivot tables, charts, data analysis, and accurate calculations.",
-        skillWord: "Proficient in professional document creation, formatting, CV design, and fast typing in Bangla/English.",
-        skillPpt: "Skilled in creating engaging slide presentations, animations, and promotional designs.",
-        skillDe: "Successfully handle large-scale accurate data entry and management tasks both online and offline.",
-        myOrders: "My Orders",
-        profile: "Profile",
-        logout: "Logout",
-        navHome: "Home",
-        navOrders: "My Orders",
-        navProfile: "Profile",
-        uidInput: "Enter your Game UID",
-        nextPayment: "Next Step (Payment)",
-        bkashPersonal: "bKash Personal Number",
-        trxInput: "Transaction ID (TrxID)",
-        back: "Back",
-        verifyOrder: "VERIFY"
-      }
-    };
+                <!-- Nagad -->
+                <div class="payment-method-btn disabled">
+                    <span><i class="fa-solid fa-wallet" style="color: #f7931e; margin-right: 8px;"></i> নগদ (Nagad)</span>
+                    <span class="badge-disabled">সাময়িক বন্ধ</span>
+                </div>
 
-    window.toggleLanguage = () => {
-      currentLang = currentLang === 'bn' ? 'en' : 'bn';
-      document.getElementById('btn-lang').innerText = currentLang === 'bn' ? 'EN' : 'BN';
-      document.getElementById('html-root').setAttribute('lang', currentLang);
+                <!-- Rocket -->
+                <div class="payment-method-btn disabled">
+                    <span><i class="fa-solid fa-wallet" style="color: #8c3494; margin-right: 8px;"></i> রকেট (Rocket)</span>
+                    <span class="badge-disabled">সাময়িক বন্ধ</span>
+                </div>
 
-      const t = translations[currentLang];
-      document.getElementById('txt-welcome').innerText = t.welcome;
-      document.getElementById('txt-login-sub').innerText = t.loginSub;
-      document.getElementById('lbl-topup').innerText = t.topup;
-      document.getElementById('lbl-ef-title').innerText = t.efTitle;
-      document.getElementById('lbl-ef-sub').innerText = t.efSub;
-      document.getElementById('lbl-ecommerce').innerText = t.ecommerce;
-      document.getElementById('cat-shirt').innerText = t.shirt;
-      document.getElementById('cat-pant').innerText = t.pant;
-      document.getElementById('cat-shoe').innerText = t.shoe;
-      document.getElementById('cat-other').innerText = t.other;
-      document.getElementById('lbl-computer').innerText = t.computer;
-      document.getElementById('lbl-computer-desc').innerText = t.computerDesc;
-      document.getElementById('skill-excel').innerText = t.skillExcel;
-      document.getElementById('skill-word').innerText = t.skillWord;
-      document.getElementById('skill-ppt').innerText = t.skillPpt;
-      document.getElementById('skill-de').innerText = t.skillDe;
-      document.getElementById('lbl-my-orders').innerText = t.myOrders;
-      document.getElementById('lbl-profile').innerText = t.profile;
-      document.getElementById('btn-logout').innerText = t.logout;
-      document.getElementById('nav-home-text').innerText = t.navHome;
-      document.getElementById('nav-orders-text').innerText = t.navOrders;
-      document.getElementById('nav-profile-text').innerText = t.navProfile;
-      document.getElementById('lbl-uid-input').innerText = t.uidInput;
-      document.getElementById('btn-next-payment').innerText = t.nextPayment;
-      document.getElementById('lbl-bkash-personal').innerText = t.bkashPersonal;
-      document.getElementById('lbl-trx-input').innerText = t.trxInput;
-      document.getElementById('btn-back').innerText = t.back;
-      document.getElementById('btn-verify-order').innerText = t.verifyOrder;
-    };
+                <!-- Upay -->
+                <div class="payment-method-btn disabled">
+                    <span><i class="fa-solid fa-wallet" style="color: #ffc107; margin-right: 8px;"></i> উপায় (Upay)</span>
+                    <span class="badge-disabled">সাময়িক বন্ধ</span>
+                </div>
 
-    document.getElementById('btn-login').addEventListener('click', async () => {
-      try {
-        await signInWithPopup(auth, new GoogleAuthProvider());
-      } catch (error) {
-        alert("লগইন করতে সমস্যা হয়েছে: " + error.message);
-      }
-    });
+                <button class="btn-action" style="background: var(--secondary-bg);" onclick="goToStep(2)">পেছনে</button>
+            </div>
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        currentUser = user;
-        document.getElementById('auth-screen').classList.add('hidden');
-        document.getElementById('app-content').classList.remove('hidden');
-        
-        document.getElementById('profile-name').innerText = user.displayName || 'User';
-        document.getElementById('profile-email').innerText = user.email;
-        document.getElementById('profile-initial').innerText = (user.displayName || 'U').charAt(0).toUpperCase();
-      } else {
-        document.getElementById('auth-screen').classList.remove('hidden');
-        document.getElementById('app-content').classList.add('hidden');
-      }
-    });
+            <!-- STEP 4: bKash Payment & TrxID -->
+            <div class="step-content" id="step4">
+                <div class="step-title">বিকাশ পেমেন্ট</div>
+                
+                <div class="instruction-list">
+                    *247# ডায়াল করে অথবা বিকাশ অ্যাপ থেকে <b>Send Money</b> করুন।
+                </div>
 
-    window.logout = () => signOut(auth);
-    window.toggleTheme = () => document.documentElement.classList.toggle('dark');
+                <div class="copy-box">
+                    <div>
+                        <div style="font-size: 0.75rem; opacity: 0.8;">বিকাশ পার্সোনাল নম্বর:</div>
+                        <strong id="bkashNumber">01891623379</strong>
+                    </div>
+                    <button class="copy-btn" onclick="copyBkashNumber()"><i class="fa-regular fa-copy"></i> Copy</button>
+                </div>
 
-    // Smooth Game Toggle Logic
-    window.showTopup = (type) => {
-      const ffGrid = document.getElementById('ff-grid');
-      const efGrid = document.getElementById('ef-grid');
-      const btnFf = document.getElementById('btn-ff');
-      const btnEf = document.getElementById('btn-ef');
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>ট্রানজেকশন আইডি (TrxID) দিন:</label>
+                    <input type="text" id="trxIdInput" class="form-control" placeholder="যেমন: 8N7A6D5C">
+                </div>
 
-      if (type === 'ff') {
-        ffGrid.classList.remove('hidden-section');
-        efGrid.classList.add('hidden-section');
-        btnFf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16";
-        btnEf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70";
-      } else {
-        ffGrid.classList.add('hidden-section');
-        efGrid.classList.remove('hidden-section');
-        btnEf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-orange-600 flex items-center justify-center transition-all h-16";
-        btnFf.className = "flex-1 bg-white dark:bg-slate-800 p-2 rounded-xl shadow border-2 border-transparent hover:border-orange-500 flex items-center justify-center transition-all h-16 opacity-70";
-      }
-    };
+                <button class="btn-action" id="submitBtn" onclick="submitOrderToWhatsApp()">VERIFY</button>
+                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(3)">পেছনে</button>
+            </div>
 
-    window.switchTab = (tab) => {
-      const views = ['home', 'orders', 'profile'];
-      views.forEach(v => {
-        document.getElementById(`view-${v}`).classList.add('hidden-section');
-        document.getElementById(`nav-${v}`).className = "font-bold text-slate-400 flex flex-col items-center";
-      });
+        </div>
+    </div>
 
-      document.getElementById(`view-${tab}`).classList.remove('hidden-section');
-      document.getElementById(`nav-${tab}`).className = "font-bold text-orange-600 flex flex-col items-center";
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" id="nav-home" onclick="showSection('home')">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" id="nav-orders" onclick="showSection('orders')">
+            <i class="fa-solid fa-box"></i>
+            <span>My Orders</span>
+        </div>
+        <div class="nav-item" id="nav-profile" onclick="showSection('profile')">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </div>
+    </div>
+        <script>
+        // ==========================================
+        // ১. আপনার তথ্য (WhatsApp নম্বর)
+        // ==========================================
+        const ADMIN_WHATSAPP = "8801891623379"; // আপনার হোয়াটসঅ্যাপ নম্বর (country code সহ)
 
-      if (tab === 'orders') loadMyOrders();
-    };
-
-    window.openOrderModal = (itemName, price) => {
-      selectedItemData = { itemName, price };
-      document.getElementById('modal-title').innerText = `${itemName} (${price} TK)`;
-      document.getElementById('game-uid').value = '';
-      document.getElementById('trx-id').value = '';
-      document.getElementById('step-uid').classList.remove('hidden-section');
-      document.getElementById('step-bkash').classList.add('hidden-section');
-      document.getElementById('order-modal').classList.remove('hidden');
-    };
-
-    window.closeModal = () => {
-      document.getElementById('order-modal').classList.add('hidden');
-    };
-
-    window.proceedToPayment = () => {
-      const uid = document.getElementById('game-uid').value.trim();
-      if (!uid) return alert('দয়া করে আপনার গেম UID লিখুন!');
-      
-      document.getElementById('step-uid').classList.add('hidden-section');
-      document.getElementById('step-bkash').classList.remove('hidden-section');
-    };
-
-    window.backToUid = () => {
-      document.getElementById('step-bkash').classList.add('hidden-section');
-      document.getElementById('step-uid').classList.remove('hidden-section');
-    };
-
-    window.submitFinalOrder = async () => {
-      const uid = document.getElementById('game-uid').value.trim();
-      const trxId = document.getElementById('trx-id').value.trim();
-
-      if (!trxId) return alert('দয়া করে বিকাশ ট্রানজেকশন আইডি (TrxID) দিন!');
-
-      try {
-        const orderDetails = {
-          userId: currentUser.uid,
-          userEmail: currentUser.email,
-          itemName: selectedItemData.itemName,
-          price: selectedItemData.price,
-          gameUid: uid,
-          trxId: trxId,
-          status: "Pending",
-          date: new Date().toLocaleString('bn-BD')
+        // অর্ডার ডেটা স্টোরেজ
+        let currentOrder = {
+            pkgName: '',
+            price: 0,
+            uid: '',
+            trxId: ''
         };
 
-        await addDoc(collection(db, "orders"), orderDetails);
-
-        closeModal();
-        alert('অর্ডার সফলভাবে সাবমিট হয়েছে! এখন WhatsApp এ চলে যাচ্ছে...');
-
-        const message = `🚨 New Order!%0A👤 User: ${currentUser.email}%0A🎮 Item: ${selectedItemData.itemName}%0A💰 Price: ${selectedItemData.price} TK%0A🆔 UID: ${uid}%0A💳 TrxID: ${trxId}%0A📌 Status: Pending`;
-        
-        window.open(`https://wa.me/${adminWhatsAppNumber}?text=${message}`, '_blank');
-        
-        switchTab('orders');
-      } catch (error) {
-        console.error(error);
-        alert('অর্ডার সাবমিট করতে সমস্যা হয়েছে।');
-      }
-    };
-
-    window.loadMyOrders = async () => {
-      const container = document.getElementById('my-orders-list');
-      container.innerHTML = `<p class="text-center text-slate-400 py-4">লোড হচ্ছে...</p>`;
-
-      try {
-        const q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
-        const querySnapshot = await getDocs(q);
-        
-        let html = '';
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          const isCompleted = data.status === 'Completed';
-          const badgeClass = isCompleted 
-            ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 font-bold px-3 py-1 rounded-full text-xs' 
-            : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 font-bold px-3 py-1 rounded-full text-xs';
-
-          html += `
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow border border-slate-100 dark:border-slate-700 space-y-2">
-              <div class="flex justify-between items-center border-b pb-2 dark:border-slate-700">
-                <span class="font-bold text-sm text-slate-700 dark:text-slate-300">Package: <span class="text-orange-600">${data.itemName}</span></span>
-                <span class="${badgeClass}">${data.status || 'Pending'}</span>
-              </div>
-              <div class="text-xs space-y-1 text-slate-500 dark:text-slate-400">
-                <p>Order Date: <span class="font-semibold">${data.date}</span></p>
-                <p>Total Price: <span class="font-bold text-slate-700 dark:text-slate-200">৳${data.price}.00</span></p>
-                <p>Player ID: <span class="font-mono font-bold text-slate-800 dark:text-slate-200">${data.gameUid}</span></p>
-                <p>TrxID: <span class="font-mono font-semibold text-pink-600">${data.trxId}</span></p>
-              </div>
-            </div>
-          `;
-        });
-
-        if (!html) {
-          container.innerHTML = `<p class="text-center text-slate-400 py-6">আপনার কোনো অর্ডার নেই।</p>`;
-        } else {
-          container.innerHTML = html;
+        // ==========================================
+        // ২. স্লাইড / স্টেপ মেকানিজম (৪টি ধাপ)
+        // ==========================================
+        function startPurchase(pkgName, price) {
+            currentOrder.pkgName = pkgName;
+            currentOrder.price = price;
+            
+            document.getElementById('selectedPkgName').innerText = pkgName;
+            document.getElementById('selectedPkgPrice').innerText = price;
+            
+            document.getElementById('purchaseModal').style.display = 'flex';
+            goToStep(1);
         }
-      } catch (error) {
-        console.error(error);
-        container.innerHTML = `<p class="text-center text-red-500 py-4">অর্ডার লোড করা যায়নি।</p>`;
-      }
-    };
-  </script>
+
+        function closeModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+            document.getElementById('playerUid').value = '';
+            document.getElementById('trxIdInput').value = '';
+        }
+
+        function goToStep(stepNumber) {
+            // স্টেপ ১ ভ্যালিডেশন (UID চেক)
+            if (stepNumber === 2) {
+                const uid = document.getElementById('playerUid').value.trim();
+                if (!uid) {
+                    alert('দয়া করে আপনার Player UID দিন!');
+                    return;
+                }
+                currentOrder.uid = uid;
+            }
+
+            // স্লাইড অন/অফ
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        // ==========================================
+        // ৩. বিকাশ নম্বর কপি বাটন
+        // ==========================================
+        function copyBkashNumber() {
+            const num = document.getElementById('bkashNumber').innerText;
+            navigator.clipboard.writeText(num);
+            alert('বিকাশ নম্বর কপি হয়েছে: ' + num);
+        }
+
+        // ==========================================
+        // ৪. VERIFY চাপলে WhatsApp এ সরাসরি অর্ডার পাঠানো
+        // ==========================================
+        function submitOrderToWhatsApp() {
+            const trxId = document.getElementById('trxIdInput').value.trim();
+            if (!trxId) {
+                alert('দয়া করে বিকাশ Send Money-এর TrxID টি দিন!');
+                return;
+            }
+            currentOrder.trxId = trxId;
+
+            // হোয়াটসঅ্যাপ মেসেজের সুন্দর ফরম্যাট
+            const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n` +
+                            `🎮 *প্যাকেজ:* ${currentOrder.pkgName}\n` +
+                            `💰 *মূল্য:* ${currentOrder.price} TK\n` +
+                            `🆔 *Player UID:* ${currentOrder.uid}\n` +
+                            `💳 *পেমেন্ট মেথড:* bKash (Personal)\n` +
+                            `🧾 *TrxID:* ${currentOrder.trxId}\n\n` +
+                            `দয়া করে আমার অর্ডারটি কনফার্ম করুন।`;
+
+            // WhatsApp লিংক তৈরি ও সরাসরি রিডাইরেক্ট
+            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
+            
+            // স্থানীয় ব্রাউজারে হিস্ট্রি সেভ করা
+            saveOrderToHistory(currentOrder);
+            
+            closeModal();
+            window.location.href = waUrl; // সরাসরি ওয়াটসঅ্যাপ খুলবে
+        }
+
+        // ==========================================
+        // ৫. MS Word, Excel, Data Entry চাপলে WhatsApp এ মেসেজ
+        // ==========================================
+        function openWhatsAppService(serviceName) {
+            const text = `হ্যালো! আমি আপনার ওয়েবসাইট থেকে "${serviceName}" সার্ভিসটি নিতে আগ্রহী। এই বিষয়ে জানতে চাই।`;
+            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
+            window.location.href = waUrl;
+        }
+
+        // ==========================================
+        // ৬. সার্ভিস ট্যাপ ও নেভিগেশন
+        // ==========================================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('freefire-section').style.display = 'none';
+            document.getElementById('efootball-section').style.display = 'none';
+
+            if(tab === 'freefire') {
+                document.getElementById('freefire-section').style.display = 'block';
+                document.getElementById('tab-ff').classList.add('active');
+            } else if(tab === 'efootball') {
+                document.getElementById('efootball-section').style.display = 'block';
+                document.getElementById('tab-ef').classList.add('active');
+            }
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            if(section === 'home') {
+                document.getElementById('freefire-section').style.display = 'block';
+                document.getElementById('orders-section').style.display = 'none';
+                document.getElementById('nav-home').classList.add('active');
+            } else if(section === 'orders') {
+                document.getElementById('freefire-section').style.display = 'none';
+                document.getElementById('efootball-section').style.display = 'none';
+                document.getElementById('orders-section').style.display = 'block';
+                document.getElementById('nav-orders').classList.add('active');
+                loadOrderHistory();
+            }
+        }
+
+        // ==========================================
+        // ৭. ইউজার ব্রাউজারে মাই অর্ডারস সেভ রাখা
+        // ==========================================
+        function saveOrderToHistory(order) {
+            let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
+            orders.unshift({
+                ...order,
+                date: new Date().toLocaleDateString('bn-BD'),
+                status: 'Processing'
+            });
+            localStorage.setItem('my_orders', JSON.stringify(orders));
+        }
+
+        function loadOrderHistory() {
+            const listContainer = document.getElementById('orders-list');
+            let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
+            
+            if(orders.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center; opacity: 0.7; margin-top:20px;">কোনো অর্ডার হিস্ট্রি পাওয়া যায়নি।</p>';
+                return;
+            }
+
+            listContainer.innerHTML = orders.map(o => `
+                <div style="background: var(--card-bg); padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);">
+                    <div style="display:flex; justify-content:space-between;">
+                        <b>${o.pkgName}</b>
+                        <span style="color: var(--accent-color);">${o.price} TK</span>
+                    </div>
+                    <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px;">
+                        UID: ${o.uid} | TrxID: ${o.trxId}
+                    </div>
+                    <div style="font-size: 0.75rem; margin-top: 5px; color: #3b82f6;">
+                        স্ট্যাটাস: ${o.status} (${o.date})
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // থিম টগল (Dark / Light)
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+        });
+    </script>
 </body>
 </html>
