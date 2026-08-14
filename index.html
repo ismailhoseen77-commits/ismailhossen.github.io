@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIHADX PRO BD - Topup Shop</title>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
@@ -63,13 +63,25 @@
         .header-controls {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
 
         .btn-icon {
             background: var(--secondary-bg);
             color: var(--text-color);
-            border: none;
+            border: 1px solid var(--border-color);
             padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-login-nav {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
@@ -112,14 +124,14 @@
         .section-title {
             font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin: 15px 0 12px 0;
         }
 
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .package-card {
@@ -138,7 +150,7 @@
         .pkg-title { font-weight: 700; font-size: 1rem; }
         .pkg-price { color: var(--accent-color); font-weight: 600; margin-top: 5px; }
 
-        /* Multi-Step Modal */
+        /* Modal Popups */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -153,7 +165,7 @@
         .modal-card {
             background: var(--card-bg);
             width: 100%;
-            max-width: 450px;
+            max-width: 420px;
             border-radius: 16px;
             padding: 20px;
             position: relative;
@@ -171,7 +183,7 @@
         .step-content { display: none; }
         .step-content.active { display: block; }
 
-        .step-title {
+        .modal-title {
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 15px;
@@ -213,13 +225,38 @@
             margin-top: 10px;
         }
 
-        /* 4 Mobile Banking Options */
+        .btn-google {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: #ffffff;
+            color: #333;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 15px 0;
+            position: relative;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* 4 Mobile Banking Buttons */
         .payment-method-btn {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 14px 15px;
+            padding: 12px 15px;
             margin-bottom: 10px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
@@ -264,15 +301,7 @@
             font-weight: 600;
         }
 
-        /* Instructions */
-        .instruction-list {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            opacity: 0.9;
-        }
-
-        /* Bottom Navigation */
+        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
@@ -297,7 +326,7 @@
         .nav-item i { font-size: 1.2rem; margin-bottom: 2px; }
     </style>
 </head>
-<body>
+    <body>
 
     <!-- Header -->
     <header>
@@ -305,6 +334,7 @@
         <div class="header-controls">
             <button class="btn-icon" id="langToggle">EN</button>
             <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            <button class="btn-login-nav" id="loginNavBtn" onclick="openAuthModal()"><span data-lang="loginBtn">লগইন</span></button>
         </div>
     </header>
 
@@ -313,16 +343,16 @@
         <!-- Game Tabs -->
         <div class="game-tabs">
             <div class="tab-btn active" id="tab-ff" onclick="switchTab('freefire')">
-                <img src="free-fire-logo.png" alt="Free Fire">
+                <img src="free-fire-logo.png" alt="Free Fire" onerror="this.src='https://via.placeholder.com/100x40?text=Free+Fire'">
             </div>
             <div class="tab-btn" id="tab-ef" onclick="switchTab('efootball')">
-                <img src="EFootball_logo.png" alt="eFootball">
+                <img src="EFootball_logo.png" alt="eFootball" onerror="this.src='https://via.placeholder.com/100x40?text=eFootball'">
             </div>
         </div>
 
         <!-- Free Fire Section -->
         <div id="freefire-section">
-            <div class="section-title">টপআপ সেন্টার</div>
+            <div class="section-title" data-lang="topupCenter">টপআপ সেন্টার</div>
             <div class="packages-grid">
                 <div class="package-card" onclick="startPurchase('25 Diamond', 20)">
                     <div class="pkg-title">25 Diamond</div>
@@ -342,112 +372,134 @@
                 </div>
             </div>
 
-            <!-- Other Services (MS Word, Excel, Data Entry) -->
-            <div class="section-title">অন্যান্য সার্ভিসসমূহ</div>
+            <!-- Other Services -->
+            <div class="section-title" data-lang="otherServices">অন্যান্য সার্ভিসসমূহ</div>
             <div class="packages-grid">
                 <div class="package-card" onclick="openWhatsAppService('MS Word Work')">
                     <i class="fa-solid fa-file-word" style="font-size: 2rem; color: #2b579a; margin-bottom: 8px;"></i>
                     <div class="pkg-title">MS Word Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
                 </div>
 
                 <div class="package-card" onclick="openWhatsAppService('MS Excel Work')">
                     <i class="fa-solid fa-file-excel" style="font-size: 2rem; color: #217346; margin-bottom: 8px;"></i>
                     <div class="pkg-title">MS Excel Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
                 </div>
 
                 <div class="package-card" onclick="openWhatsAppService('Data Entry Work')">
                     <i class="fa-solid fa-keyboard" style="font-size: 2rem; color: #f97316; margin-bottom: 8px;"></i>
                     <div class="pkg-title">Data Entry Work</div>
-                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;">WhatsApp এ মেসেজ দিন</div>
+                    <div class="pkg-price" style="font-size: 0.8rem; color: #94a3b8;" data-lang="waMsg">WhatsApp এ মেসেজ দিন</div>
                 </div>
             </div>
         </div>
 
         <!-- eFootball Section -->
         <div id="efootball-section" style="display: none; text-align: center; padding: 40px 0;">
-            <h3>খুব শীঘ্রই আসছে...</h3>
+            <h3 data-lang="comingSoon">খুব শীঘ্রই আসছে...</h3>
         </div>
 
         <!-- Orders Section -->
         <div id="orders-section" style="display: none;">
-            <div class="section-title">আমার অর্ডারসমূহ</div>
-            <div id="orders-list" style="margin-top: 15px;">
-                <!-- Live Orders Load Here -->
-            </div>
+            <div class="section-title" data-lang="myOrders">আমার অর্ডারসমূহ</div>
+            <div id="orders-list" style="margin-top: 15px;"></div>
         </div>
     </div>
 
-    <!-- Multi-Step Modal (Sleek Clean Slide) -->
+    <!-- Login / Auth Modal (Google & Email/Password Only) -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title" data-lang="loginTitle">অ্যাকাউন্টে লগইন করুন</div>
+
+            <!-- Continue with Google Button -->
+            <button class="btn-google" onclick="handleGoogleLogin()">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+                <span>Continue with Google</span>
+            </button>
+
+            <div class="divider">অথবা ইমেইল দিয়ে লগইন করুন</div>
+
+            <form onsubmit="handleEmailLogin(event)">
+                <div class="form-group">
+                    <label data-lang="emailLabel">ইমেইল এড্রেস:</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="example@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label data-lang="passLabel">পাসওয়ার্ড:</label>
+                    <input type="password" id="loginPass" class="form-control" placeholder="******" required>
+                </div>
+                <button type="submit" class="btn-action" data-lang="loginSubmitBtn">লগইন করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Multi-Step Topup Purchase Modal -->
     <div class="modal-overlay" id="purchaseModal">
         <div class="modal-card">
             <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 
             <!-- STEP 1: Player UID -->
             <div class="step-content active" id="step1">
-                <div class="step-title">প্লেয়ার UID দিন</div>
+                <div class="modal-title" data-lang="step1Title">প্লেয়ার UID দিন</div>
                 <div class="form-group">
-                    <label>আপনার গেমের Player UID:</label>
+                    <label data-lang="uidLabel">আপনার গেমের Player UID:</label>
                     <input type="number" id="playerUid" class="form-control" placeholder="যেমন: 123456789">
                 </div>
-                <button class="btn-action" onclick="goToStep(2)">পরবর্তী ধাপ</button>
+                <button class="btn-action" onclick="goToStep(2)" data-lang="nextBtn">পরবর্তী ধাপ</button>
             </div>
 
-            <!-- STEP 2: Amount Confirmation -->
+            <!-- STEP 2: Confirm Order -->
             <div class="step-content" id="step2">
-                <div class="step-title">অর্ডার নিশ্চিতকরণ</div>
+                <div class="modal-title" data-lang="step2Title">অর্ডার নিশ্চিতকরণ</div>
                 <div style="background: var(--secondary-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>প্যাকেজ: <b id="selectedPkgName">-</b></p>
-                    <p style="margin-top: 5px;">মোট মূল্য: <b id="selectedPkgPrice" style="color: var(--accent-color);">-</b> TK</p>
+                    <p><span data-lang="pkgLabel">প্যাকেজ:</span> <b id="selectedPkgName">-</b></p>
+                    <p style="margin-top: 5px;"><span data-lang="priceLabel">মোট মূল্য:</span> <b id="selectedPkgPrice" style="color: var(--accent-color);">-</b> TK</p>
                 </div>
-                <button class="btn-action" onclick="goToStep(3)">নেক্সট (পেমেন্ট)</button>
-                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(1)">পেছনে</button>
+                <button class="btn-action" onclick="goToStep(3)" data-lang="nextPayBtn">নেক্সট (পেমেন্ট)</button>
+                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(1)" data-lang="backBtn">পেছনে</button>
             </div>
 
-            <!-- STEP 3: Mobile Banking Selection (4 Methods) -->
+            <!-- STEP 3: Payment Options (4 Methods) -->
             <div class="step-content" id="step3">
-                <div class="step-title">মোবাইল ব্যাংকিং সিলেক্ট করুন</div>
+                <div class="modal-title" data-lang="step3Title">মোবাইল ব্যাংকিং সিলেক্ট করুন</div>
                 
-                <!-- bKash -->
                 <div class="payment-method-btn" onclick="goToStep(4)">
                     <span><i class="fa-solid fa-wallet" style="color: #d12053; margin-right: 8px;"></i> বিকাশ (bKash)</span>
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
 
-                <!-- Nagad -->
                 <div class="payment-method-btn disabled">
                     <span><i class="fa-solid fa-wallet" style="color: #f7931e; margin-right: 8px;"></i> নগদ (Nagad)</span>
                     <span class="badge-disabled">সাময়িক বন্ধ</span>
                 </div>
 
-                <!-- Rocket -->
                 <div class="payment-method-btn disabled">
                     <span><i class="fa-solid fa-wallet" style="color: #8c3494; margin-right: 8px;"></i> রকেট (Rocket)</span>
                     <span class="badge-disabled">সাময়িক বন্ধ</span>
                 </div>
 
-                <!-- Upay -->
                 <div class="payment-method-btn disabled">
                     <span><i class="fa-solid fa-wallet" style="color: #ffc107; margin-right: 8px;"></i> উপায় (Upay)</span>
                     <span class="badge-disabled">সাময়িক বন্ধ</span>
                 </div>
 
-                <button class="btn-action" style="background: var(--secondary-bg);" onclick="goToStep(2)">পেছনে</button>
+                <button class="btn-action" style="background: var(--secondary-bg);" onclick="goToStep(2)" data-lang="backBtn">পেছনে</button>
             </div>
 
-            <!-- STEP 4: bKash Payment & TrxID -->
+            <!-- STEP 4: bKash Details & TrxID -->
             <div class="step-content" id="step4">
-                <div class="step-title">বিকাশ পেমেন্ট</div>
+                <div class="modal-title">বিকাশ পেমেন্ট</div>
                 
-                <div class="instruction-list">
+                <div style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.9;">
                     *247# ডায়াল করে অথবা বিকাশ অ্যাপ থেকে <b>Send Money</b> করুন।
                 </div>
 
                 <div class="copy-box">
                     <div>
                         <div style="font-size: 0.75rem; opacity: 0.8;">বিকাশ পার্সোনাল নম্বর:</div>
-                        <strong id="bkashNumber">01891623379</strong>
+                        <strong id="bkashNumber">01309735129</strong>
                     </div>
                     <button class="copy-btn" onclick="copyBkashNumber()"><i class="fa-regular fa-copy"></i> Copy</button>
                 </div>
@@ -457,8 +509,8 @@
                     <input type="text" id="trxIdInput" class="form-control" placeholder="যেমন: 8N7A6D5C">
                 </div>
 
-                <button class="btn-action" id="submitBtn" onclick="submitOrderToWhatsApp()">VERIFY</button>
-                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(3)">পেছনে</button>
+                <button class="btn-action" onclick="submitOrderToWhatsApp()">VERIFY</button>
+                <button class="btn-action" style="background: var(--secondary-bg); margin-top: 5px;" onclick="goToStep(3)" data-lang="backBtn">পেছনে</button>
             </div>
 
         </div>
@@ -474,27 +526,118 @@
             <i class="fa-solid fa-box"></i>
             <span>My Orders</span>
         </div>
-        <div class="nav-item" id="nav-profile" onclick="showSection('profile')">
+        <div class="nav-item" id="nav-profile" onclick="openAuthModal()">
             <i class="fa-solid fa-user"></i>
             <span>Profile</span>
         </div>
-    </div>
-        <script>
-        // ==========================================
-        // ১. আপনার তথ্য (WhatsApp নম্বর)
-        // ==========================================
-        const ADMIN_WHATSAPP = "8801891623379"; // আপনার হোয়াটসঅ্যাপ নম্বর (country code সহ)
+        </div>
+            <script>
+        // আপনার সঠিক হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোড সহ)
+        const ADMIN_WHATSAPP = "8801576502490"; 
 
-        // অর্ডার ডেটা স্টোরেজ
-        let currentOrder = {
-            pkgName: '',
-            price: 0,
-            uid: '',
-            trxId: ''
+        let currentOrder = { pkgName: '', price: 0, uid: '', trxId: '' };
+        let currentLang = 'BN';
+
+        // ==========================================
+        // ১. বাংলা / English ল্যাঙ্গুয়েজ সুইচ
+        // ==========================================
+        const translations = {
+            BN: {
+                loginBtn: "লগইন",
+                topupCenter: "টপআপ সেন্টার",
+                otherServices: "অন্যান্য সার্ভিসসমূহ",
+                waMsg: "WhatsApp এ মেসেজ দিন",
+                comingSoon: "খুব শীঘ্রই আসছে...",
+                myOrders: "আমার অর্ডারসমূহ",
+                loginTitle: "অ্যাকাউন্টে লগইন করুন",
+                emailLabel: "ইমেইল এড্রেস:",
+                passLabel: "পাসওয়ার্ড:",
+                loginSubmitBtn: "লগইন করুন",
+                step1Title: "প্লেয়ার UID দিন",
+                uidLabel: "আপনার গেমের Player UID:",
+                nextBtn: "পরবর্তী ধাপ",
+                step2Title: "অর্ডার নিশ্চিতকরণ",
+                pkgLabel: "প্যাকেজ:",
+                priceLabel: "মোট মূল্য:",
+                nextPayBtn: "নেক্সট (পেমেন্ট)",
+                backBtn: "পেছনে",
+                step3Title: "মোবাইল ব্যাংকিং সিলেক্ট করুন"
+            },
+            EN: {
+                loginBtn: "Login",
+                topupCenter: "Topup Center",
+                otherServices: "Other Services",
+                waMsg: "Message on WhatsApp",
+                comingSoon: "Coming Soon...",
+                myOrders: "My Orders",
+                loginTitle: "Login to Account",
+                emailLabel: "Email Address:",
+                passLabel: "Password:",
+                loginSubmitBtn: "Login Now",
+                step1Title: "Enter Player UID",
+                uidLabel: "Your Game Player UID:",
+                nextBtn: "Next Step",
+                step2Title: "Order Confirmation",
+                pkgLabel: "Package:",
+                priceLabel: "Total Price:",
+                nextPayBtn: "Next (Payment)",
+                backBtn: "Back",
+                step3Title: "Select Mobile Banking"
+            }
         };
 
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'BN' ? 'EN' : 'BN';
+            document.getElementById('langToggle').innerText = currentLang === 'BN' ? 'EN' : 'BN';
+            
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        });
+
         // ==========================================
-        // ২. স্লাইড / স্টেপ মেকানিজম (৪টি ধাপ)
+        // ২. Dark / Light থিম টগল
+        // ==========================================
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const icon = document.querySelector('#themeToggle i');
+            if(document.body.classList.contains('light-mode')) {
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                icon.className = 'fa-solid fa-moon';
+            }
+        });
+
+        // ==========================================
+        // ৩. Auth Modal (Google / Email Login)
+        // ==========================================
+        function openAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function handleGoogleLogin() {
+            alert('Google দিয়ে সফলভাবে লগইন হয়েছে!');
+            document.getElementById('loginNavBtn').innerText = 'Profile';
+            closeAuthModal();
+        }
+
+        function handleEmailLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            alert(`${email} দিয়ে সফলভাবে লগইন করা হয়েছে!`);
+            document.getElementById('loginNavBtn').innerText = 'Profile';
+            closeAuthModal();
+        }
+
+        // ==========================================
+        // ৪. Multi-step Purchase Mechanism
         // ==========================================
         function startPurchase(pkgName, price) {
             currentOrder.pkgName = pkgName;
@@ -514,7 +657,6 @@
         }
 
         function goToStep(stepNumber) {
-            // স্টেপ ১ ভ্যালিডেশন (UID চেক)
             if (stepNumber === 2) {
                 const uid = document.getElementById('playerUid').value.trim();
                 if (!uid) {
@@ -524,14 +666,10 @@
                 currentOrder.uid = uid;
             }
 
-            // স্লাইড অন/অফ
             document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
             document.getElementById('step' + stepNumber).classList.add('active');
         }
 
-        // ==========================================
-        // ৩. বিকাশ নম্বর কপি বাটন
-        // ==========================================
         function copyBkashNumber() {
             const num = document.getElementById('bkashNumber').innerText;
             navigator.clipboard.writeText(num);
@@ -539,7 +677,7 @@
         }
 
         // ==========================================
-        // ৪. VERIFY চাপলে WhatsApp এ সরাসরি অর্ডার পাঠানো
+        // ৫. WhatsApp Redirect for Topup & Services
         // ==========================================
         function submitOrderToWhatsApp() {
             const trxId = document.getElementById('trxIdInput').value.trim();
@@ -549,7 +687,6 @@
             }
             currentOrder.trxId = trxId;
 
-            // হোয়াটসঅ্যাপ মেসেজের সুন্দর ফরম্যাট
             const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n` +
                             `🎮 *প্যাকেজ:* ${currentOrder.pkgName}\n` +
                             `💰 *মূল্য:* ${currentOrder.price} TK\n` +
@@ -558,31 +695,24 @@
                             `🧾 *TrxID:* ${currentOrder.trxId}\n\n` +
                             `দয়া করে আমার অর্ডারটি কনফার্ম করুন।`;
 
-            // WhatsApp লিংক তৈরি ও সরাসরি রিডাইরেক্ট
             const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
             
-            // স্থানীয় ব্রাউজারে হিস্ট্রি সেভ করা
             saveOrderToHistory(currentOrder);
-            
             closeModal();
-            window.location.href = waUrl; // সরাসরি ওয়াটসঅ্যাপ খুলবে
+            window.location.href = waUrl;
         }
 
-        // ==========================================
-        // ৫. MS Word, Excel, Data Entry চাপলে WhatsApp এ মেসেজ
-        // ==========================================
         function openWhatsAppService(serviceName) {
-            const text = `হ্যালো! আমি আপনার ওয়েবসাইট থেকে "${serviceName}" সার্ভিসটি নিতে আগ্রহী। এই বিষয়ে জানতে চাই।`;
+            const text = `হ্যালো! আমি আপনার ওয়েবসাইট থেকে "${serviceName}" সার্ভিসটি নিতে আগ্রহী। এই বিষয়ে বিস্তারিত জানতে চাই।`;
             const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
             window.location.href = waUrl;
         }
 
         // ==========================================
-        // ৬. সার্ভিস ট্যাপ ও নেভিগেশন
+        // ৬. Tabs & Navigation
         // ==========================================
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById('freefire-section').style.display = 'none';
             document.getElementById('efootball-section').style.display = 'none';
 
@@ -612,7 +742,7 @@
         }
 
         // ==========================================
-        // ৭. ইউজার ব্রাউজারে মাই অর্ডারস সেভ রাখা
+        // ৭. Save Order History in LocalStorage
         // ==========================================
         function saveOrderToHistory(order) {
             let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
@@ -629,7 +759,7 @@
             let orders = JSON.parse(localStorage.getItem('my_orders') || '[]');
             
             if(orders.length === 0) {
-                listContainer.innerHTML = '<p style="text-align:center; opacity: 0.7; margin-top:20px;">কোনো অর্ডার হিস্ট্রি পাওয়া যায়নি।</p>';
+                listContainer.innerHTML = '<p style="text-align:center; opacity:0.7; margin-top:20px;">কোনো অর্ডার হিস্ট্রি পাওয়া যায়নি।</p>';
                 return;
             }
 
@@ -648,11 +778,6 @@
                 </div>
             `).join('');
         }
-
-        // থিম টগল (Dark / Light)
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-        });
     </script>
 </body>
 </html>
