@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIHADX BD SHOP</title>
+    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK (v10 Compat Web Scripts + Firestore) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <style>
         :root {
             --primary-bg: #0f172a;
@@ -92,6 +99,7 @@
             font-size: 1.4rem;
             margin-bottom: 20px;
             color: var(--accent-color);
+            font-weight: bold;
         }
 
         .form-group {
@@ -130,10 +138,10 @@
 
         .btn-google {
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            background-color: #fff;
+            background-color: #ffffff;
             color: #333;
             font-weight: 600;
             display: flex;
@@ -298,7 +306,6 @@
             z-index: 10;
         }
 
-        /* Screen Shot Matching bKash Card Style */
         .summary-header-card {
             background: #ffffff;
             border-radius: 12px;
@@ -440,6 +447,14 @@
 
         .status-pending { color: #f59e0b; font-weight: bold; }
         .status-completed { color: #22c55e; font-weight: bold; }
+        
+        .user-avatar-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
     </style>
 </head>
 <body>
@@ -460,11 +475,11 @@
                 <!-- LOGIN FORM -->
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">ইমেইল এড্রেস:</label>
+                        <label>ইমেইল এড্রেস:</label>
                         <input type="email" id="loginEmail" class="form-control" required placeholder="example@gmail.com">
                     </div>
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">পাসওয়ার্ড:</label>
+                        <label>পাসওয়ার্ড:</label>
                         <input type="password" id="loginPass" class="form-control" required placeholder="******">
                     </div>
                     <button type="submit" class="btn-action">লগইন করুন</button>
@@ -476,23 +491,23 @@
                 <!-- REGISTRATION FORM -->
                 <form id="register-form" style="display: none;" onsubmit="handleRegister(event)">
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">আপনার নাম:</label>
+                        <label>আপনার নাম:</label>
                         <input type="text" id="regName" class="form-control" required placeholder="আপনার নাম লিখুন">
                     </div>
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">ইমেইল এড্রেস:</label>
+                        <label>ইমেইল এড্রেস:</label>
                         <input type="email" id="regEmail" class="form-control" required placeholder="example@gmail.com">
                     </div>
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">মোবাইল নম্বর:</label>
-                        <input type="tel" id="regMobile" class="form-control" required placeholder="017XXXXXXXX">
+                        <label>মোবাইল নম্বর:</label>
+                        <input type="tel" id="regMobile" class="form-control" placeholder="017XXXXXXXX">
                     </div>
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">পাসওয়ার্ড:</label>
+                        <label>পাসওয়ার্ড:</label>
                         <input type="password" id="regPass" class="form-control" required placeholder="******">
                     </div>
                     <div class="form-group">
-                        <label style="color: var(--text-muted);">কনফার্ম পাসওয়ার্ড:</label>
+                        <label>কনফার্ম পাসওয়ার্ড:</label>
                         <input type="password" id="regConfirmPass" class="form-control" required placeholder="******">
                     </div>
                     <button type="submit" class="btn-action">রেজিস্ট্রেশন করুন</button>
@@ -601,7 +616,7 @@
                     </div>
                 </div>
 
-                <!-- eFootball Section (Coming Soon) -->
+                <!-- eFootball Section -->
                 <div id="ef-packages" style="display: none; text-align: center; padding: 30px 0;">
                     <h3>খুব শীঘ্রই আসছে... (Coming Soon)</h3>
                 </div>
@@ -653,21 +668,17 @@
             <div id="orders-page" class="screen">
                 <div class="section-title">আমার অর্ডারসমূহ</div>
                 <div id="orders-container" style="margin-top: 10px;"></div>
-
-                <div style="margin-top: 30px; padding: 10px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--accent-color);">
-                    <div style="font-size: 0.8rem; color: var(--accent-color); font-weight: bold; margin-bottom: 5px;">[অ্যাডমিন কন্ট্রোল ডেমো]</div>
-                    <button class="btn-action" style="padding: 6px; font-size: 0.75rem;" onclick="adminCompleteLastOrder()">সর্বশেষ অর্ডার 'Completed' করুন</button>
-                </div>
             </div>
 
             <!-- PROFILE PAGE -->
             <div id="profile-page" class="screen">
                 <div class="section-title">প্রোফাইল</div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent-color);"></i>
+                    <div id="avatarContainer">
+                        <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent-color);"></i>
+                    </div>
                     <h3 id="profName" style="margin-top: 10px;">User Name</h3>
                     <p id="profEmail" style="color: var(--text-muted); font-size: 0.85rem;"></p>
-                    <p id="profMobile" style="color: var(--text-muted); font-size: 0.85rem;"></p>
 
                     <button class="btn-action" style="background: #ef4444; color: #fff; margin-top: 30px;" onclick="handleLogout()">লগআউট করুন</button>
                 </div>
@@ -737,10 +748,8 @@
                 </div>
             </div>
 
-            <!-- STEP 4: bKash & TrxID (SCREENSHOT MATCHING VERIFY PAGE) -->
+            <!-- STEP 4: VERIFY PAGE -->
             <div id="step-4" class="step-content" style="display: none;">
-                
-                <!-- Item Summary Box -->
                 <div class="summary-header-card">
                     <span id="summaryPkgName">Package Name</span>
                 </div>
@@ -748,7 +757,6 @@
                     ৳ <span id="summaryPkgPrice">0</span>
                 </div>
 
-                <!-- Main Pink Container -->
                 <div class="bkash-pink-container">
                     <div class="bkash-title">ট্রান্সজেকশন আইডি দিন</div>
 
@@ -769,26 +777,47 @@
                     </ul>
                 </div>
 
-                <!-- Verify Red Button -->
-                <button class="btn-verify-red" onclick="submitOrder()">VERIFY</button>
-
+                <button class="btn-verify-red" id="btn-verify-submit" onclick="submitOrder()">VERIFY</button>
             </div>
 
         </div>
-                            </div>
-                        <script>
+    </div>
+        <script>
+        // FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+            authDomain: "mihadx-pro-bd.firebaseapp.com",
+            projectId: "mihadx-pro-bd",
+            storageBucket: "mihadx-pro-bd.firebasestorage.app",
+            messagingSenderId: "478391400367",
+            appId: "1:478391400367:web:86012d35014ee7350a215a",
+            measurementId: "G-E8Y80PDVDD"
+        };
+
+        // Firebase Initialize
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore(); // Firestore Connection
+
         const ADMIN_WHATSAPP = "8801576502490";
         const BKASH_NUMBER = "01309735129";
 
         let currentUser = null;
         let selectedOrder = { pkgName: '', price: 0, uid: '', trxId: '' };
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
+        // Realtime Auth State
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = {
+                    name: user.displayName || user.email.split('@')[0],
+                    email: user.email,
+                    photo: user.photoURL || null
+                };
                 showAppScreen();
             } else {
+                currentUser = null;
                 showAuthScreen();
             }
         });
@@ -803,33 +832,27 @@
             }
         }
 
+        function handleGoogleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch((error) => {
+                alert("Google Sign-In Error: " + error.message);
+            });
+        }
+
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
-            currentUser = {
-                name: email.split('@')[0],
-                email: email,
-                mobile: 'N/A'
-            };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showAppScreen();
-        }
+            const pass = document.getElementById('loginPass').value;
 
-        function handleGoogleLogin() {
-            currentUser = {
-                name: 'Google User',
-                email: 'user@gmail.com',
-                mobile: 'N/A'
-            };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showAppScreen();
+            auth.signInWithEmailAndPassword(email, pass).catch((error) => {
+                alert("লগইন ত্রুটি: " + error.message);
+            });
         }
 
         function handleRegister(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
-            const mobile = document.getElementById('regMobile').value;
             const pass = document.getElementById('regPass').value;
             const confirmPass = document.getElementById('regConfirmPass').value;
 
@@ -838,15 +861,22 @@
                 return;
             }
 
-            currentUser = { name, email, mobile };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showAppScreen();
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCredential) => {
+                    return userCredential.user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    alert("রেজিস্ট্রেশন সফল হয়েছে!");
+                })
+                .catch((error) => {
+                    alert("রেজিস্ট্রেশন ত্রুটি: " + error.message);
+                });
         }
 
         function handleLogout() {
-            localStorage.removeItem('currentUser');
-            currentUser = null;
-            location.reload();
+            auth.signOut();
         }
 
         function showAuthScreen() {
@@ -860,7 +890,12 @@
             
             document.getElementById('profName').innerText = currentUser.name;
             document.getElementById('profEmail').innerText = currentUser.email;
-            document.getElementById('profMobile').innerText = "মোবাইল: " + currentUser.mobile;
+            
+            if (currentUser.photo) {
+                document.getElementById('avatarContainer').innerHTML = `<img src="${currentUser.photo}" class="user-avatar-img">`;
+            } else {
+                document.getElementById('avatarContainer').innerHTML = `<i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent-color);"></i>`;
+            }
             
             loadOrders();
         }
@@ -895,7 +930,6 @@
         function openOrderModal(pkgName, price) {
             selectedOrder = { pkgName, price, uid: '', trxId: '' };
             
-            // Set values in elements
             document.getElementById('modalPkgName').innerText = pkgName;
             document.getElementById('modalPkgPrice').innerText = price;
             
@@ -930,67 +964,88 @@
             alert('বিকাশ নম্বর কপি হয়েছে: ' + BKASH_NUMBER);
         }
 
+        // ফায়ারবেস ডাটাবেজে (Firestore) নতুন অর্ডার সেভ করা
         function submitOrder() {
             const trx = document.getElementById('trxId').value;
             if (!trx) { alert('ট্রান্সজেকশন আইডি দিন!'); return; }
             selectedOrder.trxId = trx;
 
-            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
-            orders.unshift({
-                ...selectedOrder,
+            const verifyBtn = document.getElementById('btn-verify-submit');
+            verifyBtn.innerText = "অর্ডার সাবমিট হচ্ছে...";
+            verifyBtn.disabled = true;
+
+            const orderData = {
                 userEmail: currentUser.email,
-                date: new Date().toLocaleDateString('bn-BD'),
-                status: 'Pending'
-            });
-            localStorage.setItem('user_orders', JSON.stringify(orders));
+                itemName: selectedOrder.pkgName,
+                price: selectedOrder.price,
+                gameUid: selectedOrder.uid,
+                trxId: selectedOrder.trxId,
+                status: 'Pending',
+                date: new Date().toLocaleString('bn-BD')
+            };
 
-            const msg = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedOrder.pkgName}\n💰 *মূল্য:* ${selectedOrder.price} TK\n🆔 *Player UID:* ${selectedOrder.uid}\n💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${selectedOrder.trxId}\n👤 *ইউজার:* ${currentUser.email}`;
-            const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+            // Firestore 'orders' কালেকশনে ডাটা পাঠাচ্ছে
+            db.collection('orders').add(orderData)
+                .then(() => {
+                    verifyBtn.innerText = "VERIFY";
+                    verifyBtn.disabled = false;
 
-            closeModal();
-            window.location.href = waUrl;
+                    const msg = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedOrder.pkgName}\n💰 *মূল্য:* ${selectedOrder.price} TK\n🆔 *Player UID:* ${selectedOrder.uid}\n💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${selectedOrder.trxId}\n👤 *ইউজার:* ${currentUser.email}`;
+                    const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+                    closeModal();
+                    window.location.href = waUrl;
+                })
+                .catch((error) => {
+                    verifyBtn.innerText = "VERIFY";
+                    verifyBtn.disabled = false;
+                    alert("ডাটাবেজে অর্ডার সেভ করতে ত্রুটি: " + error.message);
+                });
         }
 
+        // ফায়ারবেস ডাটাবেজ থেকে রিয়েলটাইমে ইউজারের অর্ডার ডাটা লোড করা
         function loadOrders() {
             const container = document.getElementById('orders-container');
-            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
-            
-            let myOrders = orders.filter(o => o.userEmail === currentUser.email);
+            container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">লোড হচ্ছে...</p>';
 
-            if (myOrders.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">কোনো অর্ডার পাওয়া যায়নি।</p>';
-                return;
-            }
+            db.collection('orders')
+                .where('userEmail', '==', currentUser.email)
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">কোনো অর্ডার পাওয়া যায়নি।</p>';
+                        return;
+                    }
 
-            container.innerHTML = myOrders.map(o => `
-                <div class="order-card">
-                    <div style="display:flex; justify-content:space-between;">
-                        <strong>${o.pkgName}</strong>
-                        <span style="color:var(--accent-color);">${o.price} TK</span>
-                    </div>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">
-                        UID: ${o.uid} | TrxID: ${o.trxId}
-                    </div>
-                    <div style="font-size:0.8rem; margin-top:5px;">
-                        স্ট্যাটাস: <span class="${o.status === 'Completed' ? 'status-completed' : 'status-pending'}">${o.status}</span>
-                    </div>
-                </div>
-            `).join('');
+                    let html = '';
+                    querySnapshot.forEach((doc) => {
+                        const o = doc.data();
+                        html += `
+                            <div class="order-card">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <strong>${o.itemName}</strong>
+                                    <span style="color:var(--accent-color);">${o.price} TK</span>
+                                </div>
+                                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">
+                                    UID: ${o.gameUid} | TrxID: ${o.trxId}
+                                </div>
+                                <div style="font-size:0.8rem; margin-top:5px;">
+                                    স্ট্যাটাস: <span class="${o.status === 'Completed' ? 'status-completed' : 'status-pending'}">${o.status || 'Pending'}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                })
+                .catch((error) => {
+                    console.error("Error loading orders: ", error);
+                    container.innerHTML = '<p style="text-align:center; color:#ef4444; margin-top:20px;">অর্ডার লোড করতে সমস্যা হয়েছে।</p>';
+                });
         }
 
         function sendServiceMsg(serviceName) {
             const msg = `হ্যালো! আমি MIHADX BD SHOP থেকে "${serviceName}" সার্ভিসটি নিতে চাচ্ছি।`;
             window.location.href = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
-        }
-
-        function adminCompleteLastOrder() {
-            let orders = JSON.parse(localStorage.getItem('user_orders') || '[]');
-            if (orders.length > 0) {
-                orders[0].status = 'Completed';
-                localStorage.setItem('user_orders', JSON.stringify(orders));
-                loadOrders();
-                alert("সর্বশেষ অর্ডারের স্ট্যাটাস 'Completed' করা হয়েছে!");
-            }
         }
     </script>
 </body>
