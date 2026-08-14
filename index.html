@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIHADX BD SHOP</title>
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Firebase SDK (v10 Compat Web Scripts + Firestore) -->
+
+    <!-- Firebase SDK (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -447,7 +447,7 @@
 
         .status-pending { color: #f59e0b; font-weight: bold; }
         .status-completed { color: #22c55e; font-weight: bold; }
-        
+
         .user-avatar-img {
             width: 70px;
             height: 70px;
@@ -457,22 +457,19 @@
         }
     </style>
 </head>
-<body>
-
+    <body>
     <div class="app-container">
 
-        <!-- AUTH SCREEN (LOGIN & REGISTER) -->
+        <!-- AUTH SCREEN -->
         <div id="auth-screen" class="screen active">
             <div class="auth-card">
                 <div class="auth-title">MIHADX BD SHOP</div>
 
-                <!-- Google Login Button -->
                 <button class="btn-google" onclick="handleGoogleLogin()">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
                     <span>Continue with Google</span>
                 </button>
 
-                <!-- LOGIN FORM -->
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label>ইমেইল এড্রেস:</label>
@@ -488,7 +485,6 @@
                     </div>
                 </form>
 
-                <!-- REGISTRATION FORM -->
                 <form id="register-form" style="display: none;" onsubmit="handleRegister(event)">
                     <div class="form-group">
                         <label>আপনার নাম:</label>
@@ -515,7 +511,6 @@
                         আগে থেকেই একাউন্ট আছে? <span onclick="toggleAuthForm('login')">লগইন করুন</span>
                     </div>
                 </form>
-
             </div>
         </div>
 
@@ -616,12 +611,10 @@
                     </div>
                 </div>
 
-                <!-- eFootball Section -->
                 <div id="ef-packages" style="display: none; text-align: center; padding: 30px 0;">
                     <h3>খুব শীঘ্রই আসছে... (Coming Soon)</h3>
                 </div>
 
-                <!-- E-COMMERCE SECTION -->
                 <div class="section-title" style="margin-top: 25px;">ই-কমার্স (E-Commerce)</div>
                 <div class="packages-grid">
                     <div class="package-card" style="opacity: 0.7;">
@@ -641,7 +634,6 @@
                     </div>
                 </div>
 
-                <!-- COMPUTER SECTION -->
                 <div class="section-title" style="margin-top: 25px;">কম্পিউটার (Computer Services)</div>
                 <div class="packages-grid">
                     <div class="package-card" onclick="sendServiceMsg('MS Word Work')">
@@ -684,7 +676,7 @@
                 </div>
             </div>
 
-            <!-- Bottom Navigation Bar -->
+            <!-- Bottom Nav Bar -->
             <div class="bottom-nav">
                 <div class="nav-item active" id="nav-home" onclick="showScreen('home-page', 'nav-home')">
                     <i class="fa-solid fa-house"></i>
@@ -709,7 +701,6 @@
         <div class="modal-card">
             <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 
-            <!-- STEP 1: PLAYER UID -->
             <div id="step-1" class="step-content">
                 <div class="section-title" style="color:#000;">প্লেয়ার UID দিন</div>
                 <div class="form-group" style="margin-top: 10px;">
@@ -719,7 +710,6 @@
                 <button class="btn-action" onclick="goToStep(2)">পরবর্তী ধাপ</button>
             </div>
 
-            <!-- STEP 2: AMOUNT CONFIRMATION -->
             <div id="step-2" class="step-content" style="display: none;">
                 <div class="section-title" style="color:#000;">অর্ডার নিশ্চিতকরণ</div>
                 <div style="background: #ffffff; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #e2e8f0;">
@@ -729,7 +719,6 @@
                 <button class="btn-action" onclick="goToStep(3)">নেক্সট (পেমেন্ট)</button>
             </div>
 
-            <!-- STEP 3: MOBILE BANKING SELECTION -->
             <div id="step-3" class="step-content" style="display: none;">
                 <div class="section-title" style="color:#000; margin-bottom: 15px;">মোবাইল ব্যাংকিং</div>
                 <div>
@@ -748,7 +737,6 @@
                 </div>
             </div>
 
-            <!-- STEP 4: VERIFY PAGE -->
             <div id="step-4" class="step-content" style="display: none;">
                 <div class="summary-header-card">
                     <span id="summaryPkgName">Package Name</span>
@@ -781,8 +769,8 @@
             </div>
 
         </div>
-    </div>
-        <script>
+                                  </div>
+            <script>
         // FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -794,12 +782,11 @@
             measurementId: "G-E8Y80PDVDD"
         };
 
-        // Firebase Initialize
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
-        const db = firebase.firestore(); // Firestore Connection
+        const db = firebase.firestore();
 
         const ADMIN_WHATSAPP = "8801576502490";
         const BKASH_NUMBER = "01309735129";
@@ -807,7 +794,6 @@
         let currentUser = null;
         let selectedOrder = { pkgName: '', price: 0, uid: '', trxId: '' };
 
-        // Realtime Auth State
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUser = {
@@ -964,7 +950,7 @@
             alert('বিকাশ নম্বর কপি হয়েছে: ' + BKASH_NUMBER);
         }
 
-        // ফায়ারবেস ডাটাবেজে (Firestore) নতুন অর্ডার সেভ করা
+        // ORDER SUBMISSION TO FIRESTORE + WHATSAPP REDIRECT
         function submitOrder() {
             const trx = document.getElementById('trxId').value;
             if (!trx) { alert('ট্রান্সজেকশন আইডি দিন!'); return; }
@@ -974,6 +960,7 @@
             verifyBtn.innerText = "অর্ডার সাবমিট হচ্ছে...";
             verifyBtn.disabled = true;
 
+            // STRICTLY SET TO 'Pending'
             const orderData = {
                 userEmail: currentUser.email,
                 itemName: selectedOrder.pkgName,
@@ -984,13 +971,14 @@
                 date: new Date().toLocaleString('bn-BD')
             };
 
-            // Firestore 'orders' কালেকশনে ডাটা পাঠাচ্ছে
+            // Save to Firestore 'orders' collection
             db.collection('orders').add(orderData)
                 .then(() => {
                     verifyBtn.innerText = "VERIFY";
                     verifyBtn.disabled = false;
 
-                    const msg = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedOrder.pkgName}\n💰 *মূল্য:* ${selectedOrder.price} TK\n🆔 *Player UID:* ${selectedOrder.uid}\n💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${selectedOrder.trxId}\n👤 *ইউজার:* ${currentUser.email}`;
+                    // Create WhatsApp Message Text
+                    const msg = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedOrder.pkgName}\n💰 *মূল্য:* ${selectedOrder.price} TK\n🆔 *Player UID:* ${selectedOrder.uid}\n💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${selectedOrder.trxId}\n👤 *ইউজার জিমেইল:* ${currentUser.email}`;
                     const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 
                     closeModal();
@@ -1003,7 +991,7 @@
                 });
         }
 
-        // ফায়ারবেস ডাটাবেজ থেকে রিয়েলটাইমে ইউজারের অর্ডার ডাটা লোড করা
+        // LOAD REALTIME ORDERS FROM FIRESTORE
         function loadOrders() {
             const container = document.getElementById('orders-container');
             container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">লোড হচ্ছে...</p>';
@@ -1020,6 +1008,8 @@
                     let html = '';
                     querySnapshot.forEach((doc) => {
                         const o = doc.data();
+                        const isCompleted = o.status === 'Completed';
+                        
                         html += `
                             <div class="order-card">
                                 <div style="display:flex; justify-content:space-between;">
@@ -1030,7 +1020,7 @@
                                     UID: ${o.gameUid} | TrxID: ${o.trxId}
                                 </div>
                                 <div style="font-size:0.8rem; margin-top:5px;">
-                                    স্ট্যাটাস: <span class="${o.status === 'Completed' ? 'status-completed' : 'status-pending'}">${o.status || 'Pending'}</span>
+                                    স্ট্যাটাস: <span class="${isCompleted ? 'status-completed' : 'status-pending'}">${o.status || 'Pending'}</span>
                                 </div>
                             </div>
                         `;
@@ -1050,3 +1040,4 @@
     </script>
 </body>
 </html>
+
