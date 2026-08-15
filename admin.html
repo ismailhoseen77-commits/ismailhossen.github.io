@@ -6,6 +6,7 @@
   <title>Admin Panel - MIHADX PRO BD</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: 'Hind Siliguri', sans-serif; }
   </style>
@@ -42,13 +43,14 @@
   <div id="admin-content" class="hidden max-w-5xl mx-auto space-y-6">
     <header class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow flex justify-between items-center">
       <h1 class="text-xl font-bold text-orange-600">এডমিন ড্যাশবোর্ড - MIHADX PRO BD</h1>
-      <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-xl font-bold text-sm">লগআউট</button>
+      <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-red-600 transition-all">লগআউট</button>
     </header>
 
+    <!-- 1. USER ORDERS SECTION -->
     <section class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold">সকল ইউজারের অর্ডারসমূহ</h2>
-        <button onclick="loadAllOrders()" class="bg-orange-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">রিফ্রেশ করুন</button>
+        <h2 class="text-lg font-bold"><i class="fa-solid fa-list-check mr-2 text-orange-600"></i>সকল ইউজারের অর্ডারসমূহ</h2>
+        <button onclick="loadAllOrders()" class="bg-orange-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-orange-700 transition-all">রিফ্রেশ করুন</button>
       </div>
 
       <div class="overflow-x-auto">
@@ -58,7 +60,7 @@
               <th class="p-3">তারিখ ও সময়</th>
               <th class="p-3">ইউজার জিমেইল</th>
               <th class="p-3">প্যাকেজ ও মূল্য</th>
-              <th class="p-3">গেম UID</th>
+              <th class="p-3">একাউন্ট / UID তথ্য</th>
               <th class="p-3">TrxID</th>
               <th class="p-3">স্ট্যাটাস</th>
               <th class="p-3">অ্যাকশন</th>
@@ -70,13 +72,101 @@
         </table>
       </div>
     </section>
+
+    <!-- 2. GAME PACKAGES ADD SECTION (FF & eFootball) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Free Fire Package Form -->
+      <section class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow space-y-4">
+        <h2 class="text-lg font-bold text-amber-500"><i class="fa-solid fa-fire mr-2"></i>ফ্রি ফায়ার প্যাকেজ যুক্ত করুন</h2>
+        <form id="form-add-ff" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1">প্যাকেজের নাম</label>
+            <input type="text" id="ff-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-amber-500" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1">মূল্য (TK)</label>
+            <input type="number" id="ff-pkg-price" placeholder="যেমন: 75" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-amber-500" required>
+          </div>
+          <button type="submit" class="w-full bg-amber-500 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-amber-600 transition-all">
+            <i class="fa-solid fa-plus mr-1"></i> ফ্রি ফায়ার প্যাকেজ এড করুন
+          </button>
+        </form>
+        <div class="pt-2 border-t">
+          <h3 class="text-xs font-bold text-slate-400 mb-2">বর্তমান ফ্রি ফায়ার প্যাকেজসমূহ:</h3>
+          <div id="ff-packages-list" class="space-y-2 max-h-48 overflow-y-auto"></div>
+        </div>
+      </section>
+
+      <!-- eFootball Package Form -->
+      <section class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow space-y-4">
+        <h2 class="text-lg font-bold text-blue-500"><i class="fa-solid fa-futbol mr-2"></i>ই-ফুটবল প্যাকেজ যুক্ত করুন</h2>
+        <form id="form-add-ef" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1">প্যাকেজের নাম</label>
+            <input type="text" id="ef-pkg-name" placeholder="যেমন: 840 coin 😍" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-blue-500" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1">মূল্য (TK)</label>
+            <input type="number" id="ef-pkg-price" placeholder="যেমন: 650" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-blue-500" required>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-blue-700 transition-all">
+            <i class="fa-solid fa-plus mr-1"></i> ই-ফুটবল প্যাকেজ এড করুন
+          </button>
+        </form>
+        <div class="pt-2 border-t">
+          <h3 class="text-xs font-bold text-slate-400 mb-2">বর্তমান ই-ফুটবল প্যাকেজসমূহ:</h3>
+          <div id="ef-packages-list" class="space-y-2 max-h-48 overflow-y-auto"></div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- 3. E-COMMERCE PRODUCT ADD SECTION -->
+    <section class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow space-y-4">
+      <h2 class="text-lg font-bold text-emerald-600"><i class="fa-solid fa-bag-shopping mr-2"></i>ই-কমার্স প্রোডাক্ট আপলোড (শার্ট / প্যান্ট)</h2>
+      <form id="form-add-product" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-500 mb-1">প্রোডাক্টের নাম</label>
+          <input type="text" id="prod-title" placeholder="যেমন: Cotton Casual Shirt" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-emerald-500" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 mb-1">মূল্য (TK)</label>
+          <input type="number" id="prod-price" placeholder="যেমন: 450" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-emerald-500" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 mb-1">ক্যাটাগরি</label>
+          <select id="prod-category" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+            <option value="Shirt">শার্ট (Shirt)</option>
+            <option value="Pant">প্যান্ট (Pant)</option>
+            <option value="Other">অন্যান্য</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 mb-1">প্রোডাক্ট ছবি আপলোড</label>
+          <input type="file" id="prod-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" required>
+        </div>
+        <div class="md:col-span-2">
+          <button type="submit" id="btn-prod-upload" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-emerald-700 transition-all">
+            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> ছবি সহ প্রোডাক্ট আপলোড করুন
+          </button>
+        </div>
+      </form>
+      
+      <div class="pt-4 border-t">
+        <h3 class="text-xs font-bold text-slate-400 mb-2">বর্তমান ই-কমার্স প্রোডাক্টসমূহ:</h3>
+        <div id="ecommerce-products-list" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Firebase Script -->
+  <!-- Firebase Script (v10 Modular) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc, addDoc, deleteDoc, serverTimestamp, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -91,8 +181,9 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
-    // তোমার আসল এডমিন জিমেইল এখানে সেট করা হলো
+    // এডমিন ইমেইল চেক
     const ADMIN_EMAIL = "ismailhoseen77@gmail.com"; 
 
     document.getElementById('btn-login').addEventListener('click', async () => {
@@ -111,6 +202,7 @@
           document.getElementById('unauthorized-screen').classList.add('hidden');
           document.getElementById('admin-content').classList.remove('hidden');
           loadAllOrders();
+          listenPackagesAndProducts();
         } else {
           document.getElementById('admin-content').classList.add('hidden');
           document.getElementById('unauthorized-screen').classList.remove('hidden');
@@ -124,6 +216,7 @@
 
     window.logout = () => signOut(auth);
 
+    // ১. সকল ইউজার অর্ডার লোড করা
     window.loadAllOrders = async () => {
       const tbody = document.getElementById('admin-orders-list');
       tbody.innerHTML = `<tr><td colspan="7" class="text-center p-4 text-slate-400">লোড হচ্ছে...</td></tr>`;
@@ -136,13 +229,27 @@
           const docId = documentSnap.id;
           const isCompleted = data.status === 'Completed';
 
+          let accountDetails = '';
+          if(data.gameType === 'eFootball') {
+            accountDetails = `
+              <div class="text-xs font-mono">
+                <span class="bg-blue-100 text-blue-700 px-1 rounded font-bold">${data.accountType || 'Type N/A'}</span><br>
+                <b>ID:</b> ${data.accountId || 'N/A'}<br>
+                <b>Pass:</b> ${data.password || 'N/A'}<br>
+                <b>Backup/WA:</b> ${data.backupCode || 'N/A'}
+              </div>
+            `;
+          } else {
+            accountDetails = `<span class="font-mono font-bold text-slate-700">${data.gameUid || 'N/A'}</span>`;
+          }
+
           html += `
             <tr class="border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50">
               <td class="p-3 text-xs text-slate-500">${data.date || 'N/A'}</td>
               <td class="p-3 text-xs font-semibold">${data.userEmail}</td>
-              <td class="p-3 font-bold">${data.itemName} <br><span class="text-orange-600 text-xs">${data.price} TK</span></td>
-              <td class="p-3 font-mono font-bold text-slate-700 dark:text-slate-300">${data.gameUid}</td>
-              <td class="p-3 font-mono font-bold text-pink-600">${data.trxId}</td>
+              <td class="p-3 font-bold text-xs">${data.itemName} <br><span class="text-orange-600 font-bold text-sm">${data.price} TK</span></td>
+              <td class="p-3">${accountDetails}</td>
+              <td class="p-3 font-mono font-bold text-pink-600 text-xs">${data.trxId}</td>
               <td class="p-3">
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
                   ${data.status || 'Pending'}
@@ -167,13 +274,124 @@
     window.updateStatus = async (docId, newStatus) => {
       try {
         await updateDoc(doc(db, "orders", docId), { status: newStatus });
-        alert('অর্ডারের স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+        alert('অর্ডারের স্ট্যাটাস আপডেট হয়েছে!');
         loadAllOrders();
       } catch (e) {
-        console.error(e);
         alert('স্ট্যাটাস আপডেট করা যায়নি।');
       }
     };
-  </script>
+
+    // ২. ফ্রি ফায়ার প্যাকেজ এড
+    document.getElementById('form-add-ff').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('ff-pkg-name').value;
+      const price = Number(document.getElementById('ff-pkg-price').value);
+
+      try {
+        await addDoc(collection(db, "ff_packages"), { name, price, createdAt: serverTimestamp() });
+        alert("ফ্রি ফায়ার প্যাকেজ এড হয়েছে!");
+        document.getElementById('form-add-ff').reset();
+      } catch (err) { alert("ত্রুটি: " + err.message); }
+    });
+
+    // ৩. ই-ফুটবল প্যাকেজ এড
+    document.getElementById('form-add-ef').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('ef-pkg-name').value;
+      const price = Number(document.getElementById('ef-pkg-price').value);
+
+      try {
+        await addDoc(collection(db, "ef_packages"), { name, price, createdAt: serverTimestamp() });
+        alert("ই-ফুটবল প্যাকেজ এড হয়েছে!");
+        document.getElementById('form-add-ef').reset();
+      } catch (err) { alert("ত্রুটি: " + err.message); }
+    });
+
+    // ৪. ই-কমার্স প্রোডাক্ট (ছবি সহ) আপলোড
+    document.getElementById('form-add-product').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('prod-title').value;
+      const price = Number(document.getElementById('prod-price').value);
+      const category = document.getElementById('prod-category').value;
+      const file = document.getElementById('prod-file').files[0];
+      const btn = document.getElementById('btn-prod-upload');
+
+      if (!file) return alert("ছবি সিলেক্ট করুন!");
+
+      btn.disabled = true;
+      btn.innerText = "ছবি আপলোড হচ্ছে...";
+
+      try {
+        const fileRef = ref(storage, `products/${Date.now()}_${file.name}`);
+        await uploadBytes(fileRef, file);
+        const imageUrl = await getDownloadURL(fileRef);
+
+        await addDoc(collection(db, "products"), {
+          title, price, category, imageUrl, createdAt: serverTimestamp()
+        });
+
+        alert("প্রোডাক্ট সফলভাবে আপলোড হয়েছে!");
+        document.getElementById('form-add-product').reset();
+      } catch (err) {
+        alert("আপলোড ত্রুটি: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "ছবি সহ প্রোডাক্ট আপলোড করুন";
+      }
+    });
+
+    // ৫. রিয়েলটাইম প্যাকেজ ও প্রোডাক্ট লোড + ডিলিট সুবিধা
+    function listenPackagesAndProducts() {
+      // FF packages
+      onSnapshot(query(collection(db, "ff_packages"), orderBy("price", "asc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div class="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
+              <span><b>${p.name}</b> - ${p.price} TK</span>
+              <button onclick="deleteItem('ff_packages', '${docSnap.id}')" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-trash"></i></button>
+            </div>`;
+        });
+        document.getElementById('ff-packages-list').innerHTML = html || '<span class="text-xs text-slate-400">কোনো প্যাকেজ নেই</span>';
+      });
+
+      // eFootball packages
+      onSnapshot(query(collection(db, "ef_packages"), orderBy("price", "asc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div class="flex justify-between items-center bg-slate-50 p-2 rounded-lg text-xs">
+              <span><b>${p.name}</b> - ${p.price} TK</span>
+              <button onclick="deleteItem('ef_packages', '${docSnap.id}')" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-trash"></i></button>
+            </div>`;
+        });
+        document.getElementById('ef-packages-list').innerHTML = html || '<span class="text-xs text-slate-400">কোনো প্যাকেজ নেই</span>';
+      });
+
+      // E-commerce products
+      onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div class="bg-slate-50 border p-2 rounded-xl text-xs text-center relative group">
+              <img src="${p.imageUrl}" class="w-full h-20 object-cover rounded-lg mb-1">
+              <div class="font-bold truncate">${p.title}</div>
+              <div class="text-emerald-600 font-bold">${p.price} TK (${p.category})</div>
+              <button onclick="deleteItem('products', '${docSnap.id}')" class="mt-1 bg-red-100 text-red-600 px-2 py-0.5 rounded text-xs font-bold w-full hover:bg-red-200">ডিলিট</button>
+            </div>`;
+        });
+        document.getElementById('ecommerce-products-list').innerHTML = html || '<span class="text-xs text-slate-400 col-span-2">কোনো প্রোডাক্ট নেই</span>';
+        });
+  }
+
+  window.deleteItem = async (collName, id) => {
+    if (confirm("আপনি কি এটি ডিলিট করতে চান?")) {
+      await deleteDoc(doc(db, collName, id));
+    }
+  };
+</script>
 </body>
 </html>
