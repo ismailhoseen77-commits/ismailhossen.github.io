@@ -295,7 +295,8 @@
       </div>
     </div>
       </div>
-                  <!-- Firebase Logic & Interactive JS -->
+                              </div>
+    <!-- Firebase Logic & Interactive JS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -513,7 +514,7 @@
       else if (val === 'Facebook') label.innerText = "ফেসবুক ইমেইল / নম্বর (FB Email/Number)";
     });
 
-    // Submit Final Order & WhatsApp integration
+    // Submit Final Order & Detailed WhatsApp integration
     window.submitFinalOrder = async () => {
       const trxId = document.getElementById('order-trx-id').value.trim();
       const btn = document.getElementById('btn-submit-order');
@@ -535,14 +536,26 @@
         createdAt: serverTimestamp()
       };
 
+      let detailsWhatsAppMessage = "";
+
       if (selectedItem.type === 'FreeFire') {
-        orderData.gameUid = document.getElementById('order-game-uid').value.trim();
+        const uid = document.getElementById('order-game-uid').value.trim();
+        orderData.gameUid = uid;
+        detailsWhatsAppMessage = `🆔 *Player UID:* ${uid}\n`;
       } else if (selectedItem.type === 'eFootball') {
-        orderData.accountType = document.getElementById('order-acc-type').value;
-        orderData.accountId = document.getElementById('order-acc-id').value.trim();
-        orderData.password = document.getElementById('order-acc-pass').value.trim();
-        orderData.backupCode = document.getElementById('order-acc-backup').value.trim();
-        orderData.whatsapp = document.getElementById('order-acc-whatsapp').value.trim();
+        const accType = document.getElementById('order-acc-type').value;
+        const accId = document.getElementById('order-acc-id').value.trim();
+        const pass = document.getElementById('order-acc-pass').value.trim();
+        const backup = document.getElementById('order-acc-backup').value.trim();
+        const wa = document.getElementById('order-acc-whatsapp').value.trim();
+
+        orderData.accountType = accType;
+        orderData.accountId = accId;
+        orderData.password = pass;
+        orderData.backupCode = backup;
+        orderData.whatsapp = wa;
+
+        detailsWhatsAppMessage = `📌 *একাউন্ট টাইপ:* ${accType}\n🔑 *আইডি/ইমেইল:* ${accId}\n🔒 *পাসওয়ার্ড:* ${pass}\n🛡️ *ব্যাকআপ কোড:* ${backup}\n📞 *WhatsApp:* ${wa}\n`;
       }
 
       try {
@@ -550,9 +563,10 @@
         alert("আপনার অর্ডারটি সফলভাবে জমা দেওয়া হয়েছে!");
         closeModal();
 
-        // Optional WhatsApp Notification Redirect (Admin: 01576502490)
+        // Exact WhatsApp Format requested by you
         const adminWhatsApp = "8801576502490";
-        const message = `🔔 নতুন অর্ডার ভেরিফিকেশন!\n\n📦 প্যাকেজ: ${selectedItem.name} (${selectedItem.price} BDT)\n👤 ইউজার: ${currentUser.email}\n💳 পেমেন্ট: bKash\n📌 TrxID: ${trxId}`;
+        const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedItem.name}\n💰 *মূল্য:* ${selectedItem.price} TK\n${detailsWhatsAppMessage}💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${trxId}\n👤 *ইউজার জিমেইল:* ${currentUser.email}`;
+        
         const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
         window.open(waUrl, '_blank');
 
@@ -563,6 +577,6 @@
         btn.innerText = "VERIFY";
       }
     };
-  </script>
+      </script>
 </body>
 </html>
