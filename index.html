@@ -3,308 +3,351 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Up Website - Payment Gateway</title>
+  <title>MIHADX PRO BD - Top Up Shop</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans">
-      <!-- Main Content Sample (যেমন: টপআপ বাটন) -->
-  <div class="p-8 text-center space-y-4">
-    <h1 class="text-xl font-bold">টপআপ শপ</h1>
-    <div class="flex justify-center gap-4">
-      <!-- Free Fire Button Sample -->
-      <button onclick="openOrderModal('115 Diamond', 78, 'FreeFire')" class="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold text-sm">
-        Free Fire (115 Diamond - 78 TK)
-      </button>
-      <!-- eFootball Button Sample -->
-      <button onclick="openOrderModal('300 Coin', 360, 'eFootball')" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold text-sm">
-        eFootball (300 Coin - 360 TK)
-      </button>
-    </div>
-  </div>
+<body class="bg-slate-100 text-slate-800 font-sans pb-20">
 
-  <!-- ================= ORDER / PAYMENT MODAL ================= -->
-  <div id="order-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative text-slate-800">
+    <!-- TOP HEADER -->
+    <header class="bg-white shadow-sm sticky top-0 z-40 px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="bg-amber-500 text-white p-2 rounded-xl text-xs font-bold shadow">
+          <i class="fa-solid fa-gamepad"></i>
+        </div>
+        <span class="font-extrabold text-slate-800 text-sm tracking-wide">MIHADX PRO BD</span>
+      </div>
       
-      <!-- Top Header Bar -->
-      <div class="bg-amber-500 p-4 text-white flex justify-between items-center">
-        <span class="font-bold text-sm" id="modal-title">অর্ডার প্রক্রিয়া</span>
-        <button onclick="closeModal()" class="text-white hover:text-slate-200 text-lg font-bold">
-          <i class="fa-solid fa-xmark"></i>
+      <div class="flex items-center gap-3">
+        <!-- Balance Counter -->
+        <div class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-inner">
+          <i class="fa-solid fa-coins text-amber-500"></i>
+          <span id="user-balance">0 B</span>
+        </div>
+        <!-- Logout / Profile Icon -->
+        <button onclick="logout()" class="text-slate-500 hover:text-red-600 text-sm p-1">
+          <i class="fa-solid fa-right-from-bracket"></i>
         </button>
       </div>
+    </header>
 
-      <div class="p-4 space-y-4 max-h-[85vh] overflow-y-auto">
-
-        <!-- STEP 1: ACCOUNT INFO & PAYMENT SELECTION -->
-        <div id="modal-step-1" class="space-y-4">
-          
-          <!-- Item Preview -->
-          <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 flex justify-between items-center">
-            <span id="modal-item-name" class="font-bold text-xs text-slate-700">Item Name</span>
-            <span id="modal-item-price" class="font-bold text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-lg">0 TK</span>
-          </div>
-
-          <!-- Free Fire Fields -->
-          <div id="fields-ff" class="space-y-2">
-            <label class="block text-xs font-bold text-slate-600">Account Info</label>
-            <span class="text-[11px] text-slate-500 block">এখানে আইডি কোড দিন।</span>
-            <input type="number" id="order-game-uid" placeholder="এখানে আইডি কোড দিন।" class="w-full p-3 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
-          </div>
-
-          <!-- eFootball Fields -->
-          <div id="fields-ef" class="space-y-3 hidden">
-            <label class="block text-xs font-bold text-slate-600">Account Info</label>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1">Account Type</label>
-              <select id="order-acc-type" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500 bg-white">
-                <option value="Facebook">Facebook</option>
-                <option value="Gmail">Gmail</option>
-                <option value="Twitter">Twitter</option>
-                <option value="Vk">Vk</option>
-                <option value="KONAMI">KONAMI</option>
-                <option value="EA Account">EA Account</option>
-                <option value="Activision Account">Activision Account</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1" id="label-acc-id">Your Facebook Id / Number</label>
-              <input type="text" id="order-acc-id" placeholder="Enter your Facebook Id / Number" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1">Password</label>
-              <input type="password" id="order-acc-pass" placeholder="Enter Password" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-500 mb-1">Backup Code / Your WhatsApp Number</label>
-              <input type="text" id="order-acc-backup" placeholder="Backup Code / Your WhatsApp Number" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
-            </div>
-          </div>
-
-          <!-- Select One Option Header -->
-          <div class="space-y-2 pt-2">
-            <label class="block text-xs font-bold text-slate-700">3 Select one option</label>
-            
-            <div class="grid grid-cols-2 gap-3">
-              <div class="p-3 border rounded-xl border-slate-200 text-center opacity-50 cursor-not-allowed">
-                <i class="fa-solid fa-wallet text-orange-500 text-lg"></i>
-                <p class="font-bold text-[11px] mt-1">Wallet Pay</p>
-              </div>
-              <div onclick="proceedToPaymentGateway()" class="p-3 border-2 border-orange-500 bg-orange-50/30 rounded-xl text-center cursor-pointer relative shadow-sm">
-                <div class="absolute top-1 right-1 w-4 h-4 bg-red-600 text-white rounded-full flex items-center justify-center text-[10px]">✓</div>
-                <div class="flex justify-center items-center gap-1.5 pt-1">
-                  <span class="font-bold text-pink-600 text-[10px]">bKash</span>
-                  <span class="font-bold text-orange-600 text-[10px]">নগদ</span>
-                  <span class="font-bold text-purple-600 text-[10px]">রকেট</span>
-                </div>
-                <p class="font-bold text-[11px] text-slate-700 mt-1">Instant Pay</p>
-              </div>
-            </div>
-          </div>
-
-          <button type="button" onclick="proceedToPaymentGateway()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold text-xs shadow-md transition-all uppercase tracking-wider">
-            Buy Now
-          </button>
-
-        </div>
-
-        <!-- STEP 2: VIDEO STYLE PAYMENT GATEWAY POPUP -->
-        <div id="modal-step-gateway" class="space-y-4 hidden">
-          <div class="text-center pb-2 border-b">
-            <p class="text-xs text-slate-500">নিরাপদ পেমেন্ট - Test</p>
-          </div>
-
-          <div class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold text-xs text-center shadow">
-            মোবাইল ব্যাংকিং
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="selectGateway('bKash')" class="p-3 bg-white border-2 border-pink-500 rounded-2xl flex items-center justify-center shadow transition-all">
-              <span class="font-extrabold text-pink-600 text-sm">bKash</span>
-            </button>
-            <button type="button" onclick="alert('বর্তমানে শুধুমাত্র বিকাশ পেমেন্ট চালু রয়েছে।')" class="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-center opacity-70">
-              <span class="font-bold text-orange-600 text-xs">নগদ</span>
-            </button>
-            <button type="button" onclick="alert('বর্তমানে শুধুমাত্র বিকাশ পেমেন্ট চালু রয়েছে।')" class="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-center opacity-70">
-              <span class="font-bold text-purple-600 text-xs">রকেট</span>
-            </button>
-          </div>
-
-          <button type="button" onclick="backToStep1()" class="w-full bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold text-xs">
-            ফিরে যান
-          </button>
-        </div>
-
-        <!-- STEP 3: EXACT VIDEO PINK BOX (TrxID & Instructions) -->
-        <div id="modal-step-bkash" class="space-y-3 hidden">
-          
-          <div class="bg-pink-600 text-white text-center py-2 rounded-xl font-bold text-sm shadow">
-            ৳ <span id="modal-box-price">0</span>
-          </div>
-
-          <div class="bg-pink-700 text-white p-4 rounded-2xl shadow-inner space-y-3">
-            <h4 class="text-center font-bold text-xs uppercase tracking-wider border-b border-pink-600 pb-2">ট্রানজেকশন আইডি দিন</h4>
-
-            <input type="text" id="order-trx-id" placeholder="ট্রানজেকশন আইডি দিন" class="w-full p-3 bg-white text-slate-800 rounded-xl text-xs font-mono uppercase focus:outline-none placeholder:text-slate-400">
-
-            <div class="text-[11px] space-y-1.5 text-pink-100 leading-relaxed">
-              <p>• *247# ডায়াল করে আপনার bKash (মোবাইল মেনু যান অথবা bKash app খুলুন)</p>
-              <p>• সেন্ড মানি -এ ক্লিক করুন।</p>
-              
-              <div class="flex items-center justify-between bg-pink-800/80 p-2 rounded-lg border border-pink-600 my-1">
-                <span>উপরের নম্বরে টাকা পাঠান: <b id="merchant-num-text" class="text-yellow-300 font-mono">01309735129</b></span>
-                <button type="button" onclick="copyMerchantNumber()" class="bg-pink-600 hover:bg-pink-700 text-white text-[10px] px-2 py-1 rounded font-bold shadow">
-                  <i class="fa-regular fa-copy"></i> কপি
-                </button>
-              </div>
-
-              <p>• টাকার পরিমাণঃ <b id="modal-inst-price" class="text-yellow-300">0</b></p>
-              <p>• নিশ্চিত করে এখন আপনার bKash PIN লিখুন।</p>
-              <p>• টাকা পাঠান এবং ট্রানজেকশন আইডি কপি করুন।</p>
-              <p>• ট্রানজেকশন আইডি লিখে ভেরিফাই চাপুন।</p>
-            </div>
-          </div>
-
-          <div class="flex gap-2 pt-1">
-            <button type="button" onclick="backToGateway()" class="w-1/3 bg-slate-200 text-slate-700 py-3 rounded-xl font-bold text-xs">
-              ফিরে যান
-            </button>
-            <button type="button" id="btn-submit-order" onclick="submitFinalOrder()" class="w-2/3 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold text-xs shadow-lg tracking-wider">
-              ভেরিফাই
-            </button>
-          </div>
-
-        </div>
-
+    <!-- BANNER SECTION -->
+    <div class="p-4">
+      <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-4 text-white shadow-lg text-center space-y-1">
+        <h2 class="font-bold text-sm">স্বাগতম MIHADX PRO BD তে!</h2>
+        <p class="text-[11px] text-amber-100">ইনস্ট্যান্ট টপ আপ করুন, ই-ফুটবল টপ-আপ এবং আকর্ষণীয় প্রোডাক্ট কিনুন ১০০% নির্ভরতায়।</p>
       </div>
     </div>
-  </div>
+
+    <!-- MAIN CONTAINER / TABS -->
+    <main class="px-4 pb-6">
+      
+      <!-- TAB 1: HOME (Products) -->
+      <section id="tab-home" class="space-y-4">
+        <h3 class="font-bold text-xs text-amber-700 bg-amber-100 px-3 py-1.5 rounded-lg inline-block shadow-sm">
+          🔥 ফ্রি ফায়ার টপ-আপ (UID)
+        </h3>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          
+          <!-- Item 1 -->
+          <div onclick="openOrderModal('25 Diamond', 25, 'FreeFire')" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center cursor-pointer hover:border-amber-500 transition-all">
+            <div class="text-amber-500 text-xl mb-1"><i class="fa-solid fa-gem"></i></div>
+            <h4 class="font-bold text-xs text-slate-700">25 Diamond</h4>
+            <span class="inline-block mt-2 bg-amber-50 text-amber-600 font-extrabold text-xs px-3 py-1 rounded-xl">25 TK</span>
+          </div>
+
+          <!-- Item 2 -->
+          <div onclick="openOrderModal('50 Diamond', 40, 'FreeFire')" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center cursor-pointer hover:border-amber-500 transition-all">
+            <div class="text-amber-500 text-xl mb-1"><i class="fa-solid fa-gem"></i></div>
+            <h4 class="font-bold text-xs text-slate-700">50 Diamond</h4>
+            <span class="inline-block mt-2 bg-amber-50 text-amber-600 font-extrabold text-xs px-3 py-1 rounded-xl">40 TK</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div onclick="openOrderModal('100 Diamond', 75, 'FreeFire')" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center cursor-pointer hover:border-amber-500 transition-all">
+            <div class="text-amber-500 text-xl mb-1"><i class="fa-solid fa-gem"></i></div>
+            <h4 class="font-bold text-xs text-slate-700">100 Diamond</h4>
+            <span class="inline-block mt-2 bg-amber-50 text-amber-600 font-extrabold text-xs px-3 py-1 rounded-xl">75 TK</span>
+          </div>
+
+          <!-- Item 4 -->
+          <div onclick="openOrderModal('115 Diamond', 83, 'FreeFire')" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center cursor-pointer hover:border-amber-500 transition-all">
+            <div class="text-amber-500 text-xl mb-1"><i class="fa-solid fa-gem"></i></div>
+            <h4 class="font-bold text-xs text-slate-700">115 Diamond</h4>
+            <span class="inline-block mt-2 bg-amber-50 text-amber-600 font-extrabold text-xs px-3 py-1 rounded-xl">83 TK</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 2: MY ORDERS -->
+      <section id="tab-orders" class="space-y-3 hidden">
+        <h3 class="font-bold text-xs text-slate-700 px-1">আপনার সকল অর্ডারসমূহ</h3>
+        <div id="orders-list" class="space-y-2">
+          <!-- Dynamically filled orders -->
+          <p class="text-center text-xs text-slate-400 py-6">কোনো অর্ডার পাওয়া যায়নি।</p>
+        </div>
+      </section>
+
+      <!-- TAB 3: PROFILE -->
+      <section id="tab-profile" class="space-y-4 hidden">
+        <div class="bg-white p-4 rounded-2xl shadow-sm text-center space-y-2">
+          <div class="w-16 h-16 bg-amber-500 text-white rounded-full flex items-center justify-center text-2xl mx-auto shadow">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <h4 class="font-bold text-sm" id="profile-email">ismailhossen77@gmail.com</h4>
+          <p class="text-xs text-slate-500">স্ট্যাটাস: ভেরিফাইড ইউজার</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around py-2.5 z-40 text-xs shadow-lg">
+      <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-amber-600 font-bold">
+        <i class="fa-solid fa-house text-base"></i>
+        <span>হোম</span>
+      </button>
+      <button onclick="switchTab('orders')" id="nav-orders" class="flex flex-col items-center text-slate-400 font-medium">
+        <i class="fa-solid fa-bag-shopping text-base"></i>
+        <span>মাই অর্ডার্স</span>
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-slate-400 font-medium">
+        <i class="fa-solid fa-user text-base"></i>
+        <span>প্রোফাইল</span>
+      </button>
+    </nav>
+
+    <!-- ================= ORDER / PAYMENT MODAL ================= -->
+    <div id="order-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative text-slate-800">
+        
+        <!-- Top Header Bar -->
+        <div class="bg-amber-500 p-4 text-white flex justify-between items-center">
+          <span class="font-bold text-sm" id="modal-title">অর্ডার প্রক্রিয়া</span>
+          <button onclick="closeModal()" class="text-white hover:text-slate-200 text-lg font-bold">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="p-4 space-y-4 max-h-[85vh] overflow-y-auto">
+
+          <!-- STEP 1: ACCOUNT INFO & PAYMENT SELECTION -->
+          <div id="modal-step-1" class="space-y-4">
+            
+            <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 flex justify-between items-center">
+              <span id="modal-item-name" class="font-bold text-xs text-slate-700">Item Name</span>
+              <span id="modal-item-price" class="font-bold text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-lg">0 TK</span>
+            </div>
+
+            <!-- Free Fire Fields -->
+            <div id="fields-ff" class="space-y-2">
+              <label class="block text-xs font-bold text-slate-600">ফ্রি ফায়ার Player UID</label>
+              <input type="number" id="order-game-uid" placeholder="যেমন: 312109495" class="w-full p-3 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+            </div>
+
+            <button type="button" onclick="proceedToPaymentGateway()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold text-xs shadow-md transition-all uppercase tracking-wider">
+              পরবর্তী ধাপে যান (Next)
+            </button>
+          </div>
+
+          <!-- STEP 2: PAYMENT GATEWAY POPUP -->
+          <div id="modal-step-gateway" class="space-y-4 hidden">
+            <div class="text-center pb-2 border-b">
+              <p class="text-xs text-slate-500">নিরাপদ পেমেন্ট গেটওয়ে</p>
+            </div>
+
+            <div class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold text-xs text-center shadow">
+              মোবাইল ব্যাংকিং
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="selectGateway('bKash')" class="p-3 bg-white border-2 border-pink-500 rounded-2xl flex items-center justify-center shadow transition-all">
+                <span class="font-extrabold text-pink-600 text-sm">bKash</span>
+              </button>
+              <button type="button" onclick="alert('বর্তমানে শুধুমাত্র বিকাশ পেমেন্ট চালু রয়েছে।')" class="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-center opacity-70">
+                <span class="font-bold text-orange-600 text-xs">নগদ</span>
+              </button>
+            </div>
+
+            <button type="button" onclick="backToStep1()" class="w-full bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold text-xs">
+              ব্যাকে যান
+            </button>
+          </div>
+
+          <!-- STEP 3: BKASH TrxID & Instructions -->
+          <div id="modal-step-bkash" class="space-y-3 hidden">
+            
+            <div class="bg-pink-600 text-white text-center py-2 rounded-xl font-bold text-sm shadow">
+              ৳ <span id="modal-box-price">0</span>
+            </div>
+
+            <div class="bg-pink-700 text-white p-4 rounded-2xl shadow-inner space-y-3">
+              <h4 class="text-center font-bold text-xs uppercase tracking-wider border-b border-pink-600 pb-2">নম্বর টাকার পাঠাবার TrxID দিন</h4>
+
+              <input type="text" id="order-trx-id" placeholder="যেমন: BK12345678" class="w-full p-3 bg-white text-slate-800 rounded-xl text-xs font-mono uppercase focus:outline-none placeholder:text-slate-400">
+
+              <div class="text-[11px] space-y-1.5 text-pink-100 leading-relaxed">
+                <div class="flex items-center justify-between bg-pink-800/80 p-2 rounded-lg border border-pink-600 my-1">
+                  <span>বিকাশ Personal: <b id="merchant-num-text" class="text-yellow-300 font-mono">01309735129</b></span>
+                  <button type="button" onclick="copyMerchantNumber()" class="bg-pink-600 hover:bg-pink-700 text-white text-[10px] px-2 py-1 rounded font-bold shadow">
+                    <i class="fa-regular fa-copy"></i> কপি
+                  </button>
+                </div>
+                <p>• টাকা পাঠিয়ে ট্রানজেকশন আইডি এখানে লিখে ভেরিফাই চাপুন।</p>
+              </div>
+            </div>
+
+            <div class="flex gap-2 pt-1">
+              <button type="button" onclick="backToGateway()" class="w-1/3 bg-slate-200 text-slate-700 py-3 rounded-xl font-bold text-xs">
+                ব্যাকে যান
+              </button>
+              <button type="button" id="btn-submit-order" onclick="submitFinalOrder()" class="w-2/3 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold text-xs shadow-lg tracking-wider">
+                অর্ডার কনফার্ম করুন
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-    let selectedItem = null;
-    let currentUser = { email: "ismailhossen77@gmail.com" }; // আপনার সংরক্ষিত জিমেইল অনুযায়ী
+      let selectedItem = null;
+      let currentUser = { email: "ismailhossen77@gmail.com" };
+      let userOrders = JSON.parse(localStorage.getItem('my_orders')) || [];
 
-    // Modal Open Logic
-    window.openOrderModal = (name, price, type) => {
-      selectedItem = { name, price, type };
-      document.getElementById('modal-item-name').innerText = name;
-      document.getElementById('modal-item-price').innerText = price + " TK";
-      document.getElementById('modal-box-price').innerText = price;
-      document.getElementById('modal-inst-price').innerText = price;
+      // Tab Switching Logic
+      function switchTab(tab) {
+        document.getElementById('tab-home').classList.add('hidden');
+        document.getElementById('tab-orders').classList.add('hidden');
+        document.getElementById('tab-profile').classList.add('hidden');
 
-      const ffFields = document.getElementById('fields-ff');
-      const efFields = document.getElementById('fields-ef');
+        document.getElementById('nav-home').className = "flex flex-col items-center text-slate-400 font-medium";
+        document.getElementById('nav-orders').className = "flex flex-col items-center text-slate-400 font-medium";
+        document.getElementById('nav-profile').className = "flex flex-col items-center text-slate-400 font-medium";
 
-      if (type === 'FreeFire') {
-        ffFields.classList.remove('hidden');
-        efFields.classList.add('hidden');
-      } else if (type === 'eFootball') {
-        ffFields.classList.add('hidden');
-        efFields.classList.remove('hidden');
+        if(tab === 'home') {
+          document.getElementById('tab-home').classList.remove('hidden');
+          document.getElementById('nav-home').className = "flex flex-col items-center text-amber-600 font-bold";
+        } else if(tab === 'orders') {
+          document.getElementById('tab-orders').classList.remove('hidden');
+          document.getElementById('nav-orders').className = "flex flex-col items-center text-amber-600 font-bold";
+          renderOrders();
+        } else if(tab === 'profile') {
+          document.getElementById('tab-profile').classList.remove('hidden');
+          document.getElementById('nav-profile').className = "flex flex-col items-center text-amber-600 font-bold";
+        }
       }
 
-      // Reset views
-      document.getElementById('modal-step-1').classList.remove('hidden');
-      document.getElementById('modal-step-gateway').classList.add('hidden');
-      document.getElementById('modal-step-bkash').classList.add('hidden');
-      document.getElementById('order-trx-id').value = '';
-      document.getElementById('order-modal').classList.remove('hidden');
-    };
+      // Modal Open/Close Logic
+      function openOrderModal(name, price, type) {
+        selectedItem = { name, price, type };
+        document.getElementById('modal-item-name').innerText = name;
+        document.getElementById('modal-item-price').innerText = price + " TK";
+        document.getElementById('modal-box-price').innerText = price;
 
-    window.closeModal = () => {
-      document.getElementById('order-modal').classList.add('hidden');
-    };
+        document.getElementById('modal-step-1').classList.remove('hidden');
+        document.getElementById('modal-step-gateway').classList.add('hidden');
+        document.getElementById('modal-step-bkash').classList.add('hidden');
+        document.getElementById('order-trx-id').value = '';
+        document.getElementById('order-game-uid').value = '';
+        document.getElementById('order-modal').classList.remove('hidden');
+      }
 
-    // Step transitions matching video flow
-    window.proceedToPaymentGateway = () => {
-      if (selectedItem.type === 'FreeFire') {
+      function closeModal() {
+        document.getElementById('order-modal').classList.add('hidden');
+      }
+
+      function proceedToPaymentGateway() {
         const uid = document.getElementById('order-game-uid').value.trim();
         if (!uid) return alert("অনুগ্রহ করে আপনার Player UID দিন!");
-      } else if (selectedItem.type === 'eFootball') {
-        const accId = document.getElementById('order-acc-id').value.trim();
-        const pass = document.getElementById('order-acc-pass').value.trim();
-        const backup = document.getElementById('order-acc-backup').value.trim();
-        if (!accId || !pass || !backup) return alert("অনুগ্রহ করে সকল তথ্য পূরণ করুন!");
+
+        document.getElementById('modal-step-1').classList.add('hidden');
+        document.getElementById('modal-step-gateway').classList.remove('hidden');
       }
 
-      document.getElementById('modal-step-1').classList.add('hidden');
-      document.getElementById('modal-step-gateway').classList.remove('hidden');
-    };
-
-    window.backToStep1 = () => {
-      document.getElementById('modal-step-gateway').classList.add('hidden');
-      document.getElementById('modal-step-1').classList.remove('hidden');
-    };
-
-    window.selectGateway = (gateway) => {
-      if(gateway === 'bKash') {
+      function backToStep1() {
         document.getElementById('modal-step-gateway').classList.add('hidden');
-        document.getElementById('modal-step-bkash').classList.remove('hidden');
+        document.getElementById('modal-step-1').classList.remove('hidden');
       }
-    };
 
-    window.backToGateway = () => {
-      document.getElementById('modal-step-bkash').classList.add('hidden');
-      document.getElementById('modal-step-gateway').classList.remove('hidden');
-    };
+      function selectGateway(gateway) {
+        if(gateway === 'bKash') {
+          document.getElementById('modal-step-gateway').classList.add('hidden');
+          document.getElementById('modal-step-bkash').classList.remove('hidden');
+        }
+      }
 
-    window.copyMerchantNumber = () => {
-      const num = "01309735129"; // আপনার সঠিক বিকাশ নম্বর (শেষ ডিজিট 129)
-      navigator.clipboard.writeText(num);
-      alert("নম্বর সফলভাবে কপি করা হয়েছে: " + num);
-    };
+      function backToGateway() {
+        document.getElementById('modal-step-bkash').classList.add('hidden');
+        document.getElementById('modal-step-gateway').classList.remove('hidden');
+      }
 
-    // Dynamic eFootball Account Type Label Change
-    document.getElementById('order-acc-type')?.addEventListener('change', (e) => {
-      const val = e.target.value;
-      document.getElementById('label-acc-id').innerText = `Your ${val} Id / Number`;
-    });
+      function copyMerchantNumber() {
+        const num = "01309735129";
+        navigator.clipboard.writeText(num);
+        alert("নম্বর সফলভাবে কপি করা হয়েছে: " + num);
+      }
 
-    // Submit Final Order & Send WhatsApp Message with exact details
-    window.submitFinalOrder = async () => {
-      const trxId = document.getElementById('order-trx-id').value.trim();
-      const btn = document.getElementById('btn-submit-order');
-
-      if (!trxId) return alert("দয়া করে ট্রানজেকশন আইডি দিন!");
-
-      btn.disabled = true;
-      btn.innerText = "যাচাই করা হচ্ছে...";
-
-      let detailsWhatsAppMessage = "";
-
-      if (selectedItem.type === 'FreeFire') {
+      // Submit Final Order & WhatsApp integration
+      function submitFinalOrder() {
+        const trxId = document.getElementById('order-trx-id').value.trim();
         const uid = document.getElementById('order-game-uid').value.trim();
-        detailsWhatsAppMessage = `🆔 *Player UID:* ${uid}\n`;
-      } else if (selectedItem.type === 'eFootball') {
-        const accType = document.getElementById('order-acc-type').value;
-        const accId = document.getElementById('order-acc-id').value.trim();
-        const pass = document.getElementById('order-acc-pass').value.trim();
-        const backup = document.getElementById('order-acc-backup').value.trim();
+        if (!trxId) return alert("দয়া করে ট্রানজেকশন আইডি দিন!");
 
-        detailsWhatsAppMessage = `📌 *Account Type:* ${accType}\n🆔 *Account ID:* ${accId}\n🔒 *Password:* ${pass}\n🛡️ *Backup Code / WhatsApp:* ${backup}\n`;
-      }
+        const newOrder = {
+          date: new Date().toLocaleString(),
+          item: selectedItem.name,
+          price: selectedItem.price + " TK",
+          status: "Pending",
+          uid: uid,
+          trx: trxId
+        };
 
-      try {
+        userOrders.unshift(newOrder);
+        localStorage.setItem('my_orders', JSON.stringify(userOrders));
+
         alert("আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
         closeModal();
 
-        // WhatsApp Notification Format
+        // Send WhatsApp Message
         const adminWhatsApp = "8801576502490";
-        const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedItem.name}\n💰 *মূল্য:* ${selectedItem.price} TK\n${detailsWhatsAppMessage}💳 *পেমেন্ট:* bKash Personal\n🧾 *TrxID:* ${trxId}\n👤 *ইউজার জিমেইল:* ${currentUser.email}`;
-        
-        const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
-        window.open(waUrl, '_blank');
-
-      } catch (err) {
-        alert("অর্ডার জমা দিতে সমস্যা হয়েছে: " + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "ভেরিফাই";
+        const message = `🚨 *নতুন টপআপ অর্ডার!* 🚨\n\n🎮 *প্যাকেজ:* ${selectedItem.name}\n💰 *মূল্য:* ${selectedItem.price} TK\n🆔 *UID:* ${uid}\n🧾 *TrxID:* ${trxId}\n👤 *ইউজার:* ${currentUser.email}`;
+        window.open(`https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`, '_blank');
       }
-    };
-  </script>
+
+      // Render Orders in 'My Orders' tab
+      function renderOrders() {
+        const container = document.getElementById('orders-list');
+        if(userOrders.length === 0) {
+          container.innerHTML = `<p class="text-center text-xs text-slate-400 py-6">কোনো অর্ডার পাওয়া যায়নি।</p>`;
+          return;
+        }
+
+        container.innerHTML = userOrders.map(o => `
+          <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center text-xs">
+            <div class="space-y-1">
+              <p class="font-bold text-slate-700">${o.item} (${o.price})</p>
+              <p class="text-[10px] text-slate-400">${o.date}</p>
+            </div>
+            <div>
+              <span class="bg-amber-100 text-amber-700 font-bold px-2.5 py-1 rounded-full text-[10px]">${o.status}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function logout() {
+        alert("লগআউট করা হয়েছে।");
+      }
+    </script>
 </body>
-</html>
+  </html>
 
