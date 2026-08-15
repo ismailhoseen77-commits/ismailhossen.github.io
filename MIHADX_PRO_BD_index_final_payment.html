@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIHADX PRO BD - Main Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style> body { font-family: 'Hind Siliguri', sans-serif; } </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 pb-24">
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="bg-white text-slate-800 shadow-sm border-b sticky top-0 z-40">
+    <div class="max-w-md mx-auto px-4 py-2.5 flex justify-between items-center">
+      <!-- Logo Left -->
+      <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
+        <div class="w-9 h-9 bg-orange-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow">
+          <i class="fa-solid fa-gamepad"></i>
+        </div>
+        <span class="font-extrabold text-slate-900 text-base tracking-wide">MIHADX PRO BD</span>
+      </div>
+      
+      <!-- Balance & Logout -->
+      <div class="flex items-center gap-2">
+        <span class="bg-orange-50 text-orange-600 border border-orange-200 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+          <i class="fa-solid fa-wallet"></i> <span id="header-spent-val">0</span> ৳
+        </span>
+        <button onclick="logout()" class="w-8 h-8 bg-slate-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center text-sm transition-all" title="লগআউট">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <main class="max-w-md mx-auto px-4 mt-4">
+
+    <!-- TAB 1: HOME SECTION -->
+    <div id="section-home" class="space-y-6">
+      
+      <!-- Banner -->
+      <div class="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-5 text-white shadow-lg">
+        <h2 class="text-xl font-bold mb-1">স্বাগতম MIHADX PRO BD তে!</h2>
+        <p class="text-xs text-orange-100">ইনস্ট্যান্ট ফ্রি ফায়ার, ই-ফুটবল টপ-আপ এবং আকর্ষণীয় প্রোডাক্ট কিনুন ১০০% নিরাপত্তায়।</p>
+      </div>
+
+      <!-- FREE FIRE SECTION (2 Columns Grid) -->
+      <section class="space-y-3">
+        <h2 class="text-base font-bold text-amber-600 flex items-center gap-2">
+          <i class="fa-solid fa-fire text-amber-500"></i> ফ্রি ফায়ার টপ-আপ (UID)
+        </h2>
+        <div id="ff-packages" class="grid grid-cols-2 gap-3">
+          <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ফ্রি ফায়ার প্যাকেজ নেই</p>
+        </div>
+      </section>
+
+      <!-- E-FOOTBALL SECTION (2 Columns Grid) -->
+      <section class="space-y-3">
+        <h2 class="text-base font-bold text-blue-600 flex items-center gap-2">
+          <i class="fa-solid fa-futbol text-blue-500"></i> ই-ফুটবল কয়েন (In-Game Account)
+        </h2>
+        <div id="ef-packages" class="grid grid-cols-2 gap-3">
+          <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ই-ফুটবল প্যাকেজ নেই</p>
+        </div>
+      </section>
+            <!-- E-COMMERCE SECTION (2 Columns Grid) -->
+      <section class="space-y-3">
+        <h2 class="text-base font-bold text-emerald-600 flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-emerald-500"></i> ই-কমার্স শপ (শার্ট ও প্যান্ট)
+        </h2>
+        <div id="ecommerce-products" class="grid grid-cols-2 gap-3">
+          <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো প্রোডাক্ট নেই</p>
+        </div>
+      </section>
+
+      <!-- COMPUTER SERVICES (Updated) -->
+      <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 space-y-3">
+        <h2 class="text-base font-bold text-indigo-600 flex items-center gap-2">
+          <i class="fa-solid fa-desktop text-indigo-500"></i> আমাদের কম্পিউটার সেবাসমূহ
+        </h2>
+        <div class="grid grid-cols-2 gap-3 text-center">
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <i class="fa-solid fa-file-word text-2xl text-blue-600 mb-1"></i>
+            <h3 class="font-bold text-xs">MS Word</h3>
+            <p class="text-[10px] text-slate-500">ডকুমেন্ট ও টাইপিং</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <i class="fa-solid fa-file-excel text-2xl text-emerald-600 mb-1"></i>
+            <h3 class="font-bold text-xs">MS Excel</h3>
+            <p class="text-[10px] text-slate-500">হিসাব-নিকাশ ও শিট</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <i class="fa-solid fa-file-powerpoint text-2xl text-orange-500 mb-1"></i>
+            <h3 class="font-bold text-xs">MS PowerPoint</h3>
+            <p class="text-[10px] text-slate-500">প্রেজেন্টেশন ডিজাইন</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <i class="fa-solid fa-keyboard text-2xl text-indigo-500 mb-1"></i>
+            <h3 class="font-bold text-xs">Data Entry</h3>
+            <p class="text-[10px] text-slate-500">নির্ভুল ডাটা এন্ট্রি</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TAB 2: MY ORDERS SECTION -->
+    <div id="section-orders" class="space-y-4 hidden">
+      <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left text-orange-500"></i> আপনার সকল অর্ডারসমূহ
+      </h2>
+      
+      <div class="bg-white p-3 rounded-2xl shadow-sm overflow-x-auto border border-slate-200">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b bg-slate-50 text-[11px] text-slate-500">
+              <th class="p-2">তারিখ</th>
+              <th class="p-2">আইটেম</th>
+              <th class="p-2">মূল্য</th>
+              <th class="p-2">স্ট্যাটাস</th>
+            </tr>
+          </thead>
+          <tbody id="user-orders-list" class="text-xs">
+            <tr><td colspan="4" class="text-center p-4 text-slate-400">লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: USER PROFILE SECTION -->
+    <div id="section-profile" class="space-y-4 hidden">
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 text-center space-y-4">
+        <div class="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-3xl font-bold mx-auto shadow-inner" id="profile-avatar">
+          U
+        </div>
+        <div>
+          <h2 id="profile-name" class="text-lg font-bold text-slate-800">User Name</h2>
+          <p id="profile-email" class="text-xs text-slate-500">user@gmail.com</p>
+        </div>
+
+        <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-1 shadow-md">
+          <p class="text-xs text-slate-400">আপনার মোট লেনদেনের পরিমাণ (Total Spent)</p>
+          <h3 id="profile-total-spent" class="text-2xl font-extrabold text-orange-400">0 TK</h3>
+        </div>
+
+        <button onclick="logout()" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-xs hover:bg-red-700 transition-all shadow">
+          <i class="fa-solid fa-right-from-bracket mr-1"></i> লগআউট করুন
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-40 py-2">
+    <div class="max-w-md mx-auto flex justify-around items-center px-4">
+      <button id="nav-btn-home" onclick="showSection('home')" class="flex flex-col items-center gap-1 text-orange-600 transition-all font-bold">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="text-[11px]">হোম</span>
+      </button>
+
+      <button id="nav-btn-orders" onclick="showSection('orders')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all">
+        <i class="fa-solid fa-bag-shopping text-lg"></i>
+        <span class="text-[11px] font-bold">মাই অর্ডার</span>
+      </button>
+
+      <button id="nav-btn-profile" onclick="showSection('profile')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all">
+        <i class="fa-solid fa-user text-lg"></i>
+        <span class="text-[11px] font-bold">প্রোফাইল</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= MULTI-STEP ORDER MODAL ================= -->
+  <div id="order-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 id="modal-title" class="text-base font-bold text-slate-800">অর্ডার প্রক্রিয়া</h3>
+      
+      <!-- Item Preview -->
+      <div class="bg-orange-50 p-3 rounded-xl flex justify-between items-center text-xs font-bold border border-orange-100">
+        <span id="modal-item-name" class="text-slate-700">Item Name</span>
+        <span id="modal-item-price" class="text-orange-600 font-extrabold text-sm">0 TK</span>
+      </div>
+
+      <form id="form-submit-order" class="space-y-4">
+        
+        <!-- STEP 1: ACCOUNT / GAME DETAILS -->
+        <div id="modal-step-1" class="space-y-3">
+          
+          <!-- Free Fire Fields -->
+          <div id="fields-ff">
+            <label class="block text-xs font-bold text-slate-600 mb-1">ফ্রি ফায়ার Player UID</label>
+            <input type="number" id="order-game-uid" placeholder="যেমন: 123456789" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+          </div>
+
+          <!-- eFootball Fields -->
+          <div id="fields-ef" class="space-y-3 hidden">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">একাউন্ট টাইপ সিলেক্ট করুন</label>
+              <select id="order-acc-type" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+                <option value="Gmail">Gmail Account</option>
+                <option value="Konami ID">Konami ID</option>
+                <option value="Facebook">Facebook Account</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1" id="label-acc-id">ইমেইল / একাউন্ট নম্বর</label>
+              <input type="text" id="order-acc-id" placeholder="Email / Number" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">পাসওয়ার্ড</label>
+              <input type="text" id="order-acc-pass" placeholder="Password" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">ব্যাকআপ কোড</label>
+              <input type="text" id="order-acc-backup" placeholder="Backup Code" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">WhatsApp নম্বর (যোগাযোগের জন্য)</label>
+              <input type="tel" id="order-acc-whatsapp" placeholder="017xxxxxxxx" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
+            </div>
+          </div>
+
+          <button type="button" onclick="nextModalStep()" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-orange-700 transition-all flex items-center justify-center gap-2">
+            <span>পরবর্তী ধাপে যান (Next)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- STEP 2: PAYMENT METHOD -->
+        <div id="modal-step-2" class="space-y-4 hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-4 flex items-center gap-2 border-b border-slate-100">
+              <span class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold">3</span>
+              <h4 class="font-bold text-sm text-slate-800">Select one option</h4>
+            </div>
+
+            <div class="p-4">
+              <button type="button" id="payment-bkash" onclick="selectPaymentMethod('bKash Payment')"
+                class="payment-option w-full border-2 border-slate-200 rounded-2xl overflow-hidden text-left bg-white hover:border-pink-500 transition-all">
+                <div class="h-28 bg-white flex items-center justify-center">
+                  <div class="flex items-center gap-3">
+                    <div class="w-16 h-16 rounded-xl bg-pink-50 flex items-center justify-center">
+                      <span class="text-3xl font-extrabold text-pink-600">bK</span>
+                    </div>
+                    <div>
+                      <div class="font-extrabold text-slate-800 text-lg">bKash</div>
+                      <div class="font-bold text-pink-600 text-sm">Payment</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-slate-200 text-slate-700 px-4 py-3 font-bold text-sm">bKash Payment</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="prevModalStep()" class="w-1/3 bg-slate-200 text-slate-700 py-3 rounded-xl font-bold text-xs hover:bg-slate-300 transition-all">
+              ব্যাকে যান
+            </button>
+            <button type="button" onclick="goToPaymentDetails()" class="w-2/3 bg-orange-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-orange-700 transition-all">
+              পরবর্তী ধাপে যান
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: BKASH PAYMENT INSTRUCTIONS -->
+        <div id="modal-step-3" class="space-y-4 hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-4 text-center border-b border-slate-100">
+              <div class="mx-auto w-20 h-14 rounded-xl bg-pink-50 flex items-center justify-center mb-2">
+                <span class="text-3xl font-extrabold text-pink-600">bK</span>
+              </div>
+              <h4 class="font-extrabold text-base text-slate-800">bKash Payment</h4>
+              <p class="text-xs text-slate-500">নিরাপদ পেমেন্ট</p>
+            </div>
+
+            <div class="bg-pink-600 text-white p-4 space-y-3">
+              <div class="bg-white/10 rounded-xl p-3 text-center">
+                <p class="text-[11px] text-pink-100">পেমেন্টের পর Transaction ID দিন</p>
+                <div class="flex items-center justify-center gap-2 mt-2">
+                  <span id="payment-number" class="font-extrabold text-lg select-all">01309735129</span>
+                  <button type="button" onclick="copyPaymentNumber()" class="bg-white/20 px-2 py-1 rounded-lg text-[10px] font-bold">
+                    <i class="fa-regular fa-copy"></i> কপি
+                  </button>
+                </div>
+              </div>
+
+              <div class="bg-white text-slate-700 rounded-xl p-4 space-y-3 text-xs leading-6">
+                <h5 class="font-extrabold text-pink-600 text-sm">কিভাবে bKash থেকে টাকা পাঠাবেন</h5>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">১.</span>
+                  <p>bKash App খুলুন অথবা <b>*247#</b> ডায়াল করুন।</p>
+                </div>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">২.</span>
+                  <p><b>Send Money</b> অপশন নির্বাচন করুন।</p>
+                </div>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">৩.</span>
+                  <p>উপরের bKash নম্বরে <b id="instruction-number">01309735129</b> টাকা পাঠান।</p>
+                </div>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">৪.</span>
+                  <p>টাকার পরিমাণ: <b id="payment-amount">0 TK</b></p>
+                </div>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">৫.</span>
+                  <p>নিশ্চিত করে আপনার bKash PIN দিন।</p>
+                </div>
+
+                <div class="flex gap-2">
+                  <span class="font-extrabold text-pink-600">৬.</span>
+                  <p>পেমেন্ট সফল হলে পাওয়া <b>Transaction ID</b> নিচের ঘরে দিন।</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Transaction ID (পেমেন্ট প্রুফ)</label>
+            <input type="text" id="order-trx-id" placeholder="যেমন: 8AB12CD34E" class="w-full p-2.5 border rounded-xl text-xs font-mono focus:outline-none focus:border-pink-500">
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="paymentDetailsBack()" class="w-1/3 bg-slate-200 text-slate-700 py-3 rounded-xl font-bold text-xs hover:bg-slate-300 transition-all">
+              ব্যাকে যান
+            </button>
+            <button type="submit" id="btn-submit-order" class="w-2/3 bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-emerald-700 transition-all">
+              Verify & Order
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+    <!-- Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+      authDomain: "mihadx-pro-bd.firebaseapp.com",
+      projectId: "mihadx-pro-bd",
+      storageBucket: "mihadx-pro-bd.firebasestorage.app",
+      messagingSenderId: "478391400367",
+      appId: "1:478391400367:web:86012d35014ee7350a215a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    let selectedItem = null;
+
+    // Security check: Redirect to login.html if logged out
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        currentUser = user;
+        document.getElementById('profile-name').innerText = user.displayName || 'User Profile';
+        document.getElementById('profile-email').innerText = user.email;
+        document.getElementById('profile-avatar').innerText = (user.displayName || user.email).charAt(0).toUpperCase();
+
+        loadUserOrdersAndStats(user.email);
+        listenPackagesAndProducts();
+      }
+    });
+
+    window.logout = () => signOut(auth).then(() => window.location.href = "login.html");
+
+    // Tab Switcher
+    window.showSection = (sectionName) => {
+      document.getElementById('section-home').classList.add('hidden');
+      document.getElementById('section-orders').classList.add('hidden');
+      document.getElementById('section-profile').classList.add('hidden');
+
+      const navHome = document.getElementById('nav-btn-home');
+      const navOrders = document.getElementById('nav-btn-orders');
+      const navProfile = document.getElementById('nav-btn-profile');
+
+      navHome.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all font-bold";
+      navOrders.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all font-bold";
+      navProfile.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all font-bold";
+
+      if(sectionName === 'home') {
+        document.getElementById('section-home').classList.remove('hidden');
+        navHome.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
+      if(sectionName === 'orders') {
+        document.getElementById('section-orders').classList.remove('hidden');
+        navOrders.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
+      if(sectionName === 'profile') {
+        document.getElementById('section-profile').classList.remove('hidden');
+        navProfile.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
+    };
+
+    // Listen Packages & Products
+    function listenPackagesAndProducts() {
+      onSnapshot(query(collection(db, "ff_packages"), orderBy("price", "asc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div onclick="openOrderModal('${p.name}', ${p.price}, 'FreeFire')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-center cursor-pointer hover:border-amber-500 hover:scale-[1.02] transition-all">
+              <i class="fa-solid fa-gem text-amber-500 text-xl mb-1"></i>
+              <h3 class="font-bold text-xs text-slate-800">${p.name}</h3>
+              <p class="text-orange-600 font-extrabold text-xs mt-1">${p.price} TK</p>
+            </div>`;
+        });
+        document.getElementById('ff-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ফ্রি ফায়ার প্যাকেজ নেই</p>';
+      });
+
+      onSnapshot(query(collection(db, "ef_packages"), orderBy("price", "asc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div onclick="openOrderModal('${p.name}', ${p.price}, 'eFootball')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-center cursor-pointer hover:border-blue-500 hover:scale-[1.02] transition-all">
+              <i class="fa-solid fa-coins text-blue-500 text-xl mb-1"></i>
+              <h3 class="font-bold text-xs text-slate-800">${p.name}</h3>
+              <p class="text-blue-600 font-extrabold text-xs mt-1">${p.price} TK</p>
+            </div>`;
+        });
+        document.getElementById('ef-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ই-ফুটবল প্যাকেজ নেই</p>';
+      });
+
+      onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snapshot) => {
+        let html = '';
+        snapshot.forEach(docSnap => {
+          const p = docSnap.data();
+          html += `
+            <div onclick="openOrderModal('${p.title}', ${p.price}, 'E-Commerce')" class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-200 cursor-pointer hover:border-emerald-500 hover:scale-[1.02] transition-all flex flex-col justify-between">
+              <img src="${p.imageUrl}" class="w-full h-28 object-cover rounded-xl mb-2">
+              <div>
+                <span class="text-[9px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">${p.category}</span>
+                <h3 class="font-bold text-xs text-slate-800 mt-1 truncate">${p.title}</h3>
+                <p class="text-emerald-600 font-extrabold text-xs mt-1">${p.price} TK</p>
+              </div>
+            </div>`;
+        });
+        document.getElementById('ecommerce-products').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো প্রোডাক্ট নেই</p>';
+      });
+    }
+
+    // Load Orders
+    function loadUserOrdersAndStats(email) {
+      onSnapshot(query(collection(db, "orders"), where("userEmail", "==", email)), (snapshot) => {
+        let html = '';
+        let totalSpent = 0;
+
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          if(data.status === 'Completed') {
+            totalSpent += Number(data.price || 0);
+          }
+
+          let statusClass = 'bg-yellow-100 text-yellow-700';
+          if(data.status === 'Completed') statusClass = 'bg-green-100 text-green-700';
+          if(data.status === 'Cancelled') statusClass = 'bg-red-100 text-red-700';
+
+          html += `
+            <tr class="border-b hover:bg-slate-50">
+              <td class="p-2 text-[10px] text-slate-500">${data.date || 'N/A'}</td>
+              <td class="p-2 font-bold text-xs">${data.itemName}</td>
+              <td class="p-2 font-bold text-orange-600 text-xs">${data.price} TK</td>
+              <td class="p-2">
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${statusClass}">
+                  ${data.status || 'Pending'}
+                </span>
+              </td>
+            </tr>`;
+        });
+
+        document.getElementById('user-orders-list').innerHTML = html || `<tr><td colspan="4" class="text-center p-4 text-slate-400">আপনার কোনো অর্ডার পাওয়া যায়নি।</td></tr>`;
+        document.getElementById('profile-total-spent').innerText = totalSpent + " TK";
+        document.getElementById('header-spent-val').innerText = totalSpent;
+      });
+    }
+
+    // Modal Handling (Multi-step)
+    window.openOrderModal = (name, price, type) => {
+      selectedItem = { name, price, type };
+      document.getElementById('modal-item-name').innerText = name;
+      document.getElementById('modal-item-price').innerText = price + " TK";
+
+      const ffFields = document.getElementById('fields-ff');
+      const efFields = document.getElementById('fields-ef');
+
+      if (type === 'FreeFire') {
+        ffFields.classList.remove('hidden');
+        efFields.classList.add('hidden');
+      } else if (type === 'eFootball') {
+        ffFields.classList.add('hidden');
+        efFields.classList.remove('hidden');
+      } else {
+        ffFields.classList.add('hidden');
+        efFields.classList.add('hidden');
+      }
+
+      document.getElementById('modal-step-1').classList.remove('hidden');
+      document.getElementById('modal-step-2').classList.add('hidden');
+      document.getElementById('modal-step-3').classList.add('hidden');
+      document.getElementById('order-modal').classList.remove('hidden');
+    };
+
+    let selectedPaymentMethod = '';
+    const ADMIN_WHATSAPP = '8801576502490';
+    const BKASH_NUMBER = '01309735129';
+
+    window.nextModalStep = () => {
+      if (selectedItem.type === 'FreeFire') {
+        const uid = document.getElementById('order-game-uid').value;
+        if (!uid) return alert("অনুগ্রহ করে আপনার Player UID দিন!");
+      } else if (selectedItem.type === 'eFootball') {
+        const accId = document.getElementById('order-acc-id').value;
+        const pass = document.getElementById('order-acc-pass').value;
+        const backup = document.getElementById('order-acc-backup').value;
+        const wa = document.getElementById('order-acc-whatsapp').value;
+        if (!accId || !pass || !backup || !wa) return alert("অনুগ্রহ করে সকল তথ্য প্রদান করুন!");
+      }
+
+      selectedPaymentMethod = '';
+      document.getElementById('payment-bkash').classList.remove('border-pink-500', 'ring-2', 'ring-pink-200');
+      document.getElementById('modal-step-1').classList.add('hidden');
+      document.getElementById('modal-step-2').classList.remove('hidden');
+    };
+
+    window.selectPaymentMethod = (method) => {
+      selectedPaymentMethod = method;
+      document.getElementById('payment-bkash').classList.remove('border-pink-500', 'ring-2', 'ring-pink-200');
+      document.getElementById('payment-bkash').classList.add('border-pink-500', 'ring-2', 'ring-pink-200');
+    };
+
+    window.goToPaymentDetails = () => {
+      if (!selectedPaymentMethod) return alert("অনুগ্রহ করে bKash Payment নির্বাচন করুন!");
+
+      document.getElementById('payment-amount').innerText = selectedItem.price + " TK";
+      document.getElementById('instruction-number').innerText = BKASH_NUMBER;
+      document.getElementById('payment-number').innerText = BKASH_NUMBER;
+      document.getElementById('selected-payment-name').innerText = 'bKash Payment';
+      document.getElementById('selected-payment-icon').innerHTML = '<span class="text-3xl font-extrabold text-pink-600">bK</span>';
+
+      document.getElementById('modal-step-2').classList.add('hidden');
+      document.getElementById('modal-step-3').classList.remove('hidden');
+    };
+
+    window.prevModalStep = () => {
+      document.getElementById('modal-step-2').classList.add('hidden');
+      document.getElementById('modal-step-1').classList.remove('hidden');
+    };
+
+    window.paymentDetailsBack = () => {
+      document.getElementById('modal-step-3').classList.add('hidden');
+      document.getElementById('modal-step-2').classList.remove('hidden');
+    };
+
+    window.copyPaymentNumber = async () => {
+      const number = document.getElementById('payment-number').innerText.trim();
+      try {
+        await navigator.clipboard.writeText(number);
+        alert("Payment number কপি হয়েছে!");
+      } catch (err) {
+        alert("নম্বরটি কপি করা যায়নি। নম্বরটি select করে কপি করুন।");
+      }
+    };
+
+    window.closeModal = () => {
+      document.getElementById('order-modal').classList.add('hidden');
+      document.getElementById('form-submit-order').reset();
+      selectedPaymentMethod = '';
+      document.getElementById('payment-bkash').classList.remove('border-pink-500', 'ring-2', 'ring-pink-200');
+      document.getElementById('modal-step-1').classList.remove('hidden');
+      document.getElementById('modal-step-2').classList.add('hidden');
+      document.getElementById('modal-step-3').classList.add('hidden');
+    };
+
+    // Dynamic label for eFootball account
+    document.getElementById('order-acc-type').addEventListener('change', (e) => {
+      const val = e.target.value;
+      const label = document.getElementById('label-acc-id');
+      if (val === 'Gmail') label.innerText = "জিমেইল এড্রেস (Gmail Address)";
+      else if (val === 'Konami ID') label.innerText = "কোনামি আইডি / ইমেইল (Konami ID/Email)";
+      else if (val === 'Facebook') label.innerText = "ফেসবুক ইমেইল / নম্বর (FB Email/Number)";
+    });
+
+    // WhatsApp order notification
+    function openWhatsAppOrderNotification(orderData) {
+      const message =
+        "নতুন অর্ডার এসেছে%0A%0A" +
+        "🎮 Game: " + encodeURIComponent(orderData.gameType) + "%0A" +
+        "📦 Package: " + encodeURIComponent(orderData.itemName) + "%0A" +
+        "💰 Amount: " + encodeURIComponent(orderData.price + " TK") + "%0A" +
+        "💳 Payment: " + encodeURIComponent(orderData.paymentMethod || "N/A") + "%0A" +
+        "🔑 TrxID: " + encodeURIComponent(orderData.trxId) + "%0A" +
+        "👤 Customer: " + encodeURIComponent(orderData.userEmail);
+
+      if (orderData.gameType === 'FreeFire') {
+        message += "%0A🆔 UID: " + encodeURIComponent(orderData.gameUid || "N/A");
+      } else if (orderData.gameType === 'eFootball') {
+        message += "%0A📱 Customer WhatsApp: " + encodeURIComponent(orderData.whatsapp || "N/A");
+      }
+
+      // Opens WhatsApp with the notification pre-filled.
+      // A browser cannot silently send a WhatsApp message without WhatsApp Business/API backend.
+      window.open("https://wa.me/" + ADMIN_WHATSAPP + "?text=" + message, "_blank");
+    }
+
+    // Submit Order
+    document.getElementById('form-submit-order').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const trxId = document.getElementById('order-trx-id').value;
+      const btn = document.getElementById('btn-submit-order');
+
+      if (!trxId) return alert("bKash/Nagad TrxID সঠিকভাবে দিন!");
+
+      btn.disabled = true;
+      btn.innerText = "প্রসেস হচ্ছে...";
+
+      const orderData = {
+        itemName: selectedItem.name,
+        price: selectedItem.price,
+        gameType: selectedItem.type,
+        userEmail: currentUser.email,
+        trxId: trxId,
+        paymentMethod: selectedPaymentMethod,
+        status: 'Pending',
+        date: new Date().toLocaleString('bn-BD'),
+        createdAt: serverTimestamp()
+      };
+
+      if (selectedItem.type === 'FreeFire') {
+        orderData.gameUid = document.getElementById('order-game-uid').value;
+      } else if (selectedItem.type === 'eFootball') {
+        orderData.accountType = document.getElementById('order-acc-type').value;
+        orderData.accountId = document.getElementById('order-acc-id').value;
+        orderData.password = document.getElementById('order-acc-pass').value;
+        orderData.backupCode = document.getElementById('order-acc-backup').value;
+        orderData.whatsapp = document.getElementById('order-acc-whatsapp').value;
+      }
+
+      try {
+        await addDoc(collection(db, "orders"), orderData);
+        openWhatsAppOrderNotification(orderData);
+        alert("আপনার অর্ডারটি সফলভাবে জমা দেওয়া হয়েছে!");
+        closeModal();
+      } catch (err) {
+        alert("অর্ডার জমা দিতে ত্রুটি: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "অর্ডার কনফার্ম করুন";
+      }
+    });
+  </script>
+</body>
+</html>
+
