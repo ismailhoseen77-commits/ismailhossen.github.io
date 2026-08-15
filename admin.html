@@ -17,7 +17,7 @@
     <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex justify-between items-center shadow-lg">
       <div>
         <h1 class="font-bold text-lg text-orange-500">এডমিন ড্যাশবোর্ড</h1>
-        <p class="text-[11px] text-slate-400">MIHADX PRO BD</p>
+        <p class="text-[11px] text-slate-400">MIHADX PRO BD Control Panel</p>
       </div>
       <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-xl font-bold transition-all">
         লগআউট
@@ -120,15 +120,19 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // Security: Only allow login with your exact admin Google/Firebase email
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "login.html";
+      } else {
+        // লোড অর্ডার্স
+        loadOrders();
       }
     });
 
     window.logout = () => signOut(auth).then(() => window.location.href = "login.html");
 
-    // Load Orders with Complete and Cancel Options
+    // Load Orders with Complete & Cancel Actions
     window.loadOrders = () => {
       onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snapshot) => {
         let html = '';
@@ -147,7 +151,7 @@
           if (data.gameType === 'FreeFire') {
             infoText = `UID: ${data.gameUid || 'N/A'}`;
           } else if (data.gameType === 'eFootball') {
-            infoText = `${data.accountType || ''} | ${data.accountId || ''} (Pass: ${data.password || ''})`;
+            infoText = `${data.accountType || ''} | ID: ${data.accountId || ''} | Pass: ${data.password || ''} | WA: ${data.whatsapp || ''}`;
           } else {
             infoText = `ইউজার: ${data.userEmail || ''}`;
           }
@@ -157,7 +161,7 @@
               <td class="p-2">
                 <div class="font-bold text-orange-400 text-xs">${data.trxId || 'No TrxID'}</div>
                 <div class="text-[10px] text-slate-300 font-medium">${data.itemName} (${data.price} TK)</div>
-                <div class="text-[9px] text-slate-400 truncate max-w-[140px]">${infoText}</div>
+                <div class="text-[9px] text-slate-400 truncate max-w-[140px]" title="${infoText}">${infoText}</div>
               </td>
               <td class="p-2">${statusBadge}</td>
               <td class="p-2 text-center space-y-1">
@@ -170,21 +174,18 @@
       });
     };
 
-    // Update Status Action (Complete or Cancel)
+    // Update Order Status (Complete/Cancel)
     window.updateOrderStatus = async (orderId, status) => {
-      const confirmMsg = status === 'Cancelled' ? 'আপনি কি সত্যিই অর্ডারটি বাতিল করতে চান?' : 'অর্ডারটি কমপ্লিট হিসেবে মার্ক করতে চান?';
+      const confirmMsg = status === 'Cancelled' ? 'আপনি কি সত্যিই এই অর্ডারটি বাতিল করতে চান?' : 'অর্ডারটি কমপ্লিট হিসেবে মার্ক করতে চান?';
       if (!confirm(confirmMsg)) return;
 
       try {
         await updateDoc(doc(db, "orders", orderId), { status: status });
-        alert(`অর্ডার স্ট্যাটাস '${status}' সফলভাবে আপডেট হয়েছে!`);
+        alert(`অর্ডার স্ট্যাটাস '${status}' আপডেট হয়েছে!`);
       } catch (err) {
-        alert("স্ট্যাটাস আপডেট করতে সমস্যা: " + err.message);
+        alert("স্ট্যাটাস আপডেট করতে ত্রুটি: " + err.message);
       }
     };
-
-    // Initial Load
-    loadOrders();
 
     // Add FF Package
     document.getElementById('form-add-ff').addEventListener('submit', async (e) => {
@@ -232,3 +233,4 @@
   </script>
 </body>
 </html>
+
