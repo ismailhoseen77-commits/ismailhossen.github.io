@@ -11,7 +11,7 @@
     body { font-family: 'Hind Siliguri', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800 pb-20">
+<body class="bg-slate-100 min-h-screen text-slate-800 pb-24">
 
   <!-- ================= 1. AUTH / LOGIN & REGISTER SCREEN ================= -->
   <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 text-white p-4">
@@ -90,104 +90,100 @@
     <!-- ================= 2. MAIN APP CONTENT ================= -->
   <div id="main-app" class="hidden">
     
-    <!-- Header / Navbar -->
-    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
-      <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-orange-500 flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
-          <i class="fa-solid fa-gamepad"></i> MIHADX PRO BD
-        </h1>
+    <!-- Top Header (Clean Modern Style) -->
+    <header class="bg-white text-slate-800 shadow-sm border-b sticky top-0 z-40">
+      <div class="max-w-md mx-auto px-4 py-2.5 flex justify-between items-center">
+        <!-- Logo Left -->
+        <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
+          <div class="w-9 h-9 bg-orange-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow">
+            <i class="fa-solid fa-gamepad"></i>
+          </div>
+          <span class="font-extrabold text-slate-900 text-base tracking-wide">MIHADX PRO BD</span>
+        </div>
         
-        <!-- Navigation Buttons -->
+        <!-- Right Info / Logout -->
         <div class="flex items-center gap-2">
-          <button onclick="showSection('home')" class="px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800">
-            <i class="fa-solid fa-house mr-1"></i> হোম
-          </button>
-          <button onclick="showSection('orders')" class="px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800">
-            <i class="fa-solid fa-box-archive mr-1"></i> মাই অর্ডার
-          </button>
-          <button onclick="showSection('profile')" class="px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800 text-orange-400">
-            <i class="fa-solid fa-user-gear mr-1"></i> প্রোফাইল
-          </button>
-          <button onclick="logout()" class="bg-red-600 text-white text-xs px-3 py-1.5 rounded-xl font-bold hover:bg-red-700 transition-all">
-            লগআউট
+          <span class="bg-orange-50 text-orange-600 border border-orange-200 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+            <i class="fa-solid fa-wallet"></i> <span id="header-spent-val">0</span> ৳
+          </span>
+          <button onclick="logout()" class="w-8 h-8 bg-slate-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center text-sm transition-all" title="লগআউট">
+            <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
       </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 mt-6">
+    <main class="max-w-md mx-auto px-4 mt-4">
 
       <!-- ============ TAB 1: HOME SECTION ============ -->
-      <div id="section-home" class="space-y-8">
+      <div id="section-home" class="space-y-6">
         
         <!-- Hero Banner -->
-        <div class="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-6 text-white shadow-lg flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-5 text-white shadow-lg flex flex-col justify-between items-start gap-3">
           <div>
-            <h2 class="text-2xl md:text-3xl font-bold mb-2">স্বাগতম MIHADX PRO BD তে!</h2>
-            <p class="text-sm text-orange-100">ইনস্ট্যান্ট ফ্রি ফায়ার, ই-ফুটবল টপ-আপ এবং আকর্ষণীয় প্রোডাক্ট কিনুন ১০০% নিরাপত্তায়।</p>
+            <h2 class="text-xl font-bold mb-1">স্বাগতম MIHADX PRO BD তে!</h2>
+            <p class="text-xs text-orange-100">ইনস্ট্যান্ট ফ্রি ফায়ার, ই-ফুটবল টপ-আপ এবং আকর্ষণীয় প্রোডাক্ট কিনুন ১০০% নিরাপত্তায়।</p>
           </div>
-          <a href="admin.html" class="bg-white text-orange-600 font-bold px-4 py-2.5 rounded-xl text-xs shadow hover:bg-orange-50 transition-all whitespace-nowrap">
+          <a href="admin.html" class="bg-white text-orange-600 font-bold px-4 py-2 rounded-xl text-xs shadow hover:bg-orange-50 transition-all self-end">
             <i class="fa-solid fa-user-shield mr-1"></i> এডমিন প্যানেল
           </a>
         </div>
 
         <!-- 1. FREE FIRE SECTION (2 Columns) -->
-        <section class="space-y-4">
-          <h2 class="text-xl font-bold text-amber-600 flex items-center gap-2">
+        <section class="space-y-3">
+          <h2 class="text-base font-bold text-amber-600 flex items-center gap-2">
             <i class="fa-solid fa-fire text-amber-500"></i> ফ্রি ফায়ার টপ-আপ (UID)
           </h2>
-          <!-- 2 Columns in Mobile: grid-cols-2 -->
-          <div id="ff-packages" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            <p class="col-span-full text-center text-slate-400 py-6">কোনো ফ্রি ফায়ার প্যাকেজ পাওয়া যায়নি</p>
+          <div id="ff-packages" class="grid grid-cols-2 gap-3">
+            <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ফ্রি ফায়ার প্যাকেজ নেই</p>
           </div>
         </section>
 
         <!-- 2. E-FOOTBALL SECTION (2 Columns) -->
-        <section class="space-y-4">
-          <h2 class="text-xl font-bold text-blue-600 flex items-center gap-2">
+        <section class="space-y-3">
+          <h2 class="text-base font-bold text-blue-600 flex items-center gap-2">
             <i class="fa-solid fa-futbol text-blue-500"></i> ই-ফুটবল কয়েন (In-Game Account)
           </h2>
-          <!-- 2 Columns in Mobile: grid-cols-2 -->
-          <div id="ef-packages" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            <p class="col-span-full text-center text-slate-400 py-6">কোনো ই-ফুটবল প্যাকেজ পাওয়া যায়নি</p>
+          <div id="ef-packages" class="grid grid-cols-2 gap-3">
+            <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ই-ফুটবল প্যাকেজ নেই</p>
           </div>
         </section>
 
         <!-- 3. E-COMMERCE SECTION (2 Columns) -->
-        <section class="space-y-4">
-          <h2 class="text-xl font-bold text-emerald-600 flex items-center gap-2">
+        <section class="space-y-3">
+          <h2 class="text-base font-bold text-emerald-600 flex items-center gap-2">
             <i class="fa-solid fa-bag-shopping text-emerald-500"></i> ই-কমার্স শপ (শার্ট ও প্যান্ট)
           </h2>
-          <div id="ecommerce-products" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <p class="col-span-full text-center text-slate-400 py-6">কোনো প্রোডাক্ট পাওয়া যায়নি</p>
+          <div id="ecommerce-products" class="grid grid-cols-2 gap-3">
+            <p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো প্রোডাক্ট নেই</p>
           </div>
         </section>
 
         <!-- 4. COMPUTER SERVICES SECTION -->
-        <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4">
-          <h2 class="text-xl font-bold text-indigo-600 flex items-center gap-2">
+        <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 space-y-3">
+          <h2 class="text-base font-bold text-indigo-600 flex items-center gap-2">
             <i class="fa-solid fa-desktop text-indigo-500"></i> আমাদের কম্পিউটার সেবাসমূহ
           </h2>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <i class="fa-solid fa-print text-2xl text-indigo-500 mb-2"></i>
-              <h3 class="font-bold text-sm">কালার ফটো প্রিন্ট</h3>
-              <p class="text-xs text-slate-500">এইচডি কোয়ালিটি পিকচার প্রিন্টিং</p>
+          <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+              <i class="fa-solid fa-print text-xl text-indigo-500 mb-1"></i>
+              <h3 class="font-bold text-xs">কালার ফটো প্রিন্ট</h3>
+              <p class="text-[10px] text-slate-500">এইচডি কোয়ালিটি পিকচার</p>
             </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <i class="fa-solid fa-file-pen text-2xl text-indigo-500 mb-2"></i>
-              <h3 class="font-bold text-sm">অনলাইন আবেদন</h3>
-              <p class="text-xs text-slate-500">চাকরি ও ভর্তি ফরম পূরণ</p>
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+              <i class="fa-solid fa-file-pen text-xl text-indigo-500 mb-1"></i>
+              <h3 class="font-bold text-xs">অনলাইন আবেদন</h3>
+              <p class="text-[10px] text-slate-500">চাকরি ও ভর্তি ফরম</p>
             </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <i class="fa-solid fa-copy text-2xl text-indigo-500 mb-2"></i>
-              <h3 class="font-bold text-sm">ফটোকপি ও টাইপিং</h3>
-              <p class="text-xs text-slate-500">বাংলা ও ইংরেজি টাইপিং</p>
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+              <i class="fa-solid fa-copy text-xl text-indigo-500 mb-1"></i>
+              <h3 class="font-bold text-xs">ফটোকপি ও টাইপিং</h3>
+              <p class="text-[10px] text-slate-500">বাংলা ও ইংরেজি</p>
             </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              <i class="fa-solid fa-passport text-2xl text-indigo-500 mb-2"></i>
-              <h3 class="font-bold text-sm">পাসপোর্ট সাইজ ছবি</h3>
-              <p class="text-xs text-slate-500">ইনস্ট্যান্ট ব্যাকগ্রাউন্ড চেঞ্জ</p>
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+              <i class="fa-solid fa-passport text-xl text-indigo-500 mb-1"></i>
+              <h3 class="font-bold text-xs">পাসপোর্ট সাইজ ছবি</h3>
+              <p class="text-[10px] text-slate-500">ইনস্ট্যান্ট চেঞ্জ</p>
             </div>
           </div>
         </section>
@@ -196,52 +192,77 @@
 
       <!-- ============ TAB 2: MY ORDERS SECTION ============ -->
       <div id="section-orders" class="space-y-4 hidden">
-        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-clock-rotate-left text-orange-500"></i> আপনার পূর্ববর্তী সকল অর্ডারসমূহ
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left text-orange-500"></i> আপনার সকল অর্ডারসমূহ
         </h2>
         
-        <div class="bg-white p-4 rounded-2xl shadow overflow-x-auto">
+        <div class="bg-white p-3 rounded-2xl shadow-sm overflow-x-auto border border-slate-200">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="border-b bg-slate-50 text-xs text-slate-500">
-                <th class="p-3">তারিখ</th>
-                <th class="p-3">আইটেমের নাম</th>
-                <th class="p-3">মূল্য</th>
-                <th class="p-3">TrxID</th>
-                <th class="p-3">স্ট্যাটাস</th>
+              <tr class="border-b bg-slate-50 text-[11px] text-slate-500">
+                <th class="p-2">তারিখ</th>
+                <th class="p-2">আইটেম</th>
+                <th class="p-2">মূল্য</th>
+                <th class="p-2">স্ট্যাটাস</th>
               </tr>
             </thead>
-            <tbody id="user-orders-list" class="text-sm">
-              <tr><td colspan="5" class="text-center p-4 text-slate-400">লোড হচ্ছে...</td></tr>
+            <tbody id="user-orders-list" class="text-xs">
+              <tr><td colspan="4" class="text-center p-4 text-slate-400">লোড হচ্ছে...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <!-- ============ TAB 3: USER PROFILE SECTION ============ -->
-      <div id="section-profile" class="max-w-lg mx-auto space-y-6 hidden">
-        <div class="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center space-y-4">
-          <div class="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-3xl font-bold mx-auto" id="profile-avatar">
+      <div id="section-profile" class="space-y-4 hidden">
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 text-center space-y-4">
+          <div class="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-3xl font-bold mx-auto shadow-inner" id="profile-avatar">
             U
           </div>
           <div>
-            <h2 id="profile-name" class="text-xl font-bold text-slate-800">User Name</h2>
+            <h2 id="profile-name" class="text-lg font-bold text-slate-800">User Name</h2>
             <p id="profile-email" class="text-xs text-slate-500">user@gmail.com</p>
           </div>
 
           <!-- Total Spent Stats Box -->
-          <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-1">
+          <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-1 shadow-md">
             <p class="text-xs text-slate-400">আপনার মোট লেনদেনের পরিমাণ (Total Spent)</p>
             <h3 id="profile-total-spent" class="text-2xl font-extrabold text-orange-400">0 TK</h3>
           </div>
 
-          <button onclick="logout()" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition-all">
+          <button onclick="logout()" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-xs hover:bg-red-700 transition-all shadow">
             <i class="fa-solid fa-right-from-bracket mr-1"></i> লগআউট করুন
           </button>
         </div>
       </div>
 
     </main>
+
+    <!-- ================= BOTTOM NAVIGATION BAR (Fixed at bottom) ================= -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-40 py-2">
+      <div class="max-w-md mx-auto flex justify-around items-center px-4">
+        
+        <!-- Tab 1: Home -->
+        <button id="nav-btn-home" onclick="showSection('home')" class="flex flex-col items-center gap-1 text-orange-600 transition-all">
+          <i class="fa-solid fa-house text-lg"></i>
+          <span class="text-[11px] font-bold">হোম</span>
+        </button>
+
+        <!-- Tab 2: My Orders -->
+        <button id="nav-btn-orders" onclick="showSection('orders')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all">
+          <i class="fa-solid fa-bag-shopping text-lg"></i>
+          <span class="text-[11px] font-bold">মাই অর্ডার</span>
+        </button>
+
+        <!-- Tab 3: Profile -->
+        <button id="nav-btn-profile" onclick="showSection('profile')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all">
+          <i class="fa-solid fa-user text-lg"></i>
+          <span class="text-[11px] font-bold">প্রোফাইল</span>
+        </button>
+
+      </div>
+    </nav>
+
   </div>
 
 
@@ -252,47 +273,47 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <h3 id="modal-title" class="text-lg font-bold text-slate-800">অর্ডার ফরম</h3>
-      <div class="bg-orange-50 p-3 rounded-xl flex justify-between items-center text-sm font-bold border border-orange-100">
+      <h3 id="modal-title" class="text-base font-bold text-slate-800">অর্ডার ফরম</h3>
+      <div class="bg-orange-50 p-3 rounded-xl flex justify-between items-center text-xs font-bold border border-orange-100">
         <span id="modal-item-name" class="text-slate-700">Item Name</span>
-        <span id="modal-item-price" class="text-orange-600 font-extrabold">0 TK</span>
+        <span id="modal-item-price" class="text-orange-600 font-extrabold text-sm">0 TK</span>
       </div>
 
       <form id="form-submit-order" class="space-y-3">
-        <!-- Dynamic Inputs based on game category -->
+        <!-- Dynamic Inputs -->
         <div id="fields-ff">
           <label class="block text-xs font-bold text-slate-500 mb-1">ফ্রি ফায়ার Player UID</label>
-          <input type="number" id="order-game-uid" placeholder="যেমন: 123456789" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-orange-500">
+          <input type="number" id="order-game-uid" placeholder="যেমন: 123456789" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
         </div>
 
         <div id="fields-ef" class="space-y-3 hidden">
           <div>
             <label class="block text-xs font-bold text-slate-500 mb-1">একাউন্ট টাইপ</label>
-            <select id="order-acc-type" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-orange-500">
+            <select id="order-acc-type" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
               <option value="Konami ID">Konami ID</option>
               <option value="Google Play">Google Play</option>
             </select>
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-500 mb-1">গেম ইমেইল / ID</label>
-            <input type="text" id="order-acc-id" placeholder="Account Email / Number" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-orange-500">
+            <input type="text" id="order-acc-id" placeholder="Account Email / Number" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-500 mb-1">গেম পাসওয়ার্ড</label>
-            <input type="text" id="order-acc-pass" placeholder="Password" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-orange-500">
+            <input type="text" id="order-acc-pass" placeholder="Password" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-500 mb-1">ব্যাকআপ কোড / WhatsApp নম্বর</label>
-            <input type="text" id="order-acc-backup" placeholder="Backup Code / Phone" class="w-full p-2.5 border rounded-xl text-sm focus:outline-none focus:border-orange-500">
+            <input type="text" id="order-acc-backup" placeholder="Backup Code / Phone" class="w-full p-2.5 border rounded-xl text-xs focus:outline-none focus:border-orange-500">
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-500 mb-1">বিকাশ / নগদ TrxID (পেমেন্ট প্রুফ)</label>
-          <input type="text" id="order-trx-id" placeholder="যেমন: BK12345678" class="w-full p-2.5 border rounded-xl text-sm font-mono focus:outline-none focus:border-orange-500" required>
+          <input type="text" id="order-trx-id" placeholder="যেমন: BK12345678" class="w-full p-2.5 border rounded-xl text-xs font-mono focus:outline-none focus:border-orange-500" required>
         </div>
 
-        <button type="submit" id="btn-submit-order" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-orange-700 transition-all">
+        <button type="submit" id="btn-submit-order" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-orange-700 transition-all">
           কনফার্ম অর্ডার করুন
         </button>
       </form>
@@ -399,15 +420,32 @@
       }
     });
 
-    // --- SECTION SWITCHER (HOME / ORDERS / PROFILE) ---
+    // --- DYNAMIC BOTTOM NAV SWITCHER (HOME / ORDERS / PROFILE) ---
     window.showSection = (sectionName) => {
       document.getElementById('section-home').classList.add('hidden');
       document.getElementById('section-orders').classList.add('hidden');
       document.getElementById('section-profile').classList.add('hidden');
 
-      if(sectionName === 'home') document.getElementById('section-home').classList.remove('hidden');
-      if(sectionName === 'orders') document.getElementById('section-orders').classList.remove('hidden');
-      if(sectionName === 'profile') document.getElementById('section-profile').classList.remove('hidden');
+      const navHome = document.getElementById('nav-btn-home');
+      const navOrders = document.getElementById('nav-btn-orders');
+      const navProfile = document.getElementById('nav-btn-profile');
+
+      navHome.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all";
+      navOrders.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all";
+      navProfile.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-orange-600 transition-all";
+
+      if(sectionName === 'home') {
+        document.getElementById('section-home').classList.remove('hidden');
+        navHome.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
+      if(sectionName === 'orders') {
+        document.getElementById('section-orders').classList.remove('hidden');
+        navOrders.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
+      if(sectionName === 'profile') {
+        document.getElementById('section-profile').classList.remove('hidden');
+        navProfile.className = "flex flex-col items-center gap-1 text-orange-600 transition-all font-bold";
+      }
     };
 
     // --- REALTIME PACKAGES (2 COLUMNS GRID) ---
@@ -418,13 +456,13 @@
         snapshot.forEach(docSnap => {
           const p = docSnap.data();
           html += `
-            <div onclick="openOrderModal('${p.name}', ${p.price}, 'FreeFire')" class="bg-white p-4 rounded-2xl shadow border border-slate-100 text-center cursor-pointer hover:border-amber-500 hover:scale-[1.02] transition-all">
-              <i class="fa-solid fa-gem text-amber-500 text-2xl mb-2"></i>
-              <h3 class="font-bold text-xs sm:text-sm text-slate-800">${p.name}</h3>
-              <p class="text-orange-600 font-extrabold text-sm mt-1">${p.price} TK</p>
+            <div onclick="openOrderModal('${p.name}', ${p.price}, 'FreeFire')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-center cursor-pointer hover:border-amber-500 hover:scale-[1.02] transition-all">
+              <i class="fa-solid fa-gem text-amber-500 text-xl mb-1"></i>
+              <h3 class="font-bold text-xs text-slate-800">${p.name}</h3>
+              <p class="text-orange-600 font-extrabold text-xs mt-1">${p.price} TK</p>
             </div>`;
         });
-        document.getElementById('ff-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4">কোনো ফ্রি ফায়ার প্যাকেজ নেই</p>';
+        document.getElementById('ff-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ফ্রি ফায়ার প্যাকেজ নেই</p>';
       });
 
       // eFootball Packages
@@ -433,13 +471,13 @@
         snapshot.forEach(docSnap => {
           const p = docSnap.data();
           html += `
-            <div onclick="openOrderModal('${p.name}', ${p.price}, 'eFootball')" class="bg-white p-4 rounded-2xl shadow border border-slate-100 text-center cursor-pointer hover:border-blue-500 hover:scale-[1.02] transition-all">
-              <i class="fa-solid fa-coins text-blue-500 text-2xl mb-2"></i>
-              <h3 class="font-bold text-xs sm:text-sm text-slate-800">${p.name}</h3>
-              <p class="text-blue-600 font-extrabold text-sm mt-1">${p.price} TK</p>
+            <div onclick="openOrderModal('${p.name}', ${p.price}, 'eFootball')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-center cursor-pointer hover:border-blue-500 hover:scale-[1.02] transition-all">
+              <i class="fa-solid fa-coins text-blue-500 text-xl mb-1"></i>
+              <h3 class="font-bold text-xs text-slate-800">${p.name}</h3>
+              <p class="text-blue-600 font-extrabold text-xs mt-1">${p.price} TK</p>
             </div>`;
         });
-        document.getElementById('ef-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4">কোনো ই-ফুটবল প্যাকেজ নেই</p>';
+        document.getElementById('ef-packages').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো ই-ফুটবল প্যাকেজ নেই</p>';
       });
 
       // E-Commerce Products
@@ -448,16 +486,16 @@
         snapshot.forEach(docSnap => {
           const p = docSnap.data();
           html += `
-            <div onclick="openOrderModal('${p.title}', ${p.price}, 'E-Commerce')" class="bg-white p-3 rounded-2xl shadow border border-slate-100 cursor-pointer hover:border-emerald-500 hover:scale-[1.02] transition-all flex flex-col justify-between">
-              <img src="${p.imageUrl}" class="w-full h-32 object-cover rounded-xl mb-2">
+            <div onclick="openOrderModal('${p.title}', ${p.price}, 'E-Commerce')" class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-200 cursor-pointer hover:border-emerald-500 hover:scale-[1.02] transition-all flex flex-col justify-between">
+              <img src="${p.imageUrl}" class="w-full h-28 object-cover rounded-xl mb-2">
               <div>
-                <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">${p.category}</span>
+                <span class="text-[9px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">${p.category}</span>
                 <h3 class="font-bold text-xs text-slate-800 mt-1 truncate">${p.title}</h3>
-                <p class="text-emerald-600 font-extrabold text-sm mt-1">${p.price} TK</p>
+                <p class="text-emerald-600 font-extrabold text-xs mt-1">${p.price} TK</p>
               </div>
             </div>`;
         });
-        document.getElementById('ecommerce-products').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4">কোনো প্রোডাক্ট নেই</p>';
+        document.getElementById('ecommerce-products').innerHTML = html || '<p class="col-span-full text-center text-slate-400 py-4 text-xs">কোনো প্রোডাক্ট নেই</p>';
       });
     }
 
@@ -474,20 +512,20 @@
 
           html += `
             <tr class="border-b hover:bg-slate-50">
-              <td class="p-3 text-xs text-slate-500">${data.date || 'N/A'}</td>
-              <td class="p-3 font-bold text-xs">${data.itemName}</td>
-              <td class="p-3 font-bold text-orange-600 text-xs">${data.price} TK</td>
-              <td class="p-3 font-mono text-xs">${data.trxId}</td>
-              <td class="p-3">
-                <span class="px-2 py-1 rounded-full text-[10px] font-bold ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+              <td class="p-2 text-[10px] text-slate-500">${data.date || 'N/A'}</td>
+              <td class="p-2 font-bold text-xs">${data.itemName}</td>
+              <td class="p-2 font-bold text-orange-600 text-xs">${data.price} TK</td>
+              <td class="p-2">
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${isCompleted ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
                   ${data.status || 'Pending'}
                 </span>
               </td>
             </tr>`;
         });
 
-        document.getElementById('user-orders-list').innerHTML = html || `<tr><td colspan="5" class="text-center p-4 text-slate-400">আপনার কোনো অর্ডার পাওয়া যায়নি।</td></tr>`;
+        document.getElementById('user-orders-list').innerHTML = html || `<tr><td colspan="4" class="text-center p-4 text-slate-400">আপনার কোনো অর্ডার পাওয়া যায়নি।</td></tr>`;
         document.getElementById('profile-total-spent').innerText = totalSpent + " TK";
+        document.getElementById('header-spent-val').innerText = totalSpent;
       });
     }
 
@@ -565,4 +603,3 @@
   </script>
 </body>
 </html>
-
