@@ -1,13 +1,17 @@
 :root { 
   --bg-color: #0b0e14; 
+  --card-bg: #121824;
   --accent-color: #ffc107; 
   --text-color: #ffffff; 
+  --text-muted: #94a3b8;
+  --border-color: #1e293b;
 }
 
+* { box-sizing: border-box; }
 body { 
   background-color: var(--bg-color); 
   color: var(--text-color); 
-  font-family: sans-serif; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   margin: 0; 
   padding: 0; 
 }
@@ -18,10 +22,14 @@ body {
   margin: auto; 
 }
 
+/* Professional Header & Navigation */
 .site-header { 
-  background: #121824; 
-  padding: 12px 0; 
-  border-bottom: 2px solid #ffc107; 
+  background: var(--card-bg); 
+  padding: 15px 0; 
+  border-bottom: 2px solid var(--accent-color); 
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 .nav-container { 
@@ -29,99 +37,185 @@ body {
   justify-content: space-between; 
   align-items: center; 
   flex-wrap: wrap; 
-  gap: 10px; 
+  gap: 15px; 
 }
 
 .logo { 
   color: var(--accent-color); 
-  font-size: 20px; 
-  font-weight: bold; 
+  font-size: 22px; 
+  font-weight: 800; 
   text-decoration: none; 
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav-menu { 
   display: flex; 
   align-items: center; 
   flex-wrap: wrap; 
-  gap: 12px; 
+  gap: 15px; 
 }
 
 .nav-menu a, .nav-menu button { 
-  color: #fff; 
+  color: var(--text-color); 
   text-decoration: none; 
   font-size: 14px; 
-  background: transparent; 
-  border: none; 
-  cursor: pointer; 
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+  color: var(--accent-color);
 }
 
 .btn-login { 
-  background: #ffc107; 
+  background: var(--accent-color); 
   color: #000 !important; 
-  padding: 6px 12px; 
-  border-radius: 4px; 
+  padding: 8px 16px; 
+  border-radius: 6px; 
   font-weight: bold; 
+  border: none;
+  cursor: pointer;
 }
 
+/* Notice Banner */
 .notice-bar { 
-  background: #1e293b; 
-  padding: 10px; 
+  background: var(--card-bg); 
+  padding: 12px 18px; 
   margin-top: 20px; 
-  border-left: 4px solid #ffc107; 
-  font-size: 14px; 
+  border-left: 4px solid var(--accent-color); 
+  border-radius: 4px;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
+/* Sections & Cards Grid */
 .section { 
-  padding: 30px 0; 
+  padding: 40px 0; 
+}
+
+.section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
 }
 
 .game-selector { 
   display: flex; 
-  gap: 10px; 
-  margin-top: 15px; 
+  gap: 12px; 
+  margin-bottom: 20px; 
 }
 
 .game-btn { 
-  background: #1e293b; 
-  color: #fff; 
-  border: 1px solid #334155; 
-  padding: 8px 16px; 
-  border-radius: 4px; 
+  background: var(--card-bg); 
+  color: var(--text-color); 
+  border: 1px solid var(--border-color); 
+  padding: 10px 20px; 
+  border-radius: 6px; 
   cursor: pointer; 
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
-.game-btn.active { 
-  background: #ffc107; 
+.game-btn.active, .game-btn:hover { 
+  background: var(--accent-color); 
   color: #000; 
-  font-weight: bold; 
+  border-color: var(--accent-color);
 }
 
+.packages-grid, .products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  border-color: var(--accent-color);
+}
+
+.card h3 {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.card p {
+  color: var(--accent-color);
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.btn-buy {
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* States: Loading, Empty, Error */
+.state-box {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px dashed var(--border-color);
+}
+
+/* AI Chat Widget */
 #ai-chat-widget { 
   position: fixed; 
-  bottom: 20px; 
-  right: 20px; 
+  bottom: 25px; 
+  right: 25px; 
   z-index: 1000; 
 }
 
 #ai-toggle-btn { 
-  background: #ffc107; 
+  background: var(--accent-color); 
   border: none; 
-  padding: 12px 15px; 
+  width: 50px;
+  height: 50px;
   border-radius: 50%; 
   cursor: pointer; 
-  font-size: 18px; 
+  font-size: 20px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 #ai-chat-box { 
-  width: 280px; 
-  background: #1e293b; 
-  border: 1px solid #334155; 
+  width: 300px; 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-color); 
   border-radius: 8px; 
   position: absolute; 
-  bottom: 55px; 
+  bottom: 65px; 
   right: 0; 
   display: flex; 
   flex-direction: column; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
 #ai-chat-box.hidden { 
@@ -130,44 +224,68 @@ body {
 
 .ai-header { 
   background: #0f172a; 
-  padding: 10px; 
+  padding: 12px; 
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
+.ai-header h3 { margin: 0; font-size: 15px; }
+#ai-close { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; }
+
 #ai-messages { 
-  height: 180px; 
+  height: 200px; 
   overflow-y: auto; 
-  padding: 10px; 
+  padding: 12px; 
   font-size: 13px; 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
+.ai-msg, .user-msg {
+  padding: 8px 12px;
+  border-radius: 6px;
+  max-width: 85%;
+}
+.ai-msg { background: #1e293b; align-self: flex-start; }
+.user-msg { background: var(--accent-color); color: #000; align-self: flex-end; }
 
 .ai-input-area { 
   display: flex; 
-  border-top: 1px solid #334155; 
+  border-top: 1px solid var(--border-color); 
 }
 
 .ai-input-area input { 
   flex: 1; 
   background: transparent; 
   border: none; 
-  padding: 10px; 
+  padding: 12px; 
   color: #fff; 
   outline: none; 
 }
 
 .ai-input-area button { 
-  background: #ffc107; 
+  background: var(--accent-color); 
   border: none; 
-  padding: 10px 15px; 
+  padding: 0 15px; 
   cursor: pointer; 
 }
 
 .site-footer { 
   text-align: center; 
-  padding: 20px 0; 
+  padding: 25px 0; 
   font-size: 13px; 
-  color: #94a3b8; 
-  border-top: 1px solid #1e293b; 
+  color: var(--text-muted); 
+  border-top: 1px solid var(--border-color); 
+  background: var(--card-bg);
+  margin-top: 40px;
 }
+
+@media(max-width: 768px) {
+  .nav-container { flex-direction: column; align-items: flex-start; }
+  .nav-menu { width: 100%; justify-content: space-between; }
+}
+
