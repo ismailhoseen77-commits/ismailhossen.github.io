@@ -3,141 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - MIHADX PRO BD</title>
+  <title>Admin Control Panel - MIHADX PRO BD</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background: #0a0512; color: #f1f5f9; }
-    .glass-card { background: rgba(23, 15, 38, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); }
-    .admin-tab-btn { transition: all 0.25s ease-in-out; }
-    .admin-tab-active { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: #ffffff; shadow: 0 4px 12px rgba(124, 58, 237, 0.4); }
+    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0d0914; color: #f1f5f9; }
+    .glass-card { background: #161022; border: 1px solid #2d2244; }
   </style>
 </head>
-<body class="min-h-screen p-3 md:p-6 pb-24">
+<body class="min-h-screen p-4 pb-20 max-w-md mx-auto space-y-4">
 
-  <div class="max-w-md mx-auto space-y-4">
-
-    <!-- Dashboard Header -->
-    <div class="glass-card p-4 rounded-2xl flex justify-between items-center shadow-lg">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-purple-600/30 flex items-center justify-center text-purple-400 border border-purple-500/30">
-          <i class="fa-solid fa-user-shield text-lg"></i>
-        </div>
-        <div>
-          <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
-          <p id="admin-email-display" class="text-[10px] text-purple-400 font-mono">যাচাই করা হচ্ছে...</p>
-        </div>
+  <!-- Admin Header -->
+  <div class="glass-card rounded-2xl p-4 flex justify-between items-center shadow-lg">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-purple-900/60 text-purple-300 border border-purple-500/30 flex items-center justify-center font-bold text-xl">
+        <i class="fa-solid fa-user-shield"></i>
       </div>
-      <button onclick="logout()" class="bg-red-500/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 text-xs px-3 py-1.5 rounded-xl font-medium transition">
-        <i class="fa-solid fa-power-off"></i>
-      </button>
-    </div>
-
-    <!-- Navigation Tabs -->
-    <div class="glass-card p-1 rounded-2xl flex text-xs font-semibold text-purple-300">
-      <button onclick="switchTab('orders')" id="nav-orders" class="admin-tab-btn admin-tab-active flex-1 py-2.5 rounded-xl text-center">
-        <i class="fa-solid fa-bag-shopping mr-1"></i> অর্ডারসমূহ
-      </button>
-      <button onclick="switchTab('packages')" id="nav-packages" class="admin-tab-btn flex-1 py-2.5 rounded-xl text-center">
-        <i class="fa-solid fa-boxes-stacked mr-1"></i> আইটেম লিস্ট
-      </button>
-      <button onclick="switchTab('add')" id="nav-add" class="admin-tab-btn flex-1 py-2.5 rounded-xl text-center">
-        <i class="fa-solid fa-circle-plus mr-1"></i> নতুন এড
-      </button>
-    </div>
-
-    <!-- TAB 1: ORDERS MANAGEMENT -->
-    <div id="tab-orders" class="glass-card p-4 rounded-2xl space-y-3">
-      <div class="flex justify-between items-center border-b border-purple-800/40 pb-2">
-        <h2 class="font-bold text-xs text-purple-300 flex items-center gap-1.5">
-          <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> সাম্প্রতিক অর্ডারসমূহ
-        </h2>
-      </div>
-      <div id="admin-orders-list" class="space-y-2.5">
-        <p class="text-center p-4 text-xs text-purple-400">অর্ডার লোড হচ্ছে...</p>
+      <div>
+        <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
+        <p id="admin-email" class="text-[11px] text-purple-400 font-mono">Loading...</p>
       </div>
     </div>
+    <button onclick="logoutAdmin()" class="w-9 h-9 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-900/60 transition">
+      <i class="fa-solid fa-power-off text-sm"></i>
+    </button>
+  </div>
 
-    <!-- TAB 2: PACKAGES & PRODUCTS VIEW -->
-    <div id="tab-packages" class="space-y-4 hidden">
-      <!-- FF Packages List -->
-      <div class="glass-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-amber-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজ
-        </h2>
-        <div id="admin-ff-list" class="space-y-1.5"></div>
-      </div>
+  <!-- Navigation Tabs -->
+  <div class="grid grid-cols-3 gap-2 bg-[#120c1d] p-1.5 rounded-2xl border border-purple-900/40 text-xs font-bold">
+    <button onclick="showAdminTab('orders')" id="tab-orders" class="py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition">
+      <i class="fa-solid fa-shopping-bag"></i> অর্ডারসমূহ
+    </button>
+    <button onclick="showAdminTab('items')" id="tab-items" class="py-2 rounded-xl bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-md">
+      <i class="fa-solid fa-boxes-stacked"></i> আইটেম লিস্ট
+    </button>
+    <button onclick="showAdminTab('add')" id="tab-add" class="py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition">
+      <i class="fa-solid fa-circle-plus"></i> নতুন এড
+    </button>
+  </div>
 
-      <!-- EF Packages List -->
-      <div class="glass-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-blue-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজ
-        </h2>
-        <div id="admin-ef-list" class="space-y-1.5"></div>
-      </div>
-
-      <!-- E-Commerce Products List -->
-      <div class="glass-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-emerald-400 flex items-center gap-1.5">
-          <i class="fa-solid fa-cart-shopping"></i> ই-কমার্স প্রোডাক্ট
-        </h2>
-        <div id="admin-prod-list" class="grid grid-cols-2 gap-2"></div>
+  <!-- VIEW: ITEMS LIST -->
+  <div id="view-items-list" class="space-y-4">
+    
+    <!-- Free Fire List -->
+    <div class="space-y-2">
+      <h2 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজ
+      </h2>
+      <div id="ff-list-container" class="space-y-2">
+        <p class="text-xs text-slate-500 py-2 text-center">প্যাকেজ লোড হচ্ছে...</p>
       </div>
     </div>
 
-    <!-- TAB 3: ADD NEW DATA (NOTICE, PACKAGES & PRODUCTS) -->
-    <div id="tab-add" class="space-y-4 hidden">
-      
-      <!-- Notice Section -->
-      <form id="form-add-notice" class="glass-card p-4 rounded-2xl space-y-3">
-        <h2 class="font-bold text-xs text-purple-300 flex items-center gap-1.5">
-          <i class="fa-solid fa-bullhorn text-purple-400"></i> সাইট নোটিশ সেটিং
-        </h2>
-        <input type="text" id="notice-input" placeholder="নোটিশের টেক্সট লিখুন..." class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none focus:border-purple-500">
-        <div class="space-y-1">
-          <label class="text-[10px] text-purple-400">নোটিশ ইমেজ (ঐচ্ছিক):</label>
-          <input type="file" id="notice-img-input" accept="image/*" class="w-full text-xs text-purple-300">
-        </div>
-        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-xl text-xs font-bold text-white transition">নোটিশ সেভ করুন</button>
-      </form>
-
-      <!-- Add Free Fire -->
-      <form id="form-add-ff" class="glass-card p-4 rounded-2xl space-y-2.5">
-        <h2 class="font-bold text-xs text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ফ্রি ফায়ার প্যাকেজ এড</h2>
-        <input type="text" id="ff-name" placeholder="নাম (যেমন: 115 Diamond)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <input type="number" id="ff-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 py-2 rounded-xl text-xs font-bold text-white transition">+ এড করুন</button>
-      </form>
-
-      <!-- Add eFootball -->
-      <form id="form-add-ef" class="glass-card p-4 rounded-2xl space-y-2.5">
-        <h2 class="font-bold text-xs text-blue-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ই-ফুটবল প্যাকেজ এড</h2>
-        <input type="text" id="ef-name" placeholder="নাম (যেমন: 130 Coins)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <input type="number" id="ef-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-xl text-xs font-bold text-white transition">+ এড করুন</button>
-      </form>
-
-      <!-- Add Product -->
-      <form id="form-add-prod" class="glass-card p-4 rounded-2xl space-y-2.5">
-        <h2 class="font-bold text-xs text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ই-কমার্স প্রোডাক্ট এড</h2>
-        <input type="text" id="prod-title" placeholder="প্রোডাক্ট নাম" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <input type="number" id="prod-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
-        <textarea id="prod-desc" placeholder="বিবরণ (Description)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none"></textarea>
-        <div class="space-y-1">
-          <label class="text-[10px] text-purple-400">প্রোডাক্টের ছবি:</label>
-          <input type="file" id="prod-img" accept="image/*" class="w-full text-xs text-purple-300" required>
-        </div>
-        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2 rounded-xl text-xs font-bold text-white transition">+ আপলোড ও এড করুন</button>
-      </form>
+    <!-- eFootball List -->
+    <div class="space-y-2 pt-2">
+      <h2 class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজ
+      </h2>
+      <div id="ef-list-container" class="space-y-2">
+        <p class="text-xs text-slate-500 py-2 text-center">প্যাকেজ লোড হচ্ছে...</p>
+      </div>
     </div>
 
   </div>
 
-  <script type="module">
+  <!-- VIEW: ADD NEW ITEM -->
+  <div id="view-add-item" class="hidden glass-card p-4 rounded-2xl space-y-3 border border-purple-500/20">
+    <h2 class="text-xs font-bold text-purple-300 border-b border-purple-800/50 pb-2">নতুন প্যাকেজ যোগ করুন</h2>
+    
+    <div>
+      <label class="text-[11px] text-slate-400">ক্যাটাগরি সিলেক্ট করুন</label>
+      <select id="add-pkg-cat" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
+        <option value="ff">Free Fire</option>
+        <option value="ef">eFootball</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="text-[11px] text-slate-400">প্যাকেজের নাম</label>
+      <input type="text" id="add-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none focus:border-purple-500">
+    </div>
+
+    <div>
+      <label class="text-[11px] text-slate-400">দাম (টাকা)</label>
+      <input type="number" id="add-pkg-price" placeholder="যেমন: 75" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none focus:border-purple-500">
+    </div>
+
+    <button onclick="addNewPackage()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg shadow-purple-900/40">
+      প্যাকেজ সেভ করুন
+    </button>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="edit-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-xs p-4 rounded-2xl space-y-3 border border-purple-500/30">
+      <div class="flex justify-between items-center border-b border-purple-800/40 pb-2">
+        <h3 class="text-xs font-bold text-purple-300">প্যাকেজ এডিট করুন</h3>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <input type="hidden" id="edit-doc-id">
+      <input type="hidden" id="edit-type">
+
+      <div>
+        <label class="text-[11px] text-slate-400">প্যাকেজের নাম</label>
+        <input type="text" id="edit-pkg-name" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
+      </div>
+
+      <div>
+        <label class="text-[11px] text-slate-400">দাম (টাকা)</label>
+        <input type="number" id="edit-pkg-price" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
+      </div>
+
+      <button onclick="saveEditPackage()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-xl text-xs transition shadow-md">
+        আপডেট করুন
+      </button>
+    </div>
+          </div>
+    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -152,172 +139,161 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const ADMIN_EMAIL = "ismailhoseen77@gmail.com";
-
     onAuthStateChanged(auth, (user) => {
-      if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        alert("অ্যাক্সেস অনুমোদিত নয়!");
-        window.location.href = "login.html";
+      if (user) {
+        document.getElementById('admin-email').innerText = user.email;
       } else {
-        document.getElementById('admin-email-display').innerText = user.email;
-        loadOrders();
-        loadExistingItems();
+        window.location.href = "login.html";
       }
     });
 
-    window.logout = () => signOut(auth).then(() => window.location.href = "login.html");
-
-    // Smooth Tab Navigation
-    window.switchTab = (tab) => {
-      ['orders', 'packages', 'add'].forEach(t => {
-        document.getElementById('tab-' + t).classList.add('hidden');
-        document.getElementById('nav-' + t).classList.remove('admin-tab-active');
-      });
-      document.getElementById('tab-' + tab).classList.remove('hidden');
-      document.getElementById('nav-' + tab).classList.add('admin-tab-active');
+    window.logoutAdmin = () => {
+      signOut(auth).then(() => window.location.href = "login.html");
     };
 
-    // Save Live Notice Text & Image
-    document.getElementById('form-add-notice').onsubmit = async (e) => {
-      e.preventDefault();
-      const text = document.getElementById('notice-input').value;
-      const fileInput = document.getElementById('notice-img-input');
-      
-      let noticeData = { text: text || '' };
+    // Tab switcher
+    window.showAdminTab = (tab) => {
+      ['orders', 'items', 'add'].forEach(t => {
+        const btn = document.getElementById('tab-' + t);
+        if(t === tab) {
+          btn.className = "py-2 rounded-xl bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-md";
+        } else {
+          btn.className = "py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition";
+        }
+      });
 
-      if (fileInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = async (ev) => {
-          noticeData.imageUrl = ev.target.result;
-          await setDoc(doc(db, "settings", "notice"), noticeData);
-          alert('নোটিশ ও ইমেজ সফলভাবে সেভ হয়েছে!');
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        await setDoc(doc(db, "settings", "notice"), noticeData);
-        alert('নোটিশ টেক্সট আপডেট হয়েছে!');
+      document.getElementById('view-items-list').classList.toggle('hidden', tab !== 'items');
+      document.getElementById('view-add-item').classList.toggle('hidden', tab !== 'add');
+    };
+
+    // Load Items List with Edit & Order Control Options
+    function loadPackages(type, containerId) {
+      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
+      onSnapshot(collection(db, colName), (snap) => {
+        let items = [];
+        snap.forEach(d => {
+          items.push({ id: d.id, ...d.data() });
+        });
+
+        // Order Sorting (by order field or default array)
+        items.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        let html = '';
+        items.forEach((item, index) => {
+          html += `
+            <div class="glass-card p-3 rounded-2xl flex items-center justify-between border border-purple-900/30">
+              <div class="flex items-center gap-2">
+                <!-- Reorder Up/Down Buttons -->
+                <div class="flex flex-col gap-0.5 text-[10px]">
+                  <button onclick="moveItem('${type}', '${item.id}', ${index}, -1, ${items.length})" class="w-5 h-4 bg-purple-900/60 text-purple-300 rounded flex items-center justify-center hover:bg-purple-700"><i class="fa-solid fa-chevron-up"></i></button>
+                  <button onclick="moveItem('${type}', '${item.id}', ${index}, 1, ${items.length})" class="w-5 h-4 bg-purple-900/60 text-purple-300 rounded flex items-center justify-center hover:bg-purple-700"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+                <div>
+                  <p class="font-bold text-xs text-slate-200">${item.name}</p>
+                  <p class="text-[11px] font-bold text-amber-400">${item.price} TK</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <!-- Edit Button -->
+                <button onclick="openEditModal('${type}', '${item.id}', '${item.name}', '${item.price}')" class="w-8 h-8 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-400 flex items-center justify-center hover:bg-amber-900/60 transition">
+                  <i class="fa-solid fa-pen-to-square text-xs"></i>
+                </button>
+                <!-- Delete Button -->
+                <button onclick="deletePackage('${type}', '${item.id}')" class="w-8 h-8 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-900/60 transition">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        document.getElementById(containerId).innerHTML = html || '<p class="text-xs text-slate-500 text-center py-2">কোনো প্যাকেজ নেই</p>';
+      });
+    }
+
+    // Move Item Up / Down (Sort adjustment)
+    window.moveItem = async (type, id, currentIndex, direction, totalCount) => {
+      const newIndex = currentIndex + direction;
+      if (newIndex < 0 || newIndex >= totalCount) return;
+
+      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
+      await updateDoc(doc(db, colName, id), {
+        order: newIndex
+      });
+    };
+
+    // Open Edit Modal
+    window.openEditModal = (type, id, name, price) => {
+      document.getElementById('edit-type').value = type;
+      document.getElementById('edit-doc-id').value = id;
+      document.getElementById('edit-pkg-name').value = name;
+      document.getElementById('edit-pkg-price').value = price;
+      document.getElementById('edit-modal').classList.remove('hidden');
+    };
+
+    window.closeEditModal = () => {
+      document.getElementById('edit-modal').classList.add('hidden');
+    };
+
+    // Save Edit Package
+    window.saveEditPackage = async () => {
+      const type = document.getElementById('edit-type').value;
+      const id = document.getElementById('edit-doc-id').value;
+      const name = document.getElementById('edit-pkg-name').value;
+      const price = Number(document.getElementById('edit-pkg-price').value);
+
+      if(!name || !price) return alert('অনুগ্রহ করে নাম এবং দাম প্রদান করুন!');
+
+      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
+      try {
+        await updateDoc(doc(db, colName, id), { name, price });
+        closeEditModal();
+        alert('প্যাকেজ সফলভাবে আপডেট করা হয়েছে!');
+      } catch(err) {
+        alert('ত্রুটি হয়েছে: ' + err.message);
       }
     };
 
-    // Load Orders Card View
-    function loadOrders() {
-      onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
-        let html = '';
-        snap.forEach(docSnap => {
-          const data = docSnap.data();
-          const id = docSnap.id;
-          let info = '';
-          if(data.gameType === 'FreeFire') info = `UID: ${data.gameUid}`;
-          else if(data.gameType === 'eFootball') info = `Type: ${data.accountType} | ID: ${data.accountId} | Pass: ${data.password} | Backup: ${data.backupCode} | WA: ${data.whatsapp}`;
-          else if(data.gameType === 'ECommerce') info = `Size: ${data.size} | Address: ${data.address} | Phone: ${data.phone}`;
-
-          const statusColor = data.status === 'Completed' ? 'text-emerald-400 bg-emerald-950/40 border-emerald-800/40' : data.status === 'Cancelled' ? 'text-red-400 bg-red-950/40 border-red-800/40' : 'text-amber-400 bg-amber-950/40 border-amber-800/40';
-
-          html += `<div class="bg-purple-950/30 border border-purple-800/40 p-3 rounded-xl space-y-2 text-xs">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="font-bold text-purple-200">${data.itemName}</p>
-                <p class="text-[10px] text-purple-400">${data.userEmail || ''}</p>
-              </div>
-              <span class="px-2 py-0.5 rounded-md border ${statusColor} text-[10px] font-bold">${data.status}</span>
-            </div>
-            <div class="flex justify-between text-[11px] font-mono text-purple-300 bg-purple-950/60 p-1.5 rounded-lg border border-purple-800/30">
-              <span>মূল্য: ${data.price} TK</span>
-              <span class="text-pink-400">TrxID: ${data.trxId}</span>
-            </div>
-            <div class="text-[10px] text-purple-300 bg-black/20 p-2 rounded-lg break-all">
-              ${info}
-            </div>
-            <div class="flex gap-2 pt-1">
-              <button onclick="updateStatus('${id}', 'Completed')" class="flex-1 bg-emerald-600/80 hover:bg-emerald-600 text-white py-1 rounded-lg text-[10px] font-bold">Complete</button>
-              <button onclick="updateStatus('${id}', 'Cancelled')" class="flex-1 bg-red-600/80 hover:bg-red-600 text-white py-1 rounded-lg text-[10px] font-bold">Cancel</button>
-            </div>
-          </div>`;
-        });
-        document.getElementById('admin-orders-list').innerHTML = html || '<p class="p-4 text-center text-xs text-purple-400">কোনো অর্ডার পাওয়া যায়নি</p>';
-      });
-    }
-
-    window.updateStatus = async (id, status) => {
-      await updateDoc(doc(db, "orders", id), { status: status });
-      alert('অর্ডার স্ট্যাটাস আপডেট হয়েছে!');
+    // Delete Package
+    window.deletePackage = async (type, id) => {
+      if(!confirm('আপনি কি নিশ্চিত যে এই প্যাকেজটি ডিলিট করতে চান?')) return;
+      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
+      try {
+        await deleteDoc(doc(db, colName, id));
+      } catch(err) {
+        alert('ত্রুটি হয়েছে: ' + err.message);
+      }
     };
 
-    // Load Packages and Products
-    function loadExistingItems() {
-      // FF List
-      onSnapshot(collection(db, "ff_packages"), snap => {
-        let h = '';
-        snap.forEach(d => {
-          const i = d.data();
-          h += `<div class="flex justify-between items-center p-2 bg-purple-950/40 border border-purple-800/30 rounded-xl text-xs">
-            <span class="text-purple-200 font-medium">${i.name} - <b class="text-amber-400">${i.price} TK</b></span>
-            <button onclick="deleteDoc(doc(db, 'ff_packages', '${d.id}'))" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash-can"></i></button>
-          </div>`;
-        });
-        document.getElementById('admin-ff-list').innerHTML = h || '<p class="text-[10px] text-purple-400">কোনো তথ্য নেই</p>';
-      });
+    // Add New Package
+    window.addNewPackage = async () => {
+      const cat = document.getElementById('add-pkg-cat').value;
+      const name = document.getElementById('add-pkg-name').value.trim();
+      const price = Number(document.getElementById('add-pkg-price').value);
 
-      // EF List
-      onSnapshot(collection(db, "ef_packages"), snap => {
-        let h = '';
-        snap.forEach(d => {
-          const i = d.data();
-          h += `<div class="flex justify-between items-center p-2 bg-purple-950/40 border border-purple-800/30 rounded-xl text-xs">
-            <span class="text-purple-200 font-medium">${i.name} - <b class="text-blue-400">${i.price} TK</b></span>
-            <button onclick="deleteDoc(doc(db, 'ef_packages', '${d.id}'))" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash-can"></i></button>
-          </div>`;
-        });
-        document.getElementById('admin-ef-list').innerHTML = h || '<p class="text-[10px] text-purple-400">কোনো তথ্য নেই</p>';
-      });
+      if(!name || !price) return alert('নাম এবং সঠিক দাম প্রদান করুন!');
 
-      // E-Commerce Grid
-      onSnapshot(collection(db, "products"), snap => {
-        let h = '';
-        snap.forEach(d => {
-          const i = d.data();
-          h += `<div class="bg-purple-950/40 border border-purple-800/30 p-2 rounded-xl text-xs space-y-1 relative group">
-            <img src="${i.imageUrl}" class="w-full h-20 object-cover rounded-lg mb-1">
-            <p class="font-bold text-purple-200 truncate text-[11px]">${i.title}</p>
-            <p class="text-emerald-400 font-bold text-[10px]">${i.price} TK</p>
-            <button onclick="deleteDoc(doc(db, 'products', '${d.id}'))" class="absolute top-1 right-1 bg-red-600/80 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px]">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>`;
+      const colName = cat === 'ff' ? 'ff_packages' : 'ef_packages';
+      try {
+        await addDoc(collection(db, colName), {
+          name: name,
+          price: price,
+          order: Date.now()
         });
-        document.getElementById('admin-prod-list').innerHTML = h || '<p class="col-span-2 text-[10px] text-purple-400">কোনো প্রোডাক্ট নেই</p>';
-      });
-    }
 
-    // Add FF Item
-    document.getElementById('form-add-ff').onsubmit = async (e) => {
-      e.preventDefault();
-      await addDoc(collection(db, "ff_packages"), { name: document.getElementById('ff-name').value, price: Number(document.getElementById('ff-price').value) });
-      e.target.reset(); alert('ফ্রি ফায়ার প্যাকেজ যুক্ত হয়েছে!');
+        document.getElementById('add-pkg-name').value = '';
+        document.getElementById('add-pkg-price').value = '';
+        alert('নতুন প্যাকেজ সফলভাবে যুক্ত হয়েছে!');
+        showAdminTab('items');
+      } catch(err) {
+        alert('ত্রুটি হয়েছে: ' + err.message);
+      }
     };
 
-    // Add EF Item
-    document.getElementById('form-add-ef').onsubmit = async (e) => {
-      e.preventDefault();
-      await addDoc(collection(db, "ef_packages"), { name: document.getElementById('ef-name').value, price: Number(document.getElementById('ef-price').value) });
-      e.target.reset(); alert('ই-ফুটবল প্যাকেজ যুক্ত হয়েছে!');
-    };
-
-    // Add E-Commerce Item
-    document.getElementById('form-add-prod').onsubmit = async (e) => {
-      e.preventDefault();
-      const reader = new FileReader();
-      reader.onload = async (ev) => {
-        await addDoc(collection(db, "products"), {
-          title: document.getElementById('prod-title').value,
-          price: Number(document.getElementById('prod-price').value),
-          description: document.getElementById('prod-desc').value,
-          imageUrl: ev.target.result
-        });
-        e.target.reset(); alert('প্রোডাক্ট আপলোড সফল হয়েছে!');
-      };
-      reader.readAsDataURL(document.getElementById('prod-img').files[0]);
-    };
+    // Initial load
+    loadPackages('ff', 'ff-list-container');
+    loadPackages('ef', 'ef-list-container');
   </script>
 </body>
 </html>
