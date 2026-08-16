@@ -10,7 +10,6 @@
   <style>
     body { font-family: 'Hind Siliguri', sans-serif; background-color: #0b132b; color: #e0e1dd; }
     .neon-card { background: rgba(28, 37, 65, 0.85); border: 1px solid rgba(0, 180, 216, 0.25); backdrop-filter: blur(10px); }
-    .neon-border { border-color: rgba(0, 180, 216, 0.4); }
   </style>
 </head>
 <body class="min-h-screen pb-12">
@@ -55,9 +54,8 @@
       </div>
     </div>
 
-    <!-- TAB 2: ITEMS LIST (FF, EF & E-COMMERCE WITH REORDERING) -->
+    <!-- TAB 2: ITEMS LIST -->
     <div id="view-items" class="hidden space-y-4">
-      <!-- Free Fire List -->
       <div class="space-y-2">
         <h2 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
           <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজসমূহ
@@ -65,7 +63,6 @@
         <div id="list-ff-pkgs" class="space-y-2"></div>
       </div>
 
-      <!-- eFootball List -->
       <div class="space-y-2">
         <h2 class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
           <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজসমূহ
@@ -73,7 +70,6 @@
         <div id="list-ef-pkgs" class="space-y-2"></div>
       </div>
 
-      <!-- E-Commerce Products List -->
       <div class="space-y-2">
         <h2 class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
           <i class="fa-solid fa-store"></i> ই-কমার্স প্রোডাক্টসমূহ
@@ -93,7 +89,6 @@
           <option value="notice">হোম নোটিশ সেটআপ</option>
         </select>
 
-        <!-- Form for FF & EF Packages -->
         <div id="form-package-fields" class="space-y-3">
           <div>
             <label class="text-[11px] text-cyan-300 font-semibold">প্যাকেজের নাম</label>
@@ -108,7 +103,6 @@
           </button>
         </div>
 
-        <!-- Form for E-Commerce Products -->
         <div id="form-ecommerce-fields" class="space-y-3 hidden">
           <div>
             <label class="text-[11px] text-cyan-300 font-semibold">প্রোডাক্টের নাম</label>
@@ -131,7 +125,6 @@
           </button>
         </div>
 
-        <!-- Form for Notice Setup -->
         <div id="form-notice-fields" class="space-y-3 hidden">
           <div>
             <label class="text-[11px] text-cyan-300 font-semibold">নোটিশ বার্তা (Text)</label>
@@ -149,7 +142,6 @@
     </div>
   </div>
 
-  <!-- FIREBASE & MAIN SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -202,7 +194,6 @@
       else if (type === 'notice') document.getElementById('form-notice-fields').classList.remove('hidden');
     };
 
-    // ORDERS MANAGEMENT
     function loadOrders() {
       onSnapshot(collection(db, "orders"), snap => {
         let html = '';
@@ -239,7 +230,6 @@
       await updateDoc(doc(db, "orders", id), { status });
     };
 
-    // LOAD ALL ITEMS WITH CLEAN REORDERING LOGIC
     function loadAllItems() {
       onSnapshot(collection(db, "ff_packages"), snap => renderItemList(snap, "list-ff-pkgs", "ff_packages"));
       onSnapshot(collection(db, "ef_packages"), snap => renderItemList(snap, "list-ef-pkgs", "ef_packages"));
@@ -249,17 +239,24 @@
     function renderItemList(snap, elementId, collectionName) {
       let items = [];
       snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+
+      // Sort items based on orderIndex
       items.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
 
       let html = '';
       items.forEach((item, index) => {
+        const imgTag = item.imageUrl ? `<img src="${item.imageUrl}" class="w-10 h-10 object-cover rounded-lg border border-cyan-500/30 flex-shrink-0">` : '';
+
         html += `
-          <div class="neon-card p-2.5 rounded-xl border border-cyan-500/30 flex justify-between items-center text-xs">
-            <div>
-              <p class="font-bold text-cyan-200">${item.name || item.title}</p>
-              <p class="text-[11px] text-pink-400 font-bold">${item.price} TK</p>
+          <div class="neon-card p-2.5 rounded-xl border border-cyan-500/30 flex justify-between items-center text-xs gap-2">
+            <div class="flex items-center gap-2.5 overflow-hidden">
+              ${imgTag}
+              <div class="truncate">
+                <p class="font-bold text-cyan-200 truncate">${item.name || item.title}</p>
+                <p class="text-[11px] text-pink-400 font-bold">${item.price} TK</p>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-1.5 flex-shrink-0">
               <button onclick="swapPosition('${collectionName}', ${index}, ${index - 1})" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed w-7 h-7 bg-slate-800 border border-cyan-500/20 text-cyan-300 rounded-lg"' : 'class="w-7 h-7 bg-cyan-900/40 border border-cyan-500/40 text-cyan-300 rounded-lg hover:bg-cyan-700"'}>
                 <i class="fa-solid fa-arrow-up text-[10px]"></i>
               </button>
@@ -276,7 +273,7 @@
       document.getElementById(elementId).innerHTML = html || '<p class="text-[11px] text-cyan-400 py-2">কোনো আইটেম নেই</p>';
     }
 
-    // SWAP POSITION FUNCTION FOR CLEAN UP/DOWN
+    // FIX REORDERING LOGIC ACCORDING TO CURRENT DISPLAYED LIST
     window.swapPosition = async (colName, currentIndex, targetIndex) => {
       const snap = await getDocs(collection(db, colName));
       let items = [];
@@ -285,14 +282,19 @@
 
       if (targetIndex < 0 || targetIndex >= items.length) return;
 
-      const currentItem = items[currentIndex];
-      const targetItem = items[targetIndex];
+      // Assign sequential orderIndex (10, 20, 30...) to resolve duplicates
+      for (let i = 0; i < items.length; i++) {
+        items[i].orderIndex = (i + 1) * 10;
+      }
 
-      const currentIdxValue = currentItem.orderIndex || (currentIndex + 1) * 10;
-      const targetIdxValue = targetItem.orderIndex || (targetIndex + 1) * 10;
+      // Swap values
+      const temp = items[currentIndex].orderIndex;
+      items[currentIndex].orderIndex = items[targetIndex].orderIndex;
+      items[targetIndex].orderIndex = temp;
 
-      await updateDoc(doc(db, colName, currentItem.id), { orderIndex: targetIdxValue });
-      await updateDoc(doc(db, colName, targetItem.id), { orderIndex: currentIdxValue });
+      // Update in Firestore
+      await updateDoc(doc(db, colName, items[currentIndex].id), { orderIndex: items[currentIndex].orderIndex });
+      await updateDoc(doc(db, colName, items[targetIndex].id), { orderIndex: items[targetIndex].orderIndex });
     };
 
     window.deleteItem = async (col, id) => {
@@ -310,7 +312,6 @@
       });
     }
 
-    // SAVE FUNCTIONS
     window.savePackage = async () => {
       const type = document.getElementById('add-category-type').value;
       const name = document.getElementById('add-pkg-name').value.trim();
@@ -374,5 +375,4 @@
     };
   </script>
 </body>
-              </html>
-
+</html>
