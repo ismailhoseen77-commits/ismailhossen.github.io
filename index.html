@@ -12,7 +12,7 @@
     .glass-card { background: rgba(22, 27, 34, 0.85); border: 1px solid rgba(48, 54, 61, 0.8); backdrop-filter: blur(12px); }
   </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-24">
 
   <!-- TOP HEADER -->
   <div class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 p-3">
@@ -111,14 +111,16 @@
         </div>
       </div>
 
-              </div>
-      <!-- VIEW 2: PACKAGES SELECTION (FF / EF) -->
+    </div>
+        <!-- VIEW 2: PACKAGES SELECTION (FF / EF) - UPDATED TO 2 COLUMNS GRID -->
     <div id="view-packages" class="hidden space-y-3">
       <button onclick="showView('home')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
       </button>
       <h2 id="pkg-title" class="text-xs font-bold text-purple-200"></h2>
-      <div id="packages-list" class="space-y-2"></div>
+      
+      <!-- 2 COLUMNS BOX GRID -->
+      <div id="packages-list" class="grid grid-cols-2 gap-3"></div>
     </div>
 
     <!-- VIEW 3: INPUT DETAILS FOR GAMING -->
@@ -208,7 +210,6 @@
             <i class="fa-solid fa-chevron-right text-pink-400 text-xs"></i>
           </div>
 
-          <!-- Cash on Delivery Option (Only for E-Commerce) -->
           <div id="cod-option" class="hidden p-3 border border-emerald-500/50 rounded-2xl flex items-center justify-between cursor-pointer bg-emerald-500/5 hover:bg-emerald-500/10 transition" onclick="submitCashOnDelivery()">
             <div class="flex items-center gap-3">
               <span class="font-bold text-xs text-emerald-400">Cash on Delivery (ক্যাশ অন ডেলিভারি)</span>
@@ -277,7 +278,7 @@
       </div>
     </div>
 
-  </div>
+        </div>
     <!-- FIXED BOTTOM NAVIGATION BAR -->
   <div class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 z-40">
     <div class="max-w-md mx-auto grid grid-cols-3 py-2 text-center">
@@ -296,22 +297,63 @@
     </div>
   </div>
 
-  <!-- FLOATING SUPPORT BUTTON & MENU -->
+  <!-- FLOATING SUPPORT BUTTON & POPUP MENU (WHATSAPP + AI BOT) -->
   <div class="fixed bottom-20 right-4 z-50">
-    <button onclick="toggleSupportMenu()" class="w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-purple-600/40">
+    <!-- SUPPORT TRIGGER BUTTON -->
+    <button onclick="toggleSupportMenu()" class="w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-purple-600/40 transition">
       <i class="fa-solid fa-headset text-xl"></i>
     </button>
 
-    <div id="support-menu" class="hidden absolute bottom-14 right-0 w-52 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-2 space-y-2">
-      <a href="https://wa.me/8801576502490" target="_blank" onclick="toggleSupportMenu()" class="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-xl transition">
+    <!-- SUPPORT SELECTION MENU -->
+    <div id="support-menu" class="hidden absolute bottom-14 right-0 w-56 bg-slate-900 border border-purple-500/30 rounded-2xl shadow-2xl p-2 space-y-1.5">
+      <!-- WHATSAPP OPTION -->
+      <a href="https://wa.me/8801576502490" target="_blank" onclick="toggleSupportMenu()" class="flex items-center gap-3 p-2.5 hover:bg-slate-800 rounded-xl transition">
         <div class="w-8 h-8 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center">
           <i class="fa-brands fa-whatsapp text-lg"></i>
         </div>
         <div>
           <p class="text-xs font-bold text-slate-200">WhatsApp সাপোর্ট</p>
-          <p class="text-[10px] text-slate-400">সরাসরি মেসেজ করুন</p>
+          <p class="text-[10px] text-slate-400">এডমিনের সাথে সরাসরি কথা বলুন</p>
         </div>
       </a>
+
+      <!-- AI ASSISTANT OPTION -->
+      <button onclick="openAiChatWindow()" class="w-full flex items-center gap-3 p-2.5 hover:bg-slate-800 rounded-xl transition text-left">
+        <div class="w-8 h-8 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center">
+          <i class="fa-solid fa-robot text-lg"></i>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-slate-200">AI Assistant</p>
+          <p class="text-[10px] text-slate-400">বটের সাথে চ্যাট করুন</p>
+        </div>
+      </button>
+    </div>
+
+    <!-- AI CHAT WINDOW BOX -->
+    <div id="ai-chat-box" class="hidden absolute bottom-14 right-0 w-80 bg-slate-900 border border-purple-500/40 rounded-2xl shadow-2xl flex flex-col h-96 overflow-hidden">
+      <!-- Chat Header -->
+      <div class="bg-gradient-to-r from-purple-800 to-slate-900 p-3 border-b border-purple-500/30 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-robot text-purple-400"></i>
+          <span class="font-bold text-xs text-purple-200">MIHADX AI Assistant</span>
+        </div>
+        <button onclick="closeAiChatWindow()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Chat Messages Container -->
+      <div id="ai-chat-messages" class="flex-1 p-3 overflow-y-auto space-y-2 text-xs">
+        <div class="bg-purple-600/20 text-purple-200 p-2.5 rounded-xl border border-purple-500/20 max-w-[85%]">
+          হ্যালো! আমি MIHADX PRO BD-এর AI সহকারী। আপনাকে কীভাবে সাহায্য করতে পারি?
+        </div>
+      </div>
+
+      <!-- Chat Input Area -->
+      <div class="p-2 border-t border-slate-800 bg-slate-950 flex gap-1.5">
+        <input type="text" id="ai-user-input" placeholder="আপনার প্রশ্নটি লিখুন..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-purple-500" onkeydown="if(event.key==='Enter') sendAiMessage()">
+        <button onclick="sendAiMessage()" class="bg-purple-600 hover:bg-purple-700 text-white px-3 rounded-xl text-xs font-bold">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -319,7 +361,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, query, where, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -406,7 +448,7 @@
       window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
-    // CATEGORY OPENING FOR PACKAGES
+    // CATEGORY OPENING FOR PACKAGES (RENDERED IN 2-COLUMN GRID BOXES)
     window.openCategory = (cat) => {
       const col = cat === 'ff' ? 'ff_packages' : 'ef_packages';
       document.getElementById('pkg-title').innerText = cat === 'ff' ? 'ফ্রি ফায়ার প্যাকেজসমূহ' : 'ই-ফুটবল প্যাকেজসমূহ';
@@ -416,13 +458,18 @@
         snap.forEach(d => {
           const item = d.data();
           html += `
-            <div onclick="selectGamePackage('${item.name}', ${item.price})" class="glass-card p-3 rounded-2xl flex justify-between items-center cursor-pointer hover:border-purple-500/50">
-              <span class="font-bold text-xs">${item.name}</span>
-              <span class="font-bold text-xs text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-xl border border-pink-500/20">${item.price} TK</span>
+            <div onclick="selectGamePackage('${item.name}', ${item.price})" class="glass-card p-3 rounded-2xl text-center flex flex-col justify-between hover:border-purple-500/60 transition cursor-pointer group">
+              <div class="space-y-1 my-2">
+                <i class="fa-solid fa-gem text-purple-400 text-lg group-hover:scale-110 transition inline-block"></i>
+                <p class="font-bold text-xs text-slate-100">${item.name}</p>
+              </div>
+              <div class="bg-purple-600/20 border border-purple-500/30 rounded-xl py-1 text-pink-400 font-bold text-xs">
+                ${item.price} TK
+              </div>
             </div>
           `;
         });
-        document.getElementById('packages-list').innerHTML = html || '<p class="text-xs text-slate-500 py-4">কোনো প্যাকেজ পাওয়া যায়নি</p>';
+        document.getElementById('packages-list').innerHTML = html || '<p class="text-xs text-slate-500 col-span-2 py-4 text-center">কোনো প্যাকেজ পাওয়া যায়নি</p>';
         showView('packages');
       });
     };
@@ -503,7 +550,6 @@
 
       try {
         await addDoc(collection(db, "orders"), orderObj);
-
         const waMsg = `🛒 *নতুন ক্যাশ অন ডেলিভারি অর্ডার!*\n\n📦 প্রোডাক্ট: *${orderObj.itemName}*\n💰 মূল্য: ${orderObj.price} BDT\n👤 কাস্টমার নাম: ${orderObj.customerName}\n📞 ফোন: ${orderObj.phone}\n📏 সাইজ/ভেরিয়েন্ট: ${orderObj.size}\n🏠 ঠিকানা: ${orderObj.address}\n✉️ ইমেইল: ${orderObj.userEmail}`;
 
         alert('আপনার Cash on Delivery অর্ডারটি গৃহীত হয়েছে!');
@@ -589,11 +635,112 @@
         document.getElementById('my-orders-list').innerHTML = html || '<p class="text-xs text-slate-500 text-center py-6">এখনো কোনো অর্ডার করা হয়নি</p>';
       });
     }
-
-    window.toggleSupportMenu = () => {
-      document.getElementById('support-menu').classList.toggle('hidden');
-    };
   </script>
+
+  <!-- GEMINI AI BOT SCRIPT -->
+  <script>
+    const GEMINI_API_KEY = "AQ.Ab8RN6K8w7UpK5jt0QH_mZCQC68UtuwR2uwOWJm8PSh4GD6SPA"; 
+
+    const SYSTEM_INSTRUCTION = `
+      তুমি MIHADX PRO BD ওয়েবসাইটের প্রফেশনাল AI সহকারী। 
+      ওয়েবসাইটের মূল তথ্যসমূহ:
+      - WhatsApp নম্বর: 01576502490
+      - bKash নম্বর: 01309735129
+      - সেবা: Free Fire TopUp, eFootball TopUp, MS Excel, MS Word, MS PowerPoint, Data Entry সার্ভিস এবং ই-কমার্স প্রোডাক্ট।
+      - পেমেন্ট পদ্ধতি: bKash এবং Cash on Delivery (শুধুমাত্র ই-কমার্স এর জন্য)।
+      কাস্টমারকে সবসময় সংক্ষিপ্ত, বিনয়ী ও নিখুঁত বাংলায় উত্তর প্রদান করবে।
+    `;
+
+    function toggleSupportMenu() {
+      document.getElementById('support-menu').classList.toggle('hidden');
+    }
+
+    function openAiChatWindow() {
+      document.getElementById('support-menu').classList.add('hidden');
+      document.getElementById('ai-chat-box').classList.remove('hidden');
+    }
+
+    function closeAiChatWindow() {
+      document.getElementById('ai-chat-box').classList.add('hidden');
+    }
+
+    async function sendAiMessage() {
+      const inputEl = document.getElementById('ai-user-input');
+      const msgContainer = document.getElementById('ai-chat-messages');
+      const text = inputEl.value.trim();
+
+      if(!text) return;
+
+      msgContainer.innerHTML += `
+        <div class="bg-slate-800 text-slate-100 p-2.5 rounded-xl max-w-[85%] ml-auto border border-slate-700">
+          ${text}
+        </div>
+      `;
+      inputEl.value = '';
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+
+      const loadingId = 'loading-' + Date.now();
+      msgContainer.innerHTML += `
+        <div id="${loadingId}" class="bg-purple-600/10 text-purple-400 p-2 rounded-xl max-w-[85%] animate-pulse">
+          উত্তর তৈরি হচ্ছে...
+        </div>
+      `;
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              { role: 'user', parts: [{ text: `${SYSTEM_INSTRUCTION}\n\nUser Question: ${text}` }] }
+            ]
+          })
+        });
+
+        const data = await response.json();
+        document.getElementById(loadingId).remove();
+
+        if(data.candidates && data.candidates[0].content.parts[0].text) {
+          const aiReply = data.candidates[0].content.parts[0].text;
+          msgContainer.innerHTML += `
+            <div class="bg-purple-600/20 text-purple-200 p-2.5 rounded-xl border border-purple-500/20 max-w-[85%]">
+              ${aiReply}
+            </div>
+          `;
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        document.getElementById(loadingId)?.remove();
+        msgContainer.innerHTML += `
+          <div class="bg-red-500/20 text-red-300 p-2 rounded-xl max-w-[85%] border border-red-500/30">
+            দুঃখিত, উত্তর দেওয়া সম্ভব হচ্ছে না। সরাসরি WhatsApp (01576502490) এ যোগাযোগ করুন।
+          </div>
+        `;
+      }
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+       
+// -------------------------------------------------------------
+// EVENT LISTENERS & INITIALIZATION
+// -------------------------------------------------------------
+
+// Enter Key Press for sending message
+document.getElementById('ai-input')?.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+// Close popup menu when clicking outside
+document.addEventListener('click', function (e) {
+  const menu = document.getElementById('support-menu');
+  const btn = document.getElementById('support-btn');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.add('hidden');
+  }
+});
+</script>
 </body>
 </html>
 
