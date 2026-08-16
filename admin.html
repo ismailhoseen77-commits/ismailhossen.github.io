@@ -3,128 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Control Panel - MIHADX PRO BD</title>
+  <title>Admin Panel - MIHADX PRO BD</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0d0914; color: #f1f5f9; }
-    .glass-card { background: #161022; border: 1px solid #2d2244; }
+    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0f0a19; color: #f1f5f9; }
+    .glass-card { background: rgba(26, 16, 43, 0.8); border: 1px solid rgba(139, 92, 246, 0.2); }
   </style>
 </head>
-<body class="min-h-screen p-4 pb-20 max-w-md mx-auto space-y-4">
+<body class="min-h-screen pb-10">
 
-  <!-- Admin Header -->
-  <div class="glass-card rounded-2xl p-4 flex justify-between items-center shadow-lg">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-purple-900/60 text-purple-300 border border-purple-500/30 flex items-center justify-center font-bold text-xl">
-        <i class="fa-solid fa-user-shield"></i>
+  <div class="max-w-md mx-auto p-4 space-y-4">
+    <!-- Admin Top Header -->
+    <div class="glass-card rounded-2xl p-4 flex justify-between items-center border border-purple-500/30">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+          <i class="fa-solid fa-user-shield text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
+          <p id="admin-email" class="text-[11px] text-purple-400 font-mono">লোড হচ্ছে...</p>
+        </div>
       </div>
-      <div>
-        <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
-        <p id="admin-email" class="text-[11px] text-purple-400 font-mono">Loading...</p>
-      </div>
-    </div>
-    <button onclick="logoutAdmin()" class="w-9 h-9 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-900/60 transition">
-      <i class="fa-solid fa-power-off text-sm"></i>
-    </button>
-  </div>
-
-  <!-- Navigation Tabs -->
-  <div class="grid grid-cols-3 gap-2 bg-[#120c1d] p-1.5 rounded-2xl border border-purple-900/40 text-xs font-bold">
-    <button onclick="showAdminTab('orders')" id="tab-orders" class="py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition">
-      <i class="fa-solid fa-shopping-bag"></i> অর্ডারসমূহ
-    </button>
-    <button onclick="showAdminTab('items')" id="tab-items" class="py-2 rounded-xl bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-md">
-      <i class="fa-solid fa-boxes-stacked"></i> আইটেম লিস্ট
-    </button>
-    <button onclick="showAdminTab('add')" id="tab-add" class="py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition">
-      <i class="fa-solid fa-circle-plus"></i> নতুন এড
-    </button>
-  </div>
-
-  <!-- VIEW: ITEMS LIST -->
-  <div id="view-items-list" class="space-y-4">
-    
-    <!-- Free Fire List -->
-    <div class="space-y-2">
-      <h2 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-        <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজ
-      </h2>
-      <div id="ff-list-container" class="space-y-2">
-        <p class="text-xs text-slate-500 py-2 text-center">প্যাকেজ লোড হচ্ছে...</p>
-      </div>
-    </div>
-
-    <!-- eFootball List -->
-    <div class="space-y-2 pt-2">
-      <h2 class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-        <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজ
-      </h2>
-      <div id="ef-list-container" class="space-y-2">
-        <p class="text-xs text-slate-500 py-2 text-center">প্যাকেজ লোড হচ্ছে...</p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- VIEW: ADD NEW ITEM -->
-  <div id="view-add-item" class="hidden glass-card p-4 rounded-2xl space-y-3 border border-purple-500/20">
-    <h2 class="text-xs font-bold text-purple-300 border-b border-purple-800/50 pb-2">নতুন প্যাকেজ যোগ করুন</h2>
-    
-    <div>
-      <label class="text-[11px] text-slate-400">ক্যাটাগরি সিলেক্ট করুন</label>
-      <select id="add-pkg-cat" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
-        <option value="ff">Free Fire</option>
-        <option value="ef">eFootball</option>
-      </select>
-    </div>
-
-    <div>
-      <label class="text-[11px] text-slate-400">প্যাকেজের নাম</label>
-      <input type="text" id="add-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none focus:border-purple-500">
-    </div>
-
-    <div>
-      <label class="text-[11px] text-slate-400">দাম (টাকা)</label>
-      <input type="number" id="add-pkg-price" placeholder="যেমন: 75" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none focus:border-purple-500">
-    </div>
-
-    <button onclick="addNewPackage()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg shadow-purple-900/40">
-      প্যাকেজ সেভ করুন
-    </button>
-  </div>
-
-  <!-- EDIT MODAL -->
-  <div id="edit-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-xs p-4 rounded-2xl space-y-3 border border-purple-500/30">
-      <div class="flex justify-between items-center border-b border-purple-800/40 pb-2">
-        <h3 class="text-xs font-bold text-purple-300">প্যাকেজ এডিট করুন</h3>
-        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <input type="hidden" id="edit-doc-id">
-      <input type="hidden" id="edit-type">
-
-      <div>
-        <label class="text-[11px] text-slate-400">প্যাকেজের নাম</label>
-        <input type="text" id="edit-pkg-name" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
-      </div>
-
-      <div>
-        <label class="text-[11px] text-slate-400">দাম (টাকা)</label>
-        <input type="number" id="edit-pkg-price" class="w-full mt-1 p-2.5 bg-[#0d0914] border border-purple-900/60 rounded-xl text-xs text-slate-200 outline-none">
-      </div>
-
-      <button onclick="saveEditPackage()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-xl text-xs transition shadow-md">
-        আপডেট করুন
+      <button onclick="logoutAdmin()" class="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center hover:bg-red-500/30">
+        <i class="fa-solid fa-power-off"></i>
       </button>
     </div>
+
+    <!-- Navigation Tabs -->
+    <div class="grid grid-cols-3 gap-2">
+      <button onclick="switchTab('orders')" id="tab-orders" class="py-2.5 rounded-xl font-bold text-xs bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-lg">
+        <i class="fa-solid fa-bag-shopping"></i> অর্ডারসমূহ
+      </button>
+      <button onclick="switchTab('items')" id="tab-items" class="py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5">
+        <i class="fa-solid fa-list-check"></i> আইটেম লিস্ট
+      </button>
+      <button onclick="switchTab('add')" id="tab-add" class="py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5">
+        <i class="fa-solid fa-circle-plus"></i> নতুন যোগ
+      </button>
+    </div>
+
+    <!-- TAB 1: ORDERS MANAGEMENT -->
+    <div id="view-orders" class="space-y-3">
+      <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+        <i class="fa-solid fa-clock-rotate-left"></i> সকল গ্রাহকের অর্ডার
+      </h2>
+      <div id="admin-orders-list" class="space-y-3">
+        <p class="text-xs text-purple-400 text-center py-6">অর্ডার লোড হচ্ছে...</p>
+      </div>
+    </div>
+        <!-- TAB 2: ITEMS LIST (FF, EF & E-COMMERCE WITH UP/DOWN REORDERING) -->
+    <div id="view-items" class="hidden space-y-4">
+      <!-- Free Fire List -->
+      <div class="space-y-2">
+        <h2 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজসমূহ
+        </h2>
+        <div id="list-ff-pkgs" class="space-y-2"></div>
+      </div>
+
+      <!-- eFootball List -->
+      <div class="space-y-2">
+        <h2 class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজসমূহ
+        </h2>
+        <div id="list-ef-pkgs" class="space-y-2"></div>
+      </div>
+
+      <!-- E-Commerce Products List -->
+      <div class="space-y-2">
+        <h2 class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-store"></i> ই-কমার্স প্রোডাক্টসমূহ
+        </h2>
+        <div id="list-shop-prods" class="space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ADD NEW CONTENT (PACKAGE, PRODUCT, NOTICE) -->
+    <div id="view-add" class="hidden space-y-4">
+      <div class="glass-card p-4 rounded-2xl space-y-3 border border-purple-500/30">
+        <h3 class="text-xs font-bold text-purple-200">ক্যাটাগরি সিলেক্ট করুন</h3>
+        <select id="add-category-type" onchange="toggleAddForm()" class="w-full p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          <option value="ff">ফ্রি ফায়ার প্যাকেজ</option>
+          <option value="ef">ই-ফুটবল প্যাকেজ</option>
+          <option value="ecommerce">ই-কমার্স প্রোডাক্ট</option>
+          <option value="notice">হোম নোটিশ সেটআপ</option>
+        </select>
+
+        <!-- Form for FF & EF Top-Up Packages -->
+        <div id="form-package-fields" class="space-y-3">
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">প্যাকেজের নাম</label>
+            <input type="text" id="add-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
           </div>
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">দাম (টাকা)</label>
+            <input type="number" id="add-pkg-price" placeholder="যেমন: 75" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          </div>
+          <button onclick="savePackage()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+            প্যাকেজ সেভ করুন
+          </button>
+        </div>
+
+        <!-- Form for E-Commerce Products -->
+        <div id="form-ecommerce-fields" class="space-y-3 hidden">
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">প্রোডাক্টের নাম</label>
+            <input type="text" id="add-prod-title" placeholder="যেমন: FF Weekly Membership" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">দাম (টাকা)</label>
+            <input type="number" id="add-prod-price" placeholder="যেমন: 165" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">ছবির ইউআরএল (Image URL)</label>
+            <input type="text" id="add-prod-img" placeholder="https://..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">বিবরণ / ডিটেইলস (ঐচ্ছিক)</label>
+            <textarea id="add-prod-desc" placeholder="প্রোডাক্টের বিবরণ লিখুন..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none h-16"></textarea>
+          </div>
+          <button onclick="saveEcomProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+            প্রোডাক্ট সেভ করুন
+          </button>
+        </div>
+
+        <!-- Form for Home Notice Setup -->
+        <div id="form-notice-fields" class="space-y-3 hidden">
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">নোটিশ বার্তা (Text)</label>
+            <textarea id="add-notice-text" placeholder="আজকের বিশেষ অফার..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none h-16"></textarea>
+          </div>
+          <div>
+            <label class="text-[11px] text-purple-300 font-semibold">নোটিশ ব্যানার ছবি (Image URL)</label>
+            <input type="text" id="add-notice-img" placeholder="https://..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+          </div>
+          <button onclick="saveNotice()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+            নোটিশ আপডেট করুন
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
     <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -140,10 +165,12 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        document.getElementById('admin-email').innerText = user.email;
-      } else {
+      if (!user) {
         window.location.href = "login.html";
+      } else {
+        document.getElementById('admin-email').innerText = user.email;
+        loadOrders();
+        loadAllItems();
       }
     });
 
@@ -151,149 +178,152 @@
       signOut(auth).then(() => window.location.href = "login.html");
     };
 
-    // Tab switcher
-    window.showAdminTab = (tab) => {
+    window.switchTab = (tab) => {
       ['orders', 'items', 'add'].forEach(t => {
-        const btn = document.getElementById('tab-' + t);
-        if(t === tab) {
-          btn.className = "py-2 rounded-xl bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-md";
-        } else {
-          btn.className = "py-2 rounded-xl text-slate-400 flex items-center justify-center gap-1.5 transition";
-        }
+        document.getElementById('view-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).className = "py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5";
       });
-
-      document.getElementById('view-items-list').classList.toggle('hidden', tab !== 'items');
-      document.getElementById('view-add-item').classList.toggle('hidden', tab !== 'add');
+      document.getElementById('view-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).className = "py-2.5 rounded-xl font-bold text-xs bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-lg";
     };
 
-    // Load Items List with Edit & Order Control Options
-    function loadPackages(type, containerId) {
-      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
-      onSnapshot(collection(db, colName), (snap) => {
-        let items = [];
-        snap.forEach(d => {
-          items.push({ id: d.id, ...d.data() });
-        });
+    window.toggleAddForm = () => {
+      const type = document.getElementById('add-category-type').value;
+      document.getElementById('form-package-fields').classList.add('hidden');
+      document.getElementById('form-ecommerce-fields').classList.add('hidden');
+      document.getElementById('form-notice-fields').classList.add('hidden');
 
-        // Order Sorting (by order field or default array)
-        items.sort((a, b) => (a.order || 0) - (b.order || 0));
+      if (type === 'ff' || type === 'ef') document.getElementById('form-package-fields').classList.remove('hidden');
+      else if (type === 'ecommerce') document.getElementById('form-ecommerce-fields').classList.remove('hidden');
+      else if (type === 'notice') document.getElementById('form-notice-fields').classList.remove('hidden');
+    };
 
+    // ORDERS MANAGEMENT
+    function loadOrders() {
+      onSnapshot(collection(db, "orders"), snap => {
         let html = '';
-        items.forEach((item, index) => {
-          html += `
-            <div class="glass-card p-3 rounded-2xl flex items-center justify-between border border-purple-900/30">
-              <div class="flex items-center gap-2">
-                <!-- Reorder Up/Down Buttons -->
-                <div class="flex flex-col gap-0.5 text-[10px]">
-                  <button onclick="moveItem('${type}', '${item.id}', ${index}, -1, ${items.length})" class="w-5 h-4 bg-purple-900/60 text-purple-300 rounded flex items-center justify-center hover:bg-purple-700"><i class="fa-solid fa-chevron-up"></i></button>
-                  <button onclick="moveItem('${type}', '${item.id}', ${index}, 1, ${items.length})" class="w-5 h-4 bg-purple-900/60 text-purple-300 rounded flex items-center justify-center hover:bg-purple-700"><i class="fa-solid fa-chevron-down"></i></button>
-                </div>
-                <div>
-                  <p class="font-bold text-xs text-slate-200">${item.name}</p>
-                  <p class="text-[11px] font-bold text-amber-400">${item.price} TK</p>
-                </div>
-              </div>
+        snap.forEach(d => {
+          const o = d.data();
+          const id = d.id;
+          let statusColor = o.status === 'Completed' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' : (o.status === 'Cancelled' ? 'text-red-400 bg-red-500/10 border-red-500/30' : 'text-amber-400 bg-amber-500/10 border-amber-500/30');
 
-              <div class="flex items-center gap-2">
-                <!-- Edit Button -->
-                <button onclick="openEditModal('${type}', '${item.id}', '${item.name}', '${item.price}')" class="w-8 h-8 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-400 flex items-center justify-center hover:bg-amber-900/60 transition">
-                  <i class="fa-solid fa-pen-to-square text-xs"></i>
-                </button>
-                <!-- Delete Button -->
-                <button onclick="deletePackage('${type}', '${item.id}')" class="w-8 h-8 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-900/60 transition">
-                  <i class="fa-solid fa-trash-can text-xs"></i>
-                </button>
+          html += `
+            <div class="glass-card p-3 rounded-2xl border border-purple-500/30 space-y-2 text-xs">
+              <div class="flex justify-between items-center border-b border-purple-500/20 pb-2">
+                <span class="font-bold text-purple-200">${o.itemName} (${o.price} BDT)</span>
+                <span class="px-2 py-0.5 rounded-lg border font-bold text-[10px] ${statusColor}">${o.status}</span>
+              </div>
+              <div class="space-y-1 text-[11px] text-purple-300 font-mono">
+                <p>TrxID: <b class="text-yellow-400">${o.trxId}</b></p>
+                <p>User: ${o.userEmail}</p>
+                ${o.gameUid ? `<p>UID: <b class="text-purple-100">${o.gameUid}</b></p>` : ''}
+                ${o.accountId ? `<p>ID: ${o.accountId} | Pass: ${o.password}</p>` : ''}
+              </div>
+              <div class="flex items-center gap-2 pt-1 border-t border-purple-500/20">
+                <button onclick="updateOrderStatus('${id}', 'Completed')" class="flex-1 bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 py-1 rounded-xl font-bold hover:bg-emerald-600/50">Completed</button>
+                <button onclick="updateOrderStatus('${id}', 'Cancelled')" class="flex-1 bg-red-600/30 border border-red-500/40 text-red-300 py-1 rounded-xl font-bold hover:bg-red-600/50">Cancelled</button>
+                ${o.whatsapp ? `<a href="https://wa.me/${o.whatsapp}" target="_blank" class="px-2.5 py-1 bg-emerald-500 text-white rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i></a>` : ''}
               </div>
             </div>
           `;
         });
-
-        document.getElementById(containerId).innerHTML = html || '<p class="text-xs text-slate-500 text-center py-2">কোনো প্যাকেজ নেই</p>';
+        document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-xs text-purple-400 text-center py-6">কোনো অর্ডার পাওয়া যায়নি!</p>';
       });
     }
 
-    // Move Item Up / Down (Sort adjustment)
-    window.moveItem = async (type, id, currentIndex, direction, totalCount) => {
-      const newIndex = currentIndex + direction;
-      if (newIndex < 0 || newIndex >= totalCount) return;
+    window.updateOrderStatus = async (id, status) => {
+      await updateDoc(doc(db, "orders", id), { status });
+    };
 
-      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
-      await updateDoc(doc(db, colName, id), {
-        order: newIndex
+    // LOAD ALL ITEMS WITH ORDERING AND EDITING
+    function loadAllItems() {
+      // FF Packages
+      onSnapshot(collection(db, "ff_packages"), snap => renderItemList(snap, "list-ff-pkgs", "ff_packages"));
+      // EF Packages
+      onSnapshot(collection(db, "ef_packages"), snap => renderItemList(snap, "list-ef-pkgs", "ef_packages"));
+      // E-Commerce Products
+      onSnapshot(collection(db, "products"), snap => renderItemList(snap, "list-shop-prods", "products"));
+    }
+
+    function renderItemList(snap, elementId, collectionName) {
+      let items = [];
+      snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+      items.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+
+      let html = '';
+      items.forEach((item, index) => {
+        html += `
+          <div class="glass-card p-2.5 rounded-xl border border-purple-500/30 flex justify-between items-center text-xs">
+            <div>
+              <p class="font-bold text-purple-200">${item.name || item.title}</p>
+              <p class="text-[11px] text-pink-400 font-bold">${item.price} TK</p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="moveItem('${collectionName}', '${item.id}', ${items[index-1]?.orderIndex || (item.orderIndex||0)-1}, ${index === 0})" class="w-7 h-7 bg-purple-900/50 border border-purple-500/30 text-purple-300 rounded-lg hover:bg-purple-700">
+                <i class="fa-solid fa-arrow-up text-[10px]"></i>
+              </button>
+              <button onclick="moveItem('${collectionName}', '${item.id}', ${items[index+1]?.orderIndex || (item.orderIndex||0)+1}, ${index === items.length - 1})" class="w-7 h-7 bg-purple-900/50 border border-purple-500/30 text-purple-300 rounded-lg hover:bg-purple-700">
+                <i class="fa-solid fa-arrow-down text-[10px]"></i>
+              </button>
+              <button onclick="deleteItem('${collectionName}', '${item.id}')" class="w-7 h-7 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg hover:bg-red-600 hover:text-white">
+                <i class="fa-solid fa-trash text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `;
       });
+      document.getElementById(elementId).innerHTML = html || '<p class="text-[11px] text-purple-400 py-2">কোনো আইটেম নেই</p>';
+    }
+
+    window.moveItem = async (col, id, newIndex, isDisabled) => {
+      if (isDisabled) return;
+      await updateDoc(doc(db, col, id), { orderIndex: newIndex });
     };
 
-    // Open Edit Modal
-    window.openEditModal = (type, id, name, price) => {
-      document.getElementById('edit-type').value = type;
-      document.getElementById('edit-doc-id').value = id;
-      document.getElementById('edit-pkg-name').value = name;
-      document.getElementById('edit-pkg-price').value = price;
-      document.getElementById('edit-modal').classList.remove('hidden');
-    };
-
-    window.closeEditModal = () => {
-      document.getElementById('edit-modal').classList.add('hidden');
-    };
-
-    // Save Edit Package
-    window.saveEditPackage = async () => {
-      const type = document.getElementById('edit-type').value;
-      const id = document.getElementById('edit-doc-id').value;
-      const name = document.getElementById('edit-pkg-name').value;
-      const price = Number(document.getElementById('edit-pkg-price').value);
-
-      if(!name || !price) return alert('অনুগ্রহ করে নাম এবং দাম প্রদান করুন!');
-
-      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
-      try {
-        await updateDoc(doc(db, colName, id), { name, price });
-        closeEditModal();
-        alert('প্যাকেজ সফলভাবে আপডেট করা হয়েছে!');
-      } catch(err) {
-        alert('ত্রুটি হয়েছে: ' + err.message);
+    window.deleteItem = async (col, id) => {
+      if (confirm('আপনি কি সত্যিই এটি ডিলিট করতে চান?')) {
+        await deleteDoc(doc(db, col, id));
       }
     };
 
-    // Delete Package
-    window.deletePackage = async (type, id) => {
-      if(!confirm('আপনি কি নিশ্চিত যে এই প্যাকেজটি ডিলিট করতে চান?')) return;
-      const colName = type === 'ff' ? 'ff_packages' : 'ef_packages';
-      try {
-        await deleteDoc(doc(db, colName, id));
-      } catch(err) {
-        alert('ত্রুটি হয়েছে: ' + err.message);
-      }
-    };
-
-    // Add New Package
-    window.addNewPackage = async () => {
-      const cat = document.getElementById('add-pkg-cat').value;
+    // SAVE FUNCTIONS
+    window.savePackage = async () => {
+      const type = document.getElementById('add-category-type').value;
       const name = document.getElementById('add-pkg-name').value.trim();
       const price = Number(document.getElementById('add-pkg-price').value);
 
-      if(!name || !price) return alert('নাম এবং সঠিক দাম প্রদান করুন!');
+      if(!name || !price) return alert('অনুগ্রহ করে নাম এবং সঠিক মূল্য প্রদান করুন!');
+      const col = type === 'ff' ? 'ff_packages' : 'ef_packages';
 
-      const colName = cat === 'ff' ? 'ff_packages' : 'ef_packages';
-      try {
-        await addDoc(collection(db, colName), {
-          name: name,
-          price: price,
-          order: Date.now()
-        });
-
-        document.getElementById('add-pkg-name').value = '';
-        document.getElementById('add-pkg-price').value = '';
-        alert('নতুন প্যাকেজ সফলভাবে যুক্ত হয়েছে!');
-        showAdminTab('items');
-      } catch(err) {
-        alert('ত্রুটি হয়েছে: ' + err.message);
-      }
+      await addDoc(collection(db, col), { name, price, orderIndex: Date.now() });
+      alert('প্যাকেজটি সফলভাবে সেভ হয়েছে!');
+      document.getElementById('add-pkg-name').value = '';
+      document.getElementById('add-pkg-price').value = '';
     };
 
-    // Initial load
-    loadPackages('ff', 'ff-list-container');
-    loadPackages('ef', 'ef-list-container');
+    window.saveEcomProduct = async () => {
+      const title = document.getElementById('add-prod-title').value.trim();
+      const price = Number(document.getElementById('add-prod-price').value);
+      const imageUrl = document.getElementById('add-prod-img').value.trim();
+      const desc = document.getElementById('add-prod-desc').value.trim();
+
+      if(!title || !price || !imageUrl) return alert('নাম, দাম এবং ছবির লিঙ্ক বাধ্যতামূলক!');
+
+      await addDoc(collection(db, "products"), { title, price, imageUrl, desc, orderIndex: Date.now() });
+      alert('ই-কমার্স প্রোডাক্ট সফলভাবে সেভ হয়েছে!');
+      document.getElementById('add-prod-title').value = '';
+      document.getElementById('add-prod-price').value = '';
+      document.getElementById('add-prod-img').value = '';
+      document.getElementById('add-prod-desc').value = '';
+    };
+
+    window.saveNotice = async () => {
+      const text = document.getElementById('add-notice-text').value.trim();
+      const imageUrl = document.getElementById('add-notice-img').value.trim();
+
+      await setDoc(doc(db, "settings", "notice"), { text, imageUrl });
+      alert('নোটিশ সফলভাবে আপডেট হয়েছে!');
+    };
   </script>
 </body>
 </html>
