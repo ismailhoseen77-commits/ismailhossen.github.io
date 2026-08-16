@@ -3,189 +3,255 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MIHADX PRO BD - Official Store</title>
+  <title>MIHADX PRO BD - Official Shop</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; color: #1e293b; }
-    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; }
-    .bkash-bg { background-color: #e2136e; }
+    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0d1117; color: #f0f6fc; }
+    .glass-card { background: rgba(22, 27, 34, 0.85); border: 1px solid rgba(48, 54, 61, 0.8); backdrop-filter: blur(12px); }
   </style>
 </head>
-<body class="min-h-screen pb-24">
+<body class="min-h-screen pb-20">
 
-  <!-- Main Container -->
-  <div class="max-w-md mx-auto p-4 space-y-4">
-
-    <!-- Top Header -->
-    <div class="glass-card rounded-2xl p-4 flex justify-between items-center shadow-sm">
-      <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-purple-200">
-          <i class="fa-solid fa-bolt"></i>
-        </div>
-        <div>
-          <h1 class="font-bold text-base text-purple-900 tracking-wide">MIHADX PRO BD</h1>
-          <p class="text-[11px] text-purple-600 font-medium">বিশ্বাসযোগ্য টপ-আপ ও শপ</p>
-        </div>
+  <!-- TOP HEADER -->
+  <div class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 p-3">
+    <div class="max-w-md mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white text-xs shadow-lg shadow-purple-600/30">M</div>
+        <span class="font-bold text-sm tracking-wide bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">MIHADX PRO BD</span>
       </div>
-      <a href="login.html" id="top-auth-btn" class="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-purple-100 transition">
-        লগইন
-      </a>
+      <button id="top-auth-btn" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-purple-600/20 text-purple-300 border border-purple-500/30"></button>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto p-4 space-y-5">
+
+    <!-- NOTICE BANNER -->
+    <div id="notice-container" class="hidden glass-card rounded-2xl p-3 border border-purple-500/30 space-y-2">
+      <div class="flex items-center gap-2 text-purple-400 text-xs font-bold">
+        <i class="fa-solid fa-bullhorn animate-pulse"></i>
+        <span>বিশেষ বিজ্ঞপ্তি</span>
+      </div>
+      <p id="notice-text" class="text-xs text-slate-300 leading-relaxed"></p>
+      <img id="notice-img" class="w-full h-32 object-cover rounded-xl hidden border border-slate-800">
     </div>
 
-    <!-- Notice Bar -->
-    <div id="notice-container" class="hidden glass-card rounded-2xl p-3 border-l-4 border-l-purple-600 space-y-2">
-      <div class="flex items-center gap-2 text-xs font-bold text-purple-800">
-        <span class="bg-purple-600 text-white px-2 py-0.5 rounded-md text-[10px]">নোটিশ</span>
-        <marquee id="notice-text" class="text-slate-700 font-normal"></marquee>
-      </div>
-      <img id="notice-img" class="hidden w-full h-28 object-cover rounded-xl mt-1 border border-purple-100" />
-    </div>
-
-    <!-- VIEW 1: HOME PAGE -->
-    <div id="view-home" class="space-y-4">
-      <!-- Top-Up Category -->
+    <!-- MAIN DASHBOARD VIEW -->
+    <div id="view-home" class="space-y-5">
+      
+      <!-- COMPUTER SERVICES SECTION -->
       <div class="space-y-2">
-        <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-          <i class="fa-solid fa-gamepad text-purple-600"></i> গেম টপ-আপ ক্যাটাগরি
+        <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-desktop"></i> কম্পিউটার সার্ভিসসমূহ
+        </h2>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="orderCompService('MS Excel Data & Analytics Work')" class="glass-card p-3 rounded-2xl text-left hover:border-purple-500/60 transition group">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-file-excel text-sm"></i>
+            </div>
+            <p class="font-bold text-xs text-slate-200">MS Excel</p>
+            <p class="text-[10px] text-slate-400">ডাটা এন্ট্রি ও এনালাইসিস</p>
+          </button>
+
+          <button onclick="orderCompService('MS Word Document Formatting')" class="glass-card p-3 rounded-2xl text-left hover:border-purple-500/60 transition group">
+            <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-file-word text-sm"></i>
+            </div>
+            <p class="font-bold text-xs text-slate-200">MS Word</p>
+            <p class="text-[10px] text-slate-400">টাইপিং ও কম্পোজিং</p>
+          </button>
+
+          <button onclick="orderCompService('MS PowerPoint Slide Design')" class="glass-card p-3 rounded-2xl text-left hover:border-purple-500/60 transition group">
+            <div class="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-file-powerpoint text-sm"></i>
+            </div>
+            <p class="font-bold text-xs text-slate-200">MS PowerPoint</p>
+            <p class="text-[10px] text-slate-400">প্রেজেন্টেশন স্লাইড ডিজাইন</p>
+          </button>
+
+          <button onclick="orderCompService('Professional Data Entry Service')" class="glass-card p-3 rounded-2xl text-left hover:border-purple-500/60 transition group">
+            <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-keyboard text-sm"></i>
+            </div>
+            <p class="font-bold text-xs text-slate-200">Data Entry</p>
+            <p class="text-[10px] text-slate-400">প্রফেশনাল ডাটা এন্ট্রি</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- GAME TOPUP CATEGORIES -->
+      <div class="space-y-2">
+        <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-gamepad"></i> গেম টপআপ ক্যাটাগরি
         </h2>
         <div class="grid grid-cols-2 gap-3">
-          <!-- Free Fire -->
-          <div onclick="openCategory('ff')" class="glass-card p-3 rounded-2xl text-center cursor-pointer hover:border-purple-400 transition shadow-sm hover:shadow-md">
-            <div class="h-20 bg-slate-900 rounded-xl flex items-center justify-center mb-2 overflow-hidden">
-              <span class="text-amber-400 font-black text-sm tracking-wider">FREE FIRE</span>
+          <button onclick="openCategory('ff')" class="glass-card p-3 rounded-2xl text-center hover:border-purple-500/50 transition">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-2">
+              <i class="fa-solid fa-fire text-lg"></i>
             </div>
-            <p class="font-bold text-xs text-slate-800">Free Fire TopUp</p>
-          </div>
-          <!-- eFootball -->
-          <div onclick="openCategory('ef')" class="glass-card p-3 rounded-2xl text-center cursor-pointer hover:border-purple-400 transition shadow-sm hover:shadow-md">
-            <div class="h-20 bg-blue-900 rounded-xl flex items-center justify-center mb-2 overflow-hidden">
-              <span class="text-yellow-400 font-black text-sm tracking-wider">eFOOTBALL</span>
+            <p class="font-bold text-xs">Free Fire TopUp</p>
+          </button>
+          <button onclick="openCategory('ef')" class="glass-card p-3 rounded-2xl text-center hover:border-purple-500/50 transition">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-2">
+              <i class="fa-solid fa-futbol text-lg"></i>
             </div>
-            <p class="font-bold text-xs text-slate-800">eFootball Coins</p>
-          </div>
+            <p class="font-bold text-xs">eFootball TopUp</p>
+          </button>
         </div>
       </div>
 
-      <!-- E-Commerce Shop Section -->
+      <!-- E-COMMERCE PRODUCTS -->
       <div class="space-y-2">
-        <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-          <i class="fa-solid fa-bag-shopping text-purple-600"></i> ই-কমার্স শপ
+        <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-store"></i> ই-কমার্স শপ
         </h2>
-        <div id="home-prod-list" class="grid grid-cols-2 gap-3">
-          <p class="text-xs text-slate-400 col-span-2 text-center py-4">প্রোডাক্ট লোড হচ্ছে...</p>
+        <div id="ecommerce-list" class="grid grid-cols-2 gap-3">
+          <p class="text-xs text-slate-500 col-span-2 text-center py-4">প্রোডাক্ট লোড হচ্ছে...</p>
         </div>
       </div>
-    </div>
-        <!-- VIEW 2: PACKAGES LIST PAGE -->
-    <div id="view-packages" class="hidden space-y-3">
-      <button onclick="showView('home')" class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
-        <i class="fa-solid fa-arrow-left"></i> ব্যাক করুন
-      </button>
-      <h2 id="pkg-title" class="text-sm font-bold text-purple-900">প্যাকেজসমূহ</h2>
-      <div id="pkg-list-container" class="grid grid-cols-2 gap-2.5"></div>
-    </div>
 
-    <!-- VIEW 3: INPUT USER DETAILS PAGE -->
-    <div id="view-input" class="hidden space-y-3">
-      <button onclick="showView('packages')" class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+              </div>
+      <!-- VIEW 2: PACKAGES SELECTION (FF / EF) -->
+    <div id="view-packages" class="hidden space-y-3">
+      <button onclick="showView('home')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
       </button>
-      <div class="glass-card p-4 rounded-2xl space-y-3">
-        <h3 id="selected-item-info" class="font-bold text-xs text-purple-900 border-b pb-2"></h3>
-        
-        <!-- FF Input Form -->
-        <div id="ff-input-group" class="space-y-3 hidden">
-          <div>
-            <label class="text-[11px] font-semibold text-slate-600">ফ্রি ফায়ার Player UID লিখুন</label>
-            <input type="number" id="input-ff-uid" placeholder="123......." class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-purple-600">
-          </div>
-        </div>
+      <h2 id="pkg-title" class="text-xs font-bold text-purple-200"></h2>
+      <div id="packages-list" class="space-y-2"></div>
+    </div>
 
-        <!-- EF Input Form -->
-        <div id="ef-input-group" class="space-y-3 hidden">
+    <!-- VIEW 3: INPUT DETAILS FOR GAMING -->
+    <div id="view-input" class="hidden space-y-3">
+      <button onclick="showView('packages')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
+        <i class="fa-solid fa-arrow-left"></i> ব্যাক
+      </button>
+      
+      <div class="glass-card p-4 rounded-2xl space-y-3">
+        <p class="text-xs font-bold text-purple-300 border-b border-slate-800 pb-2" id="selected-item-display"></p>
+        
+        <div id="game-inputs" class="space-y-3">
           <div>
-            <label class="text-[11px] font-semibold text-slate-600">লগইন টাইপ</label>
-            <select id="input-ef-type" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none">
-              <option value="Konami ID">Konami ID</option>
-              <option value="Gmail ID">Gmail ID</option>
+            <label class="text-[11px] text-slate-400">একাউন্ট টাইপ সিলেক্ট করুন</label>
+            <select id="input-account-type" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+              <option value="In-Game (UID)">In-Game (UID)</option>
+              <option value="Facebook Login">Facebook Login</option>
+              <option value="Gmail Login">Gmail Login</option>
             </select>
           </div>
-          <input type="text" id="input-ef-id" placeholder="Konami ID / Email" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none">
-          <input type="password" id="input-ef-pass" placeholder="পাসওয়ার্ড" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none">
-          <input type="text" id="input-ef-backup" placeholder="ব্যাকআপ কোড (ঐচ্ছিক)" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none">
-          <input type="number" id="input-ef-wa" placeholder="আপনার হোয়াটসঅ্যাপ নম্বর" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none">
+          <div>
+            <label class="text-[11px] text-slate-400">Player UID / Account ID</label>
+            <input type="text" id="input-uid" placeholder="এখানে আপনার Player UID দিন" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400">পাসওয়ার্ড (শুধুমাত্র Fb/Gmail এর ক্ষেত্রে)</label>
+            <input type="password" id="input-pass" placeholder="পাসওয়ার্ড না থাকলে খালি রাখুন" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+          </div>
         </div>
 
-        <button onclick="goToPaymentSelection()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md shadow-purple-200">
+        <button onclick="goToPaymentSelection('game')" class="w-full bg-purple-600 hover:bg-purple-700 font-bold py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
           পরবর্তী ধাপে যান
         </button>
       </div>
     </div>
 
-    <!-- VIEW 4: MOBILE BANKING SELECTION -->
-    <div id="view-payment-select" class="hidden space-y-4">
-      <button onclick="showView('input')" class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+    <!-- VIEW 3.5: E-COMMERCE SHIPPING FORM -->
+    <div id="view-ecom-form" class="hidden space-y-3">
+      <button onclick="showView('home')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
+        <i class="fa-solid fa-arrow-left"></i> ব্যাক
+      </button>
+
+      <div class="glass-card p-4 rounded-2xl space-y-3">
+        <p class="text-xs font-bold text-purple-300 border-b border-slate-800 pb-2" id="ecom-item-display"></p>
+
+        <div class="space-y-3">
+          <div>
+            <label class="text-[11px] text-slate-400">আপনার পূর্ণ নাম</label>
+            <input type="text" id="ecom-name" placeholder="আপনার নাম লিখুন" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400">ফোন নম্বর (ডেলিভারির জন্য)</label>
+            <input type="tel" id="ecom-phone" placeholder="017XXXXXXXX" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400">সাইজ / কালার / ভেরিয়েন্ট (যেমন: L Size)</label>
+            <input type="text" id="ecom-size" placeholder="যেমন: M, L, XL অথবা কালার" class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none">
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400">সম্পূর্ণ ঠিকানা (বাসা নম্বর, এরিয়া, জেলা)</label>
+            <textarea id="ecom-address" placeholder="আপনার পূর্ণ ঠিকানা লিখুন..." class="w-full mt-1 p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs outline-none h-16"></textarea>
+          </div>
+        </div>
+
+        <button onclick="goToPaymentSelection('ecom')" class="w-full bg-purple-600 hover:bg-purple-700 font-bold py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
+          পরবর্তী ধাপে যান
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 4: PAYMENT METHOD SELECTION -->
+    <div id="view-payment-select" class="hidden space-y-3">
+      <button onclick="showView('input')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
       </button>
 
       <div class="glass-card p-4 rounded-2xl space-y-4 text-center">
-        <div class="bg-blue-600 text-white py-2 rounded-xl text-xs font-bold shadow-sm">
-          মোবাইল ব্যাংকিং
+        <div class="bg-purple-600/20 text-purple-300 py-2 rounded-xl text-xs font-bold border border-purple-500/30">
+          মোট প্রদয়: <span id="pay-select-amount">0</span> BDT
         </div>
 
-        <div class="space-y-3">
-          <div onclick="openBkashPage()" class="p-3 border-2 border-pink-500 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-pink-50 transition shadow-sm">
+        <div class="space-y-2.5">
+          <div onclick="selectPaymentMethod('bkash')" class="p-3 border border-pink-500/50 rounded-2xl flex items-center justify-between cursor-pointer bg-pink-500/5 hover:bg-pink-500/10 transition">
             <div class="flex items-center gap-3">
-              <span class="font-black text-xl text-pink-600 tracking-tighter">bKash</span>
-              <span class="text-xs font-bold text-slate-700">বিকাশ (চালু আছে)</span>
+              <span class="font-bold text-xs text-pink-400">bKash (বিকাশ)</span>
             </div>
-            <i class="fa-solid fa-chevron-right text-pink-500 text-xs"></i>
+            <i class="fa-solid fa-chevron-right text-pink-400 text-xs"></i>
           </div>
-        </div>
 
-        <div class="bg-purple-50 border border-purple-100 p-2.5 rounded-xl text-xs text-purple-900 font-bold">
-          Pay <span id="pay-select-amount">0</span> BDT
+          <!-- Cash on Delivery Option (Only for E-Commerce) -->
+          <div id="cod-option" class="hidden p-3 border border-emerald-500/50 rounded-2xl flex items-center justify-between cursor-pointer bg-emerald-500/5 hover:bg-emerald-500/10 transition" onclick="submitCashOnDelivery()">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-xs text-emerald-400">Cash on Delivery (ক্যাশ অন ডেলিভারি)</span>
+            </div>
+            <i class="fa-solid fa-truck text-emerald-400 text-xs"></i>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- VIEW 5: BKASH INSTRUCTION & VERIFY PAGE -->
     <div id="view-bkash" class="hidden space-y-3">
-      <button onclick="showView('payment-select')" class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+      <button onclick="showView('payment-select')" class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-xl">
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
       </button>
 
-      <div class="bkash-bg text-white rounded-3xl p-5 space-y-4 shadow-lg">
-        <div class="text-center font-bold text-sm tracking-wide border-b border-pink-400/40 pb-2">
-          ট্রানজেকশন আইডি দিন
-        </div>
+      <div class="bg-pink-900/30 border border-pink-500/40 text-white rounded-3xl p-5 space-y-4 shadow-lg">
+        <p class="text-center font-bold text-sm tracking-wide border-b border-pink-500/30 pb-2">ট্রানজেকশন আইডি দিন</p>
 
-        <input type="text" id="input-trxid" placeholder="ট্রানজেকশন আইডি দিন" class="w-full p-3 rounded-2xl text-slate-800 text-xs text-center font-bold outline-none shadow-inner">
+        <input type="text" id="input-trxid" placeholder="ট্রানজেকশন আইডি দিন" class="w-full p-3 rounded-2xl bg-slate-900 border border-pink-500/50 text-xs text-center uppercase tracking-widest outline-none">
 
-        <div class="text-[11px] space-y-2.5 font-medium leading-relaxed bg-black/10 p-3.5 rounded-2xl border border-pink-400/30">
-          <p>• *247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান।</p>
-          <p>• <b class="text-yellow-300">"Send Money"</b> -এ ক্লিক করুন।</p>
-          <div class="flex justify-between items-center bg-white/20 px-3 py-1.5 rounded-xl">
+        <div class="text-[11px] space-y-2 text-slate-300 bg-black/30 p-3 rounded-2xl border border-pink-500/20">
+          <p><b>*247#</b> ডায়াল করে অথবা bKash অ্যাপের মাধ্যমে ক্যাশ আউট অথবা সেন্ড মানি করুন:</p>
+          <p><b class="text-yellow-300">Send Money / Cashout</b> এ ক্লিক করুন</p>
+          <div class="flex justify-between items-center bg-white/10 p-2 rounded-xl">
             <span>প্রাপক নম্বর:</span>
             <span class="font-mono font-bold text-yellow-300 text-xs">01309735129</span>
-            <button onclick="navigator.clipboard.writeText('01309735129'); alert('নম্বর কপি হয়েছে!');" class="bg-white text-pink-600 text-[10px] font-bold px-2 py-0.5 rounded-md">Copy</button>
+            <button onclick="navigator.clipboard.writeText('01309735129'); alert('নম্বর কপি হয়েছে!');" class="bg-white text-black px-2 py-0.5 rounded-lg text-[10px] font-bold">কপি</button>
           </div>
-          <p>• টাকার পরিমাণ: <b class="text-yellow-300 font-bold" id="bkash-amount-text">0</b> BDT</p>
-          <p>• এখন আপনার bKash Transaction ID দিন এবং VERIFY বাটনে চাপ দিন।</p>
+          <p>টাকার পরিমাণ: <b class="text-yellow-300 font-bold"><span id="bkash-amount-text">0</span> BDT</b></p>
+          <p>এখন আপনার bKash Transaction ID টি দিয়ে VERIFY বাটনে চাপ দিন</p>
         </div>
 
-        <button onclick="verifyAndSubmitOrder()" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-2xl text-xs transition shadow-md tracking-wider">
-          VERIFY
+        <button onclick="verifyAndSubmitOrder()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-2xl text-xs transition">
+          VERIFY ORDER
         </button>
       </div>
     </div>
 
     <!-- VIEW 6: MY ORDERS -->
     <div id="view-my-orders" class="hidden space-y-3">
-      <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-        <i class="fa-solid fa-clock-rotate-left text-purple-600"></i> আমার অর্ডারসমূহ
+      <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+        <i class="fa-solid fa-clock-rotate-left"></i> আমার অর্ডারসমূহ
       </h2>
       <div id="my-orders-list" class="space-y-2.5">
         <p class="text-xs text-slate-400 text-center py-6">অর্ডার লোড হচ্ছে...</p>
@@ -194,48 +260,36 @@
 
     <!-- VIEW 7: PROFILE -->
     <div id="view-profile" class="hidden space-y-4">
-      <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-        <i class="fa-solid fa-user text-purple-600"></i> প্রোফাইল বিবরণ
+      <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+        <i class="fa-solid fa-user"></i> প্রোফাইল বিবরণ
       </h2>
-
       <div class="glass-card p-4 rounded-2xl space-y-4 text-center">
-        <div class="w-16 h-16 rounded-full bg-purple-100 text-purple-600 mx-auto flex items-center justify-center font-bold text-2xl border-2 border-purple-200">
+        <div class="w-16 h-16 rounded-full bg-purple-500/20 text-purple-400 mx-auto flex items-center justify-center font-bold text-xl">
           <i class="fa-solid fa-user-check"></i>
         </div>
-
         <div class="space-y-1">
-          <p id="profile-email" class="font-bold text-sm text-slate-800">Guest User</p>
-          <p class="text-[11px] text-slate-500 font-medium">সাধারণ ইউজার অ্যাকাউন্ট</p>
+          <p id="profile-email" class="font-bold text-sm text-slate-200">Guest User</p>
+          <p class="text-[11px] text-slate-500">সাধারণ কাস্টমার অ্যাকাউন্ট</p>
         </div>
-
-        <!-- Total Spent Card -->
-        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3.5 rounded-2xl shadow-sm">
-          <p class="text-[10px] uppercase font-semibold tracking-wider text-purple-100">মোট লেনদেন (Total Spent)</p>
-          <p class="text-xl font-black mt-0.5"><span id="profile-total-spent">0</span> BDT</p>
-        </div>
-
-        <button onclick="logoutUser()" id="profile-logout-btn" class="hidden w-full bg-red-50 text-red-600 border border-red-200 font-bold py-2.5 rounded-xl text-xs hover:bg-red-100 transition">
-          <i class="fa-solid fa-right-from-bracket"></i> লগআউট করুন
+        <button onclick="logoutUser()" id="profile-logout-btn" class="hidden w-full bg-red-500/20 text-red-400 border border-red-500/30 py-2 rounded-xl font-bold text-xs">
+          লগআউট করুন
         </button>
       </div>
     </div>
 
   </div>
-
-  <!-- FIXED BOTTOM NAVIGATION BAR -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40">
+    <!-- FIXED BOTTOM NAVIGATION BAR -->
+  <div class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 z-40">
     <div class="max-w-md mx-auto grid grid-cols-3 py-2 text-center">
-      <button onclick="navSwitch('home')" id="nav-home" class="flex flex-col items-center justify-center text-purple-600 font-bold gap-1">
+      <button onclick="navSwitch('home')" id="nav-home" class="flex flex-col items-center justify-center text-purple-400">
         <i class="fa-solid fa-house text-base"></i>
         <span class="text-[10px]">হোম</span>
       </button>
-
-      <button onclick="navSwitch('my-orders')" id="nav-my-orders" class="flex flex-col items-center justify-center text-slate-400 font-medium gap-1">
+      <button onclick="navSwitch('my-orders')" id="nav-my-orders" class="flex flex-col items-center justify-center text-slate-400">
         <i class="fa-solid fa-bag-shopping text-base"></i>
         <span class="text-[10px]">মাই অর্ডার</span>
       </button>
-
-      <button onclick="navSwitch('profile')" id="nav-profile" class="flex flex-col items-center justify-center text-slate-400 font-medium gap-1">
+      <button onclick="navSwitch('profile')" id="nav-profile" class="flex flex-col items-center justify-center text-slate-400">
         <i class="fa-solid fa-user text-base"></i>
         <span class="text-[10px]">প্রোফাইল</span>
       </button>
@@ -244,112 +298,28 @@
 
   <!-- FLOATING SUPPORT BUTTON & MENU -->
   <div class="fixed bottom-20 right-4 z-50">
-    <button onclick="toggleSupportMenu()" class="w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95">
+    <button onclick="toggleSupportMenu()" class="w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-purple-600/40">
       <i class="fa-solid fa-headset text-xl"></i>
     </button>
 
-    <div id="support-menu" class="hidden absolute bottom-14 right-0 w-52 bg-white border border-slate-200 rounded-2xl shadow-2xl p-2 space-y-1 text-xs">
-      <a href="https://wa.me/8801576502490" target="_blank" onclick="toggleSupportMenu()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 text-slate-800 font-bold transition">
-        <div class="w-8 h-8 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+    <div id="support-menu" class="hidden absolute bottom-14 right-0 w-52 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-2 space-y-2">
+      <a href="https://wa.me/8801576502490" target="_blank" onclick="toggleSupportMenu()" class="flex items-center gap-3 p-2 hover:bg-slate-800 rounded-xl transition">
+        <div class="w-8 h-8 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center">
           <i class="fa-brands fa-whatsapp text-lg"></i>
         </div>
         <div>
-          <p class="text-xs">WhatsApp সাপোর্ট</p>
-          <p class="text-[10px] text-slate-400 font-normal">সরাসরি চ্যাট করুন</p>
+          <p class="text-xs font-bold text-slate-200">WhatsApp সাপোর্ট</p>
+          <p class="text-[10px] text-slate-400">সরাসরি মেসেজ করুন</p>
         </div>
       </a>
-
-      <button onclick="openLiveChat()" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-purple-50 text-slate-800 font-bold transition text-left">
-        <div class="w-8 h-8 bg-purple-600 text-white rounded-xl flex items-center justify-center shadow-sm">
-          <i class="fa-solid fa-robot text-sm"></i>
-        </div>
-        <div>
-          <p class="text-xs">লাইভ চ্যাট (AI Bot)</p>
-          <p class="text-[10px] text-slate-400 font-normal">২৪/৭ স্মার্ট অ্যাসিস্ট্যান্ট</p>
-        </div>
-      </button>
     </div>
   </div>
-
-  <!-- LIVE CHAT MODAL WINDOW -->
-  <div id="live-chat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[480px]">
-      <div class="bg-purple-600 text-white p-3.5 flex justify-between items-center shadow-md">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
-            <i class="fa-solid fa-robot text-sm"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-xs">AI অ্যাসিস্ট্যান্ট</h4>
-            <p class="text-[10px] text-purple-200 font-medium">অনলাইন • সাহায্য করতে প্রস্তুত</p>
-          </div>
-        </div>
-        <button onclick="closeLiveChat()" class="text-purple-200 hover:text-white text-base">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div id="chat-messages" class="flex-1 p-3.5 overflow-y-auto space-y-3 bg-slate-50 text-xs">
-        <div class="bg-purple-100 text-purple-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] border border-purple-200 leading-relaxed">
-          হ্যালো! আমি আপনার AI অ্যাসিস্ট্যান্ট। কীভাবে আপনাকে সাহায্য করতে পারি?
-        </div>
-      </div>
-
-      <div class="p-2.5 bg-white border-t border-slate-200 flex items-center gap-2">
-        <input type="text" id="chat-input" placeholder="আপনার প্রশ্নটি লিখুন..." onkeypress="if(event.key==='Enter') sendChatMessage()" class="flex-1 bg-slate-100 p-2.5 rounded-xl text-xs outline-none focus:ring-1 focus:ring-purple-600">
-        <button onclick="sendChatMessage()" class="w-9 h-9 bg-purple-600 hover:bg-purple-700 text-white rounded-xl flex items-center justify-center transition shadow-sm">
-          <i class="fa-solid fa-paper-plane text-xs"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-    <!-- SUPPORT WIDGET SCRIPT -->
-  <script>
-    function toggleSupportMenu() {
-      document.getElementById('support-menu').classList.toggle('hidden');
-    }
-
-    function openLiveChat() {
-      document.getElementById('support-menu').classList.add('hidden');
-      document.getElementById('live-chat-modal').classList.remove('hidden');
-    }
-
-    function closeLiveChat() {
-      document.getElementById('live-chat-modal').classList.add('hidden');
-    }
-
-    function sendChatMessage() {
-      const input = document.getElementById('chat-input');
-      const msg = input.value.trim();
-      if(!msg) return;
-
-      const container = document.getElementById('chat-messages');
-
-      container.innerHTML += `
-        <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto font-medium shadow-sm">
-          ${msg}
-        </div>
-      `;
-
-      input.value = '';
-      container.scrollTop = container.scrollHeight;
-
-      setTimeout(() => {
-        container.innerHTML += `
-          <div class="bg-purple-100 text-purple-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] border border-purple-200 leading-relaxed">
-            ধন্যবাদ! এআই বট খুব শীঘ্রই সম্পূর্ণ চালু হলে সরাসরি প্রশ্নের উত্তর দিতে পারবে।
-          </div>
-        `;
-        container.scrollTop = container.scrollHeight;
-      }, 700);
-    }
-  </script>
 
   <!-- FIREBASE MAIN SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, query, where, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -365,111 +335,44 @@
     const db = getFirestore(app);
 
     let currentUser = null;
-    let selectedType = '';
-    let selectedItem = null;
-
+    let selectedOrderData = {};
     const ADMIN_WHATSAPP = "8801576502490";
 
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
       const topBtn = document.getElementById('top-auth-btn');
       const logoutBtn = document.getElementById('profile-logout-btn');
-      
+
       if(user) {
         topBtn.innerText = "প্রোফাইল";
         topBtn.onclick = () => navSwitch('profile');
-        topBtn.href = "#";
         document.getElementById('profile-email').innerText = user.email;
         logoutBtn.classList.remove('hidden');
         loadUserOrders(user.email);
       } else {
         topBtn.innerText = "লগইন";
-        topBtn.href = "login.html";
+        topBtn.onclick = () => window.location.href = 'login.html';
         document.getElementById('profile-email').innerText = "Guest User (লগইন করা নেই)";
         logoutBtn.classList.add('hidden');
-        document.getElementById('my-orders-list').innerHTML = '<p class="text-xs text-slate-400 text-center py-6">অর্ডার দেখতে অনুগ্রহ করে লগইন করুন!</p>';
+        document.getElementById('my-orders-list').innerHTML = '<p class="text-xs text-slate-500 text-center py-6">লগইন করুন আপনার অর্ডারসমূহ দেখতে</p>';
       }
     });
 
     window.logoutUser = () => {
       signOut(auth).then(() => {
-        alert('সফলভাবে লগআউট হয়েছে!');
+        alert('সফলভাবে লগআউট হয়েছে!');
         window.location.reload();
       });
     };
 
-    // Bottom Nav Switcher
-    window.navSwitch = (tab) => {
-      ['home', 'my-orders', 'profile'].forEach(t => {
-        const btn = document.getElementById('nav-' + t);
-        if(t === tab) {
-          btn.className = "flex flex-col items-center justify-center text-purple-600 font-bold gap-1";
-        } else {
-          btn.className = "flex flex-col items-center justify-center text-slate-400 font-medium gap-1";
-        }
-      });
-
-      showView(tab);
-    };
-
-    // View Navigation Switcher
-    window.showView = (viewName) => {
-      ['home', 'packages', 'input', 'payment-select', 'bkash', 'my-orders', 'profile'].forEach(v => {
-        const el = document.getElementById('view-' + v);
-        if(el) el.classList.add('hidden');
-      });
-      document.getElementById('view-' + viewName).classList.remove('hidden');
-    };
-
-    // Load User Orders & Calculate Total Spent
-    function loadUserOrders(email) {
-      const q = query(collection(db, "orders"), where("userEmail", "==", email));
-      onSnapshot(q, (snap) => {
-        let html = '';
-        let totalSpent = 0;
-
-        snap.forEach(d => {
-          const o = d.data();
-          const price = Number(o.price) || 0;
-          totalSpent += price;
-
-          let statusBg = 'bg-amber-100 text-amber-700 border-amber-200';
-          let statusText = 'Pending';
-          if(o.status === 'Completed') {
-            statusBg = 'bg-emerald-100 text-emerald-700 border-emerald-200';
-            statusText = 'Completed';
-          } else if(o.status === 'Cancelled') {
-            statusBg = 'bg-red-100 text-red-700 border-red-200';
-            statusText = 'Cancelled';
-          }
-
-          html += `
-            <div class="glass-card p-3 rounded-2xl space-y-1.5 shadow-sm">
-              <div class="flex justify-between items-center">
-                <span class="font-bold text-xs text-slate-800">${o.itemName}</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${statusBg}">${statusText}</span>
-              </div>
-              <div class="flex justify-between items-center text-[11px] text-slate-500">
-                <span>TrxID: <b class="font-mono text-slate-700">${o.trxId}</b></span>
-                <span class="font-bold text-purple-700">${price} BDT</span>
-              </div>
-            </div>
-          `;
-        });
-
-        document.getElementById('my-orders-list').innerHTML = html || '<p class="text-xs text-slate-400 text-center py-6">আপনি এখনও কোনো অর্ডার করেননি!</p>';
-        document.getElementById('profile-total-spent').innerText = totalSpent;
-      });
-    }
-
-    // Load Notice
-    onSnapshot(doc(db, "settings", "notice"), (docSnap) => {
-      if (docSnap.exists()) {
+    // LOAD NOTICE & E-COMMERCE PRODUCTS
+    onSnapshot(doc(db, "settings", "notice"), docSnap => {
+      if(docSnap.exists()){
         const data = docSnap.data();
-        if (data.text || data.imageUrl) {
+        if(data.text || data.imageUrl) {
           document.getElementById('notice-container').classList.remove('hidden');
           document.getElementById('notice-text').innerText = data.text || '';
-          if (data.imageUrl) {
+          if(data.imageUrl) {
             const img = document.getElementById('notice-img');
             img.src = data.imageUrl;
             img.classList.remove('hidden');
@@ -478,129 +381,217 @@
       }
     });
 
-    // Load E-Commerce Products
     onSnapshot(collection(db, "products"), snap => {
       let html = '';
       snap.forEach(d => {
         const p = d.data();
-        html += `<div class="glass-card p-2.5 rounded-2xl shadow-sm space-y-1.5 flex flex-col justify-between">
-          <img src="${p.imageUrl}" class="w-full h-28 object-cover rounded-xl">
-          <div>
-            <p class="font-bold text-xs text-slate-800 line-clamp-1">${p.title}</p>
-            <p class="text-xs font-black text-purple-700 mt-0.5">${p.price} TK</p>
+        html += `
+          <div onclick="selectEcomProduct('${p.title}', ${p.price})" class="glass-card p-2.5 rounded-2xl hover:border-purple-500/50 transition cursor-pointer flex flex-col justify-between">
+            <img src="${p.imageUrl}" class="w-full h-28 object-cover rounded-xl mb-2">
+            <div>
+              <p class="font-bold text-xs text-slate-200 line-clamp-1">${p.title}</p>
+              <p class="text-[11px] font-bold text-pink-400 mt-1">${p.price} BDT</p>
+            </div>
+            <button class="w-full mt-2 bg-purple-600/30 text-purple-300 text-[11px] font-bold py-1 rounded-lg border border-purple-500/30">অর্ডার করুন</button>
           </div>
-        </div>`;
+        `;
       });
-      document.getElementById('home-prod-list').innerHTML = html || '<p class="text-xs text-slate-400 col-span-2 text-center py-4">কোনো প্রোডাক্ট পাওয়া যায়নি</p>';
+      document.getElementById('ecommerce-list').innerHTML = html || '<p class="text-xs text-slate-500 col-span-2 text-center">কোনো প্রোডাক্ট পাওয়া যায়নি</p>';
     });
 
-    // Category Open & Packages Selection
-    window.openCategory = (type) => {
-      selectedType = type;
-      document.getElementById('pkg-title').innerText = type === 'ff' ? 'ফ্রি ফায়ার প্যাকেজসমূহ' : 'ই-ফুটবল প্যাকেজসমূহ';
-      const col = type === 'ff' ? 'ff_packages' : 'ef_packages';
+    // COMPUTER SERVICE ORDER VIA WHATSAPP
+    window.orderCompService = (serviceName) => {
+      const userMail = currentUser ? currentUser.email : "Guest (Not Logged In)";
+      const msg = `হ্যালো! আমি আপনার ওয়েবসাইট থেকে এই কম্পিউটার সার্ভিসটি নিতে চাই:\n\n📌 সার্ভিস: *${serviceName}*\n👤 ইউজার ইমেইল: ${userMail}\n\nঅনুগ্রহ করে আমার সাথে যোগাযোগ করুন।`;
+      window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    };
+
+    // CATEGORY OPENING FOR PACKAGES
+    window.openCategory = (cat) => {
+      const col = cat === 'ff' ? 'ff_packages' : 'ef_packages';
+      document.getElementById('pkg-title').innerText = cat === 'ff' ? 'ফ্রি ফায়ার প্যাকেজসমূহ' : 'ই-ফুটবল প্যাকেজসমূহ';
 
       onSnapshot(collection(db, col), snap => {
         let html = '';
         snap.forEach(d => {
           const item = d.data();
-          html += `<div onclick='selectPackage(${JSON.stringify(item)})' class="glass-card p-3 rounded-2xl text-center cursor-pointer hover:border-purple-400 transition shadow-sm">
-            <p class="font-bold text-xs text-purple-900">${item.name}</p>
-            <p class="text-xs font-bold text-pink-600 mt-1 bg-pink-50 py-0.5 rounded-lg border border-pink-100">${item.price} TK</p>
-          </div>`;
+          html += `
+            <div onclick="selectGamePackage('${item.name}', ${item.price})" class="glass-card p-3 rounded-2xl flex justify-between items-center cursor-pointer hover:border-purple-500/50">
+              <span class="font-bold text-xs">${item.name}</span>
+              <span class="font-bold text-xs text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-xl border border-pink-500/20">${item.price} TK</span>
+            </div>
+          `;
         });
-        document.getElementById('pkg-list-container').innerHTML = html || '<p class="col-span-2 text-xs text-slate-400 text-center py-4">প্যাকেজ খালি রয়েছে</p>';
+        document.getElementById('packages-list').innerHTML = html || '<p class="text-xs text-slate-500 py-4">কোনো প্যাকেজ পাওয়া যায়নি</p>';
+        showView('packages');
       });
-
-      showView('packages');
     };
 
-    window.selectPackage = (item) => {
-      selectedItem = item;
-      document.getElementById('selected-item-info').innerText = `${item.name} - ${item.price} TK`;
-      
-      if(selectedType === 'ff') {
-        document.getElementById('ff-input-group').classList.remove('hidden');
-        document.getElementById('ef-input-group').classList.add('hidden');
-      } else {
-        document.getElementById('ef-input-group').classList.remove('hidden');
-        document.getElementById('ff-input-group').classList.add('hidden');
-      }
+    // SELECT GAME PACKAGE
+    window.selectGamePackage = (name, price) => {
+      selectedOrderData = { type: 'game', itemName: name, price: price };
+      document.getElementById('selected-item-display').innerText = `সিলেক্ট করা হয়েছে: ${name} (${price} BDT)`;
       showView('input');
     };
 
-    window.goToPaymentSelection = () => {
-      if(selectedType === 'ff') {
-        const uid = document.getElementById('input-ff-uid').value;
-        if(!uid) return alert('অনুগ্রহ করে Player UID প্রদান করুন!');
-      } else {
-        const id = document.getElementById('input-ef-id').value;
-        const pass = document.getElementById('input-ef-pass').value;
-        if(!id || !pass) return alert('আইডি এবং পাসওয়ার্ড প্রদান করুন!');
+    // SELECT E-COMMERCE PRODUCT
+    window.selectEcomProduct = (title, price) => {
+      selectedOrderData = { type: 'ecom', itemName: title, price: price };
+      document.getElementById('ecom-item-display').innerText = `প্রোডাক্ট: ${title} (${price} BDT)`;
+      showView('ecom-form');
+    };
+
+    // GO TO PAYMENT SELECTION
+    window.goToPaymentSelection = (type) => {
+      if(!currentUser) {
+        alert('অর্ডার করতে আপনাকে প্রথমে লগইন করতে হবে!');
+        return window.location.href = 'login.html';
       }
 
-      document.getElementById('pay-select-amount').innerText = selectedItem.price;
+      if(type === 'game') {
+        const uid = document.getElementById('input-uid').value.trim();
+        if(!uid) return alert('অনুগ্রহ করে আপনার Player UID দিন!');
+
+        selectedOrderData.gameUid = uid;
+        selectedOrderData.accountType = document.getElementById('input-account-type').value;
+        selectedOrderData.password = document.getElementById('input-pass').value.trim() || 'N/A';
+        document.getElementById('cod-option').classList.add('hidden');
+      } else if(type === 'ecom') {
+        const name = document.getElementById('ecom-name').value.trim();
+        const phone = document.getElementById('ecom-phone').value.trim();
+        const size = document.getElementById('ecom-size').value.trim();
+        const address = document.getElementById('ecom-address').value.trim();
+
+        if(!name || !phone || !address) return alert('অনুগ্রহ করে নাম, ফোন নম্বর এবং সম্পূর্ণ ঠিকানা দিন!');
+
+        selectedOrderData.customerName = name;
+        selectedOrderData.phone = phone;
+        selectedOrderData.size = size || 'Standard';
+        selectedOrderData.address = address;
+
+        document.getElementById('cod-option').classList.remove('hidden');
+      }
+
+      document.getElementById('pay-select-amount').innerText = selectedOrderData.price;
       showView('payment-select');
     };
 
-    window.openBkashPage = () => {
-      document.getElementById('bkash-amount-text').innerText = selectedItem.price;
-      showView('bkash');
+    window.selectPaymentMethod = (method) => {
+      if(method === 'bkash') {
+        document.getElementById('bkash-amount-text').innerText = selectedOrderData.price;
+        showView('bkash');
+      }
     };
 
-    window.verifyAndSubmitOrder = async () => {
-      const trxId = document.getElementById('input-trxid').value.trim();
-      if(!trxId) return alert('অনুগ্রহ করে ট্রানজেকশন আইডি প্রদান করুন!');
+    // SUBMIT CASH ON DELIVERY ORDER
+    window.submitCashOnDelivery = async () => {
+      if(!currentUser) return;
 
-      let orderData = {
-        itemName: selectedItem.name,
-        price: selectedItem.price,
-        trxId: trxId,
-        gameType: selectedType === 'ff' ? 'FreeFire' : 'eFootball',
-        userEmail: currentUser ? currentUser.email : 'Guest',
+      const orderObj = {
+        userEmail: currentUser.email,
+        itemName: selectedOrderData.itemName,
+        price: selectedOrderData.price,
+        paymentMethod: 'Cash on Delivery',
+        trxId: 'COD-' + Date.now().toString().slice(-6),
+        customerName: selectedOrderData.customerName,
+        phone: selectedOrderData.phone,
+        size: selectedOrderData.size,
+        address: selectedOrderData.address,
         status: 'Pending',
-        createdAt: new Date()
+        timestamp: Date.now()
       };
 
-      if(selectedType === 'ff') {
-        orderData.gameUid = document.getElementById('input-ff-uid').value;
-      } else {
-        orderData.accountType = document.getElementById('input-ef-type').value;
-        orderData.accountId = document.getElementById('input-ef-id').value;
-        orderData.password = document.getElementById('input-ef-pass').value;
-        orderData.backupCode = document.getElementById('input-ef-backup').value || 'N/A';
-        orderData.whatsapp = document.getElementById('input-ef-wa').value || 'N/A';
+      try {
+        await addDoc(collection(db, "orders"), orderObj);
+
+        const waMsg = `🛒 *নতুন ক্যাশ অন ডেলিভারি অর্ডার!*\n\n📦 প্রোডাক্ট: *${orderObj.itemName}*\n💰 মূল্য: ${orderObj.price} BDT\n👤 কাস্টমার নাম: ${orderObj.customerName}\n📞 ফোন: ${orderObj.phone}\n📏 সাইজ/ভেরিয়েন্ট: ${orderObj.size}\n🏠 ঠিকানা: ${orderObj.address}\n✉️ ইমেইল: ${orderObj.userEmail}`;
+
+        alert('আপনার Cash on Delivery অর্ডারটি গৃহীত হয়েছে!');
+        window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waMsg)}`, '_blank');
+        navSwitch('my-orders');
+      } catch (e) {
+        alert('অর্ডার সাবমিট করতে সমস্যা হয়েছে!');
+      }
+    };
+
+    // VERIFY & SUBMIT BKASH ORDER
+    window.verifyAndSubmitOrder = async () => {
+      const trxId = document.getElementById('input-trxid').value.trim();
+      if(!trxId) return alert('অনুগ্রহ করে আপনার bKash Transaction ID টি দিন!');
+
+      const orderObj = {
+        userEmail: currentUser.email,
+        itemName: selectedOrderData.itemName,
+        price: selectedOrderData.price,
+        paymentMethod: 'bKash',
+        trxId: trxId,
+        status: 'Pending',
+        timestamp: Date.now()
+      };
+
+      if(selectedOrderData.type === 'game') {
+        orderObj.gameUid = selectedOrderData.gameUid;
+        orderObj.accountType = selectedOrderData.accountType;
+        orderObj.password = selectedOrderData.password;
+      } else if(selectedOrderData.type === 'ecom') {
+        orderObj.customerName = selectedOrderData.customerName;
+        orderObj.phone = selectedOrderData.phone;
+        orderObj.size = selectedOrderData.size;
+        orderObj.address = selectedOrderData.address;
       }
 
       try {
-        await addDoc(collection(db, "orders"), orderData);
-
-        let waText = `*NEW ORDER - MIHADX PRO BD*%0A`;
-        waText += `------------------------------%0A`;
-        waText += `*Item:* ${orderData.itemName}%0A`;
-        waText += `*Price:* ${orderData.price} BDT%0A`;
-        waText += `*TrxID:* ${orderData.trxId}%0A`;
-        waText += `*User Email:* ${orderData.userEmail}%0A`;
-        
-        if(selectedType === 'ff') {
-          waText += `*Game:* Free Fire%0A`;
-          waText += `*UID:* ${orderData.gameUid}%0A`;
-        } else {
-          waText += `*Game:* eFootball%0A`;
-          waText += `*Type:* ${orderData.accountType}%0A`;
-          waText += `*ID/Email:* ${orderData.accountId}%0A`;
-          waText += `*Password:* ${orderData.password}%0A`;
-          waText += `*Backup Code:* ${orderData.backupCode}%0A`;
-          waText += `*WhatsApp:* ${orderData.whatsapp}%0A`;
-        }
-        waText += `------------------------------`;
-
-        alert('অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে!');
-        window.location.href = `https://wa.me/${ADMIN_WHATSAPP}?text=${waText}`;
-
-      } catch(err) {
-        alert('ত্রুটি হয়েছে: ' + err.message);
+        await addDoc(collection(db, "orders"), orderObj);
+        alert('আপনার অর্ডারটি সফলভাবে জমা দেওয়া হয়েছে!');
+        document.getElementById('input-trxid').value = '';
+        navSwitch('my-orders');
+      } catch(e) {
+        alert('অর্ডার জমা করতে সমস্যা হয়েছে!');
       }
+    };
+
+    // NAVIGATION CONTROLLER
+    window.showView = (v) => {
+      ['home', 'packages', 'input', 'ecom-form', 'payment-select', 'bkash', 'my-orders', 'profile'].forEach(view => {
+        const el = document.getElementById('view-' + view);
+        if(el) el.classList.add('hidden');
+      });
+      document.getElementById('view-' + v).classList.remove('hidden');
+    };
+
+    window.navSwitch = (tab) => {
+      ['home', 'my-orders', 'profile'].forEach(t => {
+        document.getElementById('nav-' + t).className = "flex flex-col items-center justify-center text-slate-400";
+      });
+      document.getElementById('nav-' + tab).className = "flex flex-col items-center justify-center text-purple-400";
+      showView(tab);
+    };
+
+    function loadUserOrders(email) {
+      const q = query(collection(db, "orders"), where("userEmail", "==", email));
+      onSnapshot(q, (snap) => {
+        let html = '';
+        snap.forEach(d => {
+          const o = d.data();
+          let statusBg = o.status === 'Completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : (o.status === 'Cancelled' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20');
+          
+          html += `
+            <div class="glass-card p-3 rounded-2xl space-y-1.5 text-xs">
+              <div class="flex justify-between items-center border-b border-slate-800 pb-1.5">
+                <span class="font-bold text-slate-200">${o.itemName}</span>
+                <span class="px-2 py-0.5 rounded-lg border font-bold text-[10px] ${statusBg}">${o.status}</span>
+              </div>
+              <p class="text-[11px] text-slate-400">মূল্য: <b class="text-purple-300">${o.price} BDT</b> (${o.paymentMethod || 'bKash'})</p>
+              <p class="text-[11px] text-slate-400">TrxID/ID: <b class="text-yellow-400">${o.trxId}</b></p>
+            </div>
+          `;
+        });
+        document.getElementById('my-orders-list').innerHTML = html || '<p class="text-xs text-slate-500 text-center py-6">এখনো কোনো অর্ডার করা হয়নি</p>';
+      });
+    }
+
+    window.toggleSupportMenu = () => {
+      document.getElementById('support-menu').classList.toggle('hidden');
     };
   </script>
 </body>
