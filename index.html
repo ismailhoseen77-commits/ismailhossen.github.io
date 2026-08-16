@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; color: #1e293b; }
-    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; shadow: 0 4px 20px -2px rgba(124, 58, 237, 0.08); }
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; }
     .bkash-bg { background-color: #e2136e; }
   </style>
 </head>
@@ -18,7 +18,7 @@
   <!-- Main Container -->
   <div class="max-w-md mx-auto p-4 space-y-4">
 
-    <!-- Header -->
+    <!-- Top Header -->
     <div class="glass-card rounded-2xl p-4 flex justify-between items-center shadow-sm">
       <div class="flex items-center gap-2.5">
         <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-purple-200">
@@ -29,7 +29,7 @@
           <p class="text-[11px] text-purple-600 font-medium">বিশ্বাসযোগ্য টপ-আপ ও শপ</p>
         </div>
       </div>
-      <a href="login.html" id="auth-btn" class="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-purple-100 transition">
+      <a href="login.html" id="top-auth-btn" class="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-purple-100 transition">
         লগইন
       </a>
     </div>
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <!-- VIEW 4: MOBILE BANKING SELECTION (bKash, Nagad, Rocket) -->
+    <!-- VIEW 4: MOBILE BANKING SELECTION -->
     <div id="view-payment-select" class="hidden space-y-4">
       <button onclick="showView('input')" class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
@@ -136,31 +136,12 @@
         </div>
 
         <div class="space-y-3">
-          <!-- bKash Button -->
           <div onclick="openBkashPage()" class="p-3 border-2 border-pink-500 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-pink-50 transition shadow-sm">
             <div class="flex items-center gap-3">
               <span class="font-black text-xl text-pink-600 tracking-tighter">bKash</span>
               <span class="text-xs font-bold text-slate-700">বিকাশ (চালু আছে)</span>
             </div>
             <i class="fa-solid fa-chevron-right text-pink-500 text-xs"></i>
-          </div>
-
-          <!-- Nagad Button (Disabled) -->
-          <div class="p-3 border border-slate-200 bg-slate-50 rounded-2xl flex items-center justify-between opacity-60 cursor-not-allowed">
-            <div class="flex items-center gap-3">
-              <span class="font-black text-xl text-orange-600 tracking-tighter">নগদ</span>
-              <span class="text-xs font-bold text-slate-500">নগদ (সাময়িক বন্ধ)</span>
-            </div>
-            <span class="text-[10px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md">বন্ধ</span>
-          </div>
-
-          <!-- Rocket Button (Disabled) -->
-          <div class="p-3 border border-slate-200 bg-slate-50 rounded-2xl flex items-center justify-between opacity-60 cursor-not-allowed">
-            <div class="flex items-center gap-3">
-              <span class="font-black text-xl text-purple-700 tracking-tighter">রকেট</span>
-              <span class="text-xs font-bold text-slate-500">রকেট (সাময়িক বন্ধ)</span>
-            </div>
-            <span class="text-[10px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md">বন্ধ</span>
           </div>
         </div>
 
@@ -176,7 +157,6 @@
         <i class="fa-solid fa-arrow-left"></i> ব্যাক
       </button>
 
-      <!-- bKash Magenta Container -->
       <div class="bkash-bg text-white rounded-3xl p-5 space-y-4 shadow-lg">
         <div class="text-center font-bold text-sm tracking-wide border-b border-pink-400/40 pb-2">
           ট্রানজেকশন আইডি দিন
@@ -184,19 +164,16 @@
 
         <input type="text" id="input-trxid" placeholder="ট্রানজেকশন আইডি দিন" class="w-full p-3 rounded-2xl text-slate-800 text-xs text-center font-bold outline-none shadow-inner">
 
-        <!-- Instruction Steps -->
         <div class="text-[11px] space-y-2.5 font-medium leading-relaxed bg-black/10 p-3.5 rounded-2xl border border-pink-400/30">
           <p>• *247# ডায়াল করে আপনার bKash মোবাইল মেনুতে যান অথবা bKash অ্যাপে যান।</p>
           <p>• <b class="text-yellow-300">"Send Money"</b> -এ ক্লিক করুন।</p>
           <div class="flex justify-between items-center bg-white/20 px-3 py-1.5 rounded-xl">
-            <span>প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন:</span>
+            <span>প্রাপক নম্বর:</span>
             <span class="font-mono font-bold text-yellow-300 text-xs">01891623379</span>
             <button onclick="navigator.clipboard.writeText('01891623379'); alert('নম্বর কপি হয়েছে!');" class="bg-white text-pink-600 text-[10px] font-bold px-2 py-0.5 rounded-md">Copy</button>
           </div>
           <p>• টাকার পরিমাণ: <b class="text-yellow-300 font-bold" id="bkash-amount-text">0</b> BDT</p>
-          <p>• নিশ্চিত করতে এখন আপনার bKash মোবাইল মেনু পিন লিখুন।</p>
-          <p>• সবকিছু ঠিক থাকলে, আপনি bKash থেকে একটি নিশ্চিতকরণ বার্তা পাবেন।</p>
-          <p>• এখন উপরের বাক্সে আপনার <b class="text-yellow-300">Transaction ID</b> দিন এবং নিচের <b class="text-yellow-300">VERIFY</b> বাটনে ক্লিক করুন।</p>
+          <p>• এখন আপনার bKash Transaction ID দিন এবং VERIFY বাটনে চাপ দিন।</p>
         </div>
 
         <button onclick="verifyAndSubmitOrder()" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-2xl text-xs transition shadow-md tracking-wider">
@@ -205,11 +182,174 @@
       </div>
     </div>
 
-                            </div>
-    <script type="module">
+    <!-- VIEW 6: MY ORDERS -->
+    <div id="view-my-orders" class="hidden space-y-3">
+      <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
+        <i class="fa-solid fa-clock-rotate-left text-purple-600"></i> আমার অর্ডারসমূহ
+      </h2>
+      <div id="my-orders-list" class="space-y-2.5">
+        <p class="text-xs text-slate-400 text-center py-6">অর্ডার লোড হচ্ছে...</p>
+      </div>
+    </div>
+
+    <!-- VIEW 7: PROFILE -->
+    <div id="view-profile" class="hidden space-y-4">
+      <h2 class="text-xs font-bold text-purple-900 flex items-center gap-1.5">
+        <i class="fa-solid fa-user text-purple-600"></i> প্রোফাইল বিবরণ
+      </h2>
+
+      <div class="glass-card p-4 rounded-2xl space-y-4 text-center">
+        <div class="w-16 h-16 rounded-full bg-purple-100 text-purple-600 mx-auto flex items-center justify-center font-bold text-2xl border-2 border-purple-200">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+
+        <div class="space-y-1">
+          <p id="profile-email" class="font-bold text-sm text-slate-800">Guest User</p>
+          <p class="text-[11px] text-slate-500 font-medium">সাধারণ ইউজার অ্যাকাউন্ট</p>
+        </div>
+
+        <!-- Total Spent Card -->
+        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3.5 rounded-2xl shadow-sm">
+          <p class="text-[10px] uppercase font-semibold tracking-wider text-purple-100">মোট লেনদেন (Total Spent)</p>
+          <p class="text-xl font-black mt-0.5"><span id="profile-total-spent">0</span> BDT</p>
+        </div>
+
+        <button onclick="logoutUser()" id="profile-logout-btn" class="hidden w-full bg-red-50 text-red-600 border border-red-200 font-bold py-2.5 rounded-xl text-xs hover:bg-red-100 transition">
+          <i class="fa-solid fa-right-from-bracket"></i> লগআউট করুন
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FIXED BOTTOM NAVIGATION BAR -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40">
+    <div class="max-w-md mx-auto grid grid-cols-3 py-2 text-center">
+      <button onclick="navSwitch('home')" id="nav-home" class="flex flex-col items-center justify-center text-purple-600 font-bold gap-1">
+        <i class="fa-solid fa-house text-base"></i>
+        <span class="text-[10px]">হোম</span>
+      </button>
+
+      <button onclick="navSwitch('my-orders')" id="nav-my-orders" class="flex flex-col items-center justify-center text-slate-400 font-medium gap-1">
+        <i class="fa-solid fa-bag-shopping text-base"></i>
+        <span class="text-[10px]">মাই অর্ডার</span>
+      </button>
+
+      <button onclick="navSwitch('profile')" id="nav-profile" class="flex flex-col items-center justify-center text-slate-400 font-medium gap-1">
+        <i class="fa-solid fa-user text-base"></i>
+        <span class="text-[10px]">প্রোফাইল</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FLOATING SUPPORT BUTTON & MENU -->
+  <div class="fixed bottom-20 right-4 z-50">
+    <button onclick="toggleSupportMenu()" class="w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95">
+      <i class="fa-solid fa-headset text-xl"></i>
+    </button>
+
+    <div id="support-menu" class="hidden absolute bottom-14 right-0 w-52 bg-white border border-slate-200 rounded-2xl shadow-2xl p-2 space-y-1 text-xs">
+      <a href="https://wa.me/8801891622490" target="_blank" onclick="toggleSupportMenu()" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-emerald-50 text-slate-800 font-bold transition">
+        <div class="w-8 h-8 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+        </div>
+        <div>
+          <p class="text-xs">WhatsApp সাপোর্ট</p>
+          <p class="text-[10px] text-slate-400 font-normal">সরাসরি চ্যাট করুন</p>
+        </div>
+      </a>
+
+      <button onclick="openLiveChat()" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-purple-50 text-slate-800 font-bold transition text-left">
+        <div class="w-8 h-8 bg-purple-600 text-white rounded-xl flex items-center justify-center shadow-sm">
+          <i class="fa-solid fa-robot text-sm"></i>
+        </div>
+        <div>
+          <p class="text-xs">লাইভ চ্যাট (AI Bot)</p>
+          <p class="text-[10px] text-slate-400 font-normal">২৪/৭ স্মার্ট অ্যাসিস্ট্যান্ট</p>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- LIVE CHAT MODAL WINDOW -->
+  <div id="live-chat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[480px]">
+      <div class="bg-purple-600 text-white p-3.5 flex justify-between items-center shadow-md">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
+            <i class="fa-solid fa-robot text-sm"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs">AI অ্যাসিস্ট্যান্ট</h4>
+            <p class="text-[10px] text-purple-200 font-medium">অনলাইন • সাহায্য করতে প্রস্তুত</p>
+          </div>
+        </div>
+        <button onclick="closeLiveChat()" class="text-purple-200 hover:text-white text-base">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="chat-messages" class="flex-1 p-3.5 overflow-y-auto space-y-3 bg-slate-50 text-xs">
+        <div class="bg-purple-100 text-purple-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] border border-purple-200 leading-relaxed">
+          হ্যালো! আমি আপনার AI অ্যাসিস্ট্যান্ট। কীভাবে আপনাকে সাহায্য করতে পারি?
+        </div>
+      </div>
+
+      <div class="p-2.5 bg-white border-t border-slate-200 flex items-center gap-2">
+        <input type="text" id="chat-input" placeholder="আপনার প্রশ্নটি লিখুন..." onkeypress="if(event.key==='Enter') sendChatMessage()" class="flex-1 bg-slate-100 p-2.5 rounded-xl text-xs outline-none focus:ring-1 focus:ring-purple-600">
+        <button onclick="sendChatMessage()" class="w-9 h-9 bg-purple-600 hover:bg-purple-700 text-white rounded-xl flex items-center justify-center transition shadow-sm">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+    <!-- SUPPORT WIDGET SCRIPT -->
+  <script>
+    function toggleSupportMenu() {
+      document.getElementById('support-menu').classList.toggle('hidden');
+    }
+
+    function openLiveChat() {
+      document.getElementById('support-menu').classList.add('hidden');
+      document.getElementById('live-chat-modal').classList.remove('hidden');
+    }
+
+    function closeLiveChat() {
+      document.getElementById('live-chat-modal').classList.add('hidden');
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const msg = input.value.trim();
+      if(!msg) return;
+
+      const container = document.getElementById('chat-messages');
+
+      container.innerHTML += `
+        <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto font-medium shadow-sm">
+          ${msg}
+        </div>
+      `;
+
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        container.innerHTML += `
+          <div class="bg-purple-100 text-purple-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] border border-purple-200 leading-relaxed">
+            ধন্যবাদ! এআই বট খুব শীঘ্রই সম্পূর্ণ চালু হলে সরাসরি প্রশ্নের উত্তর দিতে পারবে।
+          </div>
+        `;
+        container.scrollTop = container.scrollHeight;
+      }, 700);
+    }
+  </script>
+
+  <!-- FIREBASE MAIN SCRIPT -->
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -228,28 +368,99 @@
     let selectedType = '';
     let selectedItem = null;
 
-    // Updated Admin WhatsApp Number (Ending with 490)
     const ADMIN_WHATSAPP = "8801891622490";
 
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
-      const btn = document.getElementById('auth-btn');
+      const topBtn = document.getElementById('top-auth-btn');
+      const logoutBtn = document.getElementById('profile-logout-btn');
+      
       if(user) {
-        btn.innerText = "প্রোফাইল";
-        btn.href = "#";
+        topBtn.innerText = "প্রোফাইল";
+        topBtn.onclick = () => navSwitch('profile');
+        topBtn.href = "#";
+        document.getElementById('profile-email').innerText = user.email;
+        logoutBtn.classList.remove('hidden');
+        loadUserOrders(user.email);
       } else {
-        btn.innerText = "লগইন";
-        btn.href = "login.html";
+        topBtn.innerText = "লগইন";
+        topBtn.href = "login.html";
+        document.getElementById('profile-email').innerText = "Guest User (লগইন করা নেই)";
+        logoutBtn.classList.add('hidden');
+        document.getElementById('my-orders-list').innerHTML = '<p class="text-xs text-slate-400 text-center py-6">অর্ডার দেখতে অনুগ্রহ করে লগইন করুন!</p>';
       }
     });
 
+    window.logoutUser = () => {
+      signOut(auth).then(() => {
+        alert('সফলভাবে লগআউট হয়েছে!');
+        window.location.reload();
+      });
+    };
+
+    // Bottom Nav Switcher
+    window.navSwitch = (tab) => {
+      ['home', 'my-orders', 'profile'].forEach(t => {
+        const btn = document.getElementById('nav-' + t);
+        if(t === tab) {
+          btn.className = "flex flex-col items-center justify-center text-purple-600 font-bold gap-1";
+        } else {
+          btn.className = "flex flex-col items-center justify-center text-slate-400 font-medium gap-1";
+        }
+      });
+
+      showView(tab);
+    };
+
     // View Navigation Switcher
     window.showView = (viewName) => {
-      ['home', 'packages', 'input', 'payment-select', 'bkash'].forEach(v => {
-        document.getElementById('view-' + v).classList.add('hidden');
+      ['home', 'packages', 'input', 'payment-select', 'bkash', 'my-orders', 'profile'].forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if(el) el.classList.add('hidden');
       });
       document.getElementById('view-' + viewName).classList.remove('hidden');
     };
+
+    // Load User Orders & Calculate Total Spent
+    function loadUserOrders(email) {
+      const q = query(collection(db, "orders"), where("userEmail", "==", email));
+      onSnapshot(q, (snap) => {
+        let html = '';
+        let totalSpent = 0;
+
+        snap.forEach(d => {
+          const o = d.data();
+          const price = Number(o.price) || 0;
+          totalSpent += price;
+
+          let statusBg = 'bg-amber-100 text-amber-700 border-amber-200';
+          let statusText = 'Pending';
+          if(o.status === 'Completed') {
+            statusBg = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+            statusText = 'Completed';
+          } else if(o.status === 'Cancelled') {
+            statusBg = 'bg-red-100 text-red-700 border-red-200';
+            statusText = 'Cancelled';
+          }
+
+          html += `
+            <div class="glass-card p-3 rounded-2xl space-y-1.5 shadow-sm">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-xs text-slate-800">${o.itemName}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${statusBg}">${statusText}</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px] text-slate-500">
+                <span>TrxID: <b class="font-mono text-slate-700">${o.trxId}</b></span>
+                <span class="font-bold text-purple-700">${price} BDT</span>
+              </div>
+            </div>
+          `;
+        });
+
+        document.getElementById('my-orders-list').innerHTML = html || '<p class="text-xs text-slate-400 text-center py-6">আপনি এখনও কোনো অর্ডার করেননি!</p>';
+        document.getElementById('profile-total-spent').innerText = totalSpent;
+      });
+    }
 
     // Load Notice
     onSnapshot(doc(db, "settings", "notice"), (docSnap) => {
@@ -283,7 +494,7 @@
       document.getElementById('home-prod-list').innerHTML = html || '<p class="text-xs text-slate-400 col-span-2 text-center py-4">কোনো প্রোডাক্ট পাওয়া যায়নি</p>';
     });
 
-    // Open TopUp Category
+    // Category Open & Packages Selection
     window.openCategory = (type) => {
       selectedType = type;
       document.getElementById('pkg-title').innerText = type === 'ff' ? 'ফ্রি ফায়ার প্যাকেজসমূহ' : 'ই-ফুটবল প্যাকেজসমূহ';
@@ -304,7 +515,6 @@
       showView('packages');
     };
 
-    // Select Package
     window.selectPackage = (item) => {
       selectedItem = item;
       document.getElementById('selected-item-info').innerText = `${item.name} - ${item.price} TK`;
@@ -319,7 +529,6 @@
       showView('input');
     };
 
-    // Go to Payment Selection
     window.goToPaymentSelection = () => {
       if(selectedType === 'ff') {
         const uid = document.getElementById('input-ff-uid').value;
@@ -334,13 +543,11 @@
       showView('payment-select');
     };
 
-    // Open bKash Instructions Page
     window.openBkashPage = () => {
       document.getElementById('bkash-amount-text').innerText = selectedItem.price;
       showView('bkash');
     };
 
-    // Verify & Complete Order
     window.verifyAndSubmitOrder = async () => {
       const trxId = document.getElementById('input-trxid').value.trim();
       if(!trxId) return alert('অনুগ্রহ করে ট্রানজেকশন আইডি প্রদান করুন!');
@@ -368,7 +575,6 @@
       try {
         await addDoc(collection(db, "orders"), orderData);
 
-        // Format WhatsApp Message
         let waText = `*NEW ORDER - MIHADX PRO BD*%0A`;
         waText += `------------------------------%0A`;
         waText += `*Item:* ${orderData.itemName}%0A`;
