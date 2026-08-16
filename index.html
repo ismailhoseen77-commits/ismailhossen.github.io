@@ -12,11 +12,11 @@
         <div class="container nav-container">
             <a href="index.html" class="logo"><i class="fa-solid fa-gamepad"></i> Mihadx BD</a>
             <nav class="nav-menu">
-                <a href="#home" class="active">Home</a>
+                <a href="index.html" class="active">Home</a>
                 <a href="#topup">Top-Up</a>
                 <a href="#shop">Shop</a>
                 <a href="track.html">Track Order</a>
-                <div id="auth-section">
+                <div id="auth-section" style="display:inline-block;">
                     <a href="login.html" class="btn-login"><i class="fa-brands fa-google"></i> Login</a>
                 </div>
             </nav>
@@ -25,8 +25,10 @@
 
     <main class="main-content">
         <!-- Notice Banner -->
-        <div id="notice-container" class="container">
-            <div class="notice-bar"><i class="fa-solid fa-bullhorn"></i> বিকাশ পেমেন্ট করুন: <strong>01309735129</strong> (Send Money / Cash In) করে TrxID দিন। যে কোনো সমস্যায় WhatsApp: <strong>01576502490</strong></div>
+        <div class="container">
+            <div class="notice-bar">
+                <i class="fa-solid fa-bullhorn"></i> বিকাশ পেমেন্ট করুন: <strong>01309735129</strong> (Send Money / Cash In) করে TrxID দিন। যে কোনো সমস্যায় WhatsApp: <strong>01576502490</strong>
+            </div>
         </div>
 
         <!-- Top-Up Section -->
@@ -54,9 +56,12 @@
     <div id="ai-chat-widget">
         <button id="ai-toggle-btn"><i class="fa-solid fa-robot"></i></button>
         <div id="ai-chat-box" class="hidden">
-            <div class="ai-header"><h3>Mihadx AI Support</h3><button id="ai-close">&times;</button></div>
+            <div class="ai-header">
+                <h3>Mihadx AI Support</h3>
+                <button id="ai-close">&times;</button>
+            </div>
             <div id="ai-messages">
-                <div class="ai-msg"><b>AI:</b> আসসালামু আলাইকুম! টপ-আপ বা অর্ডার সম্পর্কিত যেকোনো প্রয়োজনে আমাকে জিজ্ঞেস করুন। বিকাশ নম্বর: 01309735129</div>
+                <div class="ai-msg"><b>AI:</b> আসসালামু আলাইকুম! টপ-আপ বা অর্ডার সম্পর্কিত যেকোনো প্রয়োজনে আমাকে জিজ্ঞেস করুন।</div>
             </div>
             <div class="ai-input-area">
                 <input type="text" id="ai-input" placeholder="আপনার প্রশ্ন লিখুন...">
@@ -75,4 +80,5 @@
     <script type="module" src="js/topup.js"></script>
     <script type="module" src="js/ai-support.js"></script>
 </body>
-</html>
+    </html>
+    
