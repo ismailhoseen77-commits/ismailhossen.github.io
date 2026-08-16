@@ -3,57 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - MIHADX PRO BD</title>
+  <title>Admin Control Panel - MIHADX PRO BD</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0f0a19; color: #f1f5f9; }
-    .glass-card { background: rgba(26, 16, 43, 0.8); border: 1px solid rgba(139, 92, 246, 0.2); }
+    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0b132b; color: #e0e1dd; }
+    .neon-card { background: rgba(28, 37, 65, 0.85); border: 1px solid rgba(0, 180, 216, 0.25); backdrop-filter: blur(10px); }
+    .neon-border { border-color: rgba(0, 180, 216, 0.4); }
   </style>
 </head>
-<body class="min-h-screen pb-10">
+<body class="min-h-screen pb-12">
 
   <div class="max-w-md mx-auto p-4 space-y-4">
     <!-- Admin Top Header -->
-    <div class="glass-card rounded-2xl p-4 flex justify-between items-center border border-purple-500/30">
+    <div class="neon-card rounded-2xl p-4 flex justify-between items-center shadow-lg border border-cyan-500/30">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+        <div class="w-10 h-10 rounded-xl bg-cyan-600 flex items-center justify-center text-white shadow-cyan-500/50 shadow-sm">
           <i class="fa-solid fa-user-shield text-xl"></i>
         </div>
         <div>
-          <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
-          <p id="admin-email" class="text-[11px] text-purple-400 font-mono">লোড হচ্ছে...</p>
+          <h1 class="font-bold text-sm text-cyan-200">এডমিন কন্ট্রোল প্যানেল</h1>
+          <p id="admin-email" class="text-[11px] text-cyan-400 font-mono">লোড হচ্ছে...</p>
         </div>
       </div>
-      <button onclick="logoutAdmin()" class="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center hover:bg-red-500/30">
+      <button onclick="logoutAdmin()" class="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center hover:bg-red-500/40">
         <i class="fa-solid fa-power-off"></i>
       </button>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="grid grid-cols-3 gap-2">
-      <button onclick="switchTab('orders')" id="tab-orders" class="py-2.5 rounded-xl font-bold text-xs bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-lg">
+      <button onclick="switchTab('orders')" id="tab-orders" class="py-2.5 rounded-xl font-bold text-xs bg-cyan-600 text-white flex items-center justify-center gap-1.5 shadow-md shadow-cyan-600/30">
         <i class="fa-solid fa-bag-shopping"></i> অর্ডারসমূহ
       </button>
-      <button onclick="switchTab('items')" id="tab-items" class="py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5">
+      <button onclick="switchTab('items')" id="tab-items" class="py-2.5 rounded-xl font-bold text-xs bg-slate-800 text-cyan-300 border border-cyan-900/60 flex items-center justify-center gap-1.5">
         <i class="fa-solid fa-list-check"></i> আইটেম লিস্ট
       </button>
-      <button onclick="switchTab('add')" id="tab-add" class="py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5">
+      <button onclick="switchTab('add')" id="tab-add" class="py-2.5 rounded-xl font-bold text-xs bg-slate-800 text-cyan-300 border border-cyan-900/60 flex items-center justify-center gap-1.5">
         <i class="fa-solid fa-circle-plus"></i> নতুন যোগ
       </button>
     </div>
 
     <!-- TAB 1: ORDERS MANAGEMENT -->
     <div id="view-orders" class="space-y-3">
-      <h2 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+      <h2 class="text-xs font-bold text-cyan-300 flex items-center gap-1.5">
         <i class="fa-solid fa-clock-rotate-left"></i> সকল গ্রাহকের অর্ডার
       </h2>
       <div id="admin-orders-list" class="space-y-3">
-        <p class="text-xs text-purple-400 text-center py-6">অর্ডার লোড হচ্ছে...</p>
+        <p class="text-xs text-cyan-400 text-center py-6">অর্ডার লোড হচ্ছে...</p>
       </div>
     </div>
-        <!-- TAB 2: ITEMS LIST (FF, EF & E-COMMERCE WITH UP/DOWN REORDERING) -->
+
+    <!-- TAB 2: ITEMS LIST (FF, EF & E-COMMERCE WITH REORDERING) -->
     <div id="view-items" class="hidden space-y-4">
       <!-- Free Fire List -->
       <div class="space-y-2">
@@ -80,28 +82,28 @@
       </div>
     </div>
 
-    <!-- TAB 3: ADD NEW CONTENT (PACKAGE, PRODUCT, NOTICE) -->
+    <!-- TAB 3: ADD NEW CONTENT -->
     <div id="view-add" class="hidden space-y-4">
-      <div class="glass-card p-4 rounded-2xl space-y-3 border border-purple-500/30">
-        <h3 class="text-xs font-bold text-purple-200">ক্যাটাগরি সিলেক্ট করুন</h3>
-        <select id="add-category-type" onchange="toggleAddForm()" class="w-full p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+      <div class="neon-card p-4 rounded-2xl space-y-3 border border-cyan-500/30">
+        <h3 class="text-xs font-bold text-cyan-200">ক্যাটাগরি সিলেক্ট করুন</h3>
+        <select id="add-category-type" onchange="toggleAddForm()" class="w-full p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none">
           <option value="ff">ফ্রি ফায়ার প্যাকেজ</option>
           <option value="ef">ই-ফুটবল প্যাকেজ</option>
           <option value="ecommerce">ই-কমার্স প্রোডাক্ট</option>
           <option value="notice">হোম নোটিশ সেটআপ</option>
         </select>
 
-        <!-- Form for FF & EF Top-Up Packages -->
+        <!-- Form for FF & EF Packages -->
         <div id="form-package-fields" class="space-y-3">
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">প্যাকেজের নাম</label>
-            <input type="text" id="add-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">প্যাকেজের নাম</label>
+            <input type="text" id="add-pkg-name" placeholder="যেমন: 100 Diamond" class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none">
           </div>
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">দাম (টাকা)</label>
-            <input type="number" id="add-pkg-price" placeholder="যেমন: 75" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">দাম (টাকা)</label>
+            <input type="number" id="add-pkg-price" placeholder="যেমন: 75" class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none">
           </div>
-          <button onclick="savePackage()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+          <button onclick="savePackage()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md shadow-cyan-600/30">
             প্যাকেজ সেভ করুন
           </button>
         </div>
@@ -109,35 +111,35 @@
         <!-- Form for E-Commerce Products -->
         <div id="form-ecommerce-fields" class="space-y-3 hidden">
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">প্রোডাক্টের নাম</label>
-            <input type="text" id="add-prod-title" placeholder="যেমন: FF Weekly Membership" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">প্রোডাক্টের নাম</label>
+            <input type="text" id="add-prod-title" placeholder="যেমন: FF Weekly Membership" class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none">
           </div>
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">দাম (টাকা)</label>
-            <input type="number" id="add-prod-price" placeholder="যেমন: 165" class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">দাম (টাকা)</label>
+            <input type="number" id="add-prod-price" placeholder="যেমন: 165" class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none">
           </div>
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">ছবির ইউআরএল (Image URL)</label>
-            <input type="text" id="add-prod-img" placeholder="https://..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">ছবি আপলোড করুন (ফাইল ম্যানেজার)</label>
+            <input type="file" id="add-prod-file" accept="image/*" class="w-full mt-1 p-2 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-cyan-600 file:text-white cursor-pointer">
           </div>
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">বিবরণ / ডিটেইলস (ঐচ্ছিক)</label>
-            <textarea id="add-prod-desc" placeholder="প্রোডাক্টের বিবরণ লিখুন..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none h-16"></textarea>
+            <label class="text-[11px] text-cyan-300 font-semibold">বিবরণ / ডিটেইলস (ঐচ্ছিক)</label>
+            <textarea id="add-prod-desc" placeholder="প্রোডাক্টের বিবরণ লিখুন..." class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none h-16"></textarea>
           </div>
           <button onclick="saveEcomProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
             প্রোডাক্ট সেভ করুন
           </button>
         </div>
 
-        <!-- Form for Home Notice Setup -->
+        <!-- Form for Notice Setup -->
         <div id="form-notice-fields" class="space-y-3 hidden">
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">নোটিশ বার্তা (Text)</label>
-            <textarea id="add-notice-text" placeholder="আজকের বিশেষ অফার..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none h-16"></textarea>
+            <label class="text-[11px] text-cyan-300 font-semibold">নোটিশ বার্তা (Text)</label>
+            <textarea id="add-notice-text" placeholder="আজকের বিশেষ অফার..." class="w-full mt-1 p-2.5 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none h-16"></textarea>
           </div>
           <div>
-            <label class="text-[11px] text-purple-300 font-semibold">নোটিশ ব্যানার ছবি (Image URL)</label>
-            <input type="text" id="add-notice-img" placeholder="https://..." class="w-full mt-1 p-2.5 bg-slate-900 border border-purple-500/40 rounded-xl text-xs text-purple-100 outline-none">
+            <label class="text-[11px] text-cyan-300 font-semibold">নোটিশ ব্যানার ছবি আপলোড করুন</label>
+            <input type="file" id="add-notice-file" accept="image/*" class="w-full mt-1 p-2 bg-slate-900 border border-cyan-500/40 rounded-xl text-xs text-cyan-100 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-amber-600 file:text-white cursor-pointer">
           </div>
           <button onclick="saveNotice()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
             নোটিশ আপডেট করুন
@@ -146,10 +148,12 @@
       </div>
     </div>
   </div>
-    <script type="module">
+
+  <!-- FIREBASE & MAIN SCRIPT -->
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -181,10 +185,10 @@
     window.switchTab = (tab) => {
       ['orders', 'items', 'add'].forEach(t => {
         document.getElementById('view-' + t).classList.add('hidden');
-        document.getElementById('tab-' + t).className = "py-2.5 rounded-xl font-bold text-xs bg-purple-900/40 text-purple-300 border border-purple-800/40 flex items-center justify-center gap-1.5";
+        document.getElementById('tab-' + t).className = "py-2.5 rounded-xl font-bold text-xs bg-slate-800 text-cyan-300 border border-cyan-900/60 flex items-center justify-center gap-1.5";
       });
       document.getElementById('view-' + tab).classList.remove('hidden');
-      document.getElementById('tab-' + tab).className = "py-2.5 rounded-xl font-bold text-xs bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-lg";
+      document.getElementById('tab-' + tab).className = "py-2.5 rounded-xl font-bold text-xs bg-cyan-600 text-white flex items-center justify-center gap-1.5 shadow-md shadow-cyan-600/30";
     };
 
     window.toggleAddForm = () => {
@@ -208,18 +212,18 @@
           let statusColor = o.status === 'Completed' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' : (o.status === 'Cancelled' ? 'text-red-400 bg-red-500/10 border-red-500/30' : 'text-amber-400 bg-amber-500/10 border-amber-500/30');
 
           html += `
-            <div class="glass-card p-3 rounded-2xl border border-purple-500/30 space-y-2 text-xs">
-              <div class="flex justify-between items-center border-b border-purple-500/20 pb-2">
-                <span class="font-bold text-purple-200">${o.itemName} (${o.price} BDT)</span>
+            <div class="neon-card p-3 rounded-2xl border border-cyan-500/30 space-y-2 text-xs">
+              <div class="flex justify-between items-center border-b border-cyan-500/20 pb-2">
+                <span class="font-bold text-cyan-200">${o.itemName} (${o.price} BDT)</span>
                 <span class="px-2 py-0.5 rounded-lg border font-bold text-[10px] ${statusColor}">${o.status}</span>
               </div>
-              <div class="space-y-1 text-[11px] text-purple-300 font-mono">
+              <div class="space-y-1 text-[11px] text-cyan-300 font-mono">
                 <p>TrxID: <b class="text-yellow-400">${o.trxId}</b></p>
                 <p>User: ${o.userEmail}</p>
-                ${o.gameUid ? `<p>UID: <b class="text-purple-100">${o.gameUid}</b></p>` : ''}
+                ${o.gameUid ? `<p>UID: <b class="text-cyan-100">${o.gameUid}</b></p>` : ''}
                 ${o.accountId ? `<p>ID: ${o.accountId} | Pass: ${o.password}</p>` : ''}
               </div>
-              <div class="flex items-center gap-2 pt-1 border-t border-purple-500/20">
+              <div class="flex items-center gap-2 pt-1 border-t border-cyan-500/20">
                 <button onclick="updateOrderStatus('${id}', 'Completed')" class="flex-1 bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 py-1 rounded-xl font-bold hover:bg-emerald-600/50">Completed</button>
                 <button onclick="updateOrderStatus('${id}', 'Cancelled')" class="flex-1 bg-red-600/30 border border-red-500/40 text-red-300 py-1 rounded-xl font-bold hover:bg-red-600/50">Cancelled</button>
                 ${o.whatsapp ? `<a href="https://wa.me/${o.whatsapp}" target="_blank" class="px-2.5 py-1 bg-emerald-500 text-white rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i></a>` : ''}
@@ -227,7 +231,7 @@
             </div>
           `;
         });
-        document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-xs text-purple-400 text-center py-6">কোনো অর্ডার পাওয়া যায়নি!</p>';
+        document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-xs text-cyan-400 text-center py-6">কোনো অর্ডার পাওয়া যায়নি!</p>';
       });
     }
 
@@ -235,13 +239,10 @@
       await updateDoc(doc(db, "orders", id), { status });
     };
 
-    // LOAD ALL ITEMS WITH ORDERING AND EDITING
+    // LOAD ALL ITEMS WITH CLEAN REORDERING LOGIC
     function loadAllItems() {
-      // FF Packages
       onSnapshot(collection(db, "ff_packages"), snap => renderItemList(snap, "list-ff-pkgs", "ff_packages"));
-      // EF Packages
       onSnapshot(collection(db, "ef_packages"), snap => renderItemList(snap, "list-ef-pkgs", "ef_packages"));
-      // E-Commerce Products
       onSnapshot(collection(db, "products"), snap => renderItemList(snap, "list-shop-prods", "products"));
     }
 
@@ -253,16 +254,16 @@
       let html = '';
       items.forEach((item, index) => {
         html += `
-          <div class="glass-card p-2.5 rounded-xl border border-purple-500/30 flex justify-between items-center text-xs">
+          <div class="neon-card p-2.5 rounded-xl border border-cyan-500/30 flex justify-between items-center text-xs">
             <div>
-              <p class="font-bold text-purple-200">${item.name || item.title}</p>
+              <p class="font-bold text-cyan-200">${item.name || item.title}</p>
               <p class="text-[11px] text-pink-400 font-bold">${item.price} TK</p>
             </div>
             <div class="flex items-center gap-1.5">
-              <button onclick="moveItem('${collectionName}', '${item.id}', ${items[index-1]?.orderIndex || (item.orderIndex||0)-1}, ${index === 0})" class="w-7 h-7 bg-purple-900/50 border border-purple-500/30 text-purple-300 rounded-lg hover:bg-purple-700">
+              <button onclick="swapPosition('${collectionName}', ${index}, ${index - 1})" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed w-7 h-7 bg-slate-800 border border-cyan-500/20 text-cyan-300 rounded-lg"' : 'class="w-7 h-7 bg-cyan-900/40 border border-cyan-500/40 text-cyan-300 rounded-lg hover:bg-cyan-700"'}>
                 <i class="fa-solid fa-arrow-up text-[10px]"></i>
               </button>
-              <button onclick="moveItem('${collectionName}', '${item.id}', ${items[index+1]?.orderIndex || (item.orderIndex||0)+1}, ${index === items.length - 1})" class="w-7 h-7 bg-purple-900/50 border border-purple-500/30 text-purple-300 rounded-lg hover:bg-purple-700">
+              <button onclick="swapPosition('${collectionName}', ${index}, ${index + 1})" ${index === items.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed w-7 h-7 bg-slate-800 border border-cyan-500/20 text-cyan-300 rounded-lg"' : 'class="w-7 h-7 bg-cyan-900/40 border border-cyan-500/40 text-cyan-300 rounded-lg hover:bg-cyan-700"'}>
                 <i class="fa-solid fa-arrow-down text-[10px]"></i>
               </button>
               <button onclick="deleteItem('${collectionName}', '${item.id}')" class="w-7 h-7 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg hover:bg-red-600 hover:text-white">
@@ -272,12 +273,26 @@
           </div>
         `;
       });
-      document.getElementById(elementId).innerHTML = html || '<p class="text-[11px] text-purple-400 py-2">কোনো আইটেম নেই</p>';
+      document.getElementById(elementId).innerHTML = html || '<p class="text-[11px] text-cyan-400 py-2">কোনো আইটেম নেই</p>';
     }
 
-    window.moveItem = async (col, id, newIndex, isDisabled) => {
-      if (isDisabled) return;
-      await updateDoc(doc(db, col, id), { orderIndex: newIndex });
+    // SWAP POSITION FUNCTION FOR CLEAN UP/DOWN
+    window.swapPosition = async (colName, currentIndex, targetIndex) => {
+      const snap = await getDocs(collection(db, colName));
+      let items = [];
+      snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+      items.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+
+      if (targetIndex < 0 || targetIndex >= items.length) return;
+
+      const currentItem = items[currentIndex];
+      const targetItem = items[targetIndex];
+
+      const currentIdxValue = currentItem.orderIndex || (currentIndex + 1) * 10;
+      const targetIdxValue = targetItem.orderIndex || (targetIndex + 1) * 10;
+
+      await updateDoc(doc(db, colName, currentItem.id), { orderIndex: targetIdxValue });
+      await updateDoc(doc(db, colName, targetItem.id), { orderIndex: currentIdxValue });
     };
 
     window.deleteItem = async (col, id) => {
@@ -285,6 +300,15 @@
         await deleteDoc(doc(db, col, id));
       }
     };
+
+    function convertFileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
 
     // SAVE FUNCTIONS
     window.savePackage = async () => {
@@ -304,27 +328,51 @@
     window.saveEcomProduct = async () => {
       const title = document.getElementById('add-prod-title').value.trim();
       const price = Number(document.getElementById('add-prod-price').value);
-      const imageUrl = document.getElementById('add-prod-img').value.trim();
+      const fileInput = document.getElementById('add-prod-file');
       const desc = document.getElementById('add-prod-desc').value.trim();
 
-      if(!title || !price || !imageUrl) return alert('নাম, দাম এবং ছবির লিঙ্ক বাধ্যতামূলক!');
+      if(!title || !price || fileInput.files.length === 0) {
+        return alert('নাম, দাম এবং ছবি সিলেক্ট করা বাধ্যতামূলক!');
+      }
 
-      await addDoc(collection(db, "products"), { title, price, imageUrl, desc, orderIndex: Date.now() });
-      alert('ই-কমার্স প্রোডাক্ট সফলভাবে সেভ হয়েছে!');
-      document.getElementById('add-prod-title').value = '';
-      document.getElementById('add-prod-price').value = '';
-      document.getElementById('add-prod-img').value = '';
-      document.getElementById('add-prod-desc').value = '';
+      try {
+        const imageUrl = await convertFileToBase64(fileInput.files[0]);
+        await addDoc(collection(db, "products"), { 
+          title, 
+          price, 
+          imageUrl, 
+          desc, 
+          orderIndex: Date.now() 
+        });
+        alert('ই-কমার্স প্রোডাক্ট সফলভাবে সেভ হয়েছে!');
+        document.getElementById('add-prod-title').value = '';
+        document.getElementById('add-prod-price').value = '';
+        document.getElementById('add-prod-file').value = '';
+        document.getElementById('add-prod-desc').value = '';
+      } catch (err) {
+        alert('ছবি প্রসেস করতে সমস্যা হয়েছে!');
+      }
     };
 
     window.saveNotice = async () => {
       const text = document.getElementById('add-notice-text').value.trim();
-      const imageUrl = document.getElementById('add-notice-img').value.trim();
+      const fileInput = document.getElementById('add-notice-file');
 
-      await setDoc(doc(db, "settings", "notice"), { text, imageUrl });
-      alert('নোটিশ সফলভাবে আপডেট হয়েছে!');
+      try {
+        let imageUrl = "";
+        if(fileInput.files.length > 0) {
+          imageUrl = await convertFileToBase64(fileInput.files[0]);
+        }
+
+        await setDoc(doc(db, "settings", "notice"), { text, imageUrl });
+        alert('নোটিশ সফলভাবে আপডেট হয়েছে!');
+        document.getElementById('add-notice-text').value = '';
+        document.getElementById('add-notice-file').value = '';
+      } catch (err) {
+        alert('নোটিশ ছবি সেভ করতে সমস্যা হয়েছে!');
+      }
     };
   </script>
 </body>
-</html>
+              </html>
 
