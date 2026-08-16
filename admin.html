@@ -5,104 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - MIHADX PRO BD</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Hind Siliguri', sans-serif; background-color: #0d0714; color: #f3e8ff; }
-    .purple-card { background: linear-gradient(145deg, #1e102d, #140b20); border: 1px solid #3b1e54; }
-    .purple-btn { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+    body { font-family: 'Hind Siliguri', sans-serif; background: #0a0512; color: #f1f5f9; }
+    .glass-card { background: rgba(23, 15, 38, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); }
+    .admin-tab-btn { transition: all 0.25s ease-in-out; }
+    .admin-tab-active { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: #ffffff; shadow: 0 4px 12px rgba(124, 58, 237, 0.4); }
   </style>
 </head>
-<body class="min-h-screen p-4 pb-20">
+<body class="min-h-screen p-3 md:p-6 pb-24">
 
-  <div class="max-w-md mx-auto space-y-5">
+  <div class="max-w-md mx-auto space-y-4">
 
-    <!-- Header -->
-    <div class="purple-card p-4 rounded-2xl flex justify-between items-center shadow-lg">
-      <div>
-        <h1 class="font-bold text-base text-purple-300">এডমিন ড্যাশবোর্ড</h1>
-        <p id="admin-email-display" class="text-[10px] text-purple-400 font-mono">যাচাই করা হচ্ছে...</p>
+    <!-- Dashboard Header -->
+    <div class="glass-card p-4 rounded-2xl flex justify-between items-center shadow-lg">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-600/30 flex items-center justify-center text-purple-400 border border-purple-500/30">
+          <i class="fa-solid fa-user-shield text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm text-purple-200">এডমিন কন্ট্রোল প্যানেল</h1>
+          <p id="admin-email-display" class="text-[10px] text-purple-400 font-mono">যাচাই করা হচ্ছে...</p>
+        </div>
       </div>
-      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-xl font-bold">লগআউট</button>
-    </div>
-
-    <!-- Live Notice Setter -->
-    <div class="purple-card p-4 rounded-2xl space-y-2">
-      <h2 class="font-bold text-xs text-purple-300"><i class="fa-solid fa-bullhorn"></i> সাইট নোটিশ পরিবর্তন করুন</h2>
-      <div class="flex gap-2">
-        <input type="text" id="notice-input" placeholder="নতুন নোটিশ লিখুন" class="flex-1 p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white outline-none">
-        <button onclick="updateNotice()" class="purple-btn text-xs px-3 py-2 rounded-xl font-bold">সেভ</button>
-      </div>
+      <button onclick="logout()" class="bg-red-500/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 text-xs px-3 py-1.5 rounded-xl font-medium transition">
+        <i class="fa-solid fa-power-off"></i>
+      </button>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="purple-card p-1.5 rounded-2xl flex justify-between text-xs font-bold">
-      <button onclick="switchTab('orders')" id="nav-orders" class="flex-1 py-2 rounded-xl bg-purple-700 text-white text-center">অর্ডারস</button>
-      <button onclick="switchTab('packages')" id="nav-packages" class="flex-1 py-2 rounded-xl text-purple-300 text-center">প্যাকেজসমূহ</button>
-      <button onclick="switchTab('add')" id="nav-add" class="flex-1 py-2 rounded-xl text-purple-300 text-center">নতুন এড</button>
+    <div class="glass-card p-1 rounded-2xl flex text-xs font-semibold text-purple-300">
+      <button onclick="switchTab('orders')" id="nav-orders" class="admin-tab-btn admin-tab-active flex-1 py-2.5 rounded-xl text-center">
+        <i class="fa-solid fa-bag-shopping mr-1"></i> অর্ডারসমূহ
+      </button>
+      <button onclick="switchTab('packages')" id="nav-packages" class="admin-tab-btn flex-1 py-2.5 rounded-xl text-center">
+        <i class="fa-solid fa-boxes-stacked mr-1"></i> আইটেম লিস্ট
+      </button>
+      <button onclick="switchTab('add')" id="nav-add" class="admin-tab-btn flex-1 py-2.5 rounded-xl text-center">
+        <i class="fa-solid fa-circle-plus mr-1"></i> নতুন এড
+      </button>
     </div>
 
-    <!-- TAB 1: ORDERS -->
-    <div id="tab-orders" class="purple-card p-4 rounded-2xl space-y-3">
-      <h2 class="font-bold text-xs text-amber-400"><i class="fa-solid fa-list-check"></i> ইউজার অর্ডারসমূহ</h2>
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs">
-          <thead>
-            <tr class="border-b border-purple-800 text-purple-400">
-              <th class="p-2">অর্ডার তথ্য</th>
-              <th class="p-2">স্ট্যাটাস</th>
-              <th class="p-2 text-center">অ্যাকশন</th>
-            </tr>
-          </thead>
-          <tbody id="admin-orders-list">
-            <tr><td colspan="3" class="text-center p-4 text-purple-400">লোড হচ্ছে...</td></tr>
-          </tbody>
-        </table>
+    <!-- TAB 1: ORDERS MANAGEMENT -->
+    <div id="tab-orders" class="glass-card p-4 rounded-2xl space-y-3">
+      <div class="flex justify-between items-center border-b border-purple-800/40 pb-2">
+        <h2 class="font-bold text-xs text-purple-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> সাম্প্রতিক অর্ডারসমূহ
+        </h2>
+      </div>
+      <div id="admin-orders-list" class="space-y-2.5">
+        <p class="text-center p-4 text-xs text-purple-400">অর্ডার লোড হচ্ছে...</p>
       </div>
     </div>
 
-    <!-- TAB 2: PACKAGES -->
+    <!-- TAB 2: PACKAGES & PRODUCTS VIEW -->
     <div id="tab-packages" class="space-y-4 hidden">
-      <div class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-amber-400">ফ্রি ফায়ার প্যাকেজসমূহ</h2>
-        <div id="admin-ff-list" class="space-y-2"></div>
+      <!-- FF Packages List -->
+      <div class="glass-card p-4 rounded-2xl space-y-2">
+        <h2 class="font-bold text-xs text-amber-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-fire"></i> ফ্রি ফায়ার প্যাকেজ
+        </h2>
+        <div id="admin-ff-list" class="space-y-1.5"></div>
       </div>
-      <div class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-blue-400">ই-ফুটবল প্যাকেজসমূহ</h2>
-        <div id="admin-ef-list" class="space-y-2"></div>
+
+      <!-- EF Packages List -->
+      <div class="glass-card p-4 rounded-2xl space-y-2">
+        <h2 class="font-bold text-xs text-blue-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-futbol"></i> ই-ফুটবল প্যাকেজ
+        </h2>
+        <div id="admin-ef-list" class="space-y-1.5"></div>
       </div>
-      <div class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-emerald-400">ই-কমার্স প্রোডাক্টসমূহ</h2>
-        <div id="admin-prod-list" class="space-y-2"></div>
+
+      <!-- E-Commerce Products List -->
+      <div class="glass-card p-4 rounded-2xl space-y-2">
+        <h2 class="font-bold text-xs text-emerald-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-cart-shopping"></i> ই-কমার্স প্রোডাক্ট
+        </h2>
+        <div id="admin-prod-list" class="grid grid-cols-2 gap-2"></div>
       </div>
     </div>
 
-    <!-- TAB 3: ADD NEW -->
+    <!-- TAB 3: ADD NEW DATA (NOTICE, PACKAGES & PRODUCTS) -->
     <div id="tab-add" class="space-y-4 hidden">
-      <!-- Add FF -->
-      <form id="form-add-ff" class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-amber-400">+ ফ্রি ফায়ার প্যাকেজ এড</h2>
-        <input type="text" id="ff-name" placeholder="নাম (যেমন: 115 Diamond)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <input type="number" id="ff-price" placeholder="দাম (TK)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <button type="submit" class="w-full purple-btn py-2 rounded-xl text-xs font-bold">+ এড করুন</button>
+      
+      <!-- Notice Section -->
+      <form id="form-add-notice" class="glass-card p-4 rounded-2xl space-y-3">
+        <h2 class="font-bold text-xs text-purple-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-bullhorn text-purple-400"></i> সাইট নোটিশ সেটিং
+        </h2>
+        <input type="text" id="notice-input" placeholder="নোটিশের টেক্সট লিখুন..." class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none focus:border-purple-500">
+        <div class="space-y-1">
+          <label class="text-[10px] text-purple-400">নোটিশ ইমেজ (ঐচ্ছিক):</label>
+          <input type="file" id="notice-img-input" accept="image/*" class="w-full text-xs text-purple-300">
+        </div>
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-xl text-xs font-bold text-white transition">নোটিশ সেভ করুন</button>
       </form>
 
-      <!-- Add EF -->
-      <form id="form-add-ef" class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-blue-400">+ ই-ফুটবল প্যাকেজ এড</h2>
-        <input type="text" id="ef-name" placeholder="নাম (যেমন: 130 Coins)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <input type="number" id="ef-price" placeholder="দাম (TK)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <button type="submit" class="w-full purple-btn py-2 rounded-xl text-xs font-bold">+ এড করুন</button>
+      <!-- Add Free Fire -->
+      <form id="form-add-ff" class="glass-card p-4 rounded-2xl space-y-2.5">
+        <h2 class="font-bold text-xs text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ফ্রি ফায়ার প্যাকেজ এড</h2>
+        <input type="text" id="ff-name" placeholder="নাম (যেমন: 115 Diamond)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <input type="number" id="ff-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 py-2 rounded-xl text-xs font-bold text-white transition">+ এড করুন</button>
+      </form>
+
+      <!-- Add eFootball -->
+      <form id="form-add-ef" class="glass-card p-4 rounded-2xl space-y-2.5">
+        <h2 class="font-bold text-xs text-blue-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ই-ফুটবল প্যাকেজ এড</h2>
+        <input type="text" id="ef-name" placeholder="নাম (যেমন: 130 Coins)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <input type="number" id="ef-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-xl text-xs font-bold text-white transition">+ এড করুন</button>
       </form>
 
       <!-- Add Product -->
-      <form id="form-add-prod" class="purple-card p-4 rounded-2xl space-y-2">
-        <h2 class="font-bold text-xs text-emerald-400">+ ই-কমার্স প্রোডাক্ট এড</h2>
-        <input type="text" id="prod-title" placeholder="প্রোডাক্ট নাম" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <input type="number" id="prod-price" placeholder="দাম (TK)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white" required>
-        <textarea id="prod-desc" placeholder="বিবরণ (Description)" class="w-full p-2 bg-purple-950 border border-purple-800 rounded-xl text-xs text-white"></textarea>
-        <input type="file" id="prod-img" accept="image/*" class="w-full text-xs text-purple-300" required>
-        <button type="submit" class="w-full purple-btn py-2 rounded-xl text-xs font-bold">+ আপলোড ও এড করুন</button>
+      <form id="form-add-prod" class="glass-card p-4 rounded-2xl space-y-2.5">
+        <h2 class="font-bold text-xs text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-plus"></i> ই-কমার্স প্রোডাক্ট এড</h2>
+        <input type="text" id="prod-title" placeholder="প্রোডাক্ট নাম" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <input type="number" id="prod-price" placeholder="দাম (TK)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none" required>
+        <textarea id="prod-desc" placeholder="বিবরণ (Description)" class="w-full p-2.5 bg-purple-950/60 border border-purple-800/60 rounded-xl text-xs text-white outline-none"></textarea>
+        <div class="space-y-1">
+          <label class="text-[10px] text-purple-400">প্রোডাক্টের ছবি:</label>
+          <input type="file" id="prod-img" accept="image/*" class="w-full text-xs text-purple-300" required>
+        </div>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2 rounded-xl text-xs font-bold text-white transition">+ আপলোড ও এড করুন</button>
       </form>
     </div>
 
@@ -111,7 +137,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
@@ -130,7 +156,7 @@
 
     onAuthStateChanged(auth, (user) => {
       if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        alert("অনুমতি নেই!");
+        alert("অ্যাক্সেস অনুমোদিত নয়!");
         window.location.href = "login.html";
       } else {
         document.getElementById('admin-email-display').innerText = user.email;
@@ -141,18 +167,39 @@
 
     window.logout = () => signOut(auth).then(() => window.location.href = "login.html");
 
-    window.updateNotice = async () => {
-      const txt = document.getElementById('notice-input').value;
-      if(!txt) return alert('নোটিশ লিখুন!');
-      await setDoc(doc(db, "settings", "notice"), { text: txt });
-      alert('নোটিশ আপডেট হয়েছে!');
-    };
-
+    // Smooth Tab Navigation
     window.switchTab = (tab) => {
-      ['orders', 'packages', 'add'].forEach(t => document.getElementById('tab-'+t).classList.add('hidden'));
-      document.getElementById('tab-'+tab).classList.remove('hidden');
+      ['orders', 'packages', 'add'].forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+        document.getElementById('nav-' + t).classList.remove('admin-tab-active');
+      });
+      document.getElementById('tab-' + tab).classList.remove('hidden');
+      document.getElementById('nav-' + tab).classList.add('admin-tab-active');
     };
 
+    // Save Live Notice Text & Image
+    document.getElementById('form-add-notice').onsubmit = async (e) => {
+      e.preventDefault();
+      const text = document.getElementById('notice-input').value;
+      const fileInput = document.getElementById('notice-img-input');
+      
+      let noticeData = { text: text || '' };
+
+      if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = async (ev) => {
+          noticeData.imageUrl = ev.target.result;
+          await setDoc(doc(db, "settings", "notice"), noticeData);
+          alert('নোটিশ ও ইমেজ সফলভাবে সেভ হয়েছে!');
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        await setDoc(doc(db, "settings", "notice"), noticeData);
+        alert('নোটিশ টেক্সট আপডেট হয়েছে!');
+      }
+    };
+
+    // Load Orders Card View
     function loadOrders() {
       onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
         let html = '';
@@ -161,72 +208,102 @@
           const id = docSnap.id;
           let info = '';
           if(data.gameType === 'FreeFire') info = `UID: ${data.gameUid}`;
-          else if(data.gameType === 'eFootball') info = `${data.accountType} | ID: ${data.accountId} | Pass: ${data.password} | Backup: ${data.backupCode} | WA: ${data.whatsapp}`;
+          else if(data.gameType === 'eFootball') info = `Type: ${data.accountType} | ID: ${data.accountId} | Pass: ${data.password} | Backup: ${data.backupCode} | WA: ${data.whatsapp}`;
           else if(data.gameType === 'ECommerce') info = `Size: ${data.size} | Address: ${data.address} | Phone: ${data.phone}`;
 
-          html += `<tr class="border-b border-purple-800">
-            <td class="p-2">
-              <div class="font-bold text-purple-300">${data.itemName} (${data.price} TK)</div>
-              <div class="text-[10px] text-pink-400 font-mono">TrxID: ${data.trxId}</div>
-              <div class="text-[9px] text-purple-400">${info}</div>
-            </td>
-            <td class="p-2 text-[10px]">${data.status}</td>
-            <td class="p-2 space-y-1">
-              <button onclick="updateStatus('${id}', 'Completed')" class="bg-emerald-600 text-[9px] px-2 py-0.5 rounded w-full">Complete</button>
-              <button onclick="updateStatus('${id}', 'Cancelled')" class="bg-red-600 text-[9px] px-2 py-0.5 rounded w-full">Cancel</button>
-            </td>
-          </tr>`;
+          const statusColor = data.status === 'Completed' ? 'text-emerald-400 bg-emerald-950/40 border-emerald-800/40' : data.status === 'Cancelled' ? 'text-red-400 bg-red-950/40 border-red-800/40' : 'text-amber-400 bg-amber-950/40 border-amber-800/40';
+
+          html += `<div class="bg-purple-950/30 border border-purple-800/40 p-3 rounded-xl space-y-2 text-xs">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-bold text-purple-200">${data.itemName}</p>
+                <p class="text-[10px] text-purple-400">${data.userEmail || ''}</p>
+              </div>
+              <span class="px-2 py-0.5 rounded-md border ${statusColor} text-[10px] font-bold">${data.status}</span>
+            </div>
+            <div class="flex justify-between text-[11px] font-mono text-purple-300 bg-purple-950/60 p-1.5 rounded-lg border border-purple-800/30">
+              <span>মূল্য: ${data.price} TK</span>
+              <span class="text-pink-400">TrxID: ${data.trxId}</span>
+            </div>
+            <div class="text-[10px] text-purple-300 bg-black/20 p-2 rounded-lg break-all">
+              ${info}
+            </div>
+            <div class="flex gap-2 pt-1">
+              <button onclick="updateStatus('${id}', 'Completed')" class="flex-1 bg-emerald-600/80 hover:bg-emerald-600 text-white py-1 rounded-lg text-[10px] font-bold">Complete</button>
+              <button onclick="updateStatus('${id}', 'Cancelled')" class="flex-1 bg-red-600/80 hover:bg-red-600 text-white py-1 rounded-lg text-[10px] font-bold">Cancel</button>
+            </div>
+          </div>`;
         });
-        document.getElementById('admin-orders-list').innerHTML = html || '<tr><td colspan="3" class="p-4 text-center">কোনো অর্ডার নেই</td></tr>';
+        document.getElementById('admin-orders-list').innerHTML = html || '<p class="p-4 text-center text-xs text-purple-400">কোনো অর্ডার পাওয়া যায়নি</p>';
       });
     }
 
     window.updateStatus = async (id, status) => {
       await updateDoc(doc(db, "orders", id), { status: status });
-      alert('আপডেট হয়েছে!');
+      alert('অর্ডার স্ট্যাটাস আপডেট হয়েছে!');
     };
 
+    // Load Packages and Products
     function loadExistingItems() {
+      // FF List
       onSnapshot(collection(db, "ff_packages"), snap => {
         let h = '';
         snap.forEach(d => {
           const i = d.data();
-          h += `<div class="flex justify-between p-2 bg-purple-950/60 rounded-xl text-xs"><span>${i.name} - ${i.price} TK</span><button onclick="deleteDoc(doc(db, 'ff_packages', '${d.id}'))" class="text-red-400"><i class="fa-solid fa-trash"></i></button></div>`;
+          h += `<div class="flex justify-between items-center p-2 bg-purple-950/40 border border-purple-800/30 rounded-xl text-xs">
+            <span class="text-purple-200 font-medium">${i.name} - <b class="text-amber-400">${i.price} TK</b></span>
+            <button onclick="deleteDoc(doc(db, 'ff_packages', '${d.id}'))" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash-can"></i></button>
+          </div>`;
         });
-        document.getElementById('admin-ff-list').innerHTML = h;
+        document.getElementById('admin-ff-list').innerHTML = h || '<p class="text-[10px] text-purple-400">কোনো তথ্য নেই</p>';
       });
 
+      // EF List
       onSnapshot(collection(db, "ef_packages"), snap => {
         let h = '';
         snap.forEach(d => {
           const i = d.data();
-          h += `<div class="flex justify-between p-2 bg-purple-950/60 rounded-xl text-xs"><span>${i.name} - ${i.price} TK</span><button onclick="deleteDoc(doc(db, 'ef_packages', '${d.id}'))" class="text-red-400"><i class="fa-solid fa-trash"></i></button></div>`;
+          h += `<div class="flex justify-between items-center p-2 bg-purple-950/40 border border-purple-800/30 rounded-xl text-xs">
+            <span class="text-purple-200 font-medium">${i.name} - <b class="text-blue-400">${i.price} TK</b></span>
+            <button onclick="deleteDoc(doc(db, 'ef_packages', '${d.id}'))" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash-can"></i></button>
+          </div>`;
         });
-        document.getElementById('admin-ef-list').innerHTML = h;
+        document.getElementById('admin-ef-list').innerHTML = h || '<p class="text-[10px] text-purple-400">কোনো তথ্য নেই</p>';
       });
 
+      // E-Commerce Grid
       onSnapshot(collection(db, "products"), snap => {
         let h = '';
         snap.forEach(d => {
           const i = d.data();
-          h += `<div class="flex justify-between p-2 bg-purple-950/60 rounded-xl text-xs"><span>${i.title} - ${i.price} TK</span><button onclick="deleteDoc(doc(db, 'products', '${d.id}'))" class="text-red-400"><i class="fa-solid fa-trash"></i></button></div>`;
+          h += `<div class="bg-purple-950/40 border border-purple-800/30 p-2 rounded-xl text-xs space-y-1 relative group">
+            <img src="${i.imageUrl}" class="w-full h-20 object-cover rounded-lg mb-1">
+            <p class="font-bold text-purple-200 truncate text-[11px]">${i.title}</p>
+            <p class="text-emerald-400 font-bold text-[10px]">${i.price} TK</p>
+            <button onclick="deleteDoc(doc(db, 'products', '${d.id}'))" class="absolute top-1 right-1 bg-red-600/80 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px]">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>`;
         });
-        document.getElementById('admin-prod-list').innerHTML = h;
+        document.getElementById('admin-prod-list').innerHTML = h || '<p class="col-span-2 text-[10px] text-purple-400">কোনো প্রোডাক্ট নেই</p>';
       });
     }
 
+    // Add FF Item
     document.getElementById('form-add-ff').onsubmit = async (e) => {
       e.preventDefault();
       await addDoc(collection(db, "ff_packages"), { name: document.getElementById('ff-name').value, price: Number(document.getElementById('ff-price').value) });
-      e.target.reset(); alert('এড হয়েছে!');
+      e.target.reset(); alert('ফ্রি ফায়ার প্যাকেজ যুক্ত হয়েছে!');
     };
 
+    // Add EF Item
     document.getElementById('form-add-ef').onsubmit = async (e) => {
       e.preventDefault();
       await addDoc(collection(db, "ef_packages"), { name: document.getElementById('ef-name').value, price: Number(document.getElementById('ef-price').value) });
-      e.target.reset(); alert('এড হয়েছে!');
+      e.target.reset(); alert('ই-ফুটবল প্যাকেজ যুক্ত হয়েছে!');
     };
 
+    // Add E-Commerce Item
     document.getElementById('form-add-prod').onsubmit = async (e) => {
       e.preventDefault();
       const reader = new FileReader();
@@ -237,11 +314,11 @@
           description: document.getElementById('prod-desc').value,
           imageUrl: ev.target.result
         });
-        e.target.reset(); alert('প্রোডাক্ট এড হয়েছে!');
+        e.target.reset(); alert('প্রোডাক্ট আপলোড সফল হয়েছে!');
       };
       reader.readAsDataURL(document.getElementById('prod-img').files[0]);
     };
   </script>
 </body>
-    </html>
+</html>
 
