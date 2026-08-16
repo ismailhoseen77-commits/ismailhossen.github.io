@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mihadx BD - Free Fire & eFootball Top-Up Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><i class="fa-solid fa-gamepad"></i> Mihadx BD</a>
+            <nav class="nav-menu">
+                <a href="#home" class="active">Home</a>
+                <a href="#topup">Top-Up</a>
+                <a href="#shop">Shop</a>
+                <a href="track.html">Track Order</a>
+                <div id="auth-section">
+                    <a href="login.html" class="btn-login"><i class="fa-brands fa-google"></i> Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Notice Banner -->
+        <div id="notice-container" class="container">
+            <div class="notice-bar"><i class="fa-solid fa-bullhorn"></i> বিকাশ পেমেন্ট করুন: <strong>01309735129</strong> (Send Money / Cash In) করে TrxID দিন। যে কোনো সমস্যায় WhatsApp: <strong>01576502490</strong></div>
+        </div>
+
+        <!-- Top-Up Section -->
+        <section id="topup" class="container section">
+            <h2><i class="fa-solid fa-bolt"></i> Game Top-Up (bKash)</h2>
+            <div class="game-selector">
+                <button class="game-btn active" data-game="freefire">Free Fire</button>
+                <button class="game-btn" data-game="efootball">eFootball</button>
+            </div>
+            <div class="packages-grid" id="packages-grid">
+                <!-- Dynamic Packages Loaded via JS -->
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section id="shop" class="container section">
+            <h2><i class="fa-solid fa-bag-shopping"></i> E-Commerce Shop</h2>
+            <div class="products-grid" id="products-grid">
+                <!-- Dynamic Products Loaded via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Support Floating Widget -->
+    <div id="ai-chat-widget">
+        <button id="ai-toggle-btn"><i class="fa-solid fa-robot"></i></button>
+        <div id="ai-chat-box" class="hidden">
+            <div class="ai-header"><h3>Mihadx AI Support</h3><button id="ai-close">&times;</button></div>
+            <div id="ai-messages">
+                <div class="ai-msg"><b>AI:</b> আসসালামু আলাইকুম! টপ-আপ বা অর্ডার সম্পর্কিত যেকোনো প্রয়োজনে আমাকে জিজ্ঞেস করুন। বিকাশ নম্বর: 01309735129</div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" id="ai-input" placeholder="আপনার প্রশ্ন লিখুন...">
+                <button id="ai-send"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Mihadx BD. All rights reserved. | WhatsApp: 01576502490</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/topup.js"></script>
+    <script type="module" src="js/ai-support.js"></script>
+</body>
+</html>
