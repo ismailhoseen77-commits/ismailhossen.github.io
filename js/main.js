@@ -1,47 +1,104 @@
-import { auth, googleProvider, signInWithPopup, signOut, onAuthStateChanged } from './firebase-init.js';
+import { auth, provider, signInWithPopup, signOut, onAuthStateChanged, db, collection, query, where, getDocs } from './firebase-init.js';
 
+// Global Tab Switcher
+window.switchTab = function(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+    document.getElementById(tabId).classList.remove('hidden');
+
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('text-indigo-600');
+        btn.classList.add('text-gray-400');
+    });
+
+    if (tabId === 'home-tab') document.getElementById('nav-home').classList.replace('text-gray-400', 'text-indigo-600');
+    if (tabId === 'orders-tab') {
+        document.getElementById('nav-orders').classList.replace('text-gray-400', 'text-indigo-600');
+        loadUserOrders();
+    }
+    if (tabId === 'profile-tab') document.getElementById('nav-profile').classList.replace('text-gray-400', 'text-indigo-600');
+};
+
+// Google Login
 window.loginWithGoogle = async function() {
     try {
-        await signInWithPopup(auth, googleProvider);
-        alert('সফলভাবে গুগল দিয়ে লগইন হয়েছে!');
-    } catch(e) {
-        alert('লগইন ব্যর্থ হয়েছে: ' + e.message);
+        await signInWithPopup(auth, provider);
+    } catch (e) {
+        alert("লগইন ব্যর্থ হয়েছে: " + e.message);
     }
 };
 
-window.openCompModal = function(serviceName) {
-    const modal = document.getElementById('comp-modal');
-    document.getElementById('comp-title').innerText = serviceName;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+// Logout User
+window.logoutUser = async function() {
+    await signOut(auth);
 };
 
-window.sendCompToWhatsapp = function() {
-    const serviceName = document.getElementById('comp-title').innerText;
-    const details = document.getElementById('comp-details').value.trim();
-    if(!details) return alert('কাজের বিবরণ লিখুন!');
-
-    const msg = `🖥️ *NEW COMPUTER WORK REQUEST*\nService: ${serviceName}\nDetails: ${details}`;
-    window.open(`https://wa.me/8801576502490?text=${encodeURIComponent(msg)}`, '_blank');
-    closeModals();
-};
-
+// Auth State Monitor
 onAuthStateChanged(auth, (user) => {
-    const authBtn = document.getElementById('user-auth-btn');
-    if (authBtn) {
-        if (user) {
-            authBtn.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <img src="${user.photoURL}" class="w-6 h-6 rounded-full border">
-                    <button onclick="logout()" class="text-[10px] bg-red-500 text-white px-2 py-1 rounded">Logout</button>
-                </div>`;
-        } else {
-            authBtn.innerHTML = `
-                <button onclick="loginWithGoogle()" class="bg-white text-indigo-600 px-3 py-1.5 rounded-full text-xs font-bold shadow flex items-center gap-1">
-                    <i class="fa-brands fa-google"></i> Login
-                </button>`;
-        }
+    if (user) {
+        document.getElementById('logged-out-box').classList.add('hidden');
+        document.getElementById('logged-in-box').classList.remove('hidden');
+
+        document.getElementById('profile-name').innerText = user.displayName || "User";
+        document.getElementById('profile-email').innerText = user.email;
+        document.getElementById('user-avatar').src = user.photoURL || "https://i.ibb.co/3s3W98t/efootball.png";
+
+        document.getElementById('header-user-badge').classList.remove('hidden');
+        document.getElementById('user-display-name').innerText = user.displayName ? user.displayName.split(' ')[0] : "User";
+    } else {
+        document.getElementById('logged-out-box').classList.remove('hidden');
+        document.getElementById('logged-in-box').classList.add('hidden');
+        document.getElementById('header-user-badge').classList.add('hidden');
     }
 });
 
-window.logout = () => signOut(auth);
+// Load Orders
+async function loadUserOrders() {
+    const user = auth.currentUser;
+    const container = document.getElementById('orders-list-container');
+    container.innerHTML = `<p class="text-center text-xs text-gray-500 py-4">লোড হচ্ছে...</p>`;
+
+    if (!user) {
+        container.innerHTML = `
+            <div class="bg-white p-6 rounded-2xl shadow-sm text-center space-y-2 border">
+                <i class="fa-solid fa-box-open text-3xl text-gray-300"></i>
+                <p class="text-xs text-gray-500 font-bold">অর্ডার হিস্ট্রি দেখতে লগইন করুন</p>
+            </div>
+        `;
+        return;
+    }
+
+    try {
+        const q = query(collection(db, "orders"), where("userEmail", "==", user.email));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            container.innerHTML = `
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-center space-y-2 border">
+                    <i class="fa-solid fa-circle-exclamation text-3xl text-indigo-300"></i>
+                    <p class="text-xs text-gray-600 font-bold">কোনো অর্ডার পাওয়া যায়নি!</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-2xl shadow-sm border space-y-2 text-xs";
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span class="font-bold text-gray-800">${data.product}</span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded ${data.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${data.status}</span>
+                </div>
+                <div class="flex justify-between text-gray-500 text-[11px]">
+                    <span>মূল্য: ৳${data.price}</span>
+                    <span>TrxID: ${data.trxId}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (e) {
+        container.innerHTML = `<p class="text-center text-xs text-red-500 py-4">ডাটা আনতে সমস্যা হয়েছে!</p>`;
+    }
+}
