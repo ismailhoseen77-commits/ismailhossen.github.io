@@ -1,55 +1,68 @@
-// Google Login with Direct Redirect Method
+// Google Login Handler
 function loginWithGoogle() {
     if (typeof auth === 'undefined' || typeof googleProvider === 'undefined') {
         alert("Firebase সঠিকভাবে লোড হয়নি!");
         return;
     }
-    // পপআপ ব্লক এড়াতে রিডাইরেক্ট ব্যবহার করা হলো
-    auth.signInWithRedirect(googleProvider);
+
+    auth.signInWithPopup(googleProvider)
+        .then((result) => {
+            const user = result.user;
+            // Save or Update user doc in Firestore
+            db.collection("users").doc(user.uid).set({
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+            
+            alert("লগইন সফল হয়েছে!");
+        })
+        .catch((error) => {
+            console.error("Login Error:", error);
+            if (error.code === 'auth/unauthorized-domain') {
+                alert("Firebase Console-এ Authorised domains যুক্ত করা নেই!");
+            } else if (error.code === 'auth/popup-blocked') {
+                alert("ব্রাউজারের Pop-up blocked! অনুগ্রহ করে Pop-up allow করুন।");
+            } else {
+                alert("লগইন সমস্যা: " + error.message);
+            }
+        });
 }
 
-// Handle Redirect Results
-if (typeof auth !== 'undefined') {
-    auth.getRedirectResult().then(result => {
-        if (result && result.user) {
-            console.log("Redirect login success:", result.user);
-        }
-    }).catch(error => {
-        console.error("Login Error:", error);
-    });
+// User State Change
+auth.onAuthStateChanged(user => {
+    const loggedOutBox = document.getElementById('logged-out-box');
+    const loggedInBox = document.getElementById('logged-in-box');
+    const headerBadge = document.getElementById('header-user-badge');
 
-    auth.onAuthStateChanged(user => {
-        const loggedOutBox = document.getElementById('logged-out-box');
-        const loggedInBox = document.getElementById('logged-in-box');
-        const headerBadge = document.getElementById('header-user-badge');
+    if (user) {
+        if (loggedOutBox) loggedOutBox.classList.add('hidden');
+        if (loggedInBox) loggedInBox.classList.remove('hidden');
 
-        if (user) {
-            if (loggedOutBox) loggedOutBox.classList.add('hidden');
-            if (loggedInBox) loggedInBox.classList.remove('hidden');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const userAvatar = document.getElementById('user-avatar');
+        const userDisplayName = document.getElementById('user-display-name');
 
-            const profileName = document.getElementById('profile-name');
-            const profileEmail = document.getElementById('profile-email');
-            const userAvatar = document.getElementById('user-avatar');
-            const userDisplayName = document.getElementById('user-display-name');
+        if (profileName) profileName.innerText = user.displayName || "User";
+        if (profileEmail) profileEmail.innerText = user.email || "";
+        if (userAvatar) userAvatar.src = user.photoURL || "https://i.ibb.co/3s3W98t/efootball.png";
 
-            if (profileName) profileName.innerText = user.displayName || "User";
-            if (profileEmail) profileEmail.innerText = user.email || "";
-            if (userAvatar) userAvatar.src = user.photoURL || "https://i.ibb.co/3s3W98t/efootball.png";
-
-            if (headerBadge) headerBadge.classList.remove('hidden');
-            if (userDisplayName) userDisplayName.innerText = user.displayName ? user.displayName.split(' ')[0] : "User";
-        } else {
-            if (loggedOutBox) loggedOutBox.classList.remove('hidden');
-            if (loggedInBox) loggedInBox.classList.add('hidden');
-            if (headerBadge) headerBadge.classList.add('hidden');
-        }
-    });
-}
+        if (headerBadge) headerBadge.classList.remove('hidden');
+        if (userDisplayName) userDisplayName.innerText = user.displayName ? user.displayName.split(' ')[0] : "User";
+    } else {
+        if (loggedOutBox) loggedOutBox.classList.remove('hidden');
+        if (loggedInBox) loggedInBox.classList.add('hidden');
+        if (headerBadge) headerBadge.classList.add('hidden');
+    }
+});
 
 function logoutUser() {
-    if (typeof auth !== 'undefined') {
-        auth.signOut();
-    }
+    auth.signOut().then(() => {
+        alert("লগআউট সফল হয়েছে!");
+    });
 }
 
 function switchTab(tabId) {
@@ -75,7 +88,7 @@ function loadUserOrders() {
     if (!container) return;
 
     container.innerHTML = `<p class="text-center text-xs text-gray-500 py-4">লোড হচ্ছে...</p>`;
-    const user = (typeof auth !== 'undefined') ? auth.currentUser : null;
+    const user = auth.currentUser;
 
     if (!user) {
         container.innerHTML = `<p class="text-center text-xs text-gray-500 py-4">অর্ডার লিস্ট দেখতে লগইন করুন।</p>`;
@@ -91,9 +104,10 @@ function loadUserOrders() {
         snapshot.forEach(doc => {
             const data = doc.data();
             const card = document.createElement('div');
-            card.className = "bg-white p-3 rounded-xl border text-xs space-y-1";
-            card.innerHTML = `<div class="flex justify-between font-bold"><span>${data.product}</span><span>${data.status}</span></div><p class="text-gray-500">Trx: ${data.trxId} | ৳${data.price}</p>`;
+            card.className = "bg-white p-3 rounded-xl border text-xs space-y-1 shadow-sm";
+            card.innerHTML = `<div class="flex justify-between font-bold"><span>${data.product}</span><span class="text-indigo-600">${data.status}</span></div><p class="text-gray-500">Trx: ${data.trxId} | ৳${data.price}</p>`;
             container.appendChild(card);
         });
     });
 }
+
