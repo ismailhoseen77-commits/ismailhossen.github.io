@@ -1,12 +1,10 @@
-import { auth, db, collection, addDoc, serverTimestamp } from './firebase-init.js';
-
 const ADMIN_WA_NUMBER = "8801576502490";
 let currentGame = "";
 let selectedPkgName = "";
 let selectedPkgPrice = 0;
 let selectedPayOption = "wallet";
 
-window.openProductPage = function(type) {
+function openProductPage(type) {
     currentGame = type;
     selectedPkgName = "";
     selectedPkgPrice = 0;
@@ -65,10 +63,10 @@ window.openProductPage = function(type) {
         grid.appendChild(card);
     });
 
-    window.switchTab('product-view');
-};
+    switchTab('product-view');
+}
 
-window.selectPaymentOption = function(opt) {
+function selectPaymentOption(opt) {
     selectedPayOption = opt;
     const walletEl = document.getElementById('pay-opt-wallet');
     const instantEl = document.getElementById('pay-opt-instant');
@@ -80,33 +78,32 @@ window.selectPaymentOption = function(opt) {
         instantEl.className = "border-2 border-indigo-600 bg-indigo-50/50 p-3 rounded-xl cursor-pointer text-center relative";
         walletEl.className = "border p-3 rounded-xl cursor-pointer text-center bg-gray-50";
     }
-};
+}
 
-window.handleBuyNow = function() {
+function handleBuyNow() {
     if (!selectedPkgName) return alert('একটি রিচার্জ প্যাকেজ সিলেক্ট করুন!');
 
-    let accInfo = "";
     if (currentGame === 'freefire') {
-        accInfo = document.getElementById('ff-uid').value.trim();
-        if (!accInfo) return alert('আপনার Player UID প্রদান করুন!');
+        const uid = document.getElementById('ff-uid').value.trim();
+        if (!uid) return alert('আপনার Player UID প্রদান করুন!');
     } else {
         const id = document.getElementById('ef-id').value.trim();
         const pass = document.getElementById('ef-pass').value.trim();
-        if (!id || !pass) return alert('Account ID এবং Password সঠিক দিয়ে পূরণ করুন!');
+        if (!id || !pass) return alert('Account ID এবং Password দিন!');
     }
 
     document.getElementById('checkout-amount-display').innerText = `৳ ${selectedPkgPrice}`;
     document.getElementById('instruction-amount').innerText = `${selectedPkgPrice}`;
     document.getElementById('bkash-checkout-modal').classList.remove('hidden');
     document.getElementById('bkash-checkout-modal').classList.add('flex');
-};
+}
 
-window.closeBkashModal = function() {
+function closeBkashModal() {
     document.getElementById('bkash-checkout-modal').classList.add('hidden');
     document.getElementById('bkash-checkout-modal').classList.remove('flex');
-};
+}
 
-window.submitFinalOrder = async function() {
+function submitFinalOrder() {
     const trxId = document.getElementById('trx-id-input').value.trim();
     if (!trxId) return alert('ট্রানজেকশন আইডি প্রদান করুন!');
 
@@ -122,12 +119,10 @@ window.submitFinalOrder = async function() {
         accInfo: accInfo,
         trxId: trxId,
         status: "Pending",
-        createdAt: serverTimestamp()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    try {
-        await addDoc(collection(db, "orders"), orderData);
-
+    db.collection("orders").add(orderData).then(() => {
         const msg = `🚨 *NEW TOPUP ORDER*\n` +
                     `📦 *Item:* ${selectedPkgName}\n` +
                     `💰 *Price:* ${selectedPkgPrice} BDT\n` +
@@ -137,7 +132,7 @@ window.submitFinalOrder = async function() {
 
         window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
         closeBkashModal();
-    } catch (e) {
+    }).catch(e => {
         alert('অর্ডার সাবমিট করতে ব্যর্থ হয়েছে: ' + e.message);
-    }
-};
+    });
+        }
