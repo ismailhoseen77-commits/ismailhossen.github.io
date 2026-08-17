@@ -1,72 +1,126 @@
 import { auth, db, collection, addDoc, serverTimestamp } from './firebase-init.js';
 
 const ADMIN_WA_NUMBER = "8801576502490";
-let selectedProduct = null;
-let selectedPrice = 0;
+let currentGame = "";
+let selectedPkgName = "";
+let selectedPkgPrice = 0;
+let selectedPayOption = "wallet";
 
-window.openTopupModal = function(category) {
-    const modal = document.getElementById('topup-modal');
-    const pkgContainer = document.getElementById('package-list');
-    pkgContainer.innerHTML = '';
+window.openProductPage = function(type) {
+    currentGame = type;
+    selectedPkgName = "";
+    selectedPkgPrice = 0;
 
-    let packages = [];
-    if(category === 'freefire') {
-        document.getElementById('topup-title').innerText = "Free Fire Diamond Top-Up";
-        packages = [
-            { name: "115 Diamonds", price: 80 },
-            { name: "240 Diamonds", price: 160 },
-            { name: "610 Diamonds", price: 400 },
+    const grid = document.getElementById('recharge-grid');
+    grid.innerHTML = '';
+
+    let items = [];
+    if (type === 'freefire') {
+        document.getElementById('product-header-title').innerText = "FF UID TOP UP";
+        document.getElementById('product-header-img').src = "free-fire-logo.png";
+        document.getElementById('ff-account-fields').classList.remove('hidden');
+        document.getElementById('efootball-account-fields').classList.add('hidden');
+
+        items = [
+            { name: "25 Diamond", price: 20 },
+            { name: "50 Diamond", price: 35 },
+            { name: "115 Diamond", price: 79 },
+            { name: "240 Diamond", price: 158 },
+            { name: "355 Diamond", price: 237 },
+            { name: "480 Diamond", price: 316 },
+            { name: "610 Diamond", price: 400 },
+            { name: "850 Diamond", price: 550 },
+            { name: "1240 Diamond", price: 800 },
+            { name: "2530 Diamond", price: 1610 },
             { name: "Weekly Membership", price: 160 },
             { name: "Monthly Membership", price: 780 }
         ];
-    } else if(category === 'efootball') {
-        document.getElementById('topup-title').innerText = "eFootball Coin Top-Up";
-        packages = [
-            { name: "130 Coins", price: 120 },
-            { name: "520 Coins", price: 450 },
-            { name: "1050 Coins", price: 890 }
+    } else {
+        document.getElementById('product-header-title').innerText = "E Football Coin TOP UP";
+        document.getElementById('product-header-img').src = "EFootball_logo.png";
+        document.getElementById('ff-account-fields').classList.add('hidden');
+        document.getElementById('efootball-account-fields').classList.remove('hidden');
+
+        items = [
+            { name: "100 Coin", price: 100 },
+            { name: "260 Coin", price: 190 },
+            { name: "520 Coin", price: 540 },
+            { name: "1040 Coin", price: 1020 },
+            { name: "2130 Coin", price: 2020 },
+            { name: "3250 Coin", price: 3040 }
         ];
     }
 
-    packages.forEach(pkg => {
-        const btn = document.createElement('button');
-        btn.className = "border border-indigo-200 bg-indigo-50/50 p-2.5 rounded-xl text-left hover:border-indigo-600 focus:border-indigo-600 focus:bg-indigo-100 transition";
-        btn.innerHTML = `<p class="font-bold text-xs text-indigo-900">${pkg.name}</p><p class="text-xs text-indigo-600 font-extrabold">৳ ${pkg.price}</p>`;
-        btn.onclick = () => {
-            selectedProduct = `${category.toUpperCase()} - ${pkg.name}`;
-            selectedPrice = pkg.price;
+    items.forEach(pkg => {
+        const card = document.createElement('div');
+        card.className = "border rounded-xl p-2.5 cursor-pointer bg-white hover:border-indigo-600 transition flex flex-col justify-center items-center pkg-card-item";
+        card.innerHTML = `<p class="font-bold text-xs text-gray-800">${pkg.name}</p><p class="text-[11px] font-extrabold text-indigo-600">BDT ${pkg.price}</p>`;
+        
+        card.onclick = () => {
+            document.querySelectorAll('.pkg-card-item').forEach(c => c.classList.remove('border-2', 'border-indigo-600', 'bg-indigo-50'));
+            card.classList.add('border-2', 'border-indigo-600', 'bg-indigo-50');
+            selectedPkgName = pkg.name;
+            selectedPkgPrice = pkg.price;
         };
-        pkgContainer.appendChild(btn);
+        grid.appendChild(card);
     });
 
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    window.switchTab('product-view');
 };
 
-window.closeModals = function() {
-    const modal = document.getElementById('topup-modal');
-    const compModal = document.getElementById('comp-modal');
-    if(modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
-    if(compModal) { compModal.classList.add('hidden'); compModal.classList.remove('flex'); }
+window.selectPaymentOption = function(opt) {
+    selectedPayOption = opt;
+    const walletEl = document.getElementById('pay-opt-wallet');
+    const instantEl = document.getElementById('pay-opt-instant');
+
+    if(opt === 'wallet') {
+        walletEl.className = "border-2 border-indigo-600 bg-indigo-50/50 p-3 rounded-xl cursor-pointer text-center relative";
+        instantEl.className = "border p-3 rounded-xl cursor-pointer text-center bg-gray-50";
+    } else {
+        instantEl.className = "border-2 border-indigo-600 bg-indigo-50/50 p-3 rounded-xl cursor-pointer text-center relative";
+        walletEl.className = "border p-3 rounded-xl cursor-pointer text-center bg-gray-50";
+    }
 };
 
-window.submitTopupOrder = async function() {
-    const playerInfo = document.getElementById('player-id').value.trim();
-    const trxId = document.getElementById('trx-id').value.trim();
+window.handleBuyNow = function() {
+    if (!selectedPkgName) return alert('একটি রিচার্জ প্যাকেজ সিলেক্ট করুন!');
+
+    let accInfo = "";
+    if (currentGame === 'freefire') {
+        accInfo = document.getElementById('ff-uid').value.trim();
+        if (!accInfo) return alert('আপনার Player UID প্রদান করুন!');
+    } else {
+        const id = document.getElementById('ef-id').value.trim();
+        const pass = document.getElementById('ef-pass').value.trim();
+        if (!id || !pass) return alert('Account ID এবং Password সঠিক দিয়ে পূরণ করুন!');
+    }
+
+    document.getElementById('checkout-amount-display').innerText = `৳ ${selectedPkgPrice}`;
+    document.getElementById('instruction-amount').innerText = `${selectedPkgPrice}`;
+    document.getElementById('bkash-checkout-modal').classList.remove('hidden');
+    document.getElementById('bkash-checkout-modal').classList.add('flex');
+};
+
+window.closeBkashModal = function() {
+    document.getElementById('bkash-checkout-modal').classList.add('hidden');
+    document.getElementById('bkash-checkout-modal').classList.remove('flex');
+};
+
+window.submitFinalOrder = async function() {
+    const trxId = document.getElementById('trx-id-input').value.trim();
+    if (!trxId) return alert('ট্রানজেকশন আইডি প্রদান করুন!');
+
     const user = auth.currentUser;
-
-    if(!selectedProduct) return alert('অনুগ্রহ করে একটি প্যাকেজ সিলেক্ট করুন!');
-    if(!playerInfo) return alert('Player UID অথবা অ্যাকাউন্ট ডিটেইলস দিন!');
-    if(!trxId) return alert('বিকাশ TrxID প্রদান করুন!');
+    let accInfo = currentGame === 'freefire' 
+        ? document.getElementById('ff-uid').value.trim()
+        : `Type: ${document.getElementById('ef-account-type').value} | ID: ${document.getElementById('ef-id').value.trim()} | Pass: ${document.getElementById('ef-pass').value.trim()}`;
 
     const orderData = {
-        userEmail: user ? user.email : "Guest User",
-        userName: user ? user.displayName : "Guest",
-        product: selectedProduct,
-        price: selectedPrice,
-        playerInfo: playerInfo,
+        userEmail: user ? user.email : "Guest",
+        product: `${currentGame.toUpperCase()} - ${selectedPkgName}`,
+        price: selectedPkgPrice,
+        accInfo: accInfo,
         trxId: trxId,
-        paymentMethod: "bKash (01309735129)",
         status: "Pending",
         createdAt: serverTimestamp()
     };
@@ -74,22 +128,16 @@ window.submitTopupOrder = async function() {
     try {
         await addDoc(collection(db, "orders"), orderData);
 
-        const message = `🛒 *NEW TOP-UP ORDER*\n` +
-                        `--------------------------\n` +
-                        `📦 *Product:* ${selectedProduct}\n` +
-                        `💰 *Price:* ৳${selectedPrice}\n` +
-                        `🆔 *Player Info:* ${playerInfo}\n` +
-                        `💳 *Payment Method:* bKash\n` +
-                        `🧾 *TrxID:* ${trxId}\n` +
-                        `👤 *User:* ${orderData.userName} (${orderData.userEmail})\n` +
-                        `--------------------------\n` +
-                        `অর্ডারটি দ্রুত প্রসেস করুন।`;
+        const msg = `🚨 *NEW TOPUP ORDER*\n` +
+                    `📦 *Item:* ${selectedPkgName}\n` +
+                    `💰 *Price:* ${selectedPkgPrice} BDT\n` +
+                    `💳 *TrxID:* ${trxId}\n` +
+                    `🎮 *Game:* ${currentGame}\n` +
+                    `🆔 *Info:* ${accInfo}`;
 
-        const waUrl = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(message)}`;
-        alert('অর্ডার সাবমিট হয়েছে! এখন আপনার হোয়াটসঅ্যাপে নিয়ে যাওয়া হচ্ছে...');
-        window.open(waUrl, '_blank');
-        closeModals();
+        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        closeBkashModal();
     } catch (e) {
-        alert('অর্ডার তৈরিতে সমস্যা হয়েছে: ' + e.message);
+        alert('অর্ডার সাবমিট করতে ব্যর্থ হয়েছে: ' + e.message);
     }
 };
