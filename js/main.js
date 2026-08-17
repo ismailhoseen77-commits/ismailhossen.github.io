@@ -1,9 +1,11 @@
-import { auth, provider, signInWithPopup, signOut, onAuthStateChanged, db, collection, query, where, getDocs } from './firebase-init.js';
-
-// Global Tab Switcher
-window.switchTab = function(tabId) {
+// Tab Switching System
+function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-    document.getElementById(tabId).classList.remove('hidden');
+    
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.remove('hidden');
+    }
 
     document.querySelectorAll('.nav-item').forEach(btn => {
         btn.classList.remove('text-indigo-600');
@@ -16,30 +18,30 @@ window.switchTab = function(tabId) {
         loadUserOrders();
     }
     if (tabId === 'profile-tab') document.getElementById('nav-profile').classList.replace('text-gray-400', 'text-indigo-600');
-};
+}
 
 // Google Login
-window.loginWithGoogle = async function() {
-    try {
-        await signInWithPopup(auth, provider);
-    } catch (e) {
-        alert("লগইন ব্যর্থ হয়েছে: " + e.message);
-    }
-};
+function loginWithGoogle() {
+    auth.signInWithPopup(googleProvider).then(result => {
+        console.log("Logged in:", result.user);
+    }).catch(e => {
+        alert("লগইন সমস্যা: " + e.message);
+    });
+}
 
-// Logout User
-window.logoutUser = async function() {
-    await signOut(auth);
-};
+// Logout
+function logoutUser() {
+    auth.signOut();
+}
 
 // Auth State Monitor
-onAuthStateChanged(auth, (user) => {
+auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById('logged-out-box').classList.add('hidden');
         document.getElementById('logged-in-box').classList.remove('hidden');
 
         document.getElementById('profile-name').innerText = user.displayName || "User";
-        document.getElementById('profile-email').innerText = user.email;
+        document.getElementById('profile-email').innerText = user.email || "";
         document.getElementById('user-avatar').src = user.photoURL || "https://i.ibb.co/3s3W98t/efootball.png";
 
         document.getElementById('header-user-badge').classList.remove('hidden');
@@ -52,7 +54,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // Load Orders
-async function loadUserOrders() {
+function loadUserOrders() {
     const user = auth.currentUser;
     const container = document.getElementById('orders-list-container');
     container.innerHTML = `<p class="text-center text-xs text-gray-500 py-4">লোড হচ্ছে...</p>`;
@@ -61,16 +63,13 @@ async function loadUserOrders() {
         container.innerHTML = `
             <div class="bg-white p-6 rounded-2xl shadow-sm text-center space-y-2 border">
                 <i class="fa-solid fa-box-open text-3xl text-gray-300"></i>
-                <p class="text-xs text-gray-500 font-bold">অর্ডার হিস্ট্রি দেখতে লগইন করুন</p>
+                <p class="text-xs text-gray-500 font-bold">অর্ডার হিস্ট্রি দেখতে প্রোফাইল থেকে লগইন করুন</p>
             </div>
         `;
         return;
     }
 
-    try {
-        const q = query(collection(db, "orders"), where("userEmail", "==", user.email));
-        const snapshot = await getDocs(q);
-
+    db.collection("orders").where("userEmail", "==", user.email).get().then(snapshot => {
         if (snapshot.empty) {
             container.innerHTML = `
                 <div class="bg-white p-6 rounded-2xl shadow-sm text-center space-y-2 border">
@@ -98,7 +97,8 @@ async function loadUserOrders() {
             `;
             container.appendChild(card);
         });
-    } catch (e) {
-        container.innerHTML = `<p class="text-center text-xs text-red-500 py-4">ডাটা আনতে সমস্যা হয়েছে!</p>`;
-    }
+    }).catch(e => {
+        container.innerHTML = `<p class="text-center text-xs text-red-500 py-4">ডাটা লোড হতে সমস্যা হয়েছে!</p>`;
+    });
 }
+
