@@ -3,31 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Mihadx BD</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <title>Admin Panel - Mihadx BD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="admin-body">
-    <div class="admin-wrapper" id="admin-wrapper">
-        <aside class="admin-sidebar">
-            <h2><i class="fa-solid fa-shield-halved"></i> Mihadx Admin</h2>
-            <ul>
-                <li><a href="#" class="active" data-tab="orders"><i class="fa-solid fa-receipt"></i> Orders & bKash Verify</a></li>
-                <li><a href="#" data-tab="packages"><i class="fa-solid fa-box"></i> Top-Up Packages</a></li>
-                <li><a href="#" data-tab="products"><i class="fa-solid fa-store"></i> Products</a></li>
-            </ul>
-        </aside>
-        <main class="admin-main">
-            <header class="admin-header">
-                <span id="admin-user-email">Checking admin authorization...</span>
-                <button id="admin-logout" class="btn-logout">Logout</button>
-            </header>
-            <div id="admin-content" class="admin-content-area">
-                <h3>স্বাগতম অ্যাডমিন প্যানেলে!</h3>
-                <p>এখান থেকে আপনি বিকাশ পেমেন্ট ভেরিফাই এবং অর্ডার ম্যানেজ করতে পারবেন।</p>
-            </div>
-        </main>
+<body class="bg-gray-800 text-white min-h-screen p-4">
+
+    <!-- Auth Protection Screen -->
+    <div id="admin-lock" class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 text-center space-y-4 max-w-sm w-full">
+            <i class="fa-solid fa-lock text-4xl text-amber-400"></i>
+            <h2 class="text-lg font-bold">Admin Panel Access</h2>
+            <p class="text-xs text-gray-400">শুধুমাত্র Admin Gmail (ismailhoseen77@gmail.com) দিয়ে লগইন করুন।</p>
+            <button onclick="adminLogin()" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl shadow flex items-center justify-center gap-2 text-sm">
+                <i class="fa-brands fa-google"></i> Login with Google
+            </button>
+        </div>
     </div>
-    <script type="module" src="js/dashboard.js"></script>
+
+    <!-- Admin Dashboard Content -->
+    <div id="admin-content" class="max-w-4xl mx-auto space-y-6 hidden">
+        <header class="flex justify-between items-center border-b border-gray-700 pb-4">
+            <h1 class="text-xl font-bold text-indigo-400"><i class="fa-solid fa-user-shield mr-2"></i>Admin Dashboard</h1>
+            <a href="index.html" class="bg-gray-700 hover:bg-gray-600 text-xs px-3 py-1.5 rounded-lg">Go to Store</a>
+        </header>
+
+        <!-- Orders Section -->
+        <section class="bg-gray-900 p-4 rounded-2xl border border-gray-700 space-y-3">
+            <h2 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-list-check mr-2"></i>সব অর্ডারসমূহ</h2>
+            <div id="admin-orders-list" class="space-y-3 text-xs"></div>
+        </section>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
 </body>
 </html>
