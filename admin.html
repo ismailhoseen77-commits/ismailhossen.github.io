@@ -3,78 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - MIHADX BD</title>
+    <title>Admin Panel - MIHADX BD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
-<body class="bg-gray-100 font-sans pb-10">
+<body class="bg-gray-100 p-4 pb-12 font-sans">
 
-    <!-- Header -->
-    <header class="bg-slate-900 text-white p-4 shadow-lg flex justify-between items-center sticky top-0 z-50">
-        <h1 class="text-lg font-black tracking-wider text-indigo-400">MIHADX ADMIN</h1>
-        <span class="text-xs bg-indigo-600 px-2.5 py-1 rounded-full font-bold">Control Panel</span>
+    <header class="bg-slate-900 text-white p-4 rounded-xl mb-6 flex justify-between items-center">
+        <h1 class="font-black text-lg text-indigo-400">MIHADX ADMIN</h1>
+        <span class="text-xs bg-indigo-600 px-2 py-1 rounded">Control Panel</span>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 space-y-6">
+    <main class="max-w-2xl mx-auto space-y-6">
 
-        <!-- SECTION 1: Notice Management -->
-        <section class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
-            <h2 class="font-bold text-sm text-gray-800 flex items-center gap-2 border-b pb-2">
-                <i class="fa-solid fa-bullhorn text-indigo-600"></i> হোমপেজ নোটিশ সেট করুন
-            </h2>
-            <div class="flex gap-2">
-                <input type="text" id="admin-notice-input" placeholder="এখানে নতুন নোটিশের লেখা লিখুন..." class="w-full border rounded-xl p-2.5 text-xs outline-none bg-gray-50 focus:border-indigo-600">
-                <button onclick="updateNotice()" class="bg-indigo-600 text-white font-bold px-5 text-xs rounded-xl hover:bg-indigo-700 transition">Update</button>
-            </div>
+        <!-- 1. Notice Settings (Text + Image URL) -->
+        <section class="bg-white p-4 rounded-xl shadow-sm border space-y-3">
+            <h2 class="font-bold text-xs text-gray-700 border-b pb-2"><i class="fa-solid fa-bullhorn text-indigo-600 mr-1"></i> নোটিশ ও ব্যানার সেটআপ</h2>
+            <input type="text" id="admin-notice-input" placeholder="নোটিশের লেখা লিখুন..." class="w-full border rounded-lg p-2 text-xs bg-gray-50 outline-none">
+            <input type="text" id="admin-notice-img-input" placeholder="নোটিশ ইমেজের লিংক (Image URL) দিন..." class="w-full border rounded-lg p-2 text-xs bg-gray-50 outline-none">
+            <button onclick="updateNotice()" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg text-xs">Save Notice</button>
         </section>
 
-        <!-- SECTION 2: Add New Package -->
-        <section class="bg-white p-5 rounded-2xl shadow-sm border space-y-4">
-            <h2 class="font-bold text-sm text-gray-800 flex items-center gap-2 border-b pb-2">
-                <i class="fa-solid fa-plus-circle text-indigo-600"></i> নতুন প্যাকেজ / প্রোডাক্ট যুক্ত করুন
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div>
-                    <label class="font-semibold text-gray-600">প্রোডাক্ট টাইপ</label>
-                    <select id="pkg-game-type" class="w-full border rounded-xl p-2.5 mt-1 bg-gray-50 outline-none">
-                        <option value="freefire">Free Fire Diamond</option>
-                        <option value="efootball">E-Football Coin</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="font-semibold text-gray-600">প্যাকেজের নাম (যেমন: 115 Diamond)</label>
-                    <input type="text" id="pkg-name-input" placeholder="প্যাকেজের নাম" class="w-full border rounded-xl p-2.5 mt-1 bg-gray-50 outline-none">
-                </div>
-                <div class="md:col-span-2">
-                    <label class="font-semibold text-gray-600">মূল্য (BDT)</label>
-                    <input type="number" id="pkg-price-input" placeholder="টাকার পরিমাণ (যেমন: 80)" class="w-full border rounded-xl p-2.5 mt-1 bg-gray-50 outline-none">
-                </div>
-            </div>
-            <button onclick="addNewPackage()" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-emerald-700 transition">+ প্যাকেজ যুক্ত করুন</button>
+        <!-- 2. Add Top-up Package -->
+        <section class="bg-white p-4 rounded-xl shadow-sm border space-y-3">
+            <h2 class="font-bold text-xs text-gray-700 border-b pb-2"><i class="fa-solid fa-plus text-indigo-600 mr-1"></i> নতুন টপআপ প্যাকেজ যুক্ত করুন</h2>
+            <select id="pkg-game-type" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+                <option value="freefire">Free Fire Diamond</option>
+                <option value="efootball">E-Football Coin</option>
+            </select>
+            <input type="text" id="pkg-name-input" placeholder="প্যাকেজের নাম (যেমন: 115 Diamond)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+            <input type="number" id="pkg-price-input" placeholder="দাম (BDT)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+            <button onclick="addNewPackage()" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg text-xs">+ প্যাকেজ যুক্ত করুন</button>
         </section>
 
-        <!-- SECTION 3: Active Packages List -->
-        <section class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
-            <h2 class="font-bold text-sm text-gray-800 flex items-center gap-2 border-b pb-2">
-                <i class="fa-solid fa-list-check text-indigo-600"></i> যুক্ত থাকা প্যাকেজসমূহ
-            </h2>
-            <div id="admin-packages-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <p class="text-xs text-gray-400 col-span-2 text-center py-2">লোড হচ্ছে...</p>
-            </div>
+        <!-- 3. Add E-Commerce Product with Image -->
+        <section class="bg-white p-4 rounded-xl shadow-sm border space-y-3">
+            <h2 class="font-bold text-xs text-gray-700 border-b pb-2"><i class="fa-solid fa-cart-plus text-indigo-600 mr-1"></i> নতুন ই-কমার্স প্রোডাক্ট যুক্ত করুন</h2>
+            <input type="text" id="prod-title-input" placeholder="প্রোডাক্টের নাম" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+            <input type="number" id="prod-price-input" placeholder="দাম (BDT)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+            <input type="text" id="prod-img-input" placeholder="প্রোডাক্ট ইমেজের লিংক (Image URL)" class="w-full border rounded-lg p-2 text-xs bg-gray-50">
+            <button onclick="addEcommerceProduct()" class="w-full bg-purple-600 text-white font-bold py-2 rounded-lg text-xs">+ প্রোডাক্ট প্রকাশ করুন</button>
         </section>
 
-        <!-- SECTION 4: Order Management -->
-        <section class="bg-white p-5 rounded-2xl shadow-sm border space-y-4">
-            <h2 class="font-bold text-sm text-gray-800 flex items-center gap-2 border-b pb-2">
-                <i class="fa-solid fa-box-archive text-indigo-600"></i> সব অর্ডার ম্যানেজমেন্ট
-            </h2>
-            <div id="admin-orders-list" class="space-y-3">
-                <p class="text-xs text-gray-400 text-center py-2">অর্ডার লোড হচ্ছে...</p>
-            </div>
+        <!-- 4. Active Packages List -->
+        <section class="bg-white p-4 rounded-xl shadow-sm border space-y-3">
+            <h2 class="font-bold text-xs text-gray-700 border-b pb-2">যুক্ত থাকা প্যাকেজসমূহ</h2>
+            <div id="admin-packages-list" class="space-y-2"></div>
+        </section>
+
+        <!-- 5. Order Management -->
+        <section class="bg-white p-4 rounded-xl shadow-sm border space-y-3">
+            <h2 class="font-bold text-xs text-gray-700 border-b pb-2">অর্ডার লিস্ট</h2>
+            <div id="admin-orders-list" class="space-y-2"></div>
         </section>
 
     </main>
