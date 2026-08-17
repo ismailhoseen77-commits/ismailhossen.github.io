@@ -1,11 +1,11 @@
-const IMGBB_API_KEY = "6d257f6977717c192108108ae3202982"; // ImgBB API Key
+const IMGBB_API_KEY = "6d257f6977717c192108108ae3202982";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadPackages();
     loadOrders();
 });
 
-// Helper Function: Upload Image File to ImgBB
+// Image Upload Handler using ImgBB API
 async function uploadImageToImgBB(fileInputId) {
     const fileInput = document.getElementById(fileInputId);
     if (!fileInput.files || fileInput.files.length === 0) return "";
@@ -31,7 +31,6 @@ async function uploadImageToImgBB(fileInputId) {
     }
 }
 
-// Save Notice with Image
 async function updateNotice() {
     const text = document.getElementById('admin-notice-input').value.trim();
     const btn = document.getElementById('btn-notice');
@@ -45,7 +44,7 @@ async function updateNotice() {
         text: text,
         image: imageUrl
     }).then(() => {
-        alert("নোটিশ সফলভাবে সেভ হয়েছে!");
+        alert("নোটিশ সেভ হয়েছে!");
         btn.innerText = "Save Notice";
         btn.disabled = false;
     }).catch(e => {
@@ -55,7 +54,6 @@ async function updateNotice() {
     });
 }
 
-// Add E-Commerce Product with Image
 async function addEcommerceProduct() {
     const title = document.getElementById('prod-title-input').value.trim();
     const price = Number(document.getElementById('prod-price-input').value);
@@ -73,7 +71,7 @@ async function addEcommerceProduct() {
         price: price,
         image: imageUrl
     }).then(() => {
-        alert("প্রোডাক্ট সফলভাবে যুক্ত হয়েছে!");
+        alert("প্রোডাক্ট যুক্ত হয়েছে!");
         document.getElementById('prod-title-input').value = "";
         document.getElementById('prod-price-input').value = "";
         btn.innerText = "+ প্রোডাক্ট প্রকাশ করুন";
@@ -124,7 +122,7 @@ function loadOrders() {
         snapshot.forEach(doc => {
             const o = doc.data();
             const card = document.createElement('div');
-            card.className = "bg-gray-50 p-3 rounded-lg border text-xs space-y-1";
+            card.className = "bg-gray-50 p-3 rounded-lg border text-xs space-y-1 shadow-sm";
             card.innerHTML = `
                 <div class="flex justify-between font-bold"><span>${o.product}</span><span class="text-indigo-600">${o.status}</span></div>
                 <p>User: ${o.userEmail} | Trx: ${o.trxId}</p>
