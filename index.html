@@ -6,6 +6,11 @@
     <title>MIHADX BD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase CDN Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body class="bg-slate-100 text-gray-800 pb-24">
 
@@ -27,11 +32,11 @@
                     <i class="fa-solid fa-gamepad text-indigo-600 mr-2"></i>Top Up Center
                 </h2>
                 <div class="grid grid-cols-2 gap-3">
-                    <div onclick="openProductPage('efootball')" class="bg-gray-50 border rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition shadow-sm">
+                    <div onclick="openProductPage('efootball')" class="bg-gray-50 border rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition shadow-sm active:scale-95">
                         <img src="EFootball_logo.png" class="w-12 h-12 rounded-lg mb-2 object-cover" onerror="this.src='https://i.ibb.co/3s3W98t/efootball.png'">
                         <span class="text-xs font-bold">E-Football Coin</span>
                     </div>
-                    <div onclick="openProductPage('freefire')" class="bg-gray-50 border rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition shadow-sm">
+                    <div onclick="openProductPage('freefire')" class="bg-gray-50 border rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition shadow-sm active:scale-95">
                         <img src="free-fire-logo.png" class="w-12 h-12 rounded-lg mb-2 object-cover" onerror="this.src='https://i.ibb.co/4gW8H5p/freefire.png'">
                         <span class="text-xs font-bold">Free Fire Diamond</span>
                     </div>
@@ -52,7 +57,7 @@
             </section>
         </div>
 
-        <!-- PRODUCT TOP-UP PAGE VIEW (Single Page Style) -->
+        <!-- PRODUCT TOP-UP PAGE VIEW -->
         <div id="product-view" class="tab-content hidden space-y-4">
             <button onclick="switchTab('home-tab')" class="text-xs font-bold text-indigo-600 flex items-center gap-1 mb-2">
                 <i class="fa-solid fa-arrow-left"></i> ব্যাক করুন
@@ -134,7 +139,7 @@
             <div id="orders-list-container" class="space-y-3"></div>
         </div>
 
-        <!-- TAB 3: PROFILE VIEW (JinEShop Layout) -->
+        <!-- TAB 3: PROFILE VIEW -->
         <div id="profile-tab" class="tab-content hidden space-y-4">
             
             <!-- Logged Out View -->
@@ -144,7 +149,7 @@
                     <h3 class="font-bold text-gray-800 text-sm">প্রোফাইল দেখতে লগইন করুন</h3>
                     <p class="text-xs text-gray-500 mt-1">আপনার গুগল অ্যাকাউন্ট দিয়ে খুব সহজেই লগইন করুন</p>
                 </div>
-                <button onclick="loginWithGoogle()" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs shadow flex items-center justify-center gap-2">
+                <button onclick="loginWithGoogle()" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs shadow flex items-center justify-center gap-2 active:scale-95 transition">
                     <i class="fa-brands fa-google"></i> Login with Google
                 </button>
             </div>
@@ -221,9 +226,10 @@
         </div>
     </div>
 
-    <script type="module" src="js/firebase-init.js"></script>
-    <script type="module" src="js/main.js"></script>
-    <script type="module" src="js/topup.js"></script>
+    <!-- Scripts -->
+    <script src="js/firebase-init.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/topup.js"></script>
 </body>
-</html>
-
+    </html>
+                                                                                   
