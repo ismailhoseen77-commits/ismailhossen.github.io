@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mihadx.pro.bd | Premium Script Store</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CONFIGURATION & RESET --- */
+        :root {
+            --bg-color: #030712;
+            --card-bg: #111827;
+            --primary: #6366f1;
+            --accent: #10b981;
+            --telegram: #0ea5e9;
+            --whatsapp: #25D366;
+            --bkash: #e2136e;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --spotlight-color: rgba(255, 255, 255, 0.15);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        /* --- 2. GLASS NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(3, 7, 18, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .brand:hover { transform: scale(1.05); }
+        .brand span { color: var(--primary); }
+        .brand i { font-size: 1.2rem; color: var(--accent); }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-whatsapp-nav {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--whatsapp);
+            padding: 0.5rem 1.2rem;
+            border-radius: 0px;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-whatsapp-nav:hover {
+            background: var(--whatsapp);
+            color: white;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- 3. LAYOUT & CONTAINERS --- */
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 50px 20px;
+        }
+
+        .section-label {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 5px 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- 4. SPOTLIGHT CARD DESIGN --- */
+        .spotlight-card {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 0px;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            margin-bottom: 60px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .spotlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-content-wrapper {
+            position: relative;
+            z-index: 2;
+            background: var(--card-bg);
+            width: calc(100% - 2px); 
+            height: calc(100% - 2px);
+            margin: 1px;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            overflow: hidden;
+        }
+
+        .reverse .card-content-wrapper { direction: rtl; }
+        .reverse .card-content-wrapper > * { direction: ltr; }
+          /* --- 5. VISUAL SIDE --- */
+        .visual-side {
+            position: relative;
+            background: #000;
+            min-height: 450px;
+            border-right: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .reverse .visual-side { border-right: none; border-left: 1px solid var(--border-color); }
+
+        .slide {
+            position: absolute; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.6s ease;
+        }
+        .slide.active { opacity: 1; }
+
+        .slider-nav {
+            position: absolute; bottom: 20px; right: 20px;
+            display: flex; gap: 8px; z-index: 5;
+        }
+        .nav-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255,255,255,0.3); cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-dot.active { background: white; transform: scale(1.2); }
+
+        .tech-stack {
+            position: absolute; top: 20px; left: 20px;
+            display: flex; gap: 8px; flex-wrap: wrap; z-index: 5;
+        }
+        .chip {
+            font-size: 0.7rem; font-weight: 700;
+            padding: 6px 12px; border-radius: 6px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white; text-transform: uppercase;
+        }
+        .chip.laravel { background: rgba(240, 82, 82, 0.2); border-color: #f05252; }
+        .chip.hot { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; }
+
+        /* --- 6. INFO SIDE --- */
+        .info-side { padding: 2.5rem; display: flex; flex-direction: column; }
+
+        .product-head { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        .product-head h2 { font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
+        .product-head p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .features-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;
+        }
+        .f-col h4 { font-size: 0.85rem; color: var(--primary); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .f-col ul { list-style: none; }
+        .f-col li {
+            margin-bottom: 0.6rem; color: var(--text-muted); font-size: 0.85rem;
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .f-col li i { color: var(--accent); margin-top: 3px; }
+
+        .bn-font { font-family: 'Hind Siliguri', sans-serif; }
+
+        /* Payment Box Notice */
+        .bkash-notice {
+            background: rgba(226, 19, 110, 0.1);
+            border: 1px dashed var(--bkash);
+            padding: 10px 15px;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #f472b6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .actions { display: flex; gap: 12px; margin-top: auto; }
+        
+        .btn-buy-wa {
+            flex: 1; text-align: center; padding: 0.9rem;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white; font-weight: 700; border-radius: 2px;
+            text-decoration: none; position: relative; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, box-shadow 0.3s ease;
+            cursor: pointer; border: none; font-size: 0.95rem;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-buy-wa:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 7px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-view {
+            padding: 0.9rem 1.2rem; border: 1px solid var(--border-color);
+            border-radius: 2px; color: white; text-decoration: none;
+            font-weight: 600; transition: 0.3s;
+        }
+        .btn-view:hover { background: rgba(255,255,255,0.05); border-color: white; }
+
+        /* --- 7. FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px; text-align: center;
+            background: #020617;
+        }
+        
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); display: flex;
+            justify-content: center; align-items: center; z-index: 9999;
+            opacity: 1; transition: opacity 0.5s ease;
+        }
+        .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+        
+        .loader {
+            width: 50px; height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .fade-in { opacity: 0; transform: translateY(20px); transition: 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .spotlight-card, .card-content-wrapper { grid-template-columns: 1fr; }
+            .visual-side { min-height: 220px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .reverse .card-content-wrapper { direction: ltr; }
+        }
+    </style>
+</head>
+  <body>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
+    <nav>
+        <div class="brand">
+            <i class="fas fa-code"></i>
+            <div>mihadx<span>.pro.bd</span></div>
+        </div>
+        <div class="nav-buttons">
+            <a href="https://wa.me/8801576502490" target="_blank" class="btn-whatsapp-nav">
+                <i class="fab fa-whatsapp"></i> WhatsApp Us
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+
+        <div class="section-label fade-in">Script Store</div>
+        
+        <!-- Product 1: Free Fire Topup -->
+        <div class="spotlight-card fade-in">
+            <div class="card-content-wrapper">
+                
+                <div class="visual-side">
+                    <div class="tech-stack">
+                        <span class="chip laravel">Laravel</span>
+                        <span class="chip">PHP 7.4</span>
+                        <span class="chip">Auto-API</span>
+                    </div>
+                    <div id="slider1" class="slider-container">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/shozonportfolio/refs/heads/main/Free%20Fire%20TopUp%20Website%20Available.jpg" class="slide active">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/topv2-17-Dec-2025-06-36-PM-5976.jpg" class="slide">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/top11-Dec-2025-08-00-AM-9354.jpg" class="slide">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/top11-Dec-2025-08-02-AM-3537.jpg" class="slide">
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" onclick="setSlide('slider1', 0)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider1', 1)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider1', 2)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider1', 3)"></div>
+                    </div>
+                </div>
+
+                <div class="info-side">
+                    <div class="product-head">
+                        <h2>Free Fire Games Topup Website Script</h2>
+                        <p>PHP - Laravel TopUp Website</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="f-col">
+                            <h4>Website Features</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i>Auto TopUp System</li>
+                                <li><i class="fas fa-check-circle"></i>Auto UniPin System</li>
+                                <li><i class="fas fa-check-circle"></i>Auto Payment System</li>
+                                <li><i class="fas fa-check-circle"></i>Order Notification Bot</li>
+                                <li><i class="fas fa-check-circle"></i>All Control Admin Panel</li>
+                            </ul>
+                        </div>
+                        <div class="f-col">
+                            <h4>Payment Info</h4>
+                            <ul>
+                                <li><i class="fas fa-bolt"></i> Fast Delivery</li>
+                                <li><i class="fas fa-bolt"></i> Full Support Included</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bkash-notice bn-font">
+                        <i class="fas fa-wallet"></i> বিকাশ পার্সোনাল নম্বর: <b>01309735129</b>
+                    </div>
+
+                    <div class="actions">
+                        <a href="https://wa.me/8801576502490" class="btn-view">Demo</a>
+                        <button onclick="orderScript('Free Fire Games Topup Website Script')" class="btn-buy-wa">
+                            <i class="fab fa-whatsapp"></i> Buy via WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+              <!-- Product 2: NID Server Copy -->
+        <div class="spotlight-card reverse fade-in">
+            <div class="card-content-wrapper">
+                
+                <div class="visual-side">
+                    <div class="tech-stack">
+                        <span class="chip hot">Best Seller</span>
+                        <span class="chip">Server Copy</span>
+                    </div>
+                    <div id="slider2" class="slider-container">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/11-Dec-2025-06-27-AM-4979.jpg" class="slide active">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/11-Dec-2025-06-23-AM-3148.jpg" class="slide">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/11-Dec-2025-06-36-AM-7354.jpg" class="slide">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/11-Dec-2025-06-32-AM-123.jpg" class="slide">
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" onclick="setSlide('slider2', 0)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider2', 1)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider2', 2)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider2', 3)"></div>
+                    </div>
+                </div>
+
+                <div class="info-side">
+                    <div class="product-head">
+                        <h2>NID Server Copy Website Script</h2>
+                        <p class="bn-font">🔥🔥 এনআইডি কার্ডের সার্ভার কপি ওয়েবসাইট এবং স্ক্রিপ্ট 🔥🔥</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="f-col">
+                            <h4>Website Features</h4>
+                            <ul class="bn-font">
+                                <li><i class="fas fa-check-circle"></i>সাইন কপি থেকে আইডি</li>
+                                <li><i class="fas fa-check-circle"></i>জন্ম নিবন্ধন মেক</li>
+                                <li><i class="fas fa-check-circle"></i>সার্ভার কপি মেক</li>
+                                <li><i class="fas fa-check-circle"></i>বায়োমেট্রিক ও এনআইডি পিডিএফ</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bkash-notice bn-font">
+                        <i class="fas fa-wallet"></i> বিকাশ পার্সোনাল নম্বর: <b>01309735129</b>
+                    </div>
+
+                    <div class="actions">
+                        <a href="https://wa.me/8801576502490" class="btn-view">Demo</a>
+                        <button onclick="orderScript('NID Server Copy Website Script')" class="btn-buy-wa">
+                            <i class="fab fa-whatsapp"></i> Buy via WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Product 3: Payment Gateway -->
+        <div class="spotlight-card fade-in">
+            <div class="card-content-wrapper">
+                
+                <div class="visual-side">
+                    <div class="tech-stack">
+                        <span class="chip laravel">Laravel</span>
+                        <span class="chip">Nagorik Pay</span>
+                    </div>
+                    <div id="slider3" class="slider-container">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/shozonportfolio/refs/heads/main/Auto%20Payment%20Gateway%20Website.jpg" class="slide active">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/topv2-17-Dec-2025-06-36-PM-5976.jpg" class="slide">
+                        <img src="https://raw.githubusercontent.com/Shozon-Roy/ScriptStore/refs/heads/main/top11-Dec-2025-08-00-AM-9354.jpg" class="slide">
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" onclick="setSlide('slider3', 0)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider3', 1)"></div>
+                        <div class="nav-dot" onclick="setSlide('slider3', 2)"></div>
+                    </div>
+                </div>
+
+                <div class="info-side">
+                    <div class="product-head">
+                        <h2>Payment Gateway Website Script</h2>
+                        <p>PHP - Laravel Automatic Payment Script</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="f-col">
+                            <h4>Website Features</h4>
+                            <ul class="bn-font">
+                                <li><i class="fas fa-check-circle"></i>Nagorik Pay / Aladin Pay এর সাথে অটো পেমেন্ট সেটআপ</li>
+                                <li><i class="fas fa-check-circle"></i>সহজে নিজের পেমেন্ট গেটওয়ে চালুর সুবিধা</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bkash-notice bn-font">
+                        <i class="fas fa-wallet"></i> বিকাশ পার্সোনাল নম্বর: <b>01309735129</b>
+                    </div>
+
+                    <div class="actions">
+                        <a href="https://wa.me/8801576502490" class="btn-view">Demo</a>
+                        <button onclick="orderScript('Payment Gateway Website Script')" class="btn-buy-wa">
+                            <i class="fab fa-whatsapp"></i> Buy via WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+        <footer>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">অর্ডার করার জন্য বা যেকোনো তথ্যের জন্য হোয়াটসঅ্যাপে যোগাযোগ করুন</p>
+        <a href="https://wa.me/8801576502490" target="_blank" class="btn-whatsapp-nav" style="display:inline-flex; width:auto;">
+            <i class="fab fa-whatsapp"></i> WhatsApp: 01576502490
+        </a>
+        <p style="margin-top:20px; font-size:0.8rem; color: #555;">© mihadx.pro.bd - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 500);
+        });
+
+        // Scroll Animations
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 50) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+
+        // Slider Logic
+        function setSlide(sliderId, index) {
+            const container = document.getElementById(sliderId);
+            if(!container) return;
+            
+            const slides = container.getElementsByClassName('slide');
+            const dots = container.nextElementSibling ? container.nextElementSibling.getElementsByClassName('nav-dot') : [];
+
+            for(let i=0; i<slides.length; i++) {
+                slides[i].classList.remove('active');
+                if(dots[i]) dots[i].classList.remove('active');
+            }
+
+            if(slides[index]) slides[index].classList.add('active');
+            if(dots[index]) dots[index].classList.add('active');
+        }
+
+        // Auto Slider Rotation
+        setInterval(() => {
+            const sliders = document.querySelectorAll('.slider-container');
+            sliders.forEach(container => {
+                const slides = container.getElementsByClassName('slide');
+                if (slides.length === 0) return;
+
+                let currentIndex = -1;
+                for (let i = 0; i < slides.length; i++) {
+                    if (slides[i].classList.contains('active')) {
+                        currentIndex = i;
+                        break;
+                    }
+                }
+                const nextIndex = (currentIndex + 1) % slides.length;
+                setSlide(container.id, nextIndex);
+            });
+        }, 4000);
+
+        // WhatsApp Order Logic
+        function orderScript(scriptName) {
+            const myWhatsAppNumber = "8801576502490";
+            const myBkashNumber = "01309735129";
+            
+            const message = `হ্যালো, আমি mihadx.pro.bd ওয়েবসাইট থেকে অর্ডারের জন্য মেসেজ দিচ্ছি।\n\n` +
+                            `📦 *Script Name:* ${scriptName}\n` +
+                            `💳 *Bkash Personal Number:* ${myBkashNumber}\n\n` +
+                            `আমি স্ক্রিপ্টটি কিনতে চাই, অনুগ্রহ করে পরবর্তী প্রসেসটি জানান।`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${myWhatsAppNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
+</body>
+</html>
+
