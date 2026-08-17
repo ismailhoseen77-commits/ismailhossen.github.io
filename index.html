@@ -1,83 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MihadX Topup | Premium Free Fire Center</title>
+    <title>MihadX Topup | BD's Premium Game Store</title>
+    
+    <!-- Tailwind CSS & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- SweetAlert2 for Professional Popups -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .accent-gradient { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0b0f19; 
+            color: #e2e8f0; 
+        }
+        h1, h2, h3, .font-gaming { 
+            font-family: 'Rajdhani', sans-serif; 
+        }
+        .glass { 
+            background: rgba(30, 41, 59, 0.6); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        .step-number { 
+            width: 32px; 
+            height: 32px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 8px; 
+            background: linear-gradient(135deg, #f97316, #ea580c); 
+            color: white; 
+            font-weight: bold; 
+            font-family: 'Rajdhani', sans-serif; 
+            font-size: 1.2rem; 
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.3);
+        }
+        .pkg-card { 
+            transition: all 0.2s ease-in-out; 
+            cursor: pointer; 
+        }
+        .pkg-card:hover { 
+            transform: translateY(-2px); 
+            border-color: #f97316; 
+            background: rgba(249, 115, 22, 0.05);
+        }
+        .pkg-card.active {
+            border-color: #f97316;
+            background: rgba(249, 115, 22, 0.1);
+            box-shadow: inset 0 0 0 1px #f97316;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
+<body class="antialiased pb-28">
 
-    <!-- Header -->
-    <header class="w-full max-w-3xl flex justify-between items-center py-6">
-        <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-            MihadX.pro.bd
-        </h1>
-        <div class="text-sm text-gray-300 flex gap-4">
-            <span><i class="fab fa-whatsapp text-green-500"></i> 01576502490</span>
+    <!-- Top Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/10 shadow-lg">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <i class="fa-solid fa-gamepad text-orange-500 text-2xl"></i>
+                <span class="font-gaming text-2xl font-bold tracking-wider text-white">MIHAD<span class="text-orange-500">X</span></span>
+            </div>
+            <a href="https://wa.me/8801576502490" target="_blank" class="flex items-center gap-2 bg-green-500/10 text-green-400 px-4 py-1.5 rounded-full text-sm font-semibold border border-green-500/20 hover:bg-green-500/20 transition">
+                <i class="fab fa-whatsapp text-lg"></i> <span class="hidden sm:inline">Support</span>
+            </a>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Topup Form -->
-    <main class="w-full max-w-3xl glass-panel rounded-2xl p-6 md:p-8 mt-4 shadow-2xl">
-        <h2 class="text-2xl font-bold mb-6 border-b border-gray-700 pb-2">Free Fire UID Topup</h2>
-        
-        <!-- Payment Instruction -->
-        <div class="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 mb-6 text-sm">
-            <p class="font-semibold text-blue-400 mb-1"><i class="fas fa-info-circle"></i> How to order:</p>
-            <ol class="list-decimal list-inside text-gray-300 space-y-1">
-                <li>Send money via Send Money to bKash Personal: <span class="text-pink-500 font-bold tracking-wider">01309735129</span></li>
-                <li>Copy the Transaction ID (TrxID) from bKash.</li>
-                <li>Fill out the form below and submit.</li>
-            </ol>
+    <!-- Hero Banner -->
+    <div class="w-full h-48 md:h-64 relative overflow-hidden flex items-center justify-center border-b border-white/5">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-900/40 to-slate-900/80 mix-blend-overlay z-10"></div>
+        <!-- High Quality Generic Gaming Background -->
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=2070" alt="Gaming Banner" class="absolute w-full h-full object-cover opacity-20">
+        <div class="z-20 text-center px-4 relative">
+            <div class="inline-block bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-widest shadow-lg shadow-orange-500/20">Official Topup Center</div>
+            <h1 class="font-gaming text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg uppercase tracking-wide">Free Fire <span class="text-orange-500">Diamonds</span></h1>
+            <p class="text-gray-400 text-sm md:text-base font-medium"><i class="fa-solid fa-bolt text-yellow-400"></i> Instant Delivery via Player ID</p>
         </div>
+    </div>
 
-        <form id="topupForm" class="space-y-5">
-            <div>
-                <label class="block text-sm font-medium mb-1">Player UID</label>
-                <input type="text" id="uid" required placeholder="e.g. 1234567890" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 transition">
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 mt-[-1.5rem] relative z-30">
+        <form id="topupForm" class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- Left Column: UID & Packages -->
+            <div class="md:col-span-8 space-y-6">
+                
+                <!-- Step 1: Account Info -->
+                <section class="glass rounded-2xl p-5 md:p-6 shadow-xl">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="step-number">1</div>
+                        <h2 class="font-gaming text-2xl font-bold text-white tracking-wide">Player Info</h2>
+                    </div>
+                    <div class="relative group">
+                        <input type="text" id="uid" required placeholder="Enter Player UID" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition font-mono tracking-wide text-lg">
+                        <i class="fa-regular fa-user absolute right-4 top-4 text-gray-400 group-focus-within:text-orange-500 transition"></i>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-orange-500/70"></i> Find your UID by tapping your avatar in the top-left corner of the main menu.</p>
+                </section>
+
+                <!-- Step 2: Recharge Packages -->
+                <section class="glass rounded-2xl p-5 md:p-6 shadow-xl">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="step-number">2</div>
+                        <h2 class="font-gaming text-2xl font-bold text-white tracking-wide">Select Package</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4" id="packageContainer">
+                        <!-- Packages will be injected here by JavaScript -->
+                    </div>
+                    
+                    <!-- Hidden inputs to store selection for form submission -->
+                    <input type="hidden" id="selectedPackageName" required>
+                    <input type="hidden" id="selectedPackagePrice" required>
+                </section>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium mb-1">Select Package</label>
-                <select id="package" required class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 transition">
-                    <option value="" disabled selected>Select Diamonds...</option>
-                    <option value="115 Diamonds | 85 BDT">115 Diamonds - 85 BDT</option>
-                    <option value="240 Diamonds | 170 BDT">240 Diamonds - 170 BDT</option>
-                    <option value="355 Diamonds | 255 BDT">355 Diamonds - 255 BDT</option>
-                    <option value="Weekly Pass | 160 BDT">Weekly Pass - 160 BDT</option>
-                    <option value="Monthly Pass | 800 BDT">Monthly Pass - 800 BDT</option>
-                </select>
-            </div>
+            <!-- Right Column: Payment Details -->
+            <div class="md:col-span-4 space-y-6">
+                
+                <!-- Step 3: Payment Method -->
+                <section class="glass rounded-2xl p-5 md:p-6 shadow-xl">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="step-number">3</div>
+                        <h2 class="font-gaming text-2xl font-bold text-white tracking-wide">Payment</h2>
+                    </div>
+                    
+                    <!-- bKash Box -->
+                    <div class="border-2 border-[#e2136e] bg-[#e2136e]/5 rounded-xl p-4 mb-6 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 bg-[#e2136e] text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">Manual Pay</div>
+                        
+                        <div class="flex items-center gap-3 mb-4 border-b border-[#e2136e]/20 pb-4">
+                            <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1.5 shadow-md">
+                                <!-- Using FontAwesome as fallback, with pink color to represent bKash -->
+                                <i class="fa-solid fa-paper-plane text-2xl text-[#e2136e]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-lg">bKash Personal</h3>
+                                <p class="text-xs text-pink-400 font-medium">Send Money Only</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-950/60 rounded-lg p-3 border border-slate-700 relative">
+                            <p class="text-xs text-gray-400 mb-1">Send payment to this number:</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono text-xl font-bold text-white tracking-widest">01309735129</span>
+                                <button type="button" onclick="copyNumber()" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-md transition" title="Copy Number">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-            <div>
-                <label class="block text-sm font-medium mb-1">bKash Transaction ID (TrxID)</label>
-                <input type="text" id="trxid" required placeholder="e.g. 8K2A8B9CDE" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 transition">
+                    <!-- Step 4: Transaction ID -->
+                    <div class="mt-2">
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">bKash Transaction ID</label>
+                        <input type="text" id="trxid" required placeholder="e.g. 8K2A8B9CDE" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#e2136e] focus:ring-1 focus:ring-[#e2136e] transition font-mono uppercase text-sm">
+                    </div>
+                </section>
             </div>
-
-            <button type="submit" class="w-full accent-gradient text-white font-bold text-lg py-3 rounded-lg hover:opacity-90 transition shadow-lg mt-4">
-                Confirm Order
-            </button>
         </form>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-auto py-8 text-center text-gray-500 text-sm w-full">
-        <p>Email: ismailhoseen77@gmail.com</p>
-        <p class="mt-2">© 2026 MihadX.pro.bd. All rights reserved.</p>
-    </footer>
+    <!-- Bottom Sticky Checkout Bar -->
+    <div class="fixed bottom-0 left-0 w-full glass border-t border-white/10 p-4 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div>
+                <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">Total Payable Amount</p>
+                <div class="font-gaming text-2xl sm:text-3xl font-bold text-orange-400 drop-shadow-md" id="totalAmount">৳ 0</div>
+            </div>
+            <button form="topupForm" type="submit" id="submitBtn" class="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white font-bold px-6 sm:px-10 py-3 sm:py-3.5 rounded-xl shadow-lg shadow-orange-500/25 transition transform hover:scale-[1.02] active:scale-95 flex items-center gap-2 text-sm sm:text-base border border-orange-400/50">
+                Confirm Order <i class="fa-solid fa-circle-check"></i>
+            </button>
+        </div>
+    </div>
 
-    <!-- Firebase SDK Setup -->
+    <!-- Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // Your Exact Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
             authDomain: "mihadx-pro-bd.firebaseapp.com",
@@ -91,34 +204,143 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Package Data Configuration
+        const packages = [
+            { id: 1, amount: '115', name: '115 Diamonds', price: 85, tag: '', icon: '💎' },
+            { id: 2, amount: '240', name: '240 Diamonds', price: 170, tag: 'HOT', icon: '💎' },
+            { id: 3, amount: '355', name: '355 Diamonds', price: 255, tag: '+ Bonus', icon: '💎' },
+            { id: 4, amount: 'Weekly', name: 'Weekly Pass', price: 160, tag: 'POPULAR', icon: '🎫' },
+            { id: 5, amount: 'Monthly', name: 'Monthly Pass', price: 800, tag: 'BEST VALUE', icon: '👑' },
+            { id: 6, amount: 'Level Up', name: 'Level Up Pass', price: 150, tag: '1 TIME', icon: '⭐' }
+        ];
+
+        // Render Packages Dynamically
+        const packageContainer = document.getElementById('packageContainer');
+        
+        packages.forEach(pkg => {
+            const tagHTML = pkg.tag ? `<div class="absolute -top-2 -right-2 bg-gradient-to-r from-red-600 to-pink-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">${pkg.tag}</div>` : '';
+            
+            const card = document.createElement('div');
+            card.className = `pkg-card relative bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2`;
+            card.onclick = () => selectPackage(card, pkg.name, pkg.price);
+            
+            card.innerHTML = `
+                ${tagHTML}
+                <div class="text-3xl filter drop-shadow-md">${pkg.icon}</div>
+                <div>
+                    <h3 class="font-bold text-white text-sm md:text-base">${pkg.amount}</h3>
+                    <p class="text-xs text-gray-400">${pkg.name.includes('Pass') ? 'Membership' : 'Diamonds'}</p>
+                </div>
+                <div class="w-full h-px bg-slate-700 my-1"></div>
+                <div class="font-gaming text-orange-400 font-bold text-lg">৳ ${pkg.price}</div>
+            `;
+            packageContainer.appendChild(card);
+        });
+
+        // Global Copy Function for the bKash Number
+        window.copyNumber = function() {
+            navigator.clipboard.writeText('01309735129');
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: 'bKash number copied!',
+                showConfirmButton: false,
+                timer: 2000,
+                background: '#1e293b',
+                color: '#fff'
+            });
+        };
+
+        // Package Selection Logic
+        window.selectPackage = function(element, name, price) {
+            // Remove active state from all cards
+            document.querySelectorAll('.pkg-card').forEach(c => {
+                c.classList.remove('active');
+            });
+            
+            // Add active state to clicked card
+            element.classList.add('active');
+            
+            // Update hidden inputs and total UI
+            document.getElementById('selectedPackageName').value = name;
+            document.getElementById('selectedPackagePrice').value = price;
+            
+            // Animate number change
+            const totalEl = document.getElementById('totalAmount');
+            totalEl.style.transform = 'scale(1.1)';
+            totalEl.innerText = `৳ ${price}`;
+            setTimeout(() => totalEl.style.transform = 'scale(1)', 150);
+        };
+
+        // Form Submission Logic
         document.getElementById('topupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-
+            
             const uid = document.getElementById('uid').value;
-            const pkg = document.getElementById('package').value;
+            const pkgName = document.getElementById('selectedPackageName').value;
             const trxid = document.getElementById('trxid').value;
+            
+            // Validation
+            if(!pkgName) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Select a Package',
+                    text: 'Please select a diamond or membership package to continue.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#f97316'
+                });
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
 
             try {
                 await addDoc(collection(db, "orders"), {
                     uid: uid,
-                    package: pkg,
-                    trxid: trxid,
+                    package: pkgName,
+                    trxid: trxid.toUpperCase(),
                     status: "Pending",
                     createdAt: serverTimestamp()
                 });
-                alert("Order placed successfully! We will send your diamonds shortly.");
+                
+                // Success SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Received!',
+                    html: `Your order for <b>${pkgName}</b> has been placed successfully.<br>We are verifying your TrxID.`,
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#f97316'
+                });
+                
+                // Reset form and UI
                 e.target.reset();
+                document.getElementById('selectedPackageName').value = "";
+                document.getElementById('selectedPackagePrice').value = "";
+                document.getElementById('totalAmount').innerText = "৳ 0";
+                document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
+                
             } catch (error) {
-                console.error("Error adding document: ", error);
-                alert("Error placing order. Please contact WhatsApp support.");
+                console.error("Error: ", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Please contact support on WhatsApp.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#f97316'
+                });
             } finally {
-                btn.innerText = "Confirm Order";
+                btn.innerHTML = originalText;
                 btn.disabled = false;
             }
         });
     </script>
 </body>
 </html>
+
