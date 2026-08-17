@@ -3,7 +3,6 @@ let currentGame = "";
 let selectedPkgName = "";
 let selectedPkgPrice = 0;
 
-// Load Dynamic Notice & E-Commerce Items on Page Load
 document.addEventListener("DOMContentLoaded", () => {
     loadNotice();
     loadEcommerceProducts();
@@ -46,7 +45,7 @@ function loadEcommerceProducts() {
         snapshot.forEach(doc => {
             const p = doc.data();
             const card = document.createElement('div');
-            card.className = "bg-gray-50 border rounded-xl p-2.5 space-y-2 flex flex-col justify-between";
+            card.className = "bg-gray-50 border rounded-xl p-2.5 space-y-2 flex flex-col justify-between shadow-sm";
             card.innerHTML = `
                 <img src="${p.image || 'https://via.placeholder.com/150'}" class="w-full h-24 object-cover rounded-lg">
                 <div>
@@ -67,7 +66,6 @@ function buyProductDirect(title, price) {
     handleBuyNow();
 }
 
-// Open Recharge Top-up Page (No hardcoded packages anymore)
 function openProductPage(type) {
     currentGame = type;
     selectedPkgName = "";
@@ -100,7 +98,7 @@ function openProductPage(type) {
         snapshot.forEach(doc => {
             const pkg = doc.data();
             const card = document.createElement('div');
-            card.className = "border rounded-xl p-2.5 cursor-pointer bg-white hover:border-indigo-600 transition flex flex-col justify-center items-center pkg-card-item";
+            card.className = "border rounded-xl p-2.5 cursor-pointer bg-white hover:border-indigo-600 transition flex flex-col justify-center items-center pkg-card-item shadow-sm";
             card.innerHTML = `<p class="font-bold text-xs text-gray-800">${pkg.name}</p><p class="text-[11px] font-extrabold text-indigo-600">BDT ${pkg.price}</p>`;
 
             card.onclick = () => {
@@ -135,7 +133,7 @@ function submitFinalOrder() {
     const trxId = document.getElementById('trx-id-input').value.trim();
     if (!trxId) return alert('ট্রানজেকশন আইডি প্রদান করুন!');
 
-    const user = (typeof auth !== 'undefined') ? auth.currentUser : null;
+    const user = auth.currentUser;
     const userEmail = user ? user.email : "Guest User";
 
     let accInfo = "";
@@ -163,4 +161,4 @@ function submitFinalOrder() {
         window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
         closeBkashModal();
     });
-}
+        }
