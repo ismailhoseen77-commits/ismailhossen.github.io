@@ -4,20 +4,27 @@ let selectedPkgName = "";
 let selectedPkgPrice = 0;
 let selectedPayOption = "wallet";
 
+// Open Product Recharge Page
 function openProductPage(type) {
     currentGame = type;
     selectedPkgName = "";
     selectedPkgPrice = 0;
 
     const grid = document.getElementById('recharge-grid');
+    if (!grid) return;
     grid.innerHTML = '';
 
     let items = [];
     if (type === 'freefire') {
-        document.getElementById('product-header-title').innerText = "FF UID TOP UP";
-        document.getElementById('product-header-img').src = "free-fire-logo.png";
-        document.getElementById('ff-account-fields').classList.remove('hidden');
-        document.getElementById('efootball-account-fields').classList.add('hidden');
+        const headerTitle = document.getElementById('product-header-title');
+        const headerImg = document.getElementById('product-header-img');
+        const ffFields = document.getElementById('ff-account-fields');
+        const efFields = document.getElementById('efootball-account-fields');
+
+        if (headerTitle) headerTitle.innerText = "FF UID TOP UP";
+        if (headerImg) headerImg.src = "free-fire-logo.png";
+        if (ffFields) ffFields.classList.remove('hidden');
+        if (efFields) efFields.classList.add('hidden');
 
         items = [
             { name: "25 Diamond", price: 20 },
@@ -34,10 +41,15 @@ function openProductPage(type) {
             { name: "Monthly Membership", price: 780 }
         ];
     } else {
-        document.getElementById('product-header-title').innerText = "E Football Coin TOP UP";
-        document.getElementById('product-header-img').src = "EFootball_logo.png";
-        document.getElementById('ff-account-fields').classList.add('hidden');
-        document.getElementById('efootball-account-fields').classList.remove('hidden');
+        const headerTitle = document.getElementById('product-header-title');
+        const headerImg = document.getElementById('product-header-img');
+        const ffFields = document.getElementById('ff-account-fields');
+        const efFields = document.getElementById('efootball-account-fields');
+
+        if (headerTitle) headerTitle.innerText = "E Football Coin TOP UP";
+        if (headerImg) headerImg.src = "EFootball_logo.png";
+        if (ffFields) ffFields.classList.add('hidden');
+        if (efFields) efFields.classList.remove('hidden');
 
         items = [
             { name: "100 Coin", price: 100 },
@@ -66,12 +78,15 @@ function openProductPage(type) {
     switchTab('product-view');
 }
 
+// Select Payment Option
 function selectPaymentOption(opt) {
     selectedPayOption = opt;
     const walletEl = document.getElementById('pay-opt-wallet');
     const instantEl = document.getElementById('pay-opt-instant');
 
-    if(opt === 'wallet') {
+    if (!walletEl || !instantEl) return;
+
+    if (opt === 'wallet') {
         walletEl.className = "border-2 border-indigo-600 bg-indigo-50/50 p-3 rounded-xl cursor-pointer text-center relative";
         instantEl.className = "border p-3 rounded-xl cursor-pointer text-center bg-gray-50";
     } else {
@@ -80,59 +95,101 @@ function selectPaymentOption(opt) {
     }
 }
 
+// Handle Buy Now (Supports both Guest and Logged-in Users)
 function handleBuyNow() {
     if (!selectedPkgName) return alert('একটি রিচার্জ প্যাকেজ সিলেক্ট করুন!');
 
     if (currentGame === 'freefire') {
-        const uid = document.getElementById('ff-uid').value.trim();
+        const uidEl = document.getElementById('ff-uid');
+        const uid = uidEl ? uidEl.value.trim() : "";
         if (!uid) return alert('আপনার Player UID প্রদান করুন!');
     } else {
-        const id = document.getElementById('ef-id').value.trim();
-        const pass = document.getElementById('ef-pass').value.trim();
-        if (!id || !pass) return alert('Account ID এবং Password দিন!');
+        const idEl = document.getElementById('ef-id');
+        const passEl = document.getElementById('ef-pass');
+        const id = idEl ? idEl.value.trim() : "";
+        const pass = passEl ? passEl.value.trim() : "";
+        if (!id || !pass) return alert('Account ID এবং Password সঠিকভাবে দিন!');
     }
 
-    document.getElementById('checkout-amount-display').innerText = `৳ ${selectedPkgPrice}`;
-    document.getElementById('instruction-amount').innerText = `${selectedPkgPrice}`;
-    document.getElementById('bkash-checkout-modal').classList.remove('hidden');
-    document.getElementById('bkash-checkout-modal').classList.add('flex');
+    const displayAmount = document.getElementById('checkout-amount-display');
+    const instructionAmount = document.getElementById('instruction-amount');
+    const modal = document.getElementById('bkash-checkout-modal');
+
+    if (displayAmount) displayAmount.innerText = `৳ ${selectedPkgPrice}`;
+    if (instructionAmount) instructionAmount.innerText = `${selectedPkgPrice}`;
+    
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
 }
 
+// Close Modal
 function closeBkashModal() {
-    document.getElementById('bkash-checkout-modal').classList.add('hidden');
-    document.getElementById('bkash-checkout-modal').classList.remove('flex');
+    const modal = document.getElementById('bkash-checkout-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
 }
 
+// Submit Final Order
 function submitFinalOrder() {
-    const trxId = document.getElementById('trx-id-input').value.trim();
+    const trxInput = document.getElementById('trx-id-input');
+    const trxId = trxInput ? trxInput.value.trim() : "";
     if (!trxId) return alert('ট্রানজেকশন আইডি প্রদান করুন!');
 
-    const user = auth.currentUser;
-    let accInfo = currentGame === 'freefire' 
-        ? document.getElementById('ff-uid').value.trim()
-        : `Type: ${document.getElementById('ef-account-type').value} | ID: ${document.getElementById('ef-id').value.trim()} | Pass: ${document.getElementById('ef-pass').value.trim()}`;
+    const user = (typeof auth !== 'undefined') ? auth.currentUser : null;
+    const userEmail = user ? user.email : "Guest User";
+
+    let accInfo = "";
+    if (currentGame === 'freefire') {
+        const uidVal = document.getElementById('ff-uid') ? document.getElementById('ff-uid').value.trim() : "";
+        accInfo = `UID: ${uidVal}`;
+    } else {
+        const typeVal = document.getElementById('ef-account-type') ? document.getElementById('ef-account-type').value : "Konami ID";
+        const idVal = document.getElementById('ef-id') ? document.getElementById('ef-id').value.trim() : "";
+        const passVal = document.getElementById('ef-pass') ? document.getElementById('ef-pass').value.trim() : "";
+        const backupVal = document.getElementById('ef-backup') ? document.getElementById('ef-backup').value.trim() : "";
+        
+        accInfo = `Type: ${typeVal} | ID: ${idVal} | Pass: ${passVal} | Backup: ${backupVal}`;
+    }
 
     const orderData = {
-        userEmail: user ? user.email : "Guest",
+        userEmail: userEmail,
         product: `${currentGame.toUpperCase()} - ${selectedPkgName}`,
         price: selectedPkgPrice,
         accInfo: accInfo,
         trxId: trxId,
         status: "Pending",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: (typeof firebase !== 'undefined') ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
     };
 
-    db.collection("orders").add(orderData).then(() => {
-        const msg = `🚨 *NEW TOPUP ORDER*\n` +
-                    `📦 *Item:* ${selectedPkgName}\n` +
-                    `💰 *Price:* ${selectedPkgPrice} BDT\n` +
-                    `💳 *TrxID:* ${trxId}\n` +
-                    `🎮 *Game:* ${currentGame}\n` +
-                    `🆔 *Info:* ${accInfo}`;
+    // Firebase-এ অর্ডার সেভ করার চেষ্টা করবে
+    if (typeof db !== 'undefined') {
+        db.collection("orders").add(orderData).then(() => {
+            alert("অর্ডার সফলভাবে জমা হয়েছে!");
+            sendWhatsAppMessage(userEmail, selectedPkgName, selectedPkgPrice, trxId, currentGame, accInfo);
+        }).catch(e => {
+            alert('ডাটাবেজে সমস্যা হলেও হোয়াটসঅ্যাপে মেসেজ পাঠানো হচ্ছে...');
+            sendWhatsAppMessage(userEmail, selectedPkgName, selectedPkgPrice, trxId, currentGame, accInfo);
+        });
+    } else {
+        sendWhatsAppMessage(userEmail, selectedPkgName, selectedPkgPrice, trxId, currentGame, accInfo);
+    }
+}
 
-        window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-        closeBkashModal();
-    }).catch(e => {
-        alert('অর্ডার সাবমিট করতে ব্যর্থ হয়েছে: ' + e.message);
-    });
-        }
+// WhatsApp Message Helper Function
+function sendWhatsAppMessage(userEmail, pkgName, price, trxId, game, accInfo) {
+    const msg = `🚨 *NEW TOPUP ORDER*\n` +
+                `👤 *User:* ${userEmail}\n` +
+                `📦 *Item:* ${pkgName}\n` +
+                `💰 *Price:* ${price} BDT\n` +
+                `💳 *TrxID:* ${trxId}\n` +
+                `🎮 *Game:* ${game}\n` +
+                `🆔 *Info:* ${accInfo}`;
+
+    window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    closeBkashModal();
+            }
+            
