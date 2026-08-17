@@ -1,129 +1,95 @@
-import { db, collection, getDocs, query, where } from "./firebase-init.js";
+import { auth, db, collection, addDoc, serverTimestamp } from './firebase-init.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const packagesGrid = document.getElementById('packages-grid');
-    const productsGrid = document.getElementById('products-grid');
-    const gameButtons = document.querySelectorAll('.game-btn');
-    const noticeText = document.getElementById('notice-text');
+const ADMIN_WA_NUMBER = "8801576502490";
+let selectedProduct = null;
+let selectedPrice = 0;
 
-    let currentGame = 'freefire';
+window.openTopupModal = function(category) {
+    const modal = document.getElementById('topup-modal');
+    const pkgContainer = document.getElementById('package-list');
+    pkgContainer.innerHTML = '';
 
-    // 1. Fetch Notice from Admin Firebase
-    async function loadNotice() {
-        try {
-            const querySnapshot = await getDocs(collection(db, "notices"));
-            if (!querySnapshot.empty) {
-                let latestNotice = "";
-                querySnapshot.forEach(doc => {
-                    latestNotice = doc.data().text || doc.data().notice;
-                });
-                if (noticeText && latestNotice) {
-                    noticeText.innerText = latestNotice;
-                }
-            }
-        } catch (e) {
-            console.log("Notice load default fallback.");
-        }
-    }
-
-    // 2. Fetch Packages from Admin Firebase (Add/Edit/Delete supported)
-    async function loadPackages(gameName) {
-        if (!packagesGrid) return;
-        packagesGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px; color:#94a3b8;">প্যাকেজ লোড হচ্ছে...</div>`;
-
-        try {
-            const q = query(collection(db, "packages"), where("game", "==", gameName));
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                renderDefaultPackages(gameName);
-                return;
-            }
-
-            packagesGrid.innerHTML = '';
-            querySnapshot.forEach((doc) => {
-                const pkg = doc.data();
-                packagesGrid.innerHTML += `
-                    <div class="card">
-                        ${pkg.image ? `<img src="${pkg.image}" alt="pkg">` : `<i class="fa-solid fa-gem" style="font-size:24px; color:#ffc107; margin-bottom:10px;"></i>`}
-                        <h3>${pkg.title || pkg.name}</h3>
-                        <p>৳ ${pkg.price}</p>
-                        <button class="btn-buy" onclick="alert('বিকাশ করুন: 01309735129')">Buy Now</button>
-                    </div>
-                `;
-            });
-        } catch (error) {
-            renderDefaultPackages(gameName);
-        }
-    }
-
-    function renderDefaultPackages(game) {
-        const demoData = game === 'freefire' ? [
-            { title: '115 Diamonds', price: '78' },
-            { title: '240 Diamonds', price: '155' },
-            { title: '610 Diamonds', price: '390' }
-        ] : [
-            { title: '100 Coins', price: '100' },
-            { title: '300 Coins', price: '360' }
+    let packages = [];
+    if(category === 'freefire') {
+        document.getElementById('topup-title').innerText = "Free Fire Diamond Top-Up";
+        packages = [
+            { name: "115 Diamonds", price: 80 },
+            { name: "240 Diamonds", price: 160 },
+            { name: "610 Diamonds", price: 400 },
+            { name: "Weekly Membership", price: 160 },
+            { name: "Monthly Membership", price: 780 }
         ];
-
-        packagesGrid.innerHTML = '';
-        demoData.forEach(item => {
-            packagesGrid.innerHTML += `
-                <div class="card">
-                    <i class="fa-solid fa-gamepad" style="font-size:24px; color:#ffc107; margin-bottom:10px;"></i>
-                    <h3>${item.title}</h3>
-                    <p>৳ ${item.price}</p>
-                    <button class="btn-buy" onclick="alert('বিকাশ পেমেন্ট করুন: 01309735129')">Buy Now</button>
-                </div>
-            `;
-        });
+    } else if(category === 'efootball') {
+        document.getElementById('topup-title').innerText = "eFootball Coin Top-Up";
+        packages = [
+            { name: "130 Coins", price: 120 },
+            { name: "520 Coins", price: 450 },
+            { name: "1050 Coins", price: 890 }
+        ];
     }
 
-    // 3. Fetch E-commerce Products (Admin Controlled with Image & Details)
-    async function loadProducts() {
-        if (!productsGrid) return;
-        productsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px; color:#94a3b8;">প্রোডাক্ট লোড হচ্ছে...</div>`;
-
-        try {
-            const querySnapshot = await getDocs(collection(db, "products"));
-            if (querySnapshot.empty) {
-                productsGrid.innerHTML = `
-                    <div class="card">
-                        <h3>eFootball ID</h3>
-                        <p>৳ 490</p>
-                        <button class="btn-buy" onclick="alert('যোগাযোগ: 01576502490')">Order Now</button>
-                    </div>`;
-                return;
-            }
-
-            productsGrid.innerHTML = '';
-            querySnapshot.forEach((doc) => {
-                const prod = doc.data();
-                productsGrid.innerHTML += `
-                    <div class="card">
-                        ${prod.image ? `<img src="${prod.image}" alt="prod">` : `<i class="fa-solid fa-bag-shopping" style="font-size:24px; color:#ffc107; margin-bottom:10px;"></i>`}
-                        <h3>${prod.name}</h3>
-                        <p>৳ ${prod.price}</p>
-                        <button class="btn-buy" onclick="alert('অর্ডার সফল হয়েছে!')">Order Now</button>
-                    </div>
-                `;
-            });
-        } catch (e) {
-            productsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#94a3b8;">প্রোডাক্ট পাওয়া যায়নি।</div>`;
-        }
-    }
-
-    gameButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            gameButtons.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            currentGame = e.target.getAttribute('data-game');
-            loadPackages(currentGame);
-        });
+    packages.forEach(pkg => {
+        const btn = document.createElement('button');
+        btn.className = "border border-indigo-200 bg-indigo-50/50 p-2.5 rounded-xl text-left hover:border-indigo-600 focus:border-indigo-600 focus:bg-indigo-100 transition";
+        btn.innerHTML = `<p class="font-bold text-xs text-indigo-900">${pkg.name}</p><p class="text-xs text-indigo-600 font-extrabold">৳ ${pkg.price}</p>`;
+        btn.onclick = () => {
+            selectedProduct = `${category.toUpperCase()} - ${pkg.name}`;
+            selectedPrice = pkg.price;
+        };
+        pkgContainer.appendChild(btn);
     });
 
-    loadNotice();
-    loadPackages(currentGame);
-    loadProducts();
-});
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+};
+
+window.closeModals = function() {
+    const modal = document.getElementById('topup-modal');
+    const compModal = document.getElementById('comp-modal');
+    if(modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    if(compModal) { compModal.classList.add('hidden'); compModal.classList.remove('flex'); }
+};
+
+window.submitTopupOrder = async function() {
+    const playerInfo = document.getElementById('player-id').value.trim();
+    const trxId = document.getElementById('trx-id').value.trim();
+    const user = auth.currentUser;
+
+    if(!selectedProduct) return alert('অনুগ্রহ করে একটি প্যাকেজ সিলেক্ট করুন!');
+    if(!playerInfo) return alert('Player UID অথবা অ্যাকাউন্ট ডিটেইলস দিন!');
+    if(!trxId) return alert('বিকাশ TrxID প্রদান করুন!');
+
+    const orderData = {
+        userEmail: user ? user.email : "Guest User",
+        userName: user ? user.displayName : "Guest",
+        product: selectedProduct,
+        price: selectedPrice,
+        playerInfo: playerInfo,
+        trxId: trxId,
+        paymentMethod: "bKash (01309735129)",
+        status: "Pending",
+        createdAt: serverTimestamp()
+    };
+
+    try {
+        await addDoc(collection(db, "orders"), orderData);
+
+        const message = `🛒 *NEW TOP-UP ORDER*\n` +
+                        `--------------------------\n` +
+                        `📦 *Product:* ${selectedProduct}\n` +
+                        `💰 *Price:* ৳${selectedPrice}\n` +
+                        `🆔 *Player Info:* ${playerInfo}\n` +
+                        `💳 *Payment Method:* bKash\n` +
+                        `🧾 *TrxID:* ${trxId}\n` +
+                        `👤 *User:* ${orderData.userName} (${orderData.userEmail})\n` +
+                        `--------------------------\n` +
+                        `অর্ডারটি দ্রুত প্রসেস করুন।`;
+
+        const waUrl = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(message)}`;
+        alert('অর্ডার সাবমিট হয়েছে! এখন আপনার হোয়াটসঅ্যাপে নিয়ে যাওয়া হচ্ছে...');
+        window.open(waUrl, '_blank');
+        closeModals();
+    } catch (e) {
+        alert('অর্ডার তৈরিতে সমস্যা হয়েছে: ' + e.message);
+    }
+};
