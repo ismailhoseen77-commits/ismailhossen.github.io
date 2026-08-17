@@ -1,109 +1,136 @@
-// Admin Panel Initialization
+const IMGBB_API_KEY = "6d257f6977717c192108108ae3202982"; // ImgBB API Key
+
 document.addEventListener("DOMContentLoaded", () => {
     loadPackages();
     loadOrders();
 });
 
-// Update Homepage Notice
-function updateNotice() {
-    const text = document.getElementById('admin-notice-input').value.trim();
-    if (!text) return alert("নোটিশ ফিল্ড খালি রাখা যাবে না!");
+// Helper Function: Upload Image File to ImgBB
+async function uploadImageToImgBB(fileInputId) {
+    const fileInput = document.getElementById(fileInputId);
+    if (!fileInput.files || fileInput.files.length === 0) return "";
 
-    db.collection("settings").doc("notice").set({ text: text }).then(() => {
-        alert("নোটিশ সফলভাবে আপডেট হয়েছে!");
-        document.getElementById('admin-notice-input').value = "";
-    }).catch(e => alert("সমস্যা হয়েছে: " + e.message));
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
+
+    try {
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+            return data.data.url;
+        } else {
+            alert("ছবি আপলোড ব্যর্থ হয়েছে!");
+            return "";
+        }
+    } catch (e) {
+        alert("ছবি আপলোডে নেটওয়ার্ক সমস্যা: " + e.message);
+        return "";
+    }
 }
 
-// Add New Package
+// Save Notice with Image
+async function updateNotice() {
+    const text = document.getElementById('admin-notice-input').value.trim();
+    const btn = document.getElementById('btn-notice');
+    
+    btn.innerText = "আপলোড হচ্ছে...";
+    btn.disabled = true;
+
+    const imageUrl = await uploadImageToImgBB('admin-notice-file');
+
+    db.collection("settings").doc("notice").set({
+        text: text,
+        image: imageUrl
+    }).then(() => {
+        alert("নোটিশ সফলভাবে সেভ হয়েছে!");
+        btn.innerText = "Save Notice";
+        btn.disabled = false;
+    }).catch(e => {
+        alert("সমস্যা: " + e.message);
+        btn.innerText = "Save Notice";
+        btn.disabled = false;
+    });
+}
+
+// Add E-Commerce Product with Image
+async function addEcommerceProduct() {
+    const title = document.getElementById('prod-title-input').value.trim();
+    const price = Number(document.getElementById('prod-price-input').value);
+    const btn = document.getElementById('btn-prod');
+
+    if (!title || !price) return alert("প্রোডাক্টের নাম ও দাম দিন!");
+
+    btn.innerText = "আপলোড হচ্ছে...";
+    btn.disabled = true;
+
+    const imageUrl = await uploadImageToImgBB('prod-img-file');
+
+    db.collection("products").add({
+        title: title,
+        price: price,
+        image: imageUrl
+    }).then(() => {
+        alert("প্রোডাক্ট সফলভাবে যুক্ত হয়েছে!");
+        document.getElementById('prod-title-input').value = "";
+        document.getElementById('prod-price-input').value = "";
+        btn.innerText = "+ প্রোডাক্ট প্রকাশ করুন";
+        btn.disabled = false;
+    }).catch(e => {
+        alert("সমস্যা: " + e.message);
+        btn.innerText = "+ প্রোডাক্ট প্রকাশ করুন";
+        btn.disabled = false;
+    });
+}
+
 function addNewPackage() {
     const game = document.getElementById('pkg-game-type').value;
     const name = document.getElementById('pkg-name-input').value.trim();
     const price = Number(document.getElementById('pkg-price-input').value);
 
-    if (!name || !price) return alert("প্যাকেজের নাম ও সঠিক দাম লিখুন!");
+    if (!name || !price) return alert("প্যাকেজের তথ্য দিন!");
 
     db.collection("packages").add({
         game: game,
         name: name,
-        price: price,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        price: price
     }).then(() => {
-        alert("নতুন প্যাকেজ যুক্ত হয়েছে!");
-        document.getElementById('pkg-name-input').value = "";
-        document.getElementById('pkg-price-input').value = "";
+        alert("প্যাকেজ যুক্ত করা হয়েছে!");
         loadPackages();
-    }).catch(e => alert("সমস্যা হয়েছে: " + e.message));
+    });
 }
 
-// Load Packages List
 function loadPackages() {
     const container = document.getElementById('admin-packages-list');
-    
     db.collection("packages").get().then(snapshot => {
-        if (snapshot.empty) {
-            container.innerHTML = `<p class="text-xs text-gray-400 col-span-2 text-center py-2">কোনো প্যাকেজ যুক্ত করা নেই!</p>`;
-            return;
-        }
-
         container.innerHTML = "";
         snapshot.forEach(doc => {
-            const pkg = doc.data();
+            const p = doc.data();
             const card = document.createElement('div');
-            card.className = "flex justify-between items-center bg-gray-50 p-3 rounded-xl border text-xs";
-            card.innerHTML = `
-                <div>
-                    <span class="font-bold text-gray-800">${pkg.name}</span>
-                    <p class="text-[10px] text-gray-500">${pkg.game.toUpperCase()} - ৳${pkg.price}</p>
-                </div>
-                <button onclick="deletePackage('${doc.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            `;
+            card.className = "flex justify-between items-center bg-gray-50 p-2 rounded-lg border text-xs";
+            card.innerHTML = `<span><b>${p.name}</b> (${p.game}) - ৳${p.price}</span>
+            <button onclick="deleteDoc('packages', '${doc.id}')" class="text-red-500 font-bold">Delete</button>`;
             container.appendChild(card);
         });
     });
 }
 
-// Delete Package
-function deletePackage(id) {
-    if (confirm("আপনি কি নিশ্চিত এই প্যাকেজটি মুছে ফেলতে চান?")) {
-        db.collection("packages").doc(id).delete().then(() => loadPackages());
-    }
-}
-
-// Load Orders List
 function loadOrders() {
     const container = document.getElementById('admin-orders-list');
-
-    db.collection("orders").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        if (snapshot.empty) {
-            container.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">কোনো অর্ডার পাওয়া যায়নি!</p>`;
-            return;
-        }
-
+    db.collection("orders").onSnapshot(snapshot => {
         container.innerHTML = "";
         snapshot.forEach(doc => {
-            const item = doc.data();
-            const id = doc.id;
-            const statusClass = item.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' : (item.status === 'Cancelled' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700');
-
+            const o = doc.data();
             const card = document.createElement('div');
-            card.className = "bg-gray-50 p-4 rounded-xl border space-y-2 text-xs";
+            card.className = "bg-gray-50 p-3 rounded-lg border text-xs space-y-1";
             card.innerHTML = `
-                <div class="flex justify-between items-center font-bold border-b pb-2">
-                    <span class="text-gray-800">${item.product}</span>
-                    <span class="text-[10px] px-2 py-0.5 rounded ${statusClass}">${item.status}</span>
-                </div>
-                <div class="space-y-1 text-gray-600 text-[11px]">
-                    <p><b>ইউজার:</b> ${item.userEmail}</p>
-                    <p><b>একাউন্ট ইনফো:</b> ${item.accInfo}</p>
-                    <p><b>TrxID:</b> <span class="font-mono text-indigo-600 font-bold">${item.trxId}</span> | <b>দাম:</b> ৳${item.price}</p>
-                </div>
-                <div class="flex gap-2 pt-2 border-t">
-                    <button onclick="updateOrderStatus('${id}', 'Completed')" class="flex-1 bg-emerald-600 text-white font-bold py-1.5 rounded-lg text-[11px]">Completed</button>
-                    <button onclick="updateOrderStatus('${id}', 'Pending')" class="flex-1 bg-amber-500 text-white font-bold py-1.5 rounded-lg text-[11px]">Pending</button>
-                    <button onclick="updateOrderStatus('${id}', 'Cancelled')" class="flex-1 bg-red-600 text-white font-bold py-1.5 rounded-lg text-[11px]">Cancelled</button>
+                <div class="flex justify-between font-bold"><span>${o.product}</span><span class="text-indigo-600">${o.status}</span></div>
+                <p>User: ${o.userEmail} | Trx: ${o.trxId}</p>
+                <div class="flex gap-2 pt-1">
+                    <button onclick="updateOrderStatus('${doc.id}', 'Completed')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">Completed</button>
+                    <button onclick="updateOrderStatus('${doc.id}', 'Cancelled')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">Cancelled</button>
                 </div>
             `;
             container.appendChild(card);
@@ -111,9 +138,11 @@ function loadOrders() {
     });
 }
 
-// Update Order Status
-function updateOrderStatus(id, newStatus) {
-    db.collection("orders").doc(id).update({
-        status: newStatus
-    }).catch(e => alert("স্ট্যাটাস আপডেট হয়নি: " + e.message));
+function deleteDoc(col, id) {
+    db.collection(col).doc(id).delete().then(() => loadPackages());
 }
+
+function updateOrderStatus(id, status) {
+    db.collection("orders").doc(id).update({ status: status });
+}
+
