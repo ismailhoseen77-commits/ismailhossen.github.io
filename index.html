@@ -7,14 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body class="bg-slate-100 text-gray-800 pb-24">
 
-    <!-- Header -->
     <header class="bg-indigo-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
         <h1 class="text-xl font-black cursor-pointer" onclick="switchTab('home-tab')">MIHADX BD</h1>
         <div id="header-user-badge" class="text-xs font-bold bg-white/20 px-3 py-1 rounded-full hidden">
@@ -24,19 +22,16 @@
 
     <main class="max-w-md mx-auto p-4 space-y-4">
 
-        <!-- Dynamic Notice Banner -->
-        <div id="notice-banner-box" class="hidden">
-            <img id="notice-img" src="" class="w-full h-32 object-cover rounded-2xl shadow-sm mb-2 hidden">
+        <div id="notice-banner-box" class="hidden space-y-2">
+            <img id="notice-img" src="" class="w-full h-36 object-cover rounded-2xl shadow-sm hidden">
             <div id="notice-text-box" class="bg-amber-100 border border-amber-300 text-amber-900 p-3 rounded-xl text-xs font-semibold flex items-center gap-2 hidden">
                 <i class="fa-solid fa-bullhorn text-amber-600"></i>
                 <span id="notice-text"></span>
             </div>
         </div>
 
-        <!-- TAB 1: HOME VIEW -->
-        <div id="home-tab" class="tab-content space-y-6">
+        <div id="home-tab" class="tab-content space-y-5">
             
-            <!-- Top Up Center -->
             <section class="bg-white p-4 rounded-2xl shadow-sm">
                 <h2 class="text-sm font-bold text-gray-700 mb-3 border-b pb-2">
                     <i class="fa-solid fa-gamepad text-indigo-600 mr-2"></i>Top Up Center
@@ -53,18 +48,16 @@
                 </div>
             </section>
 
-            <!-- E-Commerce Products Section -->
             <section class="bg-white p-4 rounded-2xl shadow-sm space-y-3">
                 <h2 class="text-sm font-bold text-gray-700 border-b pb-2 flex items-center gap-2">
                     <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Products & Items
                 </h2>
                 <div id="ecommerce-products-grid" class="grid grid-cols-2 gap-3">
-                    <p class="text-xs text-gray-400 col-span-2 text-center py-4">কোনো প্রোডাক্ট যুক্ত করা নেই!</p>
+                    <p class="text-xs text-gray-400 col-span-2 text-center py-4">লোড হচ্ছে...</p>
                 </div>
             </section>
         </div>
 
-        <!-- PRODUCT TOP-UP PAGE VIEW -->
         <div id="product-view" class="tab-content hidden space-y-4">
             <button onclick="switchTab('home-tab')" class="text-xs font-bold text-indigo-600 flex items-center gap-1 mb-2">
                 <i class="fa-solid fa-arrow-left"></i> ব্যাক করুন
@@ -78,19 +71,16 @@
                 </div>
             </div>
 
-            <!-- STEP 1: Select Recharge -->
             <div class="bg-white p-4 rounded-2xl shadow-sm space-y-3">
                 <div class="flex items-center gap-2 text-indigo-600 border-b pb-2">
                     <span class="w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
                     <h3 class="font-bold text-sm text-gray-800">Select Package</h3>
                 </div>
-                <!-- এখানে আগে থেকে কোনো প্যাকেজ থাকবে না, এডমিন প্যানেল থেকে আপলোড দিলে তা আসবে -->
                 <div id="recharge-grid" class="grid grid-cols-2 gap-2 text-center">
-                    <p class="text-xs text-gray-400 col-span-2 py-4">লোড হচ্ছে...</p>
+                    <p class="text-xs text-gray-400 col-span-2 py-4">প্যাকেজ লোড হচ্ছে...</p>
                 </div>
             </div>
 
-            <!-- STEP 2: Account Info -->
             <div class="bg-white p-4 rounded-2xl shadow-sm space-y-3">
                 <div class="flex items-center gap-2 text-indigo-600 border-b pb-2">
                     <span class="w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
@@ -110,19 +100,16 @@
                 </div>
             </div>
 
-            <!-- STEP 3: Payment Option -->
             <div class="bg-white p-4 rounded-2xl shadow-sm space-y-3">
                 <button onclick="handleBuyNow()" class="w-full bg-indigo-600 text-white font-black py-3 rounded-xl text-sm shadow-md">Buy Now</button>
             </div>
         </div>
 
-        <!-- TAB 2: MY ORDERS -->
         <div id="orders-tab" class="tab-content hidden space-y-4">
             <h2 class="font-bold text-base text-gray-800 border-b pb-2"><i class="fa-solid fa-bag-shopping text-indigo-600 mr-2"></i>My Orders</h2>
             <div id="orders-list-container" class="space-y-3"></div>
         </div>
 
-        <!-- TAB 3: PROFILE & LOGIN -->
         <div id="profile-tab" class="tab-content hidden space-y-4">
             <div id="logged-out-box" class="bg-white p-6 rounded-2xl shadow-sm text-center space-y-4 border">
                 <i class="fa-solid fa-circle-user text-5xl text-gray-300"></i>
@@ -144,14 +131,12 @@
 
     </main>
 
-    <!-- Nav Bar -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t py-2.5 px-8 flex justify-between items-center max-w-md mx-auto z-40 shadow-lg">
         <button onclick="switchTab('home-tab')" id="nav-home" class="flex flex-col items-center text-indigo-600 nav-item"><i class="fa-solid fa-house text-lg"></i><span class="text-[10px] font-bold">Home</span></button>
         <button onclick="switchTab('orders-tab')" id="nav-orders" class="flex flex-col items-center text-gray-400 nav-item"><i class="fa-solid fa-bag-shopping text-lg"></i><span class="text-[10px] font-bold">Orders</span></button>
         <button onclick="switchTab('profile-tab')" id="nav-profile" class="flex flex-col items-center text-gray-400 nav-item"><i class="fa-solid fa-user text-lg"></i><span class="text-[10px] font-bold">Profile</span></button>
     </nav>
 
-    <!-- Modal System -->
     <div id="bkash-checkout-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white w-full max-w-md rounded-2xl p-4 space-y-3">
             <div class="flex justify-between items-center border-b pb-2">
