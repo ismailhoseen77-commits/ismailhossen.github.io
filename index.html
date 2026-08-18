@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zain E-Shop & Topup Center - Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: linear-gradient(135deg, #f5f0fa 0%, #ece4f5 100%); color: #333; padding-bottom: 80px; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; padding: 15px; }
+        
+        /* Premium Card Design */
+        .card { background: #ffffff; border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: 0 8px 25px rgba(111, 44, 145, 0.08); border: 1px solid rgba(226, 211, 237, 0.5); transition: transform 0.2s ease; }
+        .card:hover { transform: translateY(-2px); }
+        .hidden { display: none !important; }
+
+        :root {
+            --primary-purple: #6f2c91;
+            --dark-purple: #4a1d63;
+            --light-purple: #f3ebf8;
+            --accent-pink: #ff3366;
+            --success-green: #00b894;
+        }
+
+        /* Notice Bar with Glow */
+        .notice-bar { background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple)); color: #fff; padding: 12px 16px; border-radius: 12px; margin-bottom: 18px; font-size: 13px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(111, 44, 145, 0.3); }
+        .notice-bar img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid rgba(255,255,255,0.3); }
+        
+        .section-title { font-size: 17px; font-weight: 700; color: #222; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--primary-purple); background: var(--light-purple); padding: 8px; border-radius: 8px; }
+
+        /* Game Grid */
+        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 15px; }
+        .game-card { background: #faf8fc; border: 2px solid #e2d3ed; border-radius: 14px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .game-card.active { border-color: var(--primary-purple); background: var(--light-purple); box-shadow: 0 0 12px rgba(111, 44, 145, 0.2); }
+        .game-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 8px; }
+        .game-card span { font-weight: bold; font-size: 14px; color: var(--dark-purple); }
+
+        /* Package Grid */
+        .package-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .package-item { border: 1.5px solid #e2d3ed; border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; background: #fff; transition: 0.2s; }
+        .package-item.selected { border-color: var(--primary-purple); background: var(--light-purple); box-shadow: 0 4px 12px rgba(111,44,145,0.2); transform: scale(1.02); }
+        .package-item span { display: block; font-size: 13px; font-weight: 600; color: #555; }
+        .package-item strong { display: block; font-size: 15px; color: var(--primary-purple); margin-top: 5px; }
+
+        /* Form Controls */
+        .form-group { margin-bottom: 14px; }
+        .form-group label { font-size: 12px; font-weight: 700; display: block; margin-bottom: 6px; color: #444; }
+        .form-control { width: 100%; padding: 12px; border: 1.5px solid #e2d3ed; border-radius: 10px; font-size: 14px; background: #fafafc; transition: 0.2s; }
+        .form-control:focus { border-color: var(--primary-purple); outline: none; background: #fff; box-shadow: 0 0 8px rgba(111,44,145,0.15); }
+
+        /* Buttons */
+        .btn-main { background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple)); color: #fff; border: none; padding: 13px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 10px; box-shadow: 0 4px 15px rgba(111, 44, 145, 0.3); transition: 0.2s; }
+        .btn-main:active { transform: scale(0.98); }
+        .btn-google { background: #fff; color: #444; border: 1.5px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; }
+        .btn-google img { width: 20px; height: 20px; }
+
+        /* Shop Grid */
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .product-card { background: #fff; border-radius: 12px; border: 1px solid #eee; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; }
+        .product-info { padding: 12px; text-align: center; }
+        .product-info h4 { font-size: 13px; margin-bottom: 4px; color: #333; font-weight: 700; }
+        .product-info p { color: var(--primary-purple); font-weight: bold; font-size: 14px; }
+        .btn-buy { background: var(--primary-purple); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; width: 100%; margin-top: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+
+        /* Profile & Nav */
+        .profile-header { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--primary-purple); object-fit: cover; box-shadow: 0 4px 10px rgba(111,44,145,0.2); }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eae2f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.06); z-index: 999; }
+        .nav-item { text-align: center; color: #888; text-decoration: none; font-size: 11px; cursor: pointer; font-weight: 600; }
+        .nav-item.active { color: var(--primary-purple); }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
+
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="section-home">
+            <div class="notice-bar" id="notice-container">
+                <i class="fa-solid fa-bullhorn" style="font-size: 20px;"></i>
+                <span id="admin-notice-text">লোডিং নোটিশ...</span>
+            </div>
+
+            <div id="view-main-selection">
+                <div class="card">
+                    <div class="section-title"><i class="fa-solid fa-gamepad"></i> গেম টপআপ সেন্টার</div>
+                    <div class="game-grid">
+                        <div class="game-card active" onclick="selectGame('ff')">
+                            <img src="free-fire-logo.png" alt="Free Fire">
+                            <span>Free Fire</span>
+                        </div>
+                        <div class="game-card" onclick="selectGame('efootball')">
+                            <img src="EFootball_logo.png" alt="eFootball">
+                            <span>eFootball</span>
+                        </div>
+                    </div>
+
+                    <div class="section-title" style="font-size: 15px; margin-top: 15px;"><i class="fa-solid fa-box-open"></i> প্যাকেজ নির্বাচন করুন:</div>
+                    <div class="package-grid" id="packages-container"></div>
+
+                    <button class="btn-main" onclick="proceedToPaymentStep()"><i class="fa-solid fa-arrow-right"></i> পরবর্তী ধাপে যান (পেমেন্ট)</button>
+                </div>
+
+                <div class="card">
+                    <div class="section-title"><i class="fa-solid fa-bag-shopping"></i> ই-কমার্স প্রোডাক্ট শপ</div>
+                    <div class="shop-grid" id="shop-products-container"></div>
+                </div>
+            </div>
+            <div id="view-payment-step" class="card hidden">
+                <div style="font-size: 13px; color: var(--primary-purple); cursor: pointer; font-weight: bold; margin-bottom: 12px;" onclick="backToMainSelection()"><i class="fa-solid fa-arrow-left"></i> পেছনে ফিরে যান</div>
+                <div class="section-title"><i class="fa-solid fa-credit-card"></i> পেমেন্ট ও অ্যাকাউন্ট ইনফো</div>
+                
+                <div id="dynamic-account-inputs"></div>
+
+                <div style="background: #fdfcff; border: 1.5px dashed var(--primary-purple); padding: 14px; border-radius: 12px; margin: 14px 0;">
+                    <p style="font-size: 13px; color: #444; font-weight: bold;">বিকাশ পার্সোনাল সেন্ড মানি:</p>
+                    <p style="font-size: 16px; color: var(--primary-purple); font-weight: bold; margin: 6px 0;">
+                        <span id="display-bkash-num">01700000000</span>
+                        <button style="background: var(--primary-purple); color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; margin-left: 6px;" onclick="copyBkashNumber()">Copy</button>
+                    </p>
+                    <p style="font-size: 11px; color: #666; line-height: 1.4;">টাকা পাঠিয়ে নিচের বক্সে ট্রানজেকশন আইডি (TrxID) প্রদান করুন।</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Transaction ID (TrxID)</label>
+                    <input type="text" id="topup-trxid" class="form-control" placeholder="যেমন: 9N8M7K6L">
+                </div>
+
+                <button class="btn-main" onclick="verifyAndSubmitTopup()"><i class="fa-brands fa-whatsapp"></i> অর্ডার কনফার্ম করুন</button>
+            </div>
+        </div>
+
+        <div id="section-orders" class="hidden">
+            <div class="section-title"><i class="fa-solid fa-list-check"></i> আমার অর্ডারসমূহ</div>
+            <div id="orders-list-container"></div>
+        </div>
+
+        <div id="section-profile" class="hidden">
+            <div class="card">
+                <div class="profile-header">
+                    <img id="profile-display-img" src="https://via.placeholder.com/70" alt="Avatar" class="avatar">
+                    <div>
+                        <h3 id="profile-display-name" style="font-size: 18px; color: #222;">Guest User</h3>
+                        <p id="profile-display-email" style="font-size: 12px; color: #666;">Not Logged In</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" style="font-size: 15px;"><i class="fa-solid fa-user-pen"></i> প্রোফাইল কাস্টমাইজেশন</div>
+                <form onsubmit="saveUserProfile(event)">
+                    <div class="form-group">
+                        <label>পূর্ণ নাম</label>
+                        <input type="text" id="profile-name" class="form-control" required placeholder="আপনার নাম">
+                    </div>
+                    <div class="form-group">
+                        <label>ইউজারনেম</label>
+                        <input type="text" id="profile-username" class="form-control" required placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label>মোবাইল নাম্বার</label>
+                        <input type="tel" id="profile-phone" class="form-control" required placeholder="017xxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>প্রোফাইল ছবি লিংক (URL)</label>
+                        <input type="url" id="profile-img-url" class="form-control" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn-main">প্রোফাইল আপডেট করুন</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <button class="btn-main" style="background: #ff3366;" onclick="logoutUser()">লগআউট করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal: Login / Register with Google & Email/Password -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="card" style="width: 90%; max-width: 400px; margin: 0;">
+            <div class="section-title" id="auth-modal-title">ইউজার লগইন</div>
+            
+            <button class="btn-main btn-google" onclick="loginWithGoogle()" style="margin-bottom: 12px;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> কন্টিনিউ উইথ গুগল (Google)
+            </button>
+            
+            <div style="text-align: center; font-size: 12px; color: #888; margin: 10px 0;">অথবা ইমেইল দিয়ে করুন</div>
+
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group" id="name-field-group" style="display: none;">
+                    <label>পূর্ণ নাম (Name)</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="আপনার নাম">
+                </div>
+                <div class="form-group">
+                    <label>জিমেইল (Email)</label>
+                    <input type="email" id="auth-email" class="form-control" required placeholder="example@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label>পাসওয়ার্ড (Password)</label>
+                    <input type="password" id="auth-password" class="form-control" required placeholder="পাসওয়ার্ড দিন">
+                </div>
+                <div class="form-group" id="confirm-pass-group" style="display: none;">
+                    <label>কনফার্ম পাসওয়ার্ড (Confirm Password)</label>
+                    <input type="password" id="auth-confirm-password" class="form-control" placeholder="পুনরায় পাসওয়ার্ড দিন">
+                </div>
+                <button type="submit" id="auth-submit-btn" class="btn-main">লগইন করুন</button>
+                <p id="auth-toggle-text" style="text-align: center; font-size: 13px; margin-top: 14px; color: var(--primary-purple); cursor: pointer; font-weight: bold;" onclick="toggleAuthMode()">অ্যাকাউন্ট নেই? সাইন আপ করুন</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- E-commerce Modal -->
+    <div id="ecom-modal" class="modal hidden">
+        <div class="card" style="width: 90%; max-width: 420px; max-height: 90vh; overflow-y: auto; margin: 0;">
+            <div class="section-title" style="font-size: 15px;"><i class="fa-solid fa-cart-shopping"></i> প্রোডাক্ট অর্ডার ফরম</div>
+            <p id="ecom-modal-details" style="font-size: 13px; color: #666; margin-bottom: 10px;"></p>
+            <form onsubmit="submitEcomOrder(event)">
+                <input type="hidden" id="ecom-prod-name">
+                <input type="hidden" id="ecom-prod-price">
+                
+                <div class="form-group">
+                    <label>আপনার নাম</label>
+                    <input type="text" id="ecom-cust-name" class="form-control" required placeholder="পূর্ণ নাম">
+                </div>
+                <div class="form-group">
+                    <label>মোবাইল নম্বর</label>
+                    <input type="tel" id="ecom-cust-phone" class="form-control" required placeholder="017xxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label>সাইজ / কালার</label>
+                    <input type="text" id="ecom-cust-size" class="form-control" placeholder="M, L, XL ইত্যাদি">
+                </div>
+                <div class="form-group">
+                    <label>সম্পূর্ণ ঠিকানা</label>
+                    <textarea id="ecom-cust-address" class="form-control" required placeholder="বাসা, রোড, থানা, জেলা"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-main" style="background: #00b894;"><i class="fa-brands fa-whatsapp"></i> অর্ডার কনফার্ম করুন</button>
+                <button type="button" class="btn-main" style="background: #888; margin-top: 8px;" onclick="closeEcomModal()">বাতিল</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i> Home</div>
+        <div class="nav-item" onclick="switchTab('orders', this)"><i class="fa-solid fa-bag-shopping"></i> Orders</div>
+        <div class="nav-item" onclick="switchTab('profile', this)"><i class="fa-solid fa-user"></i> Profile</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, setDoc, getDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+            authDomain: "mihadx-pro-bd.firebaseapp.com",
+            projectId: "mihadx-pro-bd",
+            storageBucket: "mihadx-pro-bd.firebasestorage.app",
+            messagingSenderId: "478391400367",
+            appId: "1:478391400367:web:86012d35014ee7350a215a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        const myWhatsappNumber = "8801700000000"; 
+        const bkashPersonalNumber = "01700000000";   
+        
+        let currentGame = 'ff';
+        let selectedPackage = null;
+        let cachedPackages = { ff: [], efootball: [] };
+        let cachedProducts = [];
+        let isSignUpMode = false;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('auth-modal').classList.add('hidden');
+                document.getElementById('profile-display-email').innerText = user.email;
+                
+                const userSnap = await getDoc(doc(db, "users", user.uid));
+                if(userSnap.exists()) {
+                    let uData = userSnap.data();
+                    document.getElementById('profile-name').value = uData.name || user.displayName || '';
+                    document.getElementById('profile-username').value = uData.username || '';
+                    document.getElementById('profile-phone').value = uData.phone || '';
+                    document.getElementById('profile-img-url').value = uData.image || user.photoURL || '';
+                    document.getElementById('profile-display-name').innerText = uData.name || user.displayName || 'User';
+                    if(uData.image || user.photoURL) document.getElementById('profile-display-img').src = uData.image || user.photoURL;
+                }
+            } else {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+        });
+
+        window.toggleAuthMode = () => {
+            isSignUpMode = !isSignUpMode;
+            document.getElementById('auth-modal-title').innerText = isSignUpMode ? "নতুন অ্যাকাউন্ট তৈরি (Register)" : "ইউজার লগইন";
+            document.getElementById('auth-submit-btn').innerText = isSignUpMode ? "সাইন আপ করুন" : "লগইন করুন";
+            document.getElementById('auth-toggle-text').innerText = isSignUpMode ? "আগে থেকেই অ্যাকাউন্ট আছে? লগইন করুন" : "অ্যাকাউন্ট নেই? সাইন আপ করুন";
+            document.getElementById('name-field-group').style.display = isSignUpMode ? 'block' : 'none';
+            document.getElementById('confirm-pass-group').style.display = isSignUpMode ? 'block' : 'none';
+        }
+
+        window.loginWithGoogle = async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || '',
+                    image: user.photoURL || '',
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                alert('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
+            } catch (err) {
+                alert('লগইন ত্রুটি: ' + err.message);
+            }
+        }
+
+        window.handleAuthSubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value.trim();
+            const pass = document.getElementById('auth-password').value.trim();
+
+            try {
+                if(isSignUpMode) {
+                    const name = document.getElementById('reg-name').value.trim();
+                    const confirmPass = document.getElementById('auth-confirm-password').value.trim();
+                    if(pass !== confirmPass) return alert('পাসওয়ার্ড দুটি মিলছে না!');
+
+                    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                    await setDoc(doc(db, "users", cred.user.uid), {
+                        uid: cred.user.uid,
+                        email: email,
+                        name: name,
+                        createdAt: serverTimestamp()
+                    });
+                    alert('সফলভাবে সাইন আপ হয়েছে!');
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                    alert('সফলভাবে লগইন হয়েছে!');
+                }
+            } catch (err) {
+                alert('ত্রুটি: ' + err.message);
+            }
+        }
+
+        window.logoutUser = () => signOut(auth).then(() => alert('লগআউট হয়েছে।'));
+
+        window.saveUserProfile = async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if(!user) return;
+            const name = document.getElementById('profile-name').value.trim();
+            const username = document.getElementById('profile-username').value.trim();
+            const phone = document.getElementById('profile-phone').value.trim();
+            const img = document.getElementById('profile-img-url').value.trim();
+
+            await setDoc(doc(db, "users", user.uid), { name, username, phone, image: img }, { merge: true });
+            document.getElementById('profile-display-name').innerText = name;
+            if(img) document.getElementById('profile-display-img').src = img;
+            alert('প্রোফাইল আপডেট সফল হয়েছে!');
+        }
+
+        // Realtime Listeners
+        onSnapshot(collection(db, "notices"), (snapshot) => {
+            const noticeContainer = document.getElementById('notice-container');
+            if(snapshot.empty) return;
+            let notices = [];
+            snapshot.forEach(doc => notices.push(doc.data()));
+            let latest = notices[notices.length - 1];
+            
+            let html = `<i class="fa-solid fa-bullhorn" style="font-size: 20px;"></i>`;
+            if(latest.image) {
+                html += `<img src="${latest.image}" alt="Notice">`;
+            }
+            html += `<span id="admin-notice-text">${latest.text || ""}</span>`;
+            noticeContainer.innerHTML = html;
+        });
+
+        onSnapshot(collection(db, "packages"), (snapshot) => {
+            cachedPackages = { ff: [], efootball: [] };
+            snapshot.forEach(docSnap => {
+                let p = docSnap.data();
+                if(cachedPackages[p.category]) cachedPackages[p.category].push({ id: docSnap.id, ...p });
+            });
+            renderPackages();
+        });
+
+        onSnapshot(collection(db, "products"), (snapshot) => {
+            cachedProducts = [];
+            snapshot.forEach(docSnap => cachedProducts.push({ id: docSnap.id, ...docSnap.data() }));
+            renderShopProducts();
+        });
+
+        window.selectGame = (game) => {
+            currentGame = game;
+            selectedPackage = null;
+            document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.game-card')[game === 'ff' ? 0 : 1].classList.add('active');
+            renderPackages();
+        }
+
+        function renderPackages() {
+            const container = document.getElementById('packages-container');
+            let pkgs = cachedPackages[currentGame] || [];
+            if(pkgs.length === 0) {
+                container.innerHTML = '<p style="grid-column: span 2; text-align: center; color: #777; font-size: 13px;">কোনো প্যাকেজ নেই।</p>';
+                return;
+            }
+            container.innerHTML = pkgs.map(pkg => `
+                <div class="package-item" onclick="selectPkg(this, '${pkg.id}', '${pkg.name}', ${pkg.price})">
+                    <span>${pkg.name}</span><strong>৳ ${pkg.price}</strong>
+                </div>
+            `).join('');
+        }
+
+        window.selectPkg = (el, id, name, price) => {
+            document.querySelectorAll('.package-item').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPackage = { id, name, price };
+        }
+
+        function renderShopProducts() {
+            const container = document.getElementById('shop-products-container');
+            if(cachedProducts.length === 0) {
+                container.innerHTML = '<p style="grid-column: span 2; text-align: center; color: #777; font-size: 13px;">প্রোডাক্ট নেই।</p>';
+                return;
+            }
+            container.innerHTML = cachedProducts.map(prod => `
+                <div class="product-card">
+                    <img src="${prod.image || 'https://via.placeholder.com/150'}" alt="${prod.title}">
+                    <div class="product-info">
+                        <h4>${prod.title}</h4>
+                        <p>৳ ${prod.price}</p>
+                        <button class="btn-buy" onclick="openEcomModal('${prod.title}', ${prod.price}, '${prod.details || ''}')">অর্ডার করুন</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.copyBkashNumber = () => {
+            navigator.clipboard.writeText(bkashPersonalNumber);
+            alert('বিকাশ নাম্বার কপি করা হয়েছে!');
+        }
+
+        window.proceedToPaymentStep = () => {
+            if(!auth.currentUser) return alert('আগে লগইন করুন!'), document.getElementById('auth-modal').classList.remove('hidden');
+            if(!selectedPackage) return alert('একটি প্যাকেজ সিলেক্ট করুন!');
+
+            document.getElementById('view-main-selection').classList.add('hidden');
+            document.getElementById('view-payment-step').classList.remove('hidden');
+            document.getElementById('display-bkash-num').innerText = bkashPersonalNumber;
+
+            const inputContainer = document.getElementById('dynamic-account-inputs');
+            if(currentGame === 'ff') {
+                inputContainer.innerHTML = `<div class="form-group"><label>Free Fire Player ID (UID)</label><input type="text" id="topup-uid" class="form-control" placeholder="UID লিখুন"></div>`;
+            } else {
+                inputContainer.innerHTML = `
+                    <div class="form-group"><label>লগইন মেথড</label><select id="ef-method" class="form-control"><option value="konami">Konami ID</option><option value="gmail">Gmail</option></select></div>
+                    <div class="form-group"><label>আইডি বা ইমেইল</label><input type="text" id="ef-email" class="form-control" placeholder="আইডি দিন"></div>
+                    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="ef-pass" class="form-control" placeholder="পাসওয়ার্ড"></div>
+                    <div class="form-group"><label>হোয়াটসঅ্যাপ নম্বর</label><input type="tel" id="ef-wa" class="form-control" placeholder="017xxxxxxxx"></div>
+                `;
+            }
+        }
+
+        window.backToMainSelection = () => {
+            document.getElementById('view-payment-step').classList.add('hidden');
+            document.getElementById('view-main-selection').classList.remove('hidden');
+        }
+
+        window.verifyAndSubmitTopup = async () => {
+            const trxId = document.getElementById('topup-trxid').value.trim();
+            if(!trxId) return alert('ট্রানজেকশন আইডি (TrxID) দিন!');
+            
+            const orderId = 'TOP' + Math.floor(100000 + Math.random() * 900000);
+            await addDoc(collection(db, "orders"), {
+                id: orderId,
+                itemName: `Topup (${currentGame.toUpperCase()}) - ${selectedPackage.name}`,
+                price: selectedPackage.price,
+                trxid: trxId,
+                status: 'Pending',
+                userEmail: auth.currentUser.email,
+                createdAt: serverTimestamp()
+            });
+            alert('টপআপ অর্ডার সফলভাবে সাবমিট হয়েছে!');
+            backToMainSelection();
+        }
+
+        window.openEcomModal = (name, price, details) => {
+            if(!auth.currentUser) return alert('আগে লগইন করুন!'), document.getElementById('auth-modal').classList.remove('hidden');
+            document.getElementById('ecom-prod-name').value = name;
+            document.getElementById('ecom-prod-price').value = price;
+            document.getElementById('ecom-modal-details').innerText = details;
+            document.getElementById('ecom-modal').classList.remove('hidden');
+        }
+        window.closeEcomModal = () => document.getElementById('ecom-modal').classList.add('hidden');
+
+        window.submitEcomOrder = async (e) => {
+            e.preventDefault();
+            const prodName = document.getElementById('ecom-prod-name').value;
+            const price = document.getElementById('ecom-prod-price').value;
+            const name = document.getElementById('ecom-cust-name').value.trim();
+            const phone = document.getElementById('ecom-cust-phone').value.trim();
+            const address = document.getElementById('ecom-cust-address').value.trim();
+
+            const orderId = 'ECO' + Math.floor(100000 + Math.random() * 900000);
+            await addDoc(collection(db, "orders"), {
+                id: orderId,
+                itemName: prodName,
+                price: Number(price),
+                trxid: 'COD',
+                status: 'Pending',
+                userEmail: auth.currentUser.email,
+                info: { name, phone, address },
+                createdAt: serverTimestamp()
+            });
+            alert('ই-কমার্স অর্ডার সফলভাবে জমা হয়েছে!');
+            closeEcomModal();
+        }
+
+        window.switchTab = (tabName, el) => {
+            document.getElementById('section-home').classList.add('hidden');
+            document.getElementById('section-orders').classList.add('hidden');
+            document.getElementById('section-profile').classList.add('hidden');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+
+            if(tabName === 'home') document.getElementById('section-home').classList.remove('hidden');
+            if(tabName === 'orders') document.getElementById('section-orders').classList.remove('hidden');
+            if(tabName === 'profile') document.getElementById('section-profile').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
