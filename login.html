@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mihadx BD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Firebase SDK (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="login-page" style="background-color: #0f172a; margin: 0; font-family: sans-serif; color: #fff;">
+    <div class="login-card" style="max-width: 400px; margin: 100px auto; background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #334155;">
+        <h2 style="margin-top: 0; color: #f8fafc;">Mihadx BD Login</h2>
+        <p style="color: #94a3b8; margin-bottom: 25px; font-size: 14px; line-height: 1.5;">আপনার গুগল অ্যাকাউন্ট দিয়ে সিকিউরলি লগইন করুন।</p>
+        
+        <button id="google-login-btn" class="google-btn" style="background: #ffffff; color: #1e293b; border: none; padding: 12px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; font-size: 14px; display: flex; items-center: center; justify-content: center; transition: background 0.2s;">
+            <i class="fa-brands fa-google" style="color: #ea4335; margin-right: 10px; font-size: 16px;"></i> <span id="btn-text">Continue with Google</span>
+        </button>
+        
+        <div id="login-error" class="error-msg" style="color: #ef4444; margin-top: 15px; font-size: 13px; min-height: 18px;"></div>
+    </div>
+
+    <script>
+        // --- FIREBASE CONFIGURATION ---
+        const firebaseConfig = {
+          apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+          authDomain: "mihadx-pro-bd.firebaseapp.com",
+          projectId: "mihadx-pro-bd",
+          storageBucket: "mihadx-pro-bd.firebasestorage.app",
+          messagingSenderId: "478391400367",
+          appId: "1:478391400367:web:86012d35014ee7350a215a",
+          measurementId: "G-E8Y80PDVDD"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+        const ADMIN_EMAIL = "ismailhoseen77@gmail.com";
+        const loginBtn = document.getElementById('google-login-btn');
+        const btnText = document.getElementById('btn-text');
+        const errorDiv = document.getElementById('login-error');
+
+        // Set Local Auth Persistence
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .catch((err) => console.error("Persistence error:", err));
+
+        // --- AUTHENTICATION STATE OBSERVER ---
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                try {
+                    setLoading(true, "Redirecting...");
+                    await syncUserData(user);
+                    
+                    if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                } catch (err) {
+                    console.error("User sync failed:", err);
+                    showError("ইউজার ডাটা সিঙ্ক করতে সমস্যা হয়েছে।");
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
+        });
+
+        // --- HANDLE REDIRECT RESULT (FOR MOBILE BROWSERS) ---
+        auth.getRedirectResult().then(async (result) => {
+            if (result && result.user) {
+                setLoading(true, "Logging in...");
+                await syncUserData(result.user);
+                if (result.user.email && result.user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }
+        }).catch((error) => {
+            handleAuthError(error);
+        });
+
+        // --- LOGIN BUTTON EVENT ---
+        loginBtn.addEventListener('click', () => {
+            clearError();
+            setLoading(true, "Authenticating...");
+
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                auth.signInWithRedirect(googleProvider).catch((error) => {
+                    handleAuthError(error);
+                });
+            } else {
+                auth.signInWithPopup(googleProvider).then(async (result) => {
+                    if (result.user) {
+                        setLoading(true, "Redirecting...");
+                        await syncUserData(result.user);
+                        if (result.user.email && result.user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }
+                }).catch((error) => {
+                    if (error.code === 'auth/popup-blocked') {
+                        auth.signInWithRedirect(googleProvider).catch((e) => handleAuthError(e));
+                    } else {
+                        handleAuthError(error);
+                    }
+                });
+            }
+        });
+
+        // Helper: Sync User to Firestore
+        async function syncUserData(user) {
+            return db.collection('users').doc(user.uid).set({
+                uid: user.uid,
+                displayName: user.displayName || 'User',
+                email: user.email || '',
+                photoURL: user.photoURL || '',
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+        }
+
+        // Helper: Friendly Error Handling
+        function handleAuthError(error) {
+            console.error("Firebase Auth Error:", error);
+            setLoading(false);
+
+            switch (error.code) {
+                case 'auth/popup-closed-by-user':
+                    showError("লগইন পপআপ উইন্ডো বন্ধ করা হয়েছে। আবার চেষ্টা করুন।");
+                    break;
+                case 'auth/popup-blocked':
+                    showError("আপনার ব্রাউজারে পপআপ ব্লক করা আছে। পপআপ এলাউ করুন।");
+                    break;
+                case 'auth/unauthorized-domain':
+                    showError("এই ডোমেইনটি Firebase-এ অথরাইজড করা নেই।");
+                    break;
+                case 'auth/network-request-failed':
+                    showError("নেটওয়ার্ক কানেকশন সমস্যা। ইন্টারনেট চেক করুন।");
+                    break;
+                case 'auth/cancelled-popup-request':
+                    showError("লগইন রিকুয়েস্ট ক্যানসেল করা হয়েছে।");
+                    break;
+                default:
+                    showError(error.message || "লগইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            }
+        }
+
+        function setLoading(isLoading, text = "Continue with Google") {
+            if (isLoading) {
+                loginBtn.disabled = true;
+                loginBtn.style.opacity = "0.7";
+                btnText.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i> ${text}`;
+            } else {
+                loginBtn.disabled = false;
+                loginBtn.style.opacity = "1";
+                btnText.innerText = "Continue with Google";
+            }
+        }
+
+        function showError(msg) {
+            errorDiv.innerText = msg;
+        }
+
+        function clearError() {
+            errorDiv.innerText = "";
+        }
+    </script>
+</body>
+</html>

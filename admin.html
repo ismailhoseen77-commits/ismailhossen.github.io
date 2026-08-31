@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mihadx.pro.bd — Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f1f5f9;
+            user-select: none;
+        }
+        .purple-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4b5fd;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+
+    <div id="loginOverlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-6 shadow-2xl text-center border border-purple-100">
+            <div class="w-16 h-16 rounded-2xl purple-gradient text-white flex items-center justify-center text-3xl mx-auto shadow-lg shadow-purple-200">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+
+            <div class="space-y-1">
+                <h2 class="text-xl font-bold text-slate-900">Admin Control Center</h2>
+                <p class="text-xs text-slate-500">Mihadx.pro.bd এডমিন প্যানেলে প্রবেশের জন্য লগইন করুন</p>
+                <div class="inline-block bg-purple-50 text-purple-700 text-[11px] font-mono px-3 py-1 rounded-full border border-purple-200 mt-1">
+                    ismailhoseen77@gmail.com
+                </div>
+            </div>
+
+            <div id="loginErrorMsg" class="hidden text-xs text-red-600 bg-red-50 p-3 rounded-xl border border-red-200 text-left"></div>
+
+            <button id="adminLoginBtn" onclick="loginAdminWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 text-slate-700 py-3.5 rounded-2xl font-semibold hover:bg-slate-50 transition shadow-sm text-sm active:scale-95">
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <span id="adminLoginBtnTxt">Google-এর মাধ্যমে এডমিন লগইন</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="adminApp" class="hidden min-h-screen flex flex-col md:flex-row">
+
+        <aside class="w-full md:w-64 bg-slate-900 text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800">
+            <div>
+                <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl purple-gradient flex items-center justify-center text-white font-bold text-lg shadow">
+                            M
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-white leading-tight">Mihadx<span class="text-brand-500"> Admin</span></h1>
+                            <p class="text-[10px] text-slate-400">v2.5 — Realtime Control</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-slate-800/50 m-3 rounded-2xl border border-slate-700/50 flex items-center gap-3">
+                    <img id="adminAvatar" src="https://via.placeholder.com/40" class="w-9 h-9 rounded-full object-cover border border-purple-500">
+                    <div class="overflow-hidden">
+                        <p id="adminName" class="text-xs font-bold text-white truncate">Admin</p>
+                        <p id="adminEmail" class="text-[10px] text-purple-300 truncate font-mono">---</p>
+                    </div>
+                </div>
+
+                <nav class="p-3 space-y-1">
+                    <button onclick="switchAdminTab('dashboard')" id="side-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-white bg-brand-600 transition">
+                        <i class="fa-solid fa-chart-line w-4"></i>
+                        <span>ড্যাশবোর্ড (Dashboard)</span>
+                    </button>
+                    <button onclick="switchAdminTab('orders')" id="side-orders" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-cart-shopping w-4"></i>
+                            <span>অর্ডার ম্যানেজমেন্ট</span>
+                        </div>
+                        <span id="pendingOrdersCountBadge" class="bg-amber-500 text-slate-950 font-extrabold text-[10px] px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button onclick="switchAdminTab('packages')" id="side-packages" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-box-open w-4"></i>
+                        <span>প্যাকেজ ও প্রোডাক্ট</span>
+                    </button>
+                    <button onclick="switchAdminTab('banners')" id="side-banners" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-images w-4"></i>
+                        <span>ব্যনার ম্যানেজমেন্ট</span>
+                    </button>
+                    <button onclick="switchAdminTab('notices')" id="side-notices" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-bullhorn w-4"></i>
+                        <span>নোটিশ ম্যানেজমেন্ট</span>
+                    </button>
+                    <button onclick="switchAdminTab('settings')" id="side-settings" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-gears w-4"></i>
+                        <span>সিস্টেম ও মেইনটেন্যান্স</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-slate-800">
+                <button onclick="logoutAdmin()" class="w-full bg-slate-800 hover:bg-red-600/20 hover:text-red-400 text-slate-400 py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>লগআউট</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
+
+            <section id="tab-dashboard" class="space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">ড্যাশবোর্ড ওভারভিউ</h2>
+                        <p class="text-xs text-slate-500">আজকের সেলস ও অর্ডার ডাটা একনজরে</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-xl border border-emerald-200">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                            Realtime Sync Active
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">মোট অর্ডার</span>
+                            <i class="fa-solid fa-receipt text-brand-600"></i>
+                        </div>
+                        <h3 id="statTotalOrders" class="text-2xl font-extrabold text-slate-900">0</h3>
+                        <p class="text-[11px] text-slate-400">সবসময়ের সর্বমোট অর্ডার</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">পেন্ডিং অর্ডার</span>
+                            <i class="fa-solid fa-clock text-amber-500"></i>
+                        </div>
+                        <h3 id="statPendingOrders" class="text-2xl font-extrabold text-amber-600">0</h3>
+                        <p class="text-[11px] text-amber-700/70 font-medium">প্রসেসিং বাকি আছে</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">সম্পন্ন অর্ডার</span>
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        </div>
+                        <h3 id="statCompletedOrders" class="text-2xl font-extrabold text-emerald-600">0</h3>
+                        <p class="text-[11px] text-emerald-700/70 font-medium">সফলভাবে ডেলিভারড</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">মোট ইনকাম</span>
+                            <i class="fa-solid fa-wallet text-purple-600"></i>
+                        </div>
+                        <h3 id="statTotalRevenue" class="text-2xl font-extrabold text-purple-700">৳ 0</h3>
+                        <p class="text-[11px] text-slate-400">কমপ্লিট অর্ডারের মূল্য</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-slate-800">সাম্প্রতিক অর্ডারসমূহ</h3>
+                        <button onclick="switchAdminTab('orders')" class="text-xs text-brand-600 font-bold hover:underline">সবগুলো দেখুন →</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 border-b border-slate-200">
+                                    <th class="p-3">Order ID</th>
+                                    <th class="p-3">Customer</th>
+                                    <th class="p-3">Game & Package</th>
+                                    <th class="p-3">Amount</th>
+                                    <th class="p-3">TrxID</th>
+                                    <th class="p-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTbody" class="divide-y divide-slate-100 font-medium">
+                                <tr>
+                                    <td colspan="6" class="p-4 text-center text-slate-400">অর্ডার ডাটা লোড হচ্ছে...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-orders" class="hidden space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">অর্ডার ম্যানেজমেন্ট</h2>
+                        <p class="text-xs text-slate-500">গ্রাহকদের লাইভ অর্ডার দেখুন এবং স্ট্যাটাস আপডেট করুন</p>
+                    </div>
+                    <button onclick="fetchOrdersRealtime()" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-700 px-3.5 py-2 rounded-xl transition">
+                        <i class="fa-solid fa-rotate mr-1"></i> Refresh List
+                    </button>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase">Search</label>
+                        <div class="relative mt-1">
+                            <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="orderSearchInput" oninput="applyOrderFilters()" placeholder="Order ID, Email, TrxID..." class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase">Filter Game</label>
+                        <select id="gameFilterSelect" onchange="applyOrderFilters()" class="w-full mt-1 py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-brand-500">
+                            <option value="all">All Games (সব গেম)</option>
+                            <option value="Free Fire">Free Fire</option>
+                            <option value="eFootball">eFootball</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase">Filter Status</label>
+                        <select id="statusFilterSelect" onchange="applyOrderFilters()" class="w-full mt-1 py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-brand-500">
+                            <option value="all">All Status (সব স্ট্যাটাস)</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Refunded">Refunded</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-800 text-slate-200 border-b border-slate-700">
+                                    <th class="p-3.5">Order Info</th>
+                                    <th class="p-3.5">Customer</th>
+                                    <th class="p-3.5">Game & Package</th>
+                                    <th class="p-3.5">Player Details</th>
+                                    <th class="p-3.5">Payment & TrxID</th>
+                                    <th class="p-3.5">Status</th>
+                                    <th class="p-3.5 text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fullOrdersTbody" class="divide-y divide-slate-100 font-medium">
+                                <tr>
+                                    <td colspan="7" class="p-6 text-center text-slate-400">অর্ডার ডাটা লোড হচ্ছে...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-packages" class="hidden space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">প্যাকেজ ও প্রোডাক্ট ম্যানেজমেন্ট</h2>
+                        <p class="text-xs text-slate-500">Free Fire এবং eFootball প্যাকেজ যোগ বা এডিট করুন</p>
+                    </div>
+                    <button onclick="openAddPackageModal()" class="purple-gradient text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow shadow-purple-200 hover:opacity-95 transition flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>নতুন প্যাকেজ যোগ করুন</span>
+                    </button>
+                </div>
+
+                <div class="flex gap-2 border-b border-slate-200">
+                    <button onclick="loadAdminPackages('ff')" id="pkgTabFF" class="px-4 py-2.5 text-xs font-bold border-b-2 border-brand-600 text-brand-600 transition">
+                        🔥 Free Fire Packages
+                    </button>
+                    <button onclick="loadAdminPackages('ef')" id="pkgTabEF" class="px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition">
+                        ⚽ eFootball Packages
+                    </button>
+                </div>
+
+                <div id="adminPackageGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                </div>
+            </section>
+
+            <section id="tab-banners" class="hidden space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">ব্যনার ম্যানেজমেন্ট</h2>
+                        <p class="text-xs text-slate-500">ইউজার প্যানেল হোম পেজের জন্য স্লাইডার ব্যানার ম্যানেজ করুন</p>
+                    </div>
+                    <button onclick="openAddBannerModal()" class="purple-gradient text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>নতুন ব্যনার আপলোড</span>
+                    </button>
+                </div>
+
+                <div id="adminBannersGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                </div>
+            </section>
+
+            <section id="tab-notices" class="hidden space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">নোটিশ ম্যানেজমেন্ট</h2>
+                        <p class="text-xs text-slate-500">ওয়েবসাইটের স্লাইডিং নোটিশ টেক্সট ও নোটিশ ছবি আপডেট করুন</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-xl space-y-4">
+                    <h3 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">বর্তমান নোটিশ আপডেট</h3>
+                    <form onsubmit="saveNotice(event)" class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-700">নোটিশ টেক্সট (Marquee Text)</label>
+                            <textarea id="noticeTextInput" rows="3" required placeholder="ওয়েবসাইটে স্বাগতম..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:outline-none focus:border-brand-500"></textarea>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-700">নোটিশ ইমেজ (ঐচ্ছিক/Optional)</label>
+                            <input type="file" id="noticeImageInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                        </div>
+
+                        <button type="submit" id="saveNoticeBtn" class="purple-gradient text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
+                            Save Notice
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="tab-settings" class="hidden space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">সিস্টেম ও মেইনটেন্যান্স সেটিংস</h2>
+                        <p class="text-xs text-slate-500">মেইনটেন্যান্স মোড এবং পেমেন্ট সেটিংস কন্ট্রোল</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3 text-amber-600 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-900">Maintenance Mode</h3>
+                                <p class="text-[11px] text-slate-500">চালু করলে ইউজারদের কাছে মেইনটেন্যান্স স্ক্রিন দেখাবে</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div>
+                                <span class="text-xs font-bold text-slate-800">মেইনটেন্যান্স মোড স্ট্যাটাস</span>
+                                <p id="maintenanceStatusTxt" class="text-[11px] text-emerald-600 font-semibold">OFF (ওয়েবসাইট সচল আছে)</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenanceMode(this.checked)" class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3 text-pink-600 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-money-bill-wave text-xl"></i>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-900">bKash Number Setting</h3>
+                                <p class="text-[11px] text-slate-500">ইউজার প্যানেলে প্রদর্শিত সেন্ড মানি নম্বর</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="saveBkashNumber(event)" class="space-y-3">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-slate-700">bKash Personal Number</label>
+                                <input type="text" id="bkashNumberInput" required placeholder="01576502490" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono focus:outline-none focus:border-brand-500">
+                            </div>
+                            <button type="submit" class="purple-gradient text-white text-xs font-bold px-4 py-2 rounded-xl shadow">
+                                Update bKash Number
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="packageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative my-8 border border-purple-100">
+            <button onclick="closeModal('packageModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 id="pkgModalTitle" class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">নতুন প্যাকেজ যোগ করুন</h3>
+
+            <form id="packageForm" onsubmit="handlePackageFormSubmit(event)" class="space-y-3.5">
+                <input type="hidden" id="pkgEditDocId">
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-700">গেম নির্বাচন</label>
+                    <select id="pkgGameSelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                        <option value="ff">Free Fire (ff_packages)</option>
+                        <option value="ef">eFootball (ef_packages)</option>
+                    </select>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-700">প্যাকেজের নাম (Package Name)</label>
+                    <input type="text" id="pkgNameInput" required placeholder="উদাহরণ: 115 Diamonds / 130 Coins" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-700">বিক্রয় মূল্য (Price ৳)</label>
+                        <input type="number" id="pkgPriceInput" required placeholder="80" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-700">আগের মূল্য (Original ৳)</label>
+                        <input type="number" id="pkgOriginalPriceInput" placeholder="100" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-700">ডিসকাউন্ট টেক্সট (Discount Tag)</label>
+                    <input type="text" id="pkgDiscountInput" placeholder="উদাহরণ: 20% OFF" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="space-y-2 border border-dashed border-purple-200 bg-purple-50/50 p-3.5 rounded-2xl">
+                    <label class="text-xs font-bold text-purple-900 block">Choose Photo (প্যাকেজ ছবি)</label>
+                    
+                    <input type="file" id="pkgImageFileInput" accept="image/*" onchange="previewSelectedImage(this)" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-600 file:text-white hover:file:bg-brand-700 cursor-pointer">
+
+                    <div id="pkgImagePreviewBox" class="hidden flex items-center gap-3 bg-white p-2 rounded-xl border border-purple-100 mt-2">
+                        <img id="pkgImagePreviewImg" src="" class="w-12 h-12 object-contain rounded-lg border border-slate-200">
+                        <div class="overflow-hidden">
+                            <span class="text-[11px] font-bold text-slate-700 block truncate" id="pkgImageFileName">Selected Image</span>
+                            <span class="text-[10px] text-emerald-600 font-semibold">Ready to upload</span>
+                        </div>
+                    </div>
+
+                    <div id="pkgUploadProgressBarBox" class="hidden space-y-1">
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                            <div id="pkgUploadProgressBar" class="bg-brand-600 h-1.5 rounded-full w-0 transition-all duration-300"></div>
+                        </div>
+                        <p id="pkgUploadProgressText" class="text-[10px] text-slate-500 text-right">0% Uploading...</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="checkbox" id="pkgAvailableInput" checked class="w-4 h-4 text-brand-600 rounded">
+                    <label for="pkgAvailableInput" class="text-xs font-bold text-slate-700">স্টক উপলব্ধ (Available for Buy)</label>
+                </div>
+
+                <button type="submit" id="savePkgBtn" class="w-full purple-gradient text-white py-3 rounded-2xl font-bold text-xs shadow-md shadow-purple-200 hover:opacity-95 transition">
+                    প্যাকেজ সেভ করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="bannerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative border border-purple-100">
+            <button onclick="closeModal('bannerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">নতুন ব্যানার যোগ করুন</h3>
+
+            <form onsubmit="handleBannerFormSubmit(event)" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-700">ব্যানার শিরোনাম (Title)</label>
+                    <input type="text" id="bannerTitleInput" placeholder="উদাহরণ: Special Offer Banner" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="space-y-1 border border-dashed border-purple-200 bg-purple-50/50 p-3 rounded-2xl">
+                    <label class="text-xs font-bold text-purple-900 block">Select Banner Image</label>
+                    <input type="file" id="bannerFileInput" required accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-600 file:text-white">
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="bannerActiveInput" checked class="w-4 h-4 text-brand-600 rounded">
+                    <label for="bannerActiveInput" class="text-xs font-bold text-slate-700">Active Banner (হোমপেজে দেখাবে)</label>
+                </div>
+
+                <button type="submit" id="saveBannerBtn" class="w-full purple-gradient text-white py-3 rounded-2xl font-bold text-xs shadow-md">
+                    আপলোড ও সেভ
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- FIREBASE INITIALIZATION ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+            authDomain: "mihadx-pro-bd.firebaseapp.com",
+            projectId: "mihadx-pro-bd",
+            storageBucket: "mihadx-pro-bd.firebasestorage.app",
+            messagingSenderId: "478391400367",
+            appId: "1:478391400367:web:86012d35014ee7350a215a",
+            measurementId: "G-E8Y80PDVDD"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.error(e));
+
+        const AUTHORIZED_ADMIN_EMAIL = "ismailhoseen77@gmail.com";
+
+        // Global State variables
+        let currentAdminUser = null;
+        let allOrdersCache = [];
+        let activePkgGame = 'ff';
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        // --- AUTHENTICATION & SECURITY ---
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (user && user.email && user.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL.toLowerCase()) {
+                    currentAdminUser = user;
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    document.getElementById('adminApp').classList.remove('hidden');
+
+                    document.getElementById('adminAvatar').src = user.photoURL || 'https://via.placeholder.com/40';
+                    document.getElementById('adminName').innerText = user.displayName || 'Admin';
+                    document.getElementById('adminEmail').innerText = user.email;
+
+                    initAdminData();
+                } else {
+                    currentAdminUser = null;
+                    document.getElementById('adminApp').classList.add('hidden');
+                    document.getElementById('loginOverlay').classList.remove('hidden');
+
+                    if (user && user.email && user.email.toLowerCase() !== AUTHORIZED_ADMIN_EMAIL.toLowerCase()) {
+                        showLoginError(`Access Denied! "${user.email}" Authorized Admin অ্যাকাউন্ট নয়।`);
+                    }
+                }
+            });
+
+            auth.getRedirectResult().catch((err) => showLoginError(err.message));
+        });
+
+        function loginAdminWithGoogle() {
+            hideLoginError();
+            setAdminLoginLoading(true);
+
+            if (isMobile) {
+                auth.signInWithRedirect(googleProvider).catch((err) => {
+                    setAdminLoginLoading(false);
+                    showLoginError(getAdminFriendlyAuthMsg(err));
+                });
+            } else {
+                auth.signInWithPopup(googleProvider).then((res) => {
+                    setAdminLoginLoading(false);
+                }).catch((err) => {
+                    if (err.code === 'auth/popup-blocked') {
+                        auth.signInWithRedirect(googleProvider).catch((e) => {
+                            setAdminLoginLoading(false);
+                            showLoginError(getAdminFriendlyAuthMsg(e));
+                        });
+                    } else {
+                        setAdminLoginLoading(false);
+                        showLoginError(getAdminFriendlyAuthMsg(err));
+                    }
+                });
+            }
+        }
+
+        function logoutAdmin() {
+            auth.signOut().then(() => {
+                window.location.reload();
+            });
+        }
+
+        function setAdminLoginLoading(loading) {
+            const btn = document.getElementById('adminLoginBtn');
+            const txt = document.getElementById('adminLoginBtnTxt');
+            if (loading) {
+                btn.disabled = true;
+                txt.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Logging in...`;
+            } else {
+                btn.disabled = false;
+                txt.innerText = `Google-এর মাধ্যমে এডমিন লগইন`;
+            }
+        }
+
+        function showLoginError(msg) {
+            const el = document.getElementById('loginErrorMsg');
+            el.innerText = msg;
+            el.classList.remove('hidden');
+        }
+
+        function hideLoginError() {
+            document.getElementById('loginErrorMsg').classList.add('hidden');
+        }
+
+        function getAdminFriendlyAuthMsg(err) {
+            switch (err.code) {
+                case 'auth/popup-closed-by-user':
+                    return 'লগইন পপআপ বন্ধ করা হয়েছে।';
+                case 'auth/popup-blocked':
+                    return 'পপআপ ব্লক করা আছে, এলাউ করুন।';
+                case 'auth/network-request-failed':
+                    return 'নেটওয়ার্ক কানেকশন সমস্যা।';
+                default:
+                    return err.message || 'লগইন করতে সমস্যা হয়েছে।';
+            }
+        }
+
+        // --- REALTIME DATA LISTENERS ---
+        function initAdminData() {
+            fetchOrdersRealtime();
+            loadAdminPackages('ff');
+            loadAdminBanners();
+            loadNoticeData();
+            loadSystemSettings();
+        }
+
+        // --- ORDER MANAGEMENT (REALTIME) ---
+        function fetchOrdersRealtime() {
+            db.collection('orders').onSnapshot((snapshot) => {
+                allOrdersCache = [];
+                snapshot.forEach(doc => {
+                    allOrdersCache.push({ id: doc.id, ...doc.data() });
+                });
+
+                allOrdersCache.sort((a, b) => {
+                    const timeA = a.createdAt ? a.createdAt.seconds : 0;
+                    const timeB = b.createdAt ? b.createdAt.seconds : 0;
+                    return timeB - timeA;
+                });
+
+                updateDashboardStats(allOrdersCache);
+                renderRecentOrders(allOrdersCache.slice(0, 5));
+                applyOrderFilters();
+            }, (error) => {
+                console.error("Orders Listener Error:", error);
+            });
+        }
+
+        function updateDashboardStats(orders) {
+            const total = orders.length;
+            const pending = orders.filter(o => (o.status || '').toLowerCase() === 'pending').length;
+            const completed = orders.filter(o => (o.status || '').toLowerCase() === 'completed').length;
+            const totalRev = orders.filter(o => (o.status || '').toLowerCase() === 'completed')
+                                   .reduce((sum, o) => sum + (Number(o.price || o.amount) || 0), 0);
+
+            document.getElementById('statTotalOrders').innerText = total;
+            document.getElementById('statPendingOrders').innerText = pending;
+            document.getElementById('pendingOrdersCountBadge').innerText = pending;
+            document.getElementById('statCompletedOrders').innerText = completed;
+            document.getElementById('statTotalRevenue').innerText = `৳ ${totalRev}`;
+        }
+
+        function renderRecentOrders(orders) {
+            const tbody = document.getElementById('recentOrdersTbody');
+            if (!orders.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">কোনো সাম্প্রতিক অর্ডার নেই।</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(ord => {
+                html += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-mono font-bold text-brand-600">#${ord.orderId || 'N/A'}</td>
+                        <td class="p-3">
+                            <div class="font-bold text-slate-800">${ord.customerName || ord.userName || 'Customer'}</div>
+                            <div class="text-[10px] text-slate-400">${ord.customerEmail || ord.userEmail || ''}</div>
+                        </td>
+                        <td class="p-3">
+                            <span class="font-bold text-slate-700">${ord.packageName || ord.package || ''}</span>
+                            <div class="text-[10px] text-slate-400">${ord.game || ''}</div>
+                        </td>
+                        <td class="p-3 font-bold text-purple-700">৳ ${ord.price || ord.amount || 0}</td>
+                        <td class="p-3 font-mono text-slate-600">${ord.transactionId || ''}</td>
+                        <td class="p-3">${getStatusBadgeHTML(ord.status)}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function applyOrderFilters() {
+            const search = document.getElementById('orderSearchInput').value.trim().toLowerCase();
+            const gameFilter = document.getElementById('gameFilterSelect').value;
+            const statusFilter = document.getElementById('statusFilterSelect').value;
+
+            let filtered = allOrdersCache.filter(ord => {
+                const matchSearch = !search || 
+                    (ord.orderId && ord.orderId.toLowerCase().includes(search)) ||
+                    (ord.customerEmail && ord.customerEmail.toLowerCase().includes(search)) ||
+                    (ord.userEmail && ord.userEmail.toLowerCase().includes(search)) ||
+                    (ord.transactionId && ord.transactionId.toLowerCase().includes(search)) ||
+                    (ord.playerUID && ord.playerUID.toLowerCase().includes(search));
+
+                const matchGame = gameFilter === 'all' || ord.game === gameFilter;
+                const matchStatus = statusFilter === 'all' || (ord.status || '').toLowerCase() === statusFilter.toLowerCase();
+
+                return matchSearch && matchGame && matchStatus;
+            });
+
+            renderFullOrdersTable(filtered);
+        }
+
+        function renderFullOrdersTable(orders) {
+            const tbody = document.getElementById('fullOrdersTbody');
+            if (!orders.length) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">কোনো অর্ডার পাওয়া যায়নি।</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(ord => {
+                let playerInfo = ord.game === 'Free Fire' ? 
+                    `<div class="text-xs">UID: <span class="font-mono font-bold text-slate-800">${ord.playerUID || 'N/A'}</span></div>` :
+                    `<div class="text-xs">Email: <span class="font-bold text-slate-800">${ord.accountEmail || 'N/A'}</span></div><div class="text-[10px] text-slate-500">WA: ${ord.customerWhatsApp || 'N/A'}</div>`;
+
+                html += `
+                    <tr class="hover:bg-slate-50 border-b border-slate-100">
+                        <td class="p-3.5">
+                            <span class="font-mono font-bold text-brand-700">#${ord.orderId || 'N/A'}</span>
+                            <div class="text-[10px] text-slate-400">${ord.orderTime || ''}</div>
+                        </td>
+                        <td class="p-3.5">
+                            <div class="font-bold text-slate-800">${ord.customerName || ord.userName || 'Customer'}</div>
+                            <div class="text-[10px] text-slate-400">${ord.customerEmail || ord.userEmail || ''}</div>
+                        </td>
+                        <td class="p-3.5">
+                            <span class="font-bold text-slate-800">${ord.packageName || ord.package || ''}</span>
+                            <div class="text-[10px] text-brand-600 font-semibold">${ord.game || ''}</div>
+                        </td>
+                        <td class="p-3.5">${playerInfo}</td>
+                        <td class="p-3.5">
+                            <div class="font-extrabold text-slate-900">৳ ${ord.price || ord.amount || 0}</div>
+                            <div class="font-mono text-[10px] text-purple-700 font-bold">${ord.transactionId || ''} (${ord.paymentMethod || 'bKash'})</div>
+                        </td>
+                        <td class="p-3.5">${getStatusBadgeHTML(ord.status)}</td>
+                        <td class="p-3.5 text-center">
+                            <select onchange="updateOrderStatus('${ord.id}', this.value)" class="bg-slate-100 border border-slate-300 rounded-lg text-xs font-bold px-2 py-1 focus:outline-none focus:border-brand-500 cursor-pointer">
+                                <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Verified" ${ord.status === 'Verified' ? 'selected' : ''}>Verified</option>
+                                <option value="Processing" ${ord.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                                <option value="Completed" ${ord.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                                <option value="Refunded" ${ord.status === 'Refunded' ? 'selected' : ''}>Refunded</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function getStatusBadgeHTML(status) {
+            switch ((status || '').toLowerCase()) {
+                case 'verified':
+                    return `<span class="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Verified</span>`;
+                case 'processing':
+                    return `<span class="bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Processing</span>`;
+                case 'completed':
+                    return `<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Completed</span>`;
+                case 'cancelled':
+                    return `<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Cancelled</span>`;
+                case 'refunded':
+                    return `<span class="bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Refunded</span>`;
+                default:
+                    return `<span class="bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-bold text-[10px]">Pending</span>`;
+            }
+        }
+
+        function updateOrderStatus(docId, newStatus) {
+            db.collection('orders').doc(docId).update({
+                status: newStatus,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                console.log(`Order ${docId} updated to ${newStatus}`);
+            }).catch((err) => {
+                alert("Order status update failed: " + err.message);
+            });
+        }
+
+        // --- PACKAGE MANAGEMENT ---
+        function loadAdminPackages(gameKey) {
+            activePkgGame = gameKey;
+            
+            document.getElementById('pkgTabFF').className = gameKey === 'ff' ? 
+                'px-4 py-2.5 text-xs font-bold border-b-2 border-brand-600 text-brand-600 transition' :
+                'px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition';
+            
+            document.getElementById('pkgTabEF').className = gameKey === 'ef' ? 
+                'px-4 py-2.5 text-xs font-bold border-b-2 border-brand-600 text-brand-600 transition' :
+                'px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition';
+
+            const grid = document.getElementById('adminPackageGrid');
+            grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin mr-2"></i>প্যাকেজ লোড হচ্ছে...</div>`;
+
+            const collectionName = gameKey === 'ff' ? 'ff_packages' : 'ef_packages';
+
+            db.collection(collectionName).onSnapshot((snapshot) => {
+                if (snapshot.empty) {
+                    grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs">কোনো প্যাকেজ নেই।</div>`;
+                    return;
+                }
+
+                let html = '';
+                snapshot.forEach(doc => {
+                    const item = doc.data();
+                    const docId = doc.id;
+                    html += `
+                        <div class="bg-white rounded-2xl p-3.5 border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between relative">
+                            <div class="space-y-2">
+                                <div class="w-full h-24 bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1">
+                                    <img src="${item.image || (gameKey === 'ff' ? 'free-fire-logo.png' : 'EFootball_logo.png')}" class="max-h-full max-w-full object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-slate-800">${item.name || ''}</h4>
+                                    <div class="flex items-center gap-1 mt-0.5">
+                                        <span class="text-xs font-extrabold text-brand-600">৳ ${item.price || 0}</span>
+                                        ${item.originalPrice ? `<span class="text-[10px] text-slate-400 line-through">৳ ${item.originalPrice}</span>` : ''}
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="text-[9px] font-bold px-2 py-0.5 rounded ${item.available !== false ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
+                                            ${item.available !== false ? 'Available' : 'Out of Stock'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                                <button onclick='openEditPackageModal("${docId}", ${JSON.stringify(item).replace(/'/g, "&apos;")})' class="flex-1 bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] font-bold py-1.5 rounded-lg transition">Edit</button>
+                                <button onclick='deletePackage("${collectionName}", "${docId}")' class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+                grid.innerHTML = html;
+            });
+        }
+
+        function openAddPackageModal() {
+            document.getElementById('pkgModalTitle').innerText = "নতুন প্যাকেজ যোগ করুন";
+            document.getElementById('pkgEditDocId').value = "";
+            document.getElementById('pkgGameSelect').value = activePkgGame;
+            document.getElementById('pkgNameInput').value = "";
+            document.getElementById('pkgPriceInput').value = "";
+            document.getElementById('pkgOriginalPriceInput').value = "";
+            document.getElementById('pkgDiscountInput').value = "";
+            document.getElementById('pkgAvailableInput').checked = true;
+            document.getElementById('pkgImageFileInput').value = "";
+            document.getElementById('pkgImagePreviewBox').classList.add('hidden');
+            document.getElementById('packageModal').classList.remove('hidden');
+        }
+
+        function openEditPackageModal(docId, item) {
+            document.getElementById('pkgModalTitle').innerText = "প্যাকেজ এডিট করুন";
+            document.getElementById('pkgEditDocId').value = docId;
+            document.getElementById('pkgGameSelect').value = activePkgGame;
+            document.getElementById('pkgNameInput').value = item.name || "";
+            document.getElementById('pkgPriceInput').value = item.price || "";
+            document.getElementById('pkgOriginalPriceInput').value = item.originalPrice || "";
+            document.getElementById('pkgDiscountInput').value = item.discount || "";
+            document.getElementById('pkgAvailableInput').checked = item.available !== false;
+            document.getElementById('pkgImageFileInput').value = "";
+
+            if (item.image) {
+                document.getElementById('pkgImagePreviewImg').src = item.image;
+                document.getElementById('pkgImageFileName').innerText = "Current Package Image";
+                document.getElementById('pkgImagePreviewBox').classList.remove('hidden');
+            } else {
+                document.getElementById('pkgImagePreviewBox').classList.add('hidden');
+            }
+
+            document.getElementById('packageModal').classList.remove('hidden');
+        }
+
+        function previewSelectedImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('pkgImagePreviewImg').src = e.target.result;
+                    document.getElementById('pkgImageFileName').innerText = input.files[0].name;
+                    document.getElementById('pkgImagePreviewBox').classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        async function handlePackageFormSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('savePkgBtn');
+            btn.disabled = true;
+            btn.innerText = "সেভ করা হচ্ছে...";
+
+            const docId = document.getElementById('pkgEditDocId').value;
+            const gameType = document.getElementById('pkgGameSelect').value;
+            const collectionName = gameType === 'ff' ? 'ff_packages' : 'ef_packages';
+
+            const name = document.getElementById('pkgNameInput').value.trim();
+            const price = Number(document.getElementById('pkgPriceInput').value);
+            const originalPrice = document.getElementById('pkgOriginalPriceInput').value ? Number(document.getElementById('pkgOriginalPriceInput').value) : null;
+            const discount = document.getElementById('pkgDiscountInput').value.trim();
+            const available = document.getElementById('pkgAvailableInput').checked;
+            const fileInput = document.getElementById('pkgImageFileInput');
+
+            let imageUrl = null;
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                try {
+                    const storageRef = storage.ref(`packages/${Date.now()}_${file.name}`);
+                    const snapshot = await storageRef.put(file);
+                    imageUrl = await snapshot.ref.getDownloadURL();
+                } catch (err) {
+                    console.error("Storage upload error:", err);
+                    imageUrl = document.getElementById('pkgImagePreviewImg').src;
+                }
+            } else if (docId) {
+                imageUrl = document.getElementById('pkgImagePreviewImg').src;
+            }
+
+            const payload = {
+                name,
+                price,
+                originalPrice,
+                discount,
+                available,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (imageUrl) {
+                payload.image = imageUrl;
+            }
+
+            try {
+                if (docId) {
+                    await db.collection(collectionName).doc(docId).update(payload);
+                } else {
+                    payload.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection(collectionName).add(payload);
+                }
+                closeModal('packageModal');
+            } catch (err) {
+                alert("প্যাকেজ সেভ করতে সমস্যা হয়েছে: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "প্যাকেজ সেভ করুন";
+            }
+        }
+
+        async function deletePackage(collectionName, docId) {
+            if (confirm("আপনি কি নিশ্চিতভাবে এই প্যাকেজটি ডিলিট করতে চান?")) {
+                try {
+                    await db.collection(collectionName).doc(docId).delete();
+                } catch (err) {
+                    alert("ডিলিট করতে সমস্যা হয়েছে: " + err.message);
+                }
+            }
+        }
+
+        // --- BANNER MANAGEMENT ---
+        function loadAdminBanners() {
+            const grid = document.getElementById('adminBannersGrid');
+            grid.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin mr-2"></i>ব্যানার লোড হচ্ছে...</div>`;
+
+            db.collection('banners').onSnapshot((snapshot) => {
+                if (snapshot.empty) {
+                    grid.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 text-xs">কোনো ব্যানার আপলোড করা নেই।</div>`;
+                    return;
+                }
+
+                let html = '';
+                snapshot.forEach(doc => {
+                    const b = doc.data();
+                    const docId = doc.id;
+                    html += `
+                        <div class="bg-white rounded-2xl p-3 border border-slate-200 shadow-sm space-y-3">
+                            <div class="w-full h-32 rounded-xl overflow-hidden bg-slate-900">
+                                <img src="${b.imageUrl}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-800 truncate max-w-[130px]">${b.title || 'Banner'}</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${b.active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}">
+                                    ${b.active ? 'Active' : 'Inactive'}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                                <button onclick='toggleBannerStatus("${docId}", ${!b.active})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 rounded-lg transition">${b.active ? 'Deactivate' : 'Activate'}</button>
+                                <button onclick='deleteBanner("${docId}")' class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+                grid.innerHTML = html;
+            });
+        }
+
+        function openAddBannerModal() {
+            document.getElementById('bannerTitleInput').value = "";
+            document.getElementById('bannerFileInput').value = "";
+            document.getElementById('bannerActiveInput').checked = true;
+            document.getElementById('bannerModal').classList.remove('hidden');
+        }
+
+        async function handleBannerFormSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveBannerBtn');
+            btn.disabled = true;
+            btn.innerText = "আপলোড হচ্ছে...";
+
+            const title = document.getElementById('bannerTitleInput').value.trim() || 'Slider Banner';
+            const active = document.getElementById('bannerActiveInput').checked;
+            const fileInput = document.getElementById('bannerFileInput');
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert("একটি ইমেজ নির্বাচন করুন!");
+                btn.disabled = false;
+                btn.innerText = "আপলোড ও সেভ";
+                return;
+            }
+
+            const file = fileInput.files[0];
+            try {
+                const storageRef = storage.ref(`banners/${Date.now()}_${file.name}`);
+                const snapshot = await storageRef.put(file);
+                const imageUrl = await snapshot.ref.getDownloadURL();
+
+                await db.collection('banners').add({
+                    title,
+                    imageUrl,
+                    active,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                closeModal('bannerModal');
+            } catch (err) {
+                alert("ব্যানার আপলোড করতে সমস্যা হয়েছে: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "আপলোড ও সেভ";
+            }
+        }
+
+        async function toggleBannerStatus(docId, newStatus) {
+            try {
+                await db.collection('banners').doc(docId).update({ active: newStatus });
+            } catch (err) {
+                alert("Status update failed: " + err.message);
+            }
+        }
+
+        async function deleteBanner(docId) {
+            if (confirm("আপনি কি নিশ্চিতভাবে এই ব্যানারটি মুছে ফেলতে চান?")) {
+                try {
+                    await db.collection('banners').doc(docId).delete();
+                } catch (err) {
+                    alert("Delete failed: " + err.message);
+                }
+            }
+        }
+
+        // --- NOTICE MANAGEMENT ---
+        function loadNoticeData() {
+            db.collection('notices').doc('current').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.text) document.getElementById('noticeTextInput').value = data.text;
+                }
+            });
+        }
+
+        async function saveNotice(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveNoticeBtn');
+            btn.disabled = true;
+            btn.innerText = "সংরক্ষণ করা হচ্ছে...";
+
+            const text = document.getElementById('noticeTextInput').value.trim();
+            const imgInput = document.getElementById('noticeImageInput');
+
+            let imageUrl = null;
+            if (imgInput.files && imgInput.files[0]) {
+                try {
+                    const storageRef = storage.ref(`notices/${Date.now()}_${imgInput.files[0].name}`);
+                    const snapshot = await storageRef.put(imgInput.files[0]);
+                    imageUrl = await snapshot.ref.getDownloadURL();
+                } catch (err) {
+                    console.error("Notice image upload error:", err);
+                }
+            }
+
+            const payload = {
+                text,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            if (imageUrl) payload.imageUrl = imageUrl;
+
+            try {
+                await db.collection('notices').doc('current').set(payload, { merge: true });
+                alert("নোটিশ সফলভাবে আপডেট করা হয়েছে!");
+            } catch (err) {
+                alert("নোটিশ সংরক্ষণ করতে সমস্যা হয়েছে: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Save Notice";
+            }
+        }
+
+        // --- SYSTEM SETTINGS ---
+        function loadSystemSettings() {
+            db.collection('settings').doc('site_control').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const isMaint = doc.data().maintenanceMode === true;
+                    document.getElementById('maintenanceToggle').checked = isMaint;
+                    document.getElementById('maintenanceStatusTxt').innerText = isMaint ? "ON (ওয়েবসাইট মেইনটেন্যান্সে আছে)" : "OFF (ওয়েবসাইট সচল আছে)";
+                    document.getElementById('maintenanceStatusTxt').className = isMaint ? "text-[11px] text-amber-600 font-bold" : "text-[11px] text-emerald-600 font-semibold";
+                }
+            });
+
+            db.collection('settings').doc('payment').onSnapshot((doc) => {
+                if (doc.exists && doc.data().bkashNumber) {
+                    document.getElementById('bkashNumberInput').value = doc.data().bkashNumber;
+                }
+            });
+        }
+
+        async function toggleMaintenanceMode(isON) {
+            try {
+                await db.collection('settings').doc('site_control').set({
+                    maintenanceMode: isON,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            } catch (err) {
+                alert("Maintenance setting update failed: " + err.message);
+            }
+        }
+
+        async function saveBkashNumber(e) {
+            e.preventDefault();
+            const num = document.getElementById('bkashNumberInput').value.trim();
+            try {
+                await db.collection('settings').doc('payment').set({
+                    bkashNumber: num,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                alert("bKash নম্বর আপডেট করা হয়েছে!");
+            } catch (err) {
+                alert("Update failed: " + err.message);
+            }
+        }
+
+        // --- NAVIGATION & UTILS ---
+        function switchAdminTab(tabName) {
+            ['dashboard', 'orders', 'packages', 'banners', 'notices', 'settings'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const sideBtn = document.getElementById(`side-${t}`);
+                if (sideBtn) {
+                    sideBtn.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold hover:bg-slate-800 hover:text-white transition";
+                }
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`side-${tabName}`);
+            if (activeBtn) {
+                activeBtn.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-white bg-brand-600 transition";
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
