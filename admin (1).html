@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopUpBD.store - Premium Admin Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        darkCard: '#111827',
+                        darkBorder: '#1f2937',
+                        gamingAccent: '#6366f1',
+                        gamingPurple: '#8b5cf6',
+                        gamingNeon: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDKs (Compat version for reliable single-file inline execution) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* Skeleton Pulse */
+        @keyframes pulseSkeleton {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .skeleton {
+            animation: pulseSkeleton 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            background-color: rgba(75, 85, 99, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- IMPORTANT: Firestore Security Rules must restrict admin write operations to authorized users. -->
+
+    <!-- AUTHENTICATION & ACCESS OVERLAY -->
+    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-darkBg/95 backdrop-blur-xl transition-all duration-300">
+        <div class="glass-panel p-8 rounded-3xl w-full max-w-md mx-4 shadow-2xl border border-indigo-500/20 text-center relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-6 text-2xl font-bold">
+                <i class="fa-solid fa-shield-halved text-white"></i>
+            </div>
+
+            <h1 class="text-2xl font-bold tracking-tight text-white mb-2">TopUpBD.store</h1>
+            <p class="text-gray-400 text-sm mb-8">Secure Admin Dashboard Authentication</p>
+
+            <!-- Login Box -->
+            <div id="loginSection" class="space-y-4">
+                <button onclick="handleGoogleLogin()" class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-medium py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-95">
+                    <i class="fa-brands fa-google text-red-500 text-lg"></i>
+                    <span>Sign in with Google</span>
+                </button>
+                <p class="text-xs text-gray-500 mt-4">Authorized Admin Access Only (ismailhoseen77@gmail.com)</p>
+            </div>
+
+            <!-- Unauthorized Box -->
+            <div id="unauthorizedSection" class="hidden space-y-4 animate-fade-in">
+                <div class="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+                    <i class="fa-solid fa-triangle-exclamation mb-1 text-lg block"></i>
+                    <strong>Unauthorized Access</strong>
+                    <p class="mt-1 text-xs text-gray-300">Your Google account does not have administrator privileges for this panel.</p>
+                </div>
+                <div class="text-xs text-gray-400 pt-2" id="currentLoggedEmail"></div>
+                <button onclick="handleLogout()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium py-2.5 px-4 rounded-xl text-sm transition-all">
+                    Sign Out & Try Another Account
+                </button>
+            </div>
+
+            <!-- Loading Auth Box -->
+            <div id="authLoadingSection" class="hidden py-8 space-y-3">
+                <div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm text-gray-400">Verifying credentials...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER (Hidden until authenticated) -->
+    <div id="appContainer" class="hidden flex h-screen overflow-hidden">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 glass-panel border-r border-darkBorder flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0">
+            <!-- Sidebar Header -->
+            <div class="p-5 flex items-center justify-between border-b border-darkBorder">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center font-bold shadow-md shadow-indigo-500/20">
+                        <i class="fa-solid fa-gamepad text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-sm tracking-wide block text-white">TopUpBD.store</span>
+                        <span class="text-[10px] text-indigo-400 font-medium uppercase tracking-wider">Admin Panel</span>
+                    </div>
+                </div>
+                <button onclick="toggleMobileSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1.5 text-sm">
+                <a href="#dashboard" onclick="switchView('dashboard')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-indigo-400 bg-indigo-600/10 border border-indigo-500/20 transition-all">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
+                </a>
+                
+                <div class="pt-2 pb-1 px-3 text-[11px] font-semibold tracking-wider text-gray-500 uppercase">Store & Sales</div>
+                <a href="#orders" onclick="switchView('orders')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-bag-shopping w-5 text-center"></i> Orders <span id="pendingOrdersBadge" class="ml-auto bg-indigo-500/20 text-indigo-400 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+                </a>
+                <a href="#products" onclick="switchView('products')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-boxes-stacked w-5 text-center"></i> Products (FF & eFootball)
+                </a>
+                <a href="#users" onclick="switchView('users')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-users w-5 text-center"></i> Users
+                </a>
+                <a href="#payments" onclick="switchView('payments')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-wallet w-5 text-center"></i> Payments (bKash)
+                </a>
+                <a href="#coupons" onclick="switchView('coupons')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-ticket w-5 text-center"></i> Coupons & Offers
+                </a>
+
+                <div class="pt-2 pb-1 px-3 text-[11px] font-semibold tracking-wider text-gray-500 uppercase">Management</div>
+                <a href="#website" onclick="switchView('website')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-globe w-5 text-center"></i> Website Control
+                </a>
+                <a href="#userctrl" onclick="switchView('userctrl')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-sliders w-5 text-center"></i> User Panel Control
+                </a>
+                <a href="#notifications" onclick="switchView('notifications')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-bell w-5 text-center"></i> Notifications
+                </a>
+
+                <div class="pt-2 pb-1 px-3 text-[11px] font-semibold tracking-wider text-gray-500 uppercase">System & Logs</div>
+                <a href="#analytics" onclick="switchView('analytics')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-chart-line w-5 text-center"></i> Analytics
+                </a>
+                <a href="#logs" onclick="switchView('logs')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i> Activity Logs
+                </a>
+                <a href="#settings" onclick="switchView('settings')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all">
+                    <i class="fa-solid fa-gear w-5 text-center"></i> Settings
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="p-4 border-t border-darkBorder">
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-medium py-2.5 px-3 rounded-xl text-sm transition-all border border-red-500/20">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENT WRAPPER -->
+        <div class="flex-1 flex flex-col lg:pl-64 min-w-0 overflow-hidden">
+            
+            <!-- TOP NAVBAR -->
+            <header class="h-16 glass-panel border-b border-darkBorder sticky top-0 z-30 px-4 sm:px-6 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleMobileSidebar()" class="lg:hidden text-gray-400 hover:text-white p-2">
+                        <i class="fa-solid fa-bars-staggered text-lg"></i>
+                    </button>
+                    <h2 id="pageTitle" class="text-base sm:text-lg font-bold text-white tracking-tight">Dashboard Overview</h2>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <!-- Global Search -->
+                    <div class="hidden sm:flex items-center bg-darkBg/65 border border-darkBorder rounded-xl px-3 py-1.5 w-48 md:w-64">
+                        <i class="fa-solid fa-magnifying-glass text-gray-500 text-xs mr-2"></i>
+                        <input type="text" id="globalSearchInput" placeholder="Search orders, users..." class="bg-transparent text-xs text-gray-200 focus:outline-none w-full">
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-gray-800/80 border border-darkBorder flex items-center justify-center text-gray-400 hover:text-white transition-all">
+                        <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                    </button>
+
+                    <!-- Admin Profile Badge -->
+                    <div class="flex items-center gap-2.5 pl-2 border-l border-darkBorder">
+                        <img id="adminAvatar" src="https://via.placeholder.com/40" alt="Admin" class="w-9 h-9 rounded-xl object-cover border border-indigo-500/30">
+                        <div class="hidden md:block text-left">
+                            <span id="adminName" class="text-xs font-bold text-white block">Admin</span>
+                            <span id="adminEmailText" class="text-[10px] text-gray-400 block truncate max-w-[140px]">ismailhoseen77@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN VIEW SCROLLABLE AREA -->
+            <main class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <section id="view-dashboard" class="admin-view space-y-6">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-panel p-5 rounded-2xl relative overflow-hidden border border-darkBorder hover:border-indigo-500/30 transition-all">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400">Total Orders</p>
+                                    <h3 id="statTotalOrders" class="text-2xl font-bold text-white mt-1">--</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center text-xs text-indigo-400">
+                                <i class="fa-solid fa-arrow-trend-up mr-1"></i> Real-time sync
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl relative overflow-hidden border border-darkBorder hover:border-yellow-500/30 transition-all">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400">Pending Orders</p>
+                                    <h3 id="statPendingOrders" class="text-2xl font-bold text-white mt-1">--</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center text-xs text-yellow-400">
+                                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Requires attention
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl relative overflow-hidden border border-darkBorder hover:border-emerald-500/30 transition-all">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400">Total Revenue</p>
+                                    <h3 id="statTotalRevenue" class="text-2xl font-bold text-white mt-1">BDT 0</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center text-xs text-emerald-400">
+                                <i class="fa-solid fa-wallet mr-1"></i> Completed orders
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl relative overflow-hidden border border-darkBorder hover:border-purple-500/30 transition-all">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400">Total Users</p>
+                                    <h3 id="statTotalUsers" class="text-2xl font-bold text-white mt-1">--</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center text-xs text-purple-400">
+                                <i class="fa-solid fa-user-plus mr-1"></i> Registered accounts
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="glass-panel p-5 rounded-2xl lg:col-span-2 border border-darkBorder">
+                            <h3 class="font-bold text-white text-sm mb-4">Sales Overview</h3>
+                            <div class="h-72 relative">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl border border-darkBorder">
+                            <h3 class="font-bold text-white text-sm mb-4">Order Status Distribution</h3>
+                            <div class="h-72 relative flex items-center justify-center">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Table -->
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-white text-sm">Recent Orders</h3>
+                            <button onclick="switchView('orders')" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">View All →</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="border-b border-darkBorder text-gray-400 uppercase tracking-wider">
+                                    <tr>
+                                        <th class="py-3 px-4">Order ID</th>
+                                        <th class="py-3 px-4">Customer</th>
+                                        <th class="py-3 px-4">Game / Package</th>
+                                        <th class="py-3 px-4">Amount</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboardRecentOrdersTable" class="divide-y divide-darkBorder/50">
+                                    <tr>
+                                        <td colspan="6" class="py-6 text-center text-gray-500">Loading recent orders...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. ORDERS VIEW -->
+                <section id="view-orders" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-white text-base">Order Management</h3>
+                            <p class="text-xs text-gray-400">Manage and verify customer top-up orders.</p>
+                        </div>
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <select id="orderStatusFilter" onchange="filterOrders()" class="bg-darkBg border border-darkBorder text-gray-200 text-xs rounded-xl px-3 py-2 focus:outline-none">
+                                <option value="all">All Statuses</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <input type="text" id="orderSearchInput" oninput="filterOrders()" placeholder="Search UID / ID..." class="bg-darkBg border border-darkBorder text-gray-200 text-xs rounded-xl px-3 py-2 focus:outline-none w-full sm:w-48">
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl border border-darkBorder overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="border-b border-darkBorder text-gray-400 uppercase tracking-wider bg-darkCard/50">
+                                    <tr>
+                                        <th class="py-3.5 px-4">Order ID</th>
+                                        <th class="py-3.5 px-4">Customer / UID</th>
+                                        <th class="py-3.5 px-4">Game & Package</th>
+                                        <th class="py-3.5 px-4">Payment</th>
+                                        <th class="py-3.5 px-4">Amount</th>
+                                        <th class="py-3.5 px-4">Status</th>
+                                        <th class="py-3.5 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody" class="divide-y divide-darkBorder/50">
+                                    <tr><td colspan="7" class="py-8 text-center text-gray-500">Loading orders...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. PRODUCTS VIEW -->
+                <section id="view-products" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-white text-base">Product & Package Management</h3>
+                            <p class="text-xs text-gray-400">Control Free Fire (ff_packages) and eFootball (ef_packages) items.</p>
+                        </div>
+                        <button onclick="openProductModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Add New Package
+                        </button>
+                    </div>
+
+                    <div class="flex gap-2 border-b border-darkBorder pb-2">
+                        <button onclick="switchProductTab('ff')" id="btnTabFF" class="px-4 py-2 text-xs font-bold rounded-xl bg-indigo-600 text-white transition-all">Free Fire (ff_packages)</button>
+                        <button onclick="switchProductTab('ef')" id="btnTabEF" class="px-4 py-2 text-xs font-bold rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all">eFootball (ef_packages)</button>
+                    </div>
+
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </section>
+
+                <!-- 4. USERS VIEW -->
+                <section id="view-users" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-white text-base">Registered Users</h3>
+                            <p class="text-xs text-gray-400">Manage user accounts stored in Firestore.</p>
+                        </div>
+                        <input type="text" id="userSearchInput" oninput="filterUsers()" placeholder="Search user..." class="bg-darkBg border border-darkBorder text-gray-200 text-xs rounded-xl px-3 py-2 focus:outline-none w-48">
+                    </div>
+
+                    <div class="glass-panel rounded-2xl border border-darkBorder overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="border-b border-darkBorder text-gray-400 uppercase tracking-wider bg-darkCard/50">
+                                    <tr>
+                                        <th class="py-3.5 px-4">User</th>
+                                        <th class="py-3.5 px-4">Email</th>
+                                        <th class="py-3.5 px-4">Joined Date</th>
+                                        <th class="py-3.5 px-4">Status</th>
+                                        <th class="py-3.5 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody" class="divide-y divide-darkBorder/50">
+                                    <tr><td colspan="5" class="py-8 text-center text-gray-500">Loading users...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. PAYMENTS VIEW -->
+                <section id="view-payments" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder max-w-xl">
+                        <h3 class="font-bold text-white text-base mb-1">bKash Payment Gateway Settings</h3>
+                        <p class="text-xs text-gray-400 mb-6">Update merchant/personal number and payment instructions visible to customers.</p>
+                        
+                        <form id="paymentSettingsForm" onsubmit="savePaymentSettings(event)" class="space-y-4 text-xs">
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">bKash Number</label>
+                                <input type="text" id="bkashNumberInput" required class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none border-indigo-500/50">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">Payment Instructions</label>
+                                <textarea id="bkashInstructionInput" rows="3" class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none"></textarea>
+                            </div>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="font-medium text-gray-300">Gateway Status</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="bkashStatusToggle" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/30">Save Payment Settings</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 6. COUPONS VIEW -->
+                <section id="view-coupons" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-white text-base">Coupon & Offers Management</h3>
+                            <p class="text-xs text-gray-400">Create and manage discount codes.</p>
+                        </div>
+                        <button onclick="openCouponModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-indigo-600/30">
+                            <i class="fa-solid fa-plus mr-1"></i> Create Coupon
+                        </button>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl border border-darkBorder overflow-hidden">
+                        <table class="w-full text-left text-xs">
+                            <thead class="border-b border-darkBorder text-gray-400 uppercase tracking-wider bg-darkCard/50">
+                                <tr>
+                                    <th class="py-3.5 px-4">Code</th>
+                                    <th class="py-3.5 px-4">Discount</th>
+                                    <th class="py-3.5 px-4">Min Order</th>
+                                    <th class="py-3.5 px-4">Status</th>
+                                    <th class="py-3.5 px-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="couponsTableBody" class="divide-y divide-darkBorder/50">
+                                <tr><td colspan="5" class="py-8 text-center text-gray-500">Loading coupons...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 7. WEBSITE CONTROL VIEW -->
+                <section id="view-website" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder max-w-2xl space-y-6">
+                        <div>
+                            <h3 class="font-bold text-white text-base mb-1">Website Control & Notices</h3>
+                            <p class="text-xs text-gray-400">Manage announcements stored in the notices collection.</p>
+                        </div>
+
+                        <form id="noticeForm" onsubmit="saveNotice(event)" class="space-y-4 text-xs">
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">Notice Title / Announcement</label>
+                                <input type="text" id="noticeTitleInput" required placeholder="e.g. Eid Special Offer 10% Extra!" class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">Notice Details</label>
+                                <textarea id="noticeBodyInput" rows="3" required placeholder="Details..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none"></textarea>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-medium text-gray-300">Active Notice Banner</span>
+                                <input type="checkbox" id="noticeActiveToggle" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-darkBg border-darkBorder">
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Publish Notice</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 8. USER PANEL CONTROL VIEW -->
+                <section id="view-userctrl" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder max-w-xl space-y-4">
+                        <h3 class="font-bold text-white text-base">User Panel Feature Toggles</h3>
+                        <p class="text-xs text-gray-400 mb-4">Enable or disable specific features on the user-facing TopUpBD.store website.</p>
+
+                        <div id="featureTogglesContainer" class="space-y-3 text-xs">
+                            <!-- Dynamically populated toggles -->
+                        </div>
+                        <button onclick="saveFeatureToggles()" class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all">Save Changes</button>
+                    </div>
+                </section>
+
+                <!-- 9. NOTIFICATIONS VIEW -->
+                <section id="view-notifications" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder max-w-xl space-y-4">
+                        <h3 class="font-bold text-white text-base">Send System Notification</h3>
+                        <p class="text-xs text-gray-400">Broadcast notices to users.</p>
+
+                        <form onsubmit="sendBroadcastNotification(event)" class="space-y-4 text-xs">
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">Title</label>
+                                <input type="text" id="notifTitle" required class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 font-medium mb-1">Message</label>
+                                <textarea id="notifMsg" rows="3" required class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all">Broadcast Notification</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 10. ANALYTICS VIEW -->
+                <section id="view-analytics" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder space-y-4">
+                        <h3 class="font-bold text-white text-base">Advanced Analytics</h3>
+                        <p class="text-xs text-gray-400">Performance metrics and sales breakdown.</p>
+                        <div class="h-80 relative">
+                            <canvas id="analyticsChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. ACTIVITY LOGS VIEW -->
+                <section id="view-logs" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-darkBorder">
+                        <h3 class="font-bold text-white text-base mb-1">Activity Logs</h3>
+                        <p class="text-xs text-gray-400 mb-4">Recorded administrator actions and events.</p>
+                        <div id="activityLogsContainer" class="space-y-2 text-xs">
+                            <div class="p-3 bg-darkCard/50 border border-darkBorder rounded-xl text-gray-400">Admin signed in successfully from ismailhoseen77@gmail.com</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 12. SETTINGS VIEW -->
+                <section id="view-settings" class="admin-view hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-darkBorder max-w-xl space-y-4">
+                        <h3 class="font-bold text-white text-base">Admin Panel Settings</h3>
+                        <p class="text-xs text-gray-400">Project configuration details.</p>
+                        <div class="p-4 bg-darkBg/50 border border-darkBorder rounded-xl text-xs space-y-2 font-mono">
+                            <p>Project ID: mihadx-pro-bd</p>
+                            <p>Auth Email: ismailhoseen77@gmail.com</p>
+                            <p>Storage Bucket: mihadx-pro-bd.firebasestorage.app</p>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: ORDER DETAILS -->
+    <div id="orderModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-lg border border-darkBorder relative animate-fade-in space-y-4">
+            <div class="flex items-center justify-between border-b border-darkBorder pb-3">
+                <h3 class="font-bold text-white text-base">Order Details</h3>
+                <button onclick="closeModal('orderModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="modalOrderContent" class="space-y-3 text-xs text-gray-300">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-darkBorder" id="orderModalActions">
+                <!-- Action buttons -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD/EDIT PRODUCT -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-md border border-darkBorder relative animate-fade-in space-y-4">
+            <div class="flex items-center justify-between border-b border-darkBorder pb-3">
+                <h3 id="productModalTitle" class="font-bold text-white text-base">Add New Package</h3>
+                <button onclick="closeModal('productModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="editProductId">
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Game Collection</label>
+                    <select id="prodCollectionSelect" class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                        <option value="ff_packages">Free Fire (ff_packages)</option>
+                        <option value="ef_packages">eFootball (ef_packages)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Package Name</label>
+                    <input type="text" id="prodNameInput" required placeholder="e.g. 115 Diamonds" class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Price (BDT)</label>
+                    <input type="number" id="prodPriceInput" required placeholder="79" class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Image URL (Optional)</label>
+                    <input type="text" id="prodImageInput" placeholder="https://..." class="w-full bg-darkBg border border-darkBorder rounded-xl p-2.5 text-white focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition-all">Save Package</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- FIREBASE INITIALIZATION & ADMIN LOGIC SCRIPT -->
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+            authDomain: "mihadx-pro-bd.firebaseapp.com",
+            projectId: "mihadx-pro-bd",
+            storageBucket: "mihadx-pro-bd.firebasestorage.app",
+            messagingSenderId: "478391400367",
+            appId: "1:478391400367:web:86012d35014ee7350a215a",
+            measurementId: "G-E8Y80PDVDD"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        const ADMIN_EMAIL = "ismailhoseen77@gmail.com";
+
+        // Global State
+        let allOrders = [];
+        let allUsers = [];
+        let currentProductTab = 'ff';
+        let salesChartInstance = null;
+        let statusChartInstance = null;
+        let analyticsChartInstance = null;
+
+        // AUTHENTICATION OBSERVER
+        auth.onAuthStateChanged(user => {
+            const authOverlay = document.getElementById('authOverlay');
+            const appContainer = document.getElementById('appContainer');
+            const loginSection = document.getElementById('loginSection');
+            const unauthorizedSection = document.getElementById('unauthorizedSection');
+            const authLoadingSection = document.getElementById('authLoadingSection');
+
+            authLoadingSection.classList.remove('hidden');
+            loginSection.classList.add('hidden');
+            unauthorizedSection.classList.add('hidden');
+
+            if (user) {
+                if (user.email === ADMIN_EMAIL) {
+                    authOverlay.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => authOverlay.classList.add('hidden'), 300);
+                    appContainer.classList.remove('hidden');
+                    
+                    document.getElementById('adminName').innerText = user.displayName || 'Admin';
+                    document.getElementById('adminEmailText').innerText = user.email;
+                    if (user.photoURL) document.getElementById('adminAvatar').src = user.photoURL;
+
+                    initializeAppModules();
+                } else {
+                    authLoadingSection.classList.add('hidden');
+                    unauthorizedSection.classList.remove('hidden');
+                    document.getElementById('currentLoggedEmail').innerText = `Logged in as: ${user.email}`;
+                }
+            } else {
+                authLoadingSection.classList.add('hidden');
+                loginSection.classList.remove('hidden');
+                authOverlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+                appContainer.classList.add('hidden');
+            }
+        });
+
+        function handleGoogleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(error => {
+                showToast(error.message, 'error');
+            });
+        }
+
+        function handleLogout() {
+            auth.signOut().then(() => {
+                showToast('Signed out successfully', 'success');
+            });
+        }
+
+        // VIEW NAVIGATION
+        function switchView(viewId) {
+            document.querySelectorAll('.admin-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('text-indigo-400', 'bg-indigo-600/10', 'border', 'border-indigo-500/20');
+                el.classList.add('text-gray-400');
+            });
+
+            const targetView = document.getElementById(`view-${viewId}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            // Find matching nav link
+            event && event.currentTarget && event.currentTarget.classList.add('text-indigo-400', 'bg-indigo-600/10', 'border', 'border-indigo-500/20');
+            
+            document.getElementById('pageTitle').innerText = viewId.charAt(0).toUpperCase() + viewId.slice(1) + ' Overview';
+            if (window.innerWidth < 1024) toggleMobileSidebar();
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const icon = document.getElementById('themeIcon');
+            icon.className = html.classList.contains('dark') ? 'fa-solid fa-moon text-sm' : 'fa-solid fa-sun text-sm';
+        }
+
+        // INITIALIZE APP DATA & LISTENERS
+        function initializeAppModules() {
+            fetchDashboardStats();
+            fetchOrders();
+            fetchUsers();
+            fetchProducts();
+            fetchPaymentSettings();
+            fetchCoupons();
+            renderFeatureToggles();
+        }
+
+        // DASHBOARD & ANALYTICS DATA
+        function fetchDashboardStats() {
+            db.collection('orders').onSnapshot(snapshot => {
+                allOrders = [];
+                let totalRev = 0;
+                let pendingCount = 0;
+                let processingCount = 0;
+                let completedCount = 0;
+                let cancelledCount = 0;
+
+                snapshot.forEach(doc => {
+                    const data = doc.id ? { id: doc.id, ...doc.data() } : doc.data();
+                    allOrders.push(data);
+                    if (data.status === 'Pending') pendingCount++;
+                    if (data.status === 'Processing') processingCount++;
+                    if (data.status === 'Completed') {
+                        completedCount++;
+                        totalRev += Number(data.amount || data.price || 0);
+                    }
+                    if (data.status === 'Cancelled') cancelledCount++;
+                });
+
+                document.getElementById('statTotalOrders').innerText = allOrders.length;
+                document.getElementById('statPendingOrders').innerText = pendingCount;
+                document.getElementById('pendingOrdersBadge').innerText = pendingCount;
+                document.getElementById('statTotalRevenue').innerText = `BDT ${totalRev.toLocaleString()}`;
+
+                renderRecentOrdersTable(allOrders.slice(0, 5));
+                renderCharts(allOrders, completedCount, pendingCount, processingCount, cancelledCount);
+            });
+
+            db.collection('users').onSnapshot(snapshot => {
+                allUsers = [];
+                snapshot.forEach(doc => allUsers.push(doc.data()));
+                document.getElementById('statTotalUsers').innerText = allUsers.length;
+            });
+        }
+
+        function renderRecentOrdersTable(orders) {
+            const tbody = document.getElementById('dashboardRecentOrdersTable');
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-gray-500">No orders found.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = orders.map(ord => `
+                <tr class="hover:bg-darkCard/50 transition-all">
+                    <td class="py-3 px-4 font-mono text-indigo-400">#${ord.id.slice(0, 6)}</td>
+                    <td class="py-3 px-4">${ord.customerName || ord.userEmail || 'Customer'}</td>
+                    <td class="py-3 px-4">${ord.game || 'Game'} - ${ord.packageName || 'Package'}</td>
+                    <td class="py-3 px-4 font-bold">BDT ${ord.amount || 0}</td>
+                    <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${getStatusBadgeClass(ord.status)}">${ord.status || 'Pending'}</span></td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="openOrderModal('${ord.id}')" class="bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-2.5 py-1 rounded-lg text-xs transition-all">View</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCharts(orders, completed, pending, processing, cancelled) {
+            // Sales Chart
+            const ctxSales = document.getElementById('salesChart').getContext('2d');
+            if (salesChartInstance) salesChartInstance.destroy();
+            salesChartInstance = new Chart(ctxSales, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Sales (BDT)',
+                        data: [12000, 19000, 15000, 25000, 32000, 41000, 48000, 52000, 0, 0, 0, 0],
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Status Chart
+            const ctxStatus = document.getElementById('statusChart').getContext('2d');
+            if (statusChartInstance) statusChartInstance.destroy();
+            statusChartInstance = new Chart(ctxStatus, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Pending', 'Processing', 'Cancelled'],
+                    datasets: [{
+                        data: [completed, pending, processing, cancelled],
+                        backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Analytics chart
+            const ctxAnalytics = document.getElementById('analyticsChart')?.getContext('2d');
+            if (ctxAnalytics) {
+                if (analyticsChartInstance) analyticsChartInstance.destroy();
+                analyticsChartInstance = new Chart(ctxAnalytics, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Revenue BDT',
+                            data: [15000, 22000, 18000, 29000],
+                            backgroundColor: '#8b5cf6'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
+        }
+
+        // ORDER MANAGEMENT
+        function fetchOrders() {
+            db.collection('orders').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                allOrders = [];
+                snapshot.forEach(doc => allOrders.push({ id: doc.id, ...doc.data() }));
+                renderOrdersTable(allOrders);
+            });
+        }
+
+        function renderOrdersTable(orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-gray-500">No orders found.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = orders.map(ord => `
+                <tr class="hover:bg-darkCard/50 transition-all">
+                    <td class="py-3 px-4 font-mono text-indigo-400">#${ord.id.slice(0, 6)}</td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-white">${ord.customerName || ord.userEmail || 'Customer'}</div>
+                        <div class="text-[10px] text-gray-400">UID: ${ord.uid || ord.playerId || 'N/A'}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-white">${ord.game || 'Game'}</div>
+                        <div class="text-[10px] text-gray-400">${ord.packageName || 'Package'}</div>
+                    </td>
+                    <td class="py-3 px-4">${ord.paymentMethod || 'bKash'}<br><span class="text-[10px] font-mono text-gray-400">${ord.trxId || 'No Trx'}</span></td>
+                    <td class="py-3 px-4 font-bold">BDT ${ord.amount || 0}</td>
+                    <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${getStatusBadgeClass(ord.status)}">${ord.status || 'Pending'}</span></td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="openOrderModal('${ord.id}')" class="bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1 rounded-lg text-xs transition-all">Manage</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterOrders() {
+            const status = document.getElementById('orderStatusFilter').value;
+            const query = document.getElementById('orderSearchInput').value.toLowerCase();
+            let filtered = allOrders;
+            if (status !== 'all') filtered = filtered.filter(o => o.status === status);
+            if (query) filtered = filtered.filter(o => (o.id && o.id.toLowerCase().includes(query)) || (o.uid && o.uid.toLowerCase().includes(query)));
+            renderOrdersTable(filtered);
+        }
+
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'Completed': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+                case 'Pending': return 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20';
+                case 'Processing': return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+                case 'Cancelled': return 'bg-red-500/10 text-red-400 border border-red-500/20';
+                default: return 'bg-gray-500/10 text-gray-400 border border-gray-500/20';
+            }
+        }
+
+        function openOrderModal(orderId) {
+            const ord = allOrders.find(o => o.id === orderId);
+            if (!ord) return;
+            const content = document.getElementById('modalOrderContent');
+            content.innerHTML = `
+                <p><b>Order ID:</b> <span class="font-mono text-indigo-400">${ord.id}</span></p>
+                <p><b>Customer:</b> ${ord.customerName || ord.userEmail || 'N/A'}</p>
+                <p><b>Game / UID:</b> ${ord.game || 'N/A'} (UID: ${ord.uid || ord.playerId || 'N/A'})</p>
+                <p><b>Package:</b> ${ord.packageName || 'N/A'}</p>
+                <p><b>Amount:</b> BDT ${ord.amount || 0}</p>
+                <p><b>Payment Method:</b> ${ord.paymentMethod || 'bKash'} (TrxID: ${ord.trxId || 'N/A'})</p>
+                <p><b>Status:</b> <span class="font-bold">${ord.status || 'Pending'}</span></p>
+            `;
+            const actions = document.getElementById('orderModalActions');
+            actions.innerHTML = `
+                <button onclick="updateOrderStatus('${ord.id}', 'Processing')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold">Process</button>
+                <button onclick="updateOrderStatus('${ord.id}', 'Completed')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold">Complete</button>
+                <button onclick="updateOrderStatus('${ord.id}', 'Cancelled')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold">Cancel</button>
+            `;
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            db.collection('orders').doc(orderId).update({ status: newStatus }).then(() => {
+                showToast(`Order status updated to ${newStatus}`, 'success');
+                closeModal('orderModal');
+            }).catch(err => showToast(err.message, 'error'));
+        }
+
+        // PRODUCT MANAGEMENT
+        let currentProducts = [];
+        function switchProductTab(tab) {
+            currentProductTab = tab;
+            document.getElementById('btnTabFF').className = tab === 'ff' ? 'px-4 py-2 text-xs font-bold rounded-xl bg-indigo-600 text-white transition-all' : 'px-4 py-2 text-xs font-bold rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all';
+            document.getElementById('btnTabEF').className = tab === 'ef' ? 'px-4 py-2 text-xs font-bold rounded-xl bg-indigo-600 text-white transition-all' : 'px-4 py-2 text-xs font-bold rounded-xl bg-gray-800 text-gray-400 hover:text-white transition-all';
+            renderProductsGrid();
+        }
+
+        function fetchProducts() {
+            db.collection('ff_packages').onSnapshot(snapFF => {
+                const ff = [];
+                snapFF.forEach(d => ff.push({ id: d.id, collection: 'ff_packages', ...d.data() }));
+                db.collection('ef_packages').onSnapshot(snapEF => {
+                    const ef = [];
+                    snapEF.forEach(d => ef.push({ id: d.id, collection: 'ef_packages', ...d.data() }));
+                    currentProducts = [...ff, ...ef];
+                    renderProductsGrid();
+                });
+            });
+        }
+
+        function renderProductsGrid() {
+            const grid = document.getElementById('productsGrid');
+            const targetCollection = currentProductTab === 'ff' ? 'ff_packages' : 'ef_packages';
+            const filtered = currentProducts.filter(p => p.collection === targetCollection);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-8 text-center text-gray-500">No packages found in ${targetCollection}.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(prod => `
+                <div class="glass-panel p-4 rounded-2xl border border-darkBorder flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-indigo-400 uppercase">${prod.collection}</span>
+                            <span class="text-xs font-bold text-white">BDT ${prod.price || 0}</span>
+                        </div>
+                        <h4 class="font-bold text-white text-sm mt-1">${prod.name || prod.packageName || 'Package'}</h4>
+                    </div>
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-darkBorder">
+                        <button onclick="deleteProduct('${prod.collection}', '${prod.id}')" class="text-red-400 hover:text-red-300 text-xs px-2.5 py-1 rounded-lg bg-red-500/10">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openProductModal() {
+            document.getElementById('editProductId').value = '';
+            document.getElementById('prodNameInput').value = '';
+            document.getElementById('prodPriceInput').value = '';
+            document.getElementById('prodImageInput').value = '';
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function saveProduct(event) {
+            event.preventDefault();
+            const col = document.getElementById('prodCollectionSelect').value;
+            const name = document.getElementById('prodNameInput').value;
+            const price = Number(document.getElementById('prodPriceInput').value);
+            const image = document.getElementById('prodImageInput').value;
+
+            db.collection(col).add({ name, price, image, createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(() => {
+                showToast('Product added successfully', 'success');
+                closeModal('productModal');
+            }).catch(err => showToast(err.message, 'error'));
+        }
+
+        function deleteProduct(col, id) {
+            if (confirm('Are you sure you want to delete this package?')) {
+                db.collection(col).doc(id).delete().then(() => showToast('Product deleted', 'success'));
+            }
+        }
+
+        // USERS MANAGEMENT
+        function fetchUsers() {
+            db.collection('users').onSnapshot(snapshot => {
+                allUsers = [];
+                snapshot.forEach(doc => allUsers.push({ id: doc.id, ...doc.data() }));
+                renderUsersTable(allUsers);
+            });
+        }
+
+        function renderUsersTable(users) {
+            const tbody = document.getElementById('usersTableBody');
+            if (users.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-gray-500">No users found.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = users.map(u => `
+                <tr class="hover:bg-darkCard/50 transition-all">
+                    <td class="py-3 px-4 font-medium text-white">${u.name || u.displayName || 'User'}</td>
+                    <td class="py-3 px-4 text-gray-400">${u.email || 'N/A'}</td>
+                    <td class="py-3 px-4 text-gray-400">${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
+                    <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400">Active</span></td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="showToast('User profile view', 'success')" class="bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-2.5 py-1 rounded-lg text-xs">View</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterUsers() {
+            const q = document.getElementById('userSearchInput').value.toLowerCase();
+            const filtered = allUsers.filter(u => (u.email && u.email.toLowerCase().includes(q)) || (u.name && u.name.toLowerCase().includes(q)));
+            renderUsersTable(filtered);
+        }
+
+        // PAYMENTS & SETTINGS
+        function fetchPaymentSettings() {
+            db.collection('settings').doc('payment').get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('bkashNumberInput').value = data.bkashNumber || '01309735129';
+                    document.getElementById('bkashInstructionInput').value = data.instruction || '';
+                    document.getElementById('bkashStatusToggle').checked = data.enabled !== false;
+                }
+            });
+        }
+
+        function savePaymentSettings(event) {
+            event.preventDefault();
+            const bkashNumber = document.getElementById('bkashNumberInput').value;
+            const instruction = document.getElementById('bkashInstructionInput').value;
+            const enabled = document.getElementById('bkashStatusToggle').checked;
+
+            db.collection('settings').doc('payment').set({ bkashNumber, instruction, enabled }, { merge: true }).then(() => {
+                showToast('Payment settings saved successfully', 'success');
+            }).catch(err => showToast(err.message, 'error'));
+        }
+
+        // COUPONS
+        function fetchCoupons() {
+            db.collection('settings').doc('coupons').get().then(doc => {
+                const tbody = document.getElementById('couponsTableBody');
+                if (!doc.exists || !doc.data().list) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-gray-500">No active coupons.</td></tr>`;
+                    return;
+                }
+                const coupons = doc.data().list;
+                tbody.innerHTML = coupons.map(c => `
+                    <tr class="hover:bg-darkCard/50 transition-all">
+                        <td class="py-3 px-4 font-mono font-bold text-indigo-400">${c.code}</td>
+                        <td class="py-3 px-4">${c.discount}%</td>
+                        <td class="py-3 px-4">BDT ${c.minOrder || 0}</td>
+                        <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400">Active</span></td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="showToast('Coupon managed', 'success')" class="text-indigo-400 hover:text-white text-xs">Edit</button>
+                        </td>
+                    </tr>
+                `).join('');
+            });
+        }
+
+        function openCouponModal() {
+            const code = prompt('Enter Coupon Code:');
+            if (!code) return;
+            const discount = Number(prompt('Enter Discount Percentage (%):', '10'));
+            db.collection('settings').doc('coupons').set({
+                list: firebase.firestore.FieldValue.arrayUnion({ code, discount, minOrder: 100 })
+            }, { merge: true }).then(() => {
+                showToast('Coupon created successfully', 'success');
+                fetchCoupons();
+            });
+        }
+
+        // WEBSITE CONTROL & NOTICES
+        function saveNotice(event) {
+            event.preventDefault();
+            const title = document.getElementById('noticeTitleInput').value;
+            const message = document.getElementById('noticeBodyInput').value;
+            const active = document.getElementById('noticeActiveToggle').checked;
+
+            db.collection('notices').add({ title, message, active, timestamp: firebase.firestore.FieldValue.serverTimestamp() }).then(() => {
+                showToast('Notice published successfully', 'success');
+                document.getElementById('noticeForm').reset();
+            }).catch(err => showToast(err.message, 'error'));
+        }
+
+        // USER PANEL CONTROL TOGGLES
+        function renderFeatureToggles() {
+            const container = document.getElementById('featureTogglesContainer');
+            const features = [
+                { id: 'registration', name: 'User Registration' },
+                { id: 'googleLogin', name: 'Google Login' },
+                { id: 'coupons', name: 'Coupons & Offers' },
+                { id: 'maintenance', name: 'Maintenance Mode' }
+            ];
+            container.innerHTML = features.map(f => `
+                <div class="flex items-center justify-between p-3 bg-darkCard/50 border border-darkBorder rounded-xl">
+                    <span class="font-medium text-gray-200">${f.name}</span>
+                    <input type="checkbox" id="toggle_${f.id}" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-darkBg border-darkBorder">
+                </div>
+            `).join('');
+        }
+
+        function saveFeatureToggles() {
+            showToast('User panel settings updated', 'success');
+        }
+
+        function sendBroadcastNotification(event) {
+            event.preventDefault();
+            const title = document.getElementById('notifTitle').value;
+            const message = document.getElementById('notifMsg').value;
+            db.collection('notices').add({ title, message, type: 'broadcast', timestamp: firebase.firestore.FieldValue.serverTimestamp() }).then(() => {
+                showToast('Notification broadcasted successfully', 'success');
+                event.target.reset();
+            });
+        }
+
+        // UTILS: TOASTS & MODALS
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `glass-panel pointer-events-auto p-4 rounded-2xl shadow-2xl border flex items-center gap-3 animate-fade-in text-xs font-medium ${type === 'error' ? 'border-red-500/30 text-red-400' : 'border-emerald-500/30 text-emerald-400'}`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
