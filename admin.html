@@ -594,26 +594,31 @@
         });
 
         function checkAdminAccess(user) {
-            if (user && user.email && user.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL.toLowerCase()) {
-                currentAdminUser = user;
-                document.getElementById('loginOverlay').classList.add('hidden');
-                document.getElementById('adminApp').classList.remove('hidden');
+    const adminEmail = "ismailhoseen77@gmail.com".toLowerCase().trim();
 
-                document.getElementById('adminAvatar').src = user.photoURL || 'https://via.placeholder.com/40';
-                document.getElementById('adminName').innerText = user.displayName || 'Admin';
-                document.getElementById('adminEmail').innerText = user.email;
+    if (user && user.email && user.email.toLowerCase().trim() === adminEmail) {
+        currentAdminUser = user;
 
-                initAdminData();
-            } else {
-                currentAdminUser = null;
-                document.getElementById('adminApp').classList.add('hidden');
-                document.getElementById('loginOverlay').classList.remove('hidden');
+        document.getElementById('loginOverlay').classList.add('hidden');
+        document.getElementById('adminApp').classList.remove('hidden');
 
-                if (user && user.email && user.email.toLowerCase() !== AUTHORIZED_ADMIN_EMAIL.toLowerCase()) {
-                    showLoginError(`Access Denied! "${user.email}" অনুমোদিত এডমিন অ্যাকাউন্ট নয়।`);
-                }
-            }
+        document.getElementById('adminAvatar').src = user.photoURL || 'https://via.placeholder.com/40';
+        document.getElementById('adminName').innerText = user.displayName || 'Admin';
+        document.getElementById('adminEmail').innerText = user.email;
+
+        hideLoginError();
+        initAdminData();
+    } else {
+        currentAdminUser = null;
+        document.getElementById('adminApp').classList.add('hidden');
+        document.getElementById('loginOverlay').classList.remove('hidden');
+
+        if (user && user.email && user.email.toLowerCase().trim() !== adminEmail) {
+            showLoginError(`Access Denied! "${user.email}" অনুমোদিত এডমিন অ্যাকাউন্ট নয়`);
         }
+    }
+        }
+        
 
         function loginAdminWithGoogle() {
             hideLoginError();
