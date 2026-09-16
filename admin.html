@@ -668,6 +668,8 @@
         // PACKAGES MANAGEMENT
         let currentPackageFilter = 'all';
 
+let currentPackageFilter = 'all';
+
 // ডাটাবেজে থাকা সব গেমের ফিল্টার বাটন লোড করার ফাংশন
 function loadGameFilterTabs() {
   db.collection('games').onSnapshot((snapshot) => {
@@ -683,9 +685,9 @@ function loadGameFilterTabs() {
 
     snapshot.forEach((doc) => {
       const game = doc.data();
-      const isActive = currentPackageFilter === game.name || currentPackageFilter === doc.id;
+      const isActive = currentPackageFilter === doc.id || currentPackageFilter === game.name;
       tabsHTML += `
-        <button onclick="setPackageFilter('${game.name}')" 
+        <button onclick="setPackageFilter('${doc.id}', '${game.name}')" 
           class="px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${isActive ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-700 border'}">
           ${game.name}
         </button>
@@ -696,9 +698,9 @@ function loadGameFilterTabs() {
   });
 }
 
-// ফিল্টার ট্যাবে ক্লিক করলে নির্দিষ্ট গেমের প্যাকেজ ফিল্টার করা
-function setPackageFilter(gameCategory) {
-  currentPackageFilter = gameCategory;
+// ফিল্টার ট্যাবে ক্লিক করলে নির্দিষ্ট গেমের প্যাকেজ দেখাবে
+function setPackageFilter(gameId, gameName) {
+  currentPackageFilter = gameId;
   loadGameFilterTabs();
   loadAdminPackages();
 }
@@ -706,7 +708,8 @@ function setPackageFilter(gameCategory) {
 // প্যাকেজের ছবি, দাম, এডিট এবং ডিলিট অপশনসহ কার্ড লোড করা
 function loadAdminPackages() {
   db.collection('packages').onSnapshot((snapshot) => {
-    const container = document.getElementById('adminPackagesGrid');
+    // সঠিক ID: adminPackageGrid
+    const container = document.getElementById('adminPackageGrid');
     if (!container) return;
 
     let html = '';
@@ -718,7 +721,7 @@ function loadAdminPackages() {
         html += `
           <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center relative flex flex-col justify-between">
             <div>
-              <!-- প্যাকেজের আপলোডকৃত ছবি -->
+              <!-- প্যাকেজের ছবি -->
               <div class="w-14 h-14 mx-auto mb-2 flex items-center justify-center bg-slate-50 rounded-xl p-1 border">
                 <img src="${p.iconUrl || 'https://via.placeholder.com/50'}" class="w-full h-full object-contain rounded-lg" alt="${p.name}">
               </div>
@@ -726,7 +729,7 @@ function loadAdminPackages() {
               <div class="text-xs font-bold text-purple-600 mb-3">৳ ${p.price}</div>
             </div>
 
-            <!-- এডিট এবং ডিলিট অ্যাকশন বাটন -->
+            <!-- এডিট এবং ডিলিট বাটন -->
             <div class="flex gap-1.5 pt-2 border-t border-slate-100">
               <button onclick="editPackagePrice('${doc.id}', ${p.price})" class="w-1/2 bg-purple-50 text-purple-600 font-bold text-[11px] py-1.5 rounded-lg border border-purple-100 active:scale-95 transition-transform">
                 এডিট
@@ -756,11 +759,19 @@ function editPackagePrice(id, currentPrice) {
   }
 }
 
-// পেজ লোড হওয়ার সময় বাটন ও প্যাকেজ চালু করা
+// প্যাকেজ ডিলিট করার ফাংশন
+function deletePackage(id) {
+  if (confirm("প্যাকেজটি ডিলিট করতে চান?")) {
+    db.collection('packages').doc(id).delete();
+  }
+}
+
+// পেজ লোড হওয়ার সময় ফিল্টার ও প্যাকেজ চালু করা
 window.addEventListener('DOMContentLoaded', () => {
   loadGameFilterTabs();
   loadAdminPackages();
 });
+    
           
 
         async function handlePackageFormSubmit(e) {
