@@ -430,6 +430,11 @@
                         <input type="text" id="pkgDiscountInput" placeholder="20% OFF" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
                     </div>
                 </div>
+                <div class="space-y-1">
+  <label class="text-xs font-bold text-slate-700">প্যাকেজ আইকন/ছবি (Upload)</label>
+  <input type="file" id="pkgIconFileInput" accept="image/*" class="w-full text-xs text-slate-500 border border-slate-200 rounded-xl p-2 bg-slate-50">
+                </div>
+                
                 <button type="submit" id="savePkgBtn" class="w-full purple-gradient text-white py-3 rounded-2xl font-bold text-xs shadow-md">
                     প্যাকেজ সেভ করুন
                 </button>
@@ -796,6 +801,36 @@ saveBtn.addEventListener('click', () => {
     nagad: document.getElementById('nagadInput').value
   }, { merge: true }).then(() => alert('সেটিংস আপডেট হয়েছে!'));
 });
+        
+    async function handlePackageFormSubmit(e) {
+  e.preventDefault();
+  
+  const gameId = document.getElementById('pkgGameSelect').value;
+  const name = document.getElementById('pkgNameInput').value;
+  const price = document.getElementById('pkgPriceInput').value;
+  const discount = document.getElementById('pkgDiscountInput').value;
+  const fileInput = document.getElementById('pkgIconFileInput');
+  
+  let iconUrl = '';
+  
+  // ছবি সিলেক্ট করা থাকলে ImgBB-তে আপলোড হবে
+  if (fileInput && fileInput.files.length > 0) {
+    iconUrl = await uploadToImgBB(fileInput.files[0]);
+  }
+
+  // ফায়ারবেস ডেটাবেজে সেভ
+  await db.collection('packages').add({
+    gameId: gameId,
+    name: name,
+    price: Number(price),
+    discount: discount,
+    iconUrl: iconUrl,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  closeModal('packageModal');
+  alert('প্যাকেজটি সফলভাবে ছবিসহ যুক্ত হয়েছে!');
+    }
         
     </script>
 </body>
