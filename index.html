@@ -292,35 +292,81 @@
         </button>
     </nav>
 
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-6 shadow-2xl text-center relative border border-purple-100">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- Login / Register Modal -->
+<div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl relative space-y-4 my-8">
+        <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
-            <div class="w-16 h-16 rounded-2xl purple-gradient text-white flex items-center justify-center text-3xl mx-auto shadow-lg shadow-purple-200">
+        <div class="text-center space-y-1">
+            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto text-xl">
                 <i class="fa-solid fa-user-lock"></i>
             </div>
-
-            <div class="space-y-1">
-                <h3 class="text-xl font-bold text-slate-900">লগইন প্রয়োজন</h3>
-                <p class="text-xs text-slate-500">অর্ডার সম্পন্ন করতে আপনার Google অ্যাকাউন্ট দিয়ে লগইন করুন</p>
-            </div>
-
-            <div id="userModalAuthError" class="hidden text-xs text-red-600 bg-red-50 p-3 rounded-xl border border-red-200 text-left"></div>
-
-            <button id="googleSignInBtn" onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 text-slate-700 py-3.5 rounded-2xl font-bold text-xs hover:bg-slate-50 transition shadow-sm active:scale-95">
-                <svg class="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span id="googleSignInBtnText">Sign in with Google</span>
-            </button>
+            <h3 id="authModalTitle" class="text-lg font-bold text-slate-900">লগইন করুন</h3>
+            <p id="authModalSub" class="text-xs text-slate-500">অর্ডার সম্পন্ন করতে আপনার একাউন্টে প্রবেশ করুন</p>
         </div>
+
+        <!-- Login / Register Tab Switcher -->
+        <div class="flex bg-slate-100 p-1 rounded-2xl text-xs font-bold">
+            <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-xl bg-white shadow-sm text-purple-600 transition">লগইন</button>
+            <button type="button" id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-700 transition">রেজিস্টার</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="emailLoginForm" onsubmit="handleEmailLogin(event)" class="space-y-3">
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">ইমেইল</label>
+                <input type="email" id="loginEmail" required placeholder="example@mail.com" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">পাসওয়ার্ড</label>
+                <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+            </div>
+            <button type="submit" id="loginSubmitBtn" class="w-full purple-gradient text-white py-3 rounded-2xl font-bold text-xs shadow-md hover:opacity-95 transition">লগইন করুন</button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="emailRegisterForm" onsubmit="handleEmailRegister(event)" class="space-y-3 hidden">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">ফার্স্ট নেম</label>
+                    <input type="text" id="regFirstName" required placeholder="Ismail" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 block mb-1">লাস্ট নেম</label>
+                    <input type="text" id="regLastName" required placeholder="Hossen" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">ইমেইল</label>
+                <input type="email" id="regEmail" required placeholder="example@mail.com" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">পাসওয়ার্ড (নূন্যতম ৬ ডিজিট)</label>
+                <input type="password" id="regPassword" minlength="6" required placeholder="••••••••" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">কনফার্ম পাসওয়ার্ড</label>
+                <input type="password" id="regConfirmPassword" minlength="6" required placeholder="••••••••" class="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:border-purple-500">
+            </div>
+            <button type="submit" id="regSubmitBtn" class="w-full purple-gradient text-white py-3 rounded-2xl font-bold text-xs shadow-md hover:opacity-95 transition">একাউন্ট তৈরি করুন</button>
+        </form>
+
+        <div class="relative flex py-1 items-center">
+            <div class="flex-grow border-t border-slate-200"></div>
+            <span class="flex-shrink mx-3 text-[10px] text-slate-400 font-bold uppercase">অথবা</span>
+            <div class="flex-grow border-t border-slate-200"></div>
+        </div>
+
+        <!-- Google Sign In -->
+        <button onclick="loginWithGoogle()" class="w-full border border-slate-200 py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-50 transition text-xs font-bold text-slate-700">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google">
+            <span>Sign in with Google</span>
+        </button>
     </div>
+</div>
+    
 
     <!-- CHECKOUT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -969,6 +1015,90 @@
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
+    // Tab Switching Logic
+function switchAuthTab(tab) {
+    const loginForm = document.getElementById('emailLoginForm');
+    const regForm = document.getElementById('emailRegisterForm');
+    const loginBtn = document.getElementById('tabLoginBtn');
+    const regBtn = document.getElementById('tabRegisterBtn');
+    const title = document.getElementById('authModalTitle');
+
+    if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+        loginBtn.className = "flex-1 py-2 rounded-xl bg-white shadow-sm text-purple-600 transition";
+        regBtn.className = "flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-700 transition";
+        title.innerText = "লগইন করুন";
+    } else {
+        loginForm.classList.add('hidden');
+        regForm.classList.remove('hidden');
+        regBtn.className = "flex-1 py-2 rounded-xl bg-white shadow-sm text-purple-600 transition";
+        loginBtn.className = "flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-700 transition";
+        title.innerText = "নতুন একাউন্ট খুলুন";
+    }
+}
+
+// Handle Registration
+async function handleEmailRegister(e) {
+    e.preventDefault();
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+    if (password !== confirmPassword) {
+        alert("পাসওয়ার্ড দুটি মিলছে না!");
+        return;
+    }
+
+    const btn = document.getElementById('regSubmitBtn');
+    btn.disabled = true;
+    btn.innerText = "প্রসেসিং হচ্ছে...";
+
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const displayName = `${firstName} ${lastName}`;
+        await userCredential.user.updateProfile({ displayName: displayName });
+        
+        alert("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!");
+        closeLoginModal();
+        location.reload();
+    } catch (error) {
+        alert("রেজিস্ট্রেশন ব্যর্থ হয়েছে: " + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "একাউন্ট তৈরি করুন";
+    }
+}
+
+// Handle Login
+async function handleEmailLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    const btn = document.getElementById('loginSubmitBtn');
+    btn.disabled = true;
+    btn.innerText = "লগইন হচ্ছে...";
+
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+        closeLoginModal();
+        if (pendingOrderContext && selectedPackage) {
+            openCheckoutModal(selectedPackage);
+            pendingOrderContext = false;
+        } else {
+            location.reload();
+        }
+    } catch (error) {
+        alert("লগইন ব্যর্থ হয়েছে: ইমেইল বা পাসওয়ার্ড ভুল দেওয়া হয়েছে!");
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "লগইন করুন";
+    }
+}
+        
     </script>
 </body>
 </html>
