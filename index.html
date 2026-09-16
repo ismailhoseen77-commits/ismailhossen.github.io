@@ -529,23 +529,24 @@
         }
 
         function loginWithGoogle() {
-            hideAuthModalError();
-            setGoogleAuthLoading(true);
+    hideAuthModalError();
+    setGoogleAuthLoading(true);
 
-            auth.signInWithPopup(googleProvider)
-                .then(() => {
-                    setGoogleAuthLoading(false);
-                    closeLoginModal();
-                })
-                .catch((err) => {
-                    if (err.code === 'auth/popup-blocked') {
-                        auth.signInWithRedirect(googleProvider);
-                    } else {
-                        setGoogleAuthLoading(false);
-                        showAuthModalError(err.message);
-                    }
-                });
+    auth.signInWithPopup(googleProvider)
+        .then((result) => {
+            setGoogleAuthLoading(false);
+            closeLoginModal();
+        })
+        .catch((err) => {
+            if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+                auth.signInWithRedirect(googleProvider);
+            } else {
+                setGoogleAuthLoading(false);
+                showAuthModalError("গুগল লগইন ব্যর্থ হয়েছে: " + err.message);
+            }
+        });
         }
+        
 
         function logoutUser() {
             auth.signOut().then(() => switchTab('home'));
