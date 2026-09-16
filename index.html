@@ -851,26 +851,24 @@
             const waInput = document.getElementById('whatsappInput');
             if (waInput) payload.customerWhatsApp = waInput.value.trim();
 
-            if (selectedGameObj && selectedGameObj.type === 'uid') {
-                payload.playerUID = document.getElementById('playerUIDInput').value.trim();
-            } else {
-                payload.accountEmail = document.getElementById('accountEmailInput')?.value.trim();
-                payload.accountPassword = document.getElementById('accountPasswordInput')?.value.trim();
-                payload.accountBackupCode = document.getElementById('accountBackupCodeInput')?.value.trim();
-            }
+                let waText = `নতুন অর্ডার বিজ্ঞপ্তি!
 
-            try {
-                await db.collection('orders').add(payload);
+Order ID: ${orderId}
+Game: ${payload.game}
+Package: ${payload.packageName}
+Price: ৳${payload.price}
+TrxID: ${trxId}
+Customer WhatsApp: ${payload.customerWhatsApp || 'N/A'}
+${payload.playerUID ? `Player UID: ${payload.playerUID}` : ''}
+${payload.accountEmail ? `Account Email: ${payload.accountEmail}` : ''}
+${payload.accountPassword ? `Account Pass: ${payload.accountPassword}` : ''}
 
-                closeModal('checkoutModal');
-                document.getElementById('successOrderId').innerText = `#${orderId}`;
+দয়া করে আমার অর্ডারটি সম্পন্ন করুন।`;
 
-                let waText = `*নতুন অর্ডার বিজ্ঞপ্তি!*%0A%0A*Order ID:* ${orderId}%0A*Game:* ${payload.game}%0A*Package:* ${payload.packageName}%0A*Price:* ৳${payload.price}%0A*TrxID:* ${trxId}%0A`;
-                if (payload.playerUID) waText += `*Player UID:* ${payload.playerUID}%0A`;
-                if (payload.accountEmail) waText += `*Account Email:* ${payload.accountEmail}%0A`;
-                waText += `%0Aদয়া করে আমার অর্ডারটি সম্পন্ন করুন।`;
-
-                document.getElementById('whatsappRedirectBtn').href = `https://wa.me/8801576502490?text=${waText}`;
+    document.getElementById('whatsappRedirectBtn').href = 'https://wa.me/8801576502490?text=' + encodeURIComponent(waText);
+            
+                
+                
                 document.getElementById('orderSuccessModal').classList.remove('hidden');
             } catch (err) {
                 alert("অর্ডার সাবমিট করতে সমস্যা হয়েছে: " + err.message);
