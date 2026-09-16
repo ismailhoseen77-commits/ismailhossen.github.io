@@ -706,47 +706,51 @@
         }
 
         function loadPackagesForGame(gameId) {
-            const grid = document.getElementById('userPackagesGrid');
-            grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-xl text-brand-600 block mb-2"></i>প্যাকেজসমূহ লোড হচ্ছে...</div>`;
+    const grid = document.getElementById('userPackagesGrid');
+    grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-xl text-brand-600 block mb-2"></i>প্যাকেজসমূহ লোড হচ্ছে...</div>`;
 
-            db.collection('packages').where('gameId', '==', gameId).onSnapshot((snapshot) => {
-                if (snapshot.empty) {
-                    grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs">এই গেমের জন্য কোনো প্যাকেজ উপলব্ধ নেই।</div>`;
-                    return;
-                }
-
-                let html = '';
-                snapshot.forEach(doc => {
-                    const pkg = { id: doc.id, ...doc.data() };
-                    const isAvailable = pkg.available !== false;
-                    const pkgJson = JSON.stringify(pkg).replace(/'/g, "&apos;");
-
-                    html += `
-                        <div class="bg-white rounded-3xl p-4 border border-purple-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3 relative overflow-hidden">
-                            ${pkg.discount ? `<div class="absolute top-2 right-2 bg-red-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">${pkg.discount}</div>` : ''}
-                            
-                            <div class="space-y-2 text-center">
-                                <div class="w-16 h-16 mx-auto bg-slate-50 rounded-2xl p-2 flex items-center justify-center border border-slate-100">
-                                    <img src="${pkg.image || pkg.imageUrl || pkg.imgUrl || selectedGameObj.imgUrl || selectedGameObj.image || 'https://cdn-icons-png.flaticon.com/512/308/308439.png'}" class="w-full h-full object-contain">
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-xs text-slate-900 leading-tight">${pkg.name}</h4>
-                                    <div class="flex items-center justify-center gap-1.5 mt-1">
-                                        <span class="text-sm font-black text-brand-600">৳ ${pkg.price}</span>
-                                        ${pkg.originalPrice ? `<span class="text-[10px] text-slate-400 line-through">৳ ${pkg.originalPrice}</span>` : ''}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button onclick='handlePackageBuyClick(${pkgJson})' ${!isAvailable ? 'disabled' : ''} class="w-full ${isAvailable ? 'purple-gradient text-white hover:opacity-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed'} py-2.5 rounded-2xl font-bold text-xs shadow-sm transition active:scale-95">
-                                ${isAvailable ? 'BUY NOW' : 'OUT OF STOCK'}
-                            </button>
-                        </div>
-                    `;
-                });
-                grid.innerHTML = html;
-            });
+    db.collection('packages').where('gameId', '==', gameId).onSnapshot((snapshot) => {
+        if (snapshot.empty) {
+            grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs">এই গেমের জন্য কোনো প্যাকেজ উপলব্ধ নেই।</div>`;
+            return;
         }
+
+        let html = '';
+        snapshot.forEach(doc => {
+            const pkg = { id: doc.id, ...doc.data() };
+            const isAvailable = pkg.available !== false;
+            const pkgJson = JSON.stringify(pkg).replace(/'/g, "&apos;");
+
+            // সব ধরণের সম্ভাব্য ফিল্ড নাম (imageUrl, image, imgUrl, img, photoUrl, iconUrl) চেক করা হচ্ছে
+            const packageImgSrc = pkg.imageUrl || pkg.image || pkg.imgUrl || pkg.img || pkg.photoUrl || pkg.iconUrl || (selectedGameObj ? (selectedGameObj.logoUrl || selectedGameObj.imgUrl) : '') || 'https://cdn-icons-png.flaticon.com/512/308/308439.png';
+
+            html += `
+                <div class="bg-white rounded-3xl p-4 border border-purple-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3 relative overflow-hidden">
+                    ${pkg.discount ? `<div class="absolute top-2 right-2 bg-red-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">${pkg.discount}</div>` : ''}
+                    
+                    <div class="space-y-2 text-center">
+                        <div class="w-16 h-16 mx-auto bg-slate-50 rounded-2xl p-2 flex items-center justify-center border border-slate-100 overflow-hidden">
+                            <img src="${packageImgSrc}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/308/308439.png'" class="w-full h-full object-contain rounded-xl">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-900 leading-tight">${pkg.name}</h4>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <span class="text-sm font-black text-brand-600">৳ ${pkg.price}</span>
+                                ${pkg.originalPrice ? `<span class="text-[10px] text-slate-400 line-through">৳ ${pkg.originalPrice}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick='handlePackageBuyClick(${pkgJson})' ${!isAvailable ? 'disabled' : ''} class="w-full ${isAvailable ? 'purple-gradient text-white hover:opacity-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed'} py-2.5 rounded-2xl font-bold text-xs shadow-sm transition active:scale-95">
+                        ${isAvailable ? 'BUY NOW' : 'OUT OF STOCK'}
+                    </button>
+                </div>
+            `;
+        });
+        grid.innerHTML = html;
+    });
+        }
+        
 
         function handlePackageBuyClick(pkg) {
             selectedPackage = pkg;
