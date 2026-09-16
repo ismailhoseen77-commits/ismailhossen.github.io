@@ -786,6 +786,17 @@
         function openAddPackageModal() { document.getElementById('packageModal').classList.remove('hidden'); }
         function openAddBannerModal() { document.getElementById('bannerModal').classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        const saveBtn = document.getElementById('saveSettingsBtn');
+const maintenanceToggle = document.getElementById('maintenanceToggle'); // আপনার টগল আইডি
+
+saveBtn.addEventListener('click', () => {
+  db.collection('settings').doc('system').set({
+    isMaintenance: maintenanceToggle.checked,
+    bkash: document.getElementById('bkashInput').value,
+    nagad: document.getElementById('nagadInput').value
+  }, { merge: true }).then(() => alert('সেটিংস আপডেট হয়েছে!'));
+});
+        
     </script>
 </body>
 </html>
