@@ -272,6 +272,12 @@
                         </button>
                     </div>
 
+                   <!-- গেমের ফিল্টার বাটনসমূহ -->
+<div id="gameFilterTabs" class="flex gap-2 my-4 overflow-x-auto pb-2 text-xs">
+  <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে ফ্রি ফায়ার, ই-ফুটবল ইত্যাদির বাটন স্বয়ংক্রিয়ভাবে তৈরি হবে -->
+</div>
+                    
+                    
                     <div id="adminPackageGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     </div>
                 </section>
@@ -660,25 +666,102 @@
         }
 
         // PACKAGES MANAGEMENT
-        function loadAdminPackages() {
-            db.collection('packages').onSnapshot((snapshot) => {
-                const container = document.getElementById('adminPackageGrid');
-                let html = '';
-                snapshot.forEach(doc => {
-                    const pkg = doc.data();
-                    html += `
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                            <h4 class="font-bold text-xs text-slate-900 truncate">${pkg.name}</h4>
-                            <div class="text-xs font-black text-brand-600">৳ ${pkg.price}</div>
-                            <button onclick="deletePackage('${doc.id}')" class="w-full bg-red-50 text-red-600 py-1.5 rounded-lg text-[10px] font-bold">
-                                Delete Package
-                            </button>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            });
-        }
+        let currentPackageFilter = 'all';
+
+// ডাটাবেজে থাকা সব গেমের ফিল্টার বাটন লোড করার ফাংশন
+function loadGameFilterTabs() {
+  db.collection('games').onSnapshot((snapshot) => {
+    const tabsContainer = document.getElementById('gameFilterTabs');
+    if (!tabsContainer) return;
+
+    let tabsHTML = `
+      <button onclick="setPackageFilter('all')" 
+        class="px-3 py-1.5 rounded-xl font-bold transition-all ${currentPackageFilter === 'all' ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-700 border'}">
+        সবগুলো
+      </button>
+    `;
+
+    snapshot.forEach((doc) => {
+      const game = doc.data();
+      const isActive = currentPackageFilter === game.name || currentPackageFilter === doc.id;
+      tabsHTML += `
+        <button onclick="setPackageFilter('${game.name}')" 
+          class="px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${isActive ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-700 border'}">
+          ${game.name}
+        </button>
+      `;
+    });
+
+    tabsContainer.innerHTML = tabsHTML;
+  });
+}
+
+// ফিল্টার ট্যাবে ক্লিক করলে নির্দিষ্ট গেমের প্যাকেজ ফিল্টার করা
+function setPackageFilter(gameCategory) {
+  currentPackageFilter = gameCategory;
+  loadGameFilterTabs();
+  loadAdminPackages();
+}
+
+// প্যাকেজের ছবি, দাম, এডিট এবং ডিলিট অপশনসহ কার্ড লোড করা
+function loadAdminPackages() {
+  db.collection('packages').onSnapshot((snapshot) => {
+    const container = document.getElementById('adminPackagesGrid');
+    if (!container) return;
+
+    let html = '';
+    snapshot.forEach((doc) => {
+      const p = doc.data();
+
+      // ক্যাটাগরি ম্যাচ করলে অথবা 'all' সিলেক্ট থাকলে দেখাবে
+      if (currentPackageFilter === 'all' || p.gameId === currentPackageFilter || p.gameName === currentPackageFilter) {
+        html += `
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center relative flex flex-col justify-between">
+            <div>
+              <!-- প্যাকেজের আপলোডকৃত ছবি -->
+              <div class="w-14 h-14 mx-auto mb-2 flex items-center justify-center bg-slate-50 rounded-xl p-1 border">
+                <img src="${p.iconUrl || 'https://via.placeholder.com/50'}" class="w-full h-full object-contain rounded-lg" alt="${p.name}">
+              </div>
+              <div class="font-bold text-xs text-slate-800 line-clamp-1">${p.name}</div>
+              <div class="text-xs font-bold text-purple-600 mb-3">৳ ${p.price}</div>
+            </div>
+
+            <!-- এডিট এবং ডিলিট অ্যাকশন বাটন -->
+            <div class="flex gap-1.5 pt-2 border-t border-slate-100">
+              <button onclick="editPackagePrice('${doc.id}', ${p.price})" class="w-1/2 bg-purple-50 text-purple-600 font-bold text-[11px] py-1.5 rounded-lg border border-purple-100 active:scale-95 transition-transform">
+                এডিট
+              </button>
+              <button onclick="deletePackage('${doc.id}')" class="w-1/2 bg-red-50 text-red-600 font-bold text-[11px] py-1.5 rounded-lg border border-red-100 active:scale-95 transition-transform">
+                ডিলিট
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    container.innerHTML = html || '<p class="text-xs text-slate-400 col-span-full py-4 text-center">এই গেমের কোনো প্যাকেজ পাওয়া যায়নি</p>';
+  });
+}
+
+// দাম এডিট করার ফাংশন
+function editPackagePrice(id, currentPrice) {
+  const newPrice = prompt("নতুন দাম লিখুন (টাকা):", currentPrice);
+  if (newPrice !== null && newPrice.trim() !== "" && !isNaN(newPrice)) {
+    db.collection('packages').doc(id).update({
+      price: Number(newPrice)
+    }).then(() => {
+      alert("প্যাকেজের দাম সফলভাবে আপডেট হয়েছে!");
+    }).catch(err => alert("সমস্যা হয়েছে: " + err.message));
+  }
+}
+
+// পেজ লোড হওয়ার সময় বাটন ও প্যাকেজ চালু করা
+window.addEventListener('DOMContentLoaded', () => {
+  loadGameFilterTabs();
+  loadAdminPackages();
+});
+          
 
         async function handlePackageFormSubmit(e) {
             e.preventDefault();
