@@ -69,6 +69,17 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-20 md:pb-6">
 
+   <!-- MAINTENANCE OVERLAY -->
+<div id="maintenanceOverlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[9999] hidden flex flex-col items-center justify-center text-center p-4">
+    <div class="bg-white/10 p-6 rounded-3xl border border-white/10 max-w-sm w-full space-y-4">
+        <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+        </div>
+        <h2 class="text-xl font-bold text-white">ওয়েবসাইট মেইনটেনেন্সে আছে</h2>
+        <p class="text-xs text-slate-300">আমরা ওয়েবসাইটের কিছু আপডেট ও রক্ষণাবেক্ষণের কাজ করছি। সাময়িক অসুবিধার জন্য আমরা আন্তরিকভাবে দুঃখিত। শীঘ্রই আমরা ফিরে আসব!</p>
+    </div>
+</div>
+    
     <!-- BANNED USER OVERLAY -->
     <div id="bannedOverlay" class="fixed inset-0 bg-red-950/95 z-[200] hidden flex flex-col items-center justify-center p-6 text-center">
         <div class="max-w-md w-full bg-slate-900 border border-red-500/30 rounded-3xl p-8 space-y-6 shadow-2xl relative overflow-hidden">
@@ -1121,6 +1132,19 @@
                 btn.innerText = "লগইন করুন";
             }
         }
+        // Firestore থেকে রিয়েল-টাইমে মেইনটেনেন্স মোড চেক করা
+db.collection("settings").doc("siteConfig")
+    .onSnapshot((doc) => {
+        const overlay = document.getElementById('maintenanceOverlay');
+        if (doc.exists && doc.data().isMaintenance === true) {
+            if (overlay) overlay.classList.remove('hidden');
+        } else {
+            if (overlay) overlay.classList.add('hidden');
+        }
+    }, (error) => {
+        console.error("Maintenance check error: ", error);
+    });
+        
     </script>
 </body>
 </html>
