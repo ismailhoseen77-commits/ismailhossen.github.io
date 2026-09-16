@@ -964,6 +964,24 @@
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
+    db.collection('settings').doc('system').onSnapshot((doc) => {
+  if (doc.exists) {
+    const data = doc.data();
+    
+    // ১. মেইনটেনেন্স চেক (চালু থাকলে পেজ ব্লক করবে)
+    if (data.isMaintenance) {
+      document.body.innerHTML = `<div style="text-align:center; padding:50px;">
+        <h2>সাইটে মেইনটেনেন্স কাজ চলছে!</h2>
+        <p>অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।</p>
+      </div>`;
+    }
+
+    // ২. বিকাশ ও নগদ নাম্বার ডায়নামিকলি পেজে বসানো
+    if (data.bkash) document.getElementById('bkashDisplayId').innerText = data.bkash;
+    if (data.nagad) document.getElementById('nagadDisplayId').innerText = data.nagad;
+  }
+});
+        
     </script>
 </body>
 </html>
