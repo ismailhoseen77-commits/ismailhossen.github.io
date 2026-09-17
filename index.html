@@ -163,7 +163,7 @@
         <div id="view-home" class="space-y-6">
 
             <!-- CLEAN AUTO-SLIDER BANNER -->
-            <div class="relative rounded-3xl overflow-hidden shadow-lg border border-purple-100 bg-slate-900 aspect-[21/9] sm:aspect-[2.5/1]" id="bannerSliderContainer">
+            <div class="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg bg-slate-900 aspect-[16/9] sm:aspect-[2.5/1]" id="bannerSliderContainer">
                 <div id="bannerSlidesWrapper" class="flex h-full w-full carousel-slide">
                     <div class="w-full h-full flex-shrink-0 bg-slate-800 flex items-center justify-center text-slate-500 text-xs">
                         <i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> ব্যানার লোড হচ্ছে...
@@ -699,7 +699,7 @@
                 activeBannersList.forEach((b) => {
                     slidesHtml += `
                         <div class="w-full h-full flex-shrink-0 relative">
-                            <img src="${b.imageUrl}" class="w-full h-full object-cover">
+                            <img src="${b.imageUrl}" class="w-full h-full object-contain bg-slate-900" alt="Banner">
                         </div>
                     `;
                 });
