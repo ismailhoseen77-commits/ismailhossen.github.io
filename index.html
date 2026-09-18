@@ -794,10 +794,21 @@
                 }
 
                 packagesMap = {};
-                let html = '';
-                snapshot.forEach(doc => {
-                    const pkg = { id: doc.id, ...doc.data() };
-                    packagesMap[pkg.id] = pkg;
+let html = '';
+let packageList = [];
+
+// ফায়ারবেস থেকে সব প্যাকেজ এনট্রি করা
+snapshot.forEach(doc => {
+    packageList.push({ id: doc.id, ...doc.data() });
+});
+
+// কম দাম থেকে বেশি দামে সাজানো (Sort)
+packageList.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+
+// সাজানো প্যাকেজগুলো একের পর এক লোড করা
+packageList.forEach(pkg => {
+    packagesMap[pkg.id] = pkg;
+    
                     const isAvailable = pkg.available !== false;
                     const packageImgSrc = pkg.imageUrl || pkg.image || pkg.imgUrl || pkg.img || (selectedGameObj ? selectedGameObj.logoUrl : '') || 'https://cdn-icons-png.flaticon.com/512/308/308439.png';
 
