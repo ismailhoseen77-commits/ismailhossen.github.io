@@ -514,29 +514,35 @@
         });
 
         function checkAdminAccess(user) {
-            const errBox = document.getElementById('loginErrorMsg');
-            if (user) {
-                if (user.email?.toLowerCase().trim() === AUTHORIZED_ADMIN_EMAIL.toLowerCase().trim()) {
-                    currentAdminUser = user;
-                    document.getElementById('loginOverlay').classList.add('hidden');
-                    document.getElementById('adminApp').classList.remove('hidden');
-                    document.getElementById('adminAvatar').src = user.photoURL || 'https://via.placeholder.com/40';
-                    document.getElementById('adminName').innerText = user.displayName || 'Admin';
-                    document.getElementById('adminEmail').innerText = user.email;
-                    initAdminData();
-                } else {
-                    auth.signOut();
-                    if(errBox) {
-                        errBox.innerText = "অনুমোদিত এডমিন ইমেইল নয়: " + user.email;
-                        errBox.classList.remove('hidden');
-                    }
-                }
-            } else {
-                currentAdminUser = null;
-                document.getElementById('adminApp').classList.add('hidden');
-                document.getElementById('loginOverlay').classList.remove('hidden');
+    const errBox = document.getElementById('loginErrorMsg');
+    if (user) {
+        const loggedInEmail = (user.email || '').toLowerCase().trim();
+        const adminEmail = AUTHORIZED_ADMIN_EMAIL.toLowerCase().trim();
+
+        if (loggedInEmail === adminEmail) {
+            currentAdminUser = user;
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('adminApp').classList.remove('hidden');
+            document.getElementById('adminAvatar').src = user.photoURL || 'https://via.placeholder.com/40';
+            document.getElementById('adminName').innerText = user.displayName || 'Admin';
+            document.getElementById('adminEmail').innerText = user.email;
+            initAdminData();
+        } else {
+            // auth.signOut() মুছে দেওয়া হয়েছে যেন মেইন ওয়েবসাইট থেকে ইউজার লগআউট না হয়
+            document.getElementById('adminApp').classList.add('hidden');
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            if(errBox) {
+                errBox.innerText = "অনুমোদিত এডমিন ইমেইল নয়: " + user.email;
+                errBox.classList.remove('hidden');
             }
         }
+    } else {
+        currentAdminUser = null;
+        document.getElementById('adminApp').classList.add('hidden');
+        document.getElementById('loginOverlay').classList.remove('hidden');
+    }
+        }
+        
 
         function loginAdminWithGoogle() {
             auth.signInWithPopup(googleProvider).catch((error) => {
