@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+no<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -1158,9 +1158,16 @@
 
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                const displayName = `${firstName} ${lastName}`.trim();
-                await userCredential.user.updateProfile({ displayName: displayName });
-                closeLoginModal();
+const displayName = `${firstName} ${lastName}`.trim();
+
+// ১. আগে প্রোফাইল আপডেট সম্পন্ন হবে
+await userCredential.user.updateProfile({ displayName: displayName });
+
+// ২. এরপর ফায়ারস্টোরে ডাটা সেভ হবে (এই নতুন লাইনটি যুক্ত হয়েছে)
+await syncUserToFirestore(userCredential.user);
+
+closeLoginModal();
+                
             } catch (error) {
                 showAuthModalError("রেজিস্ট্রেশন ব্যর্থ হয়েছে: " + error.message);
             } finally {
