@@ -1138,43 +1138,52 @@ no<!DOCTYPE html>
         }
 
         async function handleEmailRegister(e) {
-            e.preventDefault();
-            hideAuthModalError();
+    e.preventDefault();
+    hideAuthModalError();
 
-            const firstName = document.getElementById('regFirstName').value.trim();
-            const lastName = document.getElementById('regLastName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('regConfirmPassword').value;
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
 
-            if (password !== confirmPassword) {
-                showAuthModalError("পাসওয়ার্ড দুটি মিলছে না!");
-                return;
-            }
+    if (password !== confirmPassword) {
+        showAuthModalError("পাসওয়ার্ড দুটি মিলছে না!");
+        return;
+    }
 
-            const btn = document.getElementById('regSubmitBtn');
-            btn.disabled = true;
-            btn.innerText = "প্রসেসিং হচ্ছে...";
+    const btn = document.getElementById('regSubmitBtn');
+    btn.disabled = true;
+    btn.innerText = "প্রসেসিং হচ্ছে...";
 
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-const displayName = `${firstName} ${lastName}`.trim();
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const displayName = `${firstName} ${lastName}`.trim();
 
-// ১. আগে প্রোফাইল আপডেট সম্পন্ন হবে
-await userCredential.user.updateProfile({ displayName: displayName });
+        // ১. ফায়ারবেস অথ প্রোফাইলে নাম আপডেট
+        await userCredential.user.updateProfile({ displayName: displayName });
 
-// ২. এরপর ফায়ারস্টোরে ডাটা সেভ হবে (এই নতুন লাইনটি যুক্ত হয়েছে)
-await syncUserToFirestore(userCredential.user);
+        // ২. সরাসরি ফায়ারস্টোর 'users' কালেকশনে ডাটা সেভ (যার ফলে এডমিন প্যানেলে শো করবে)
+        await db.collection('users').doc(userCredential.user.uid).set({
+            uid: userCredential.user.uid,
+            displayName: displayName,
+            email: email,
+            photoURL: userCredential.user.photoURL || '',
+            badge: 'Regular',
+            isBanned: false,
+            totalSpent: 0,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
 
-closeLoginModal();
-                
-            } catch (error) {
-                showAuthModalError("রেজিস্ট্রেশন ব্যর্থ হয়েছে: " + error.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "একাউন্ট তৈরি করুন";
-            }
+        closeLoginModal();
+    } catch (error) {
+        showAuthModalError("রেজিস্ট্রেশন ব্যর্থ হয়েছে: " + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "একাউন্ট তৈরি করুন";
+    }
         }
+        
 
         async function handleEmailLogin(e) {
             e.preventDefault();
