@@ -768,13 +768,22 @@
             ref.onSnapshot((snapshot) => {
                 const grid = document.getElementById('adminPackageGrid');
                 let html = '';
-                snapshot.forEach(doc => {
-                    const p = doc.data();
+let packageList = [];
+
+snapshot.forEach(doc => {
+    packageList.push({ id: doc.id, ...doc.data() });
+});
+
+// কম দাম থেকে বেশি দামে সাজানো (Sort)
+packageList.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+
+packageList.forEach(p => {
+    
                     html += `
                         <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2 relative">
                             <h4 class="font-bold text-xs text-slate-900">${p.name}</h4>
                             <p class="text-sm font-extrabold text-purple-700">৳${p.price}</p>
-                            <button onclick="deletePackage('${doc.id}')" class="text-xs text-red-500 font-bold hover:underline">Delete</button>
+                            <button onclick="deletePackage('${p.id}')" class="text-xs text-red-500 font-bold hover:underline">Delete</button>
                         </div>
                     `;
                 });
