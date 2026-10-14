@@ -1012,7 +1012,7 @@
 
                 
                                 // টেলিগ্রামে অর্ডার নোটিফিকেশন পাঠানোর জন্য কল করা হলো
-                sendTelegramNotification({
+               await sendTelegramNotification({
                     orderId: orderId,
                     game: payload.game || '',
                     packageName: payload.packageName || '',
@@ -1229,8 +1229,8 @@
             }
         }
 
-        // টেলিগ্রাম নোটিফিকেশন পাঠানোর আপডেটেড ফাংশন
-function sendTelegramNotification(orderData) {
+        // Telegram notification pathanor updated async function
+async function sendTelegramNotification(orderData) {
     const botToken = '8946875282:AAG1kjDs2fC5x2sGITnegigJ4lWHwyCWjKs';
     const chatId = '8608534833';
 
@@ -1251,21 +1251,24 @@ function sendTelegramNotification(orderData) {
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: message
-        }),
-        keepalive: true
-    })
-    .then(res => res.json())
-    .then(data => console.log("Telegram success:", data))
-    .catch(err => console.error("Telegram error:", err));
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message
+            })
+        });
+        const data = await res.json();
+        console.log("Telegram success:", data);
+    } catch (err) {
+        console.error("Telegram error:", err);
+    }
 }
+        
         
     </script>
 </body>
