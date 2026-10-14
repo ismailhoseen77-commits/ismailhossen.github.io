@@ -1012,16 +1012,16 @@
 
                 // টেলিগ্রামে অর্ডার নোটিফিকেশন পাঠানোর জন্য কল করা হলো
                 sendTelegramNotification({
-                    orderId: orderId,
-                    game: selectedGameObj ? selectedGameObj.name : 'N/A',
-                    packageName: selectedPackage ? selectedPackage.name : 'N/A',
-                    price: selectedPackage ? selectedPackage.price : 0,
-                    paymentMethod: selectedPaymentMethod,
-                    trxId: trxId,
-                    playerUID: document.getElementById('playerUIDInput') ? document.getElementById('playerUIDInput').value : '',
-                    accountEmail: document.getElementById('accountEmailInput') ? document.getElementById('accountEmailInput').value : ''
-                });
-
+    orderId: orderId,
+    game: payload.game,
+    packageName: payload.packageName,
+    price: payload.price,
+    paymentMethod: payload.paymentMethod,
+    trxId: trxId,
+    playerUID: payload.playerUID || '',
+    accountEmail: payload.accountEmail || ''
+});
+                
                 let waText = `নতুন অর্ডার বিজ্ঞপ্তি!\n\nOrder ID: ${orderId}\nGame: ${payload.game}\nPackage: ${payload.packageName}\nPrice: ৳${payload.price}\nPayment Method: ${payload.paymentMethod}\nTrxID: ${trxId}\nCustomer WhatsApp: ${payload.customerWhatsApp || 'N/A'}\n${payload.playerUID ? `Player UID: ${payload.playerUID}\n` : ''}${payload.accountEmail ? `Account Email: ${payload.accountEmail}\n` : ''}${payload.accountPassword ? `Account Pass: ${payload.accountPassword}\n` : ''}\nদয়া করে আমার অর্ডারটি সম্পন্ন করুন।`;
 
                 document.getElementById('whatsappRedirectBtn').href = 'https://wa.me/8801576502490?text=' + encodeURIComponent(waText);
