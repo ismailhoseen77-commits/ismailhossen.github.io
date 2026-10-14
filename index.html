@@ -1229,7 +1229,7 @@
 
         // টেলিগ্রাম নোটিফিকেশন পাঠানোর আপডেটেড ফাংশন
 function sendTelegramNotification(orderData) {
-    const botToken = '8946875282:AAGOcT9S7YC7mV8QQzwpRh-006efCW6ILo8';
+    const botToken = '8946875282:AAG1kjDs2fC5x2sGITnegigJ4lWHwyCWjKs';
     const chatId = '8608534833';
 
     let message = `🚨 নতুন অর্ডার এসেছে!\n\n`;
@@ -1249,7 +1249,6 @@ function sendTelegramNotification(orderData) {
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-    // fetch call with POST method and keepalive
     fetch(url, {
         method: 'POST',
         headers: {
