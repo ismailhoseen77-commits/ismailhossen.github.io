@@ -1227,33 +1227,45 @@
             }
         }
 
-        // টেলিগ্রাম নোটিফিকেশন পাঠানোর ফাংশন
-        function sendTelegramNotification(orderData) {
-            const botToken = '8946875282:AAGOcT9S7YC7mV8QQzwpRh-006efCW6ILo8';
-            const chatId = '8608534833';
+        // টেলিগ্রাম নোটিফিকেশন পাঠানোর আপডেটেড ফাংশন
+function sendTelegramNotification(orderData) {
+    const botToken = '8946875282:AAGOcT9S7YC7mV8QQzwpRh-006efCW6ILo8';
+    const chatId = '8608534833';
 
-            let message = `🚨 নতুন অর্ডার এসেছে!\n\n`;
-            message += `📌 Order ID: ${orderData.orderId}\n`;
-            message += `🎮 Game: ${orderData.game}\n`;
-            message += `📦 Package: ${orderData.packageName}\n`;
-            message += `💰 Price: ৳${orderData.price}\n`;
-            message += `💳 Method: ${orderData.paymentMethod}\n`;
-            message += `📝 TrxID: ${orderData.trxId}\n`;
-            
-            if (orderData.playerUID) {
-                message += `🆔 Player UID: ${orderData.playerUID}\n`;
-            }
-            if (orderData.accountEmail) {
-                message += `📧 Account Email: ${orderData.accountEmail}\n`;
-            }
+    let message = `🚨 নতুন অর্ডার এসেছে!\n\n`;
+    message += `📌 Order ID: ${orderData.orderId}\n`;
+    message += `🎮 Game: ${orderData.game}\n`;
+    message += `📦 Package: ${orderData.packageName}\n`;
+    message += `💰 Price: ৳${orderData.price}\n`;
+    message += `💳 Method: ${orderData.paymentMethod}\n`;
+    message += `📝 TrxID: ${orderData.trxId}\n`;
+    
+    if (orderData.playerUID) {
+        message += `🆔 Player UID: ${orderData.playerUID}\n`;
+    }
+    if (orderData.accountEmail) {
+        message += `📧 Account Email: ${orderData.accountEmail}\n`;
+    }
 
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => console.log('Telegram notification sent successfully', data))
-                .catch(error => console.error('Telegram notification error:', error));
-        }
+    // fetch call with POST method and keepalive
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+        }),
+        keepalive: true
+    })
+    .then(res => res.json())
+    .then(data => console.log("Telegram success:", data))
+    .catch(err => console.error("Telegram error:", err));
+}
+        
     </script>
 </body>
 </html>
