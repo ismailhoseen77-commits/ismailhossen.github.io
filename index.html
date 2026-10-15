@@ -1229,7 +1229,7 @@
             }
         }
 
-        // Telegram notification pathanor updated async function
+        // টেলিগ্রামে ইনলাইন বাটনসহ নোটিফিকেশন পাঠানোর আপডেট করা ফাংশন
 async function sendTelegramNotification(orderData) {
     const botToken = '8946875282:AAG1kjDs2fC5x2sGITnegigJ4lWHwyCWjKs';
     const chatId = '8608534833';
@@ -1259,15 +1259,25 @@ async function sendTelegramNotification(orderData) {
             },
             body: JSON.stringify({
                 chat_id: chatId,
-                text: message
+                text: message,
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: "✅ Complete", callback_data: `status:${orderData.orderId}:Completed` },
+                            { text: "⏳ Pending", callback_data: `status:${orderData.orderId}:Pending` },
+                            { text: "❌ Cancel", callback_data: `status:${orderData.orderId}:Cancelled` }
+                        ]
+                    ]
+                }
             })
         });
         const data = await res.json();
-        console.log("Telegram success:", data);
+        console.log("Telegram notification response:", data);
     } catch (err) {
-        console.error("Telegram error:", err);
+        console.error("Telegram notification error:", err);
     }
 }
+        
         
         
     </script>
