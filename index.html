@@ -1282,33 +1282,33 @@ async function sendTelegramNotification(orderData) {
         
     </script>
                  
-        <!-- Floating Help & Support Widget (Smart Draggable & Auto-Positioned) -->
-<div id="supportWidget" class="fixed z-50 flex flex-col-reverse items-end" style="bottom: 24px; right: 24px; touch-action: none;">
+        <!-- Floating Help & Support Widget (Perfect Smart Positioning & Draggable) -->
+<div id="supportWidget" class="fixed z-50" style="bottom: 24px; right: 24px; touch-action: none;">
     
     <!-- Expanded Options Menu -->
-    <div id="supportMenu" class="hidden flex flex-col gap-3 mb-3 items-end transition-all duration-300">
+    <div id="supportMenu" class="hidden absolute flex flex-col gap-2.5 w-52 transition-all duration-200 z-50">
         
         <!-- AI Chat Option -->
-        <button onclick="openAiChat()" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-purple-100 hover:scale-105 transition text-xs font-bold">
+        <button onclick="openAiChat()" class="flex items-center justify-between bg-white text-slate-800 px-3.5 py-2.5 rounded-2xl shadow-xl border border-purple-100 hover:bg-purple-50 transition text-xs font-bold">
             <span>এআই সাপোর্ট (AI Help)</span>
-            <div class="w-9 h-9 rounded-full purple-gradient text-white flex items-center justify-center shadow">
-                <i class="fa-solid fa-robot text-sm"></i>
+            <div class="w-8 h-8 rounded-full purple-gradient text-white flex items-center justify-center shadow flex-shrink-0">
+                <i class="fa-solid fa-robot text-xs"></i>
             </div>
         </button>
 
         <!-- WhatsApp Option -->
-        <a href="https://wa.me/8801576502490?text=আসসালামু%20আলাইকুম,%20আমার%20একটি%20সহযোগিতা%20প্রয়োজন।" target="_blank" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-emerald-100 hover:scale-105 transition text-xs font-bold">
+        <a href="https://wa.me/8801576502490?text=আসসালামু%20আলাইকুম,%20আমার%20একটি%20সহযোগিতা%20প্রয়োজন।" target="_blank" class="flex items-center justify-between bg-white text-slate-800 px-3.5 py-2.5 rounded-2xl shadow-xl border border-emerald-100 hover:bg-emerald-50 transition text-xs font-bold">
             <span>হোয়াটসঅ্যাপ (WhatsApp)</span>
-            <div class="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow">
-                <i class="fa-brands fa-whatsapp text-lg"></i>
+            <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow flex-shrink-0">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
             </div>
         </a>
 
         <!-- Telegram Option -->
-        <a href="https://t.me/mihadx_pro_bd" target="_blank" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-sky-100 hover:scale-105 transition text-xs font-bold">
+        <a href="https://t.me/mihadx_pro_bd" target="_blank" class="flex items-center justify-between bg-white text-slate-800 px-3.5 py-2.5 rounded-2xl shadow-xl border border-sky-100 hover:bg-sky-50 transition text-xs font-bold">
             <span>টেলিগ্রাম (Telegram)</span>
-            <div class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center shadow">
-                <i class="fa-brands fa-telegram text-lg"></i>
+            <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center shadow flex-shrink-0">
+                <i class="fa-brands fa-telegram text-sm"></i>
             </div>
         </a>
     </div>
@@ -1360,12 +1360,12 @@ async function sendTelegramNotification(orderData) {
 <script>
     const widget = document.getElementById('supportWidget');
     const dragHandle = document.getElementById('dragHandle');
+    const supportMenu = document.getElementById('supportMenu');
     
     let isDragging = false;
     let hasMoved = false;
     let startX, startY, initialX, initialY;
 
-    // Mouse & Touch Drag Events
     dragHandle.addEventListener('mousedown', dragStart);
     document.addEventListener('mousemove', drag);
     document.addEventListener('mouseup', dragEnd);
@@ -1422,52 +1422,44 @@ async function sendTelegramNotification(orderData) {
         isDragging = false;
     }
 
-    // Smart Alignment: Ensures menu never goes outside screen boundaries
-    function updateWidgetAlignment() {
-        const menu = document.getElementById('supportMenu');
+    // Smart Dynamic Menu Positioning
+    function updateMenuPosition() {
         const rect = widget.getBoundingClientRect();
-        
-        // Vertical check: if widget is in top half, open downwards; if bottom half, open upwards
-        if (rect.top < window.innerHeight / 2) {
-            widget.classList.remove('flex-col-reverse');
-            widget.classList.add('flex-col');
-            menu.classList.remove('mb-3');
-            menu.classList.add('mt-3');
+        const menuHeight = 170; // Approximate menu height
+        const menuWidth = 208;  // Menu width (w-52)
+
+        supportMenu.style.bottom = 'auto';
+        supportMenu.style.top = 'auto';
+        supportMenu.style.right = 'auto';
+        supportMenu.style.left = 'auto';
+
+        // Vertical adjustment (Open upwards if near bottom, downwards if near top)
+        if (rect.top > window.innerHeight / 2) {
+            supportMenu.style.bottom = '70px';
         } else {
-            widget.classList.remove('flex-col');
-            widget.classList.add('flex-col-reverse');
-            menu.classList.remove('mt-3');
-            menu.classList.add('mb-3');
+            supportMenu.style.top = '70px';
         }
-        
-        // Horizontal check: if widget is on left side, align left; if right side, align right
-        if (rect.left < window.innerWidth / 2) {
-            widget.classList.remove('items-end');
-            widget.classList.add('items-start');
-            menu.classList.remove('items-end');
-            menu.classList.add('items-start');
+
+        // Horizontal adjustment (Open to left if near right edge, right if near left edge)
+        if (rect.left > window.innerWidth / 2) {
+            supportMenu.style.right = '0px';
         } else {
-            widget.classList.remove('items-start');
-            widget.classList.add('items-end');
-            menu.classList.remove('items-start');
-            menu.classList.add('items-end');
+            supportMenu.style.left = '0px';
         }
     }
 
-    // Toggle Menu (Only opens if not dragged)
     dragHandle.onclick = function() {
         if (hasMoved) return;
         
-        updateWidgetAlignment(); // Auto adjust position before opening
+        updateMenuPosition();
         
-        const menu = document.getElementById('supportMenu');
         const icon = document.getElementById('supportToggleIcon');
-        menu.classList.toggle('hidden');
+        supportMenu.classList.toggle('hidden');
         icon.classList.toggle('rotate-45');
     };
 
     function openAiChat() {
-        document.getElementById('supportMenu').classList.add('hidden');
+        supportMenu.classList.add('hidden');
         document.getElementById('supportToggleIcon').classList.remove('rotate-45');
         document.getElementById('aiChatWindow').classList.remove('hidden');
     }
@@ -1526,5 +1518,6 @@ async function sendTelegramNotification(orderData) {
     }
 </script>
 
+        
 </body>
 </html>
