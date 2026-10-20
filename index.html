@@ -1281,10 +1281,11 @@ async function sendTelegramNotification(orderData) {
         
         
     </script>
-    <!-- Floating Help & Support Widget -->
-<div id="supportWidget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+                 
+<!-- Floating Help & Support Widget (Draggable) -->
+<div id="supportWidget" class="fixed z-50 flex flex-col items-end" style="bottom: 24px; right: 24px; touch-action: none;">
     
-    <!-- Expanded Options Menu (Hidden by default) -->
+    <!-- Expanded Options Menu -->
     <div id="supportMenu" class="hidden flex flex-col gap-3 mb-3 items-end transition-all duration-300">
         
         <!-- AI Chat Option -->
@@ -1312,9 +1313,9 @@ async function sendTelegramNotification(orderData) {
         </a>
     </div>
 
-    <!-- Main Floating Toggle Button -->
-    <button onclick="toggleSupportMenu()" class="w-14 h-14 rounded-full purple-gradient text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 border-2 border-white/20">
-        <i id="supportToggleIcon" class="fa-solid fa-headset text-2xl transition-transform duration-300"></i>
+    <!-- Main Floating Toggle Button (Draggable Handler) -->
+    <button id="dragHandle" class="w-14 h-14 rounded-full purple-gradient text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 border-2 border-white/25 cursor-grab active:cursor-grabbing">
+        <i id="supportToggleIcon" class="fa-solid fa-headset text-2xl transition-transform duration-300 pointer-events-none"></i>
     </button>
 </div>
 
@@ -1341,7 +1342,7 @@ async function sendTelegramNotification(orderData) {
         <div class="flex items-start gap-2">
             <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
             <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700">
-                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর এআই গাইড। ওয়েবসাইট কিভাবে ব্যবহার করবেন, অর্ডার করবেন বা কোনো সমস্যা হলে আমাকে বলুন, আমি বুঝিয়ে দিচ্ছি! 😊
+                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর এআই গাইড। ওয়েবসাইট ব্যবহার, লগইন বা অর্ডার সংক্রান্ত যেকোনো সমস্যায় আমাকে বলুন, বুঝিয়ে দিচ্ছি! 😊
             </div>
         </div>
     </div>
@@ -1355,17 +1356,86 @@ async function sendTelegramNotification(orderData) {
     </div>
 </div>
 
-<!-- Widget Script -->
+<!-- Widget & Dragging Script -->
 <script>
-    function toggleSupportMenu() {
+    const widget = document.getElementById('supportWidget');
+    const dragHandle = document.getElementById('dragHandle');
+    
+    let isDragging = false;
+    let hasMoved = false;
+    let startX, startY, initialX, initialY;
+
+    // Mouse & Touch Drag Events
+    dragHandle.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+
+    dragHandle.addEventListener('touchstart', dragStart, { passive: true });
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('touchend', dragEnd);
+
+    function dragStart(e) {
+        isDragging = true;
+        hasMoved = false;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        startX = clientX;
+        startY = clientY;
+        
+        const rect = widget.getBoundingClientRect();
+        initialX = rect.left;
+        initialY = rect.top;
+        
+        widget.style.bottom = 'auto';
+        widget.style.right = 'auto';
+        widget.style.left = initialX + 'px';
+        widget.style.top = initialY + 'px';
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+            hasMoved = true; // Mark as dragged so click doesn't trigger
+        }
+
+        let newX = initialX + dx;
+        let newY = initialY + dy;
+
+        // Screen boundary limits
+        const maxX = window.innerWidth - widget.offsetWidth;
+        const maxY = window.innerHeight - widget.offsetHeight;
+
+        newX = Math.max(10, Math.min(newX, maxX - 10));
+        newY = Math.max(10, Math.min(newY, maxY - 10));
+
+        widget.style.left = newX + 'px';
+        widget.style.top = newY + 'px';
+    }
+
+    function dragEnd() {
+        isDragging = false;
+    }
+
+    // Toggle Menu (Only opens if not dragged)
+    dragHandle.onclick = function() {
+        if (hasMoved) return; // Ignore if user was dragging the button
+        
         const menu = document.getElementById('supportMenu');
         const icon = document.getElementById('supportToggleIcon');
         menu.classList.toggle('hidden');
         icon.classList.toggle('rotate-45');
-    }
+    };
 
     function openAiChat() {
-        toggleSupportMenu(); // Close menu
+        document.getElementById('supportMenu').classList.add('hidden');
+        document.getElementById('supportToggleIcon').classList.remove('rotate-45');
         document.getElementById('aiChatWindow').classList.remove('hidden');
     }
 
@@ -1395,19 +1465,21 @@ async function sendTelegramNotification(orderData) {
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // AI Smart Guide Logic
+        // AI Smart Guide Logic (Login, Topup, etc.)
         setTimeout(() => {
             let reply = "দুঃখিত, বিষয়টি আমি ঠিক বুঝতে পারিনি। আপনি চাইলে আমাদের WhatsApp বা Telegram এ সরাসরি যোগাযোগ করতে পারেন।";
             const lowerMsg = msg.toLowerCase();
 
-            if (lowerMsg.includes('order') || lowerMsg.includes('অর্ডার') || lowerMsg.includes('কিভাবে') || lowerMsg.includes('how')) {
-                reply = "অর্ডার করার নিয়ম খুব সহজ:\n১. হোমপেজ থেকে আপনার পছন্দের গেম ও প্যাকেজ সিলেক্ট করুন।\n২. চেকআউট ফর্মে আপনার Player UID এবং পেমেন্ট ইনফো (bKash TrxID) দিন।\n৩. সাবমিট করার পর 'আমার অর্ডারসমূহ' পেজ থেকে লাইভ স্ট্যাটাস দেখতে পাবেন!";
+            if (lowerMsg.includes('login') || lowerMsg.includes('লগইন') || lowerMsg.includes('ঢুকতে') || lowerMsg.includes('account')) {
+                reply = "ওয়েবসাইটে লগইন করতে সমস্যা হলে:\n১. নিশ্চিত করুন আপনি সঠিক ইমেল ও পাসওয়ার্ড দিচ্ছেন।\n২. যদি অ্যাকাউন্ট না থাকে, তবে সাইন-আপ অপশন থেকে নতুন অ্যাকাউন্ট তৈরি করে নিন।";
+            } else if (lowerMsg.includes('order') || lowerMsg.includes('অর্ডার') || lowerMsg.includes('কিভাবে') || lowerMsg.includes('how')) {
+                reply = "অর্ডার করার নিয়ম:\n১. হোমপেজ থেকে গেম ও প্যাকেজ সিলেক্ট করুন।\n২. চেকআউট ফর্মে আপনার Player UID ও পেমেন্ট TrxID দিন।\n৩. সাবমিট করার পর 'আমার অর্ডারসমূহ' পেজ থেকে লাইভ স্ট্যাটাস দেখতে পাবেন!";
             } else if (lowerMsg.includes('bkash') || lowerMsg.includes('বিকাশ') || lowerMsg.includes('payment') || lowerMsg.includes('টাকা') || lowerMsg.includes('trxid')) {
-                reply = "আমাদের অফিশিয়াল বিকাশ নম্বরে টাকা পাঠিয়ে যে ট্রানজ্যাকশন আইডি (TrxID) পাবেন, সেটি অর্ডার ফরমের নির্দিষ্ট ঘরে বসিয়ে দিতে হবে।";
+                reply = "আমাদের অফিশিয়াল নম্বরে টাকা পাঠিয়ে যে ট্রানজ্যাকশন আইডি (TrxID) পাবেন, সেটি চেকআউট ফরমের নির্দিষ্ট ঘরে বসিয়ে দেবেন।";
             } else if (lowerMsg.includes('diamond') || lowerMsg.includes('ডায়মন্ড') || lowerMsg.includes('free fire') || lowerMsg.includes('ff')) {
-                reply = "Free Fire ডায়মন্ড কিনতে প্রথমে Free Fire প্যাকেজে ক্লিক করুন, এরপর আপনার সঠিক Player UID দিয়ে পেমেন্ট সম্পন্ন করুন।";
+                reply = "Free Fire ডায়মন্ড কিনতে গেম ক্যাটাগরি থেকে Free Fire সিলেক্ট করে আপনার সঠিক Player UID দিয়ে পেমেন্ট সম্পন্ন করুন।";
             } else if (lowerMsg.includes('hi') || lowerMsg.includes('hello') || lowerMsg.includes('সালাম') || lowerMsg.includes('কেমন')) {
-                reply = "ওয়ালাইকুমুসসালাম! Mihadx.pro.bd এ আপনাকে স্বাগতম। আজ আপনাকে কীভাবে সাহায্য করতে পারি বলুন?";
+                reply = "ওয়ালাইকুমুসসালাম! Mihadx.pro.bd এ আপনাকে স্বাগতম। বলুন, আজ আপনাকে কীভাবে সাহায্য করতে পারি?";
             }
 
             chatBox.innerHTML += `
@@ -1422,6 +1494,5 @@ async function sendTelegramNotification(orderData) {
         }, 700);
     }
 </script>
-
 </body>
 </html>
