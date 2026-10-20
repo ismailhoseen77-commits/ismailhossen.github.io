@@ -1281,57 +1281,96 @@ async function sendTelegramNotification(orderData) {
         
         
     </script>
-    <!-- AI Help Widget Container -->
-<div id="aiHelpWidget" class="fixed bottom-6 right-6 z-50">
-    <!-- Floating Toggle Button -->
-    <button onclick="toggleAiChat()" class="w-14 h-14 rounded-full purple-gradient text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 border-2 border-white/20">
-        <i class="fa-solid fa-headset text-2xl"></i>
-    </button>
-
-    <!-- Chat Box Window -->
-    <div id="aiChatWindow" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden h-[450px]">
+    <!-- Floating Help & Support Widget -->
+<div id="supportWidget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    
+    <!-- Expanded Options Menu (Hidden by default) -->
+    <div id="supportMenu" class="hidden flex flex-col gap-3 mb-3 items-end transition-all duration-300">
         
-        <!-- Header -->
-        <div class="purple-gradient p-4 text-white flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <i class="fa-solid fa-robot text-sm"></i>
-                </div>
-                <div>
-                    <h4 class="text-xs font-bold leading-tight">Mihadx AI Support</h4>
-                    <p class="text-[10px] text-purple-200">সার্বক্ষণিক আপনার সহায়তায়</p>
-                </div>
+        <!-- AI Chat Option -->
+        <button onclick="openAiChat()" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-purple-100 hover:scale-105 transition text-xs font-bold">
+            <span>এআই সাপোর্ট (AI Help)</span>
+            <div class="w-9 h-9 rounded-full purple-gradient text-white flex items-center justify-center shadow">
+                <i class="fa-solid fa-robot text-sm"></i>
             </div>
-            <button onclick="toggleAiChat()" class="text-white/80 hover:text-white p-1">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
+        </button>
 
-        <!-- Chat Messages Area -->
-        <div id="aiChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar bg-slate-50">
-            <div class="flex items-start gap-2">
-                <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700">
-                    আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর এআই অ্যাসিস্ট্যান্ট। ডায়মন্ড টপ-আপ, পেমেন্ট বা অর্ডার সংক্রান্ত যেকোনো সমস্যায় আমাকে জিজ্ঞেস করতে পারেন! 😊
-                </div>
+        <!-- WhatsApp Option -->
+        <a href="https://wa.me/8801700000000?text=আসসালামু%20আলাইকুম,%20আমার%20একটি%20সহযোগিতা%20প্রয়োজন।" target="_blank" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-emerald-100 hover:scale-105 transition text-xs font-bold">
+            <span>হোয়াটসঅ্যাপ (WhatsApp)</span>
+            <div class="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+            </div>
+        </a>
+
+        <!-- Telegram Option -->
+        <a href="https://t.me/YourTelegramUsername" target="_blank" class="flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-full shadow-lg border border-sky-100 hover:scale-105 transition text-xs font-bold">
+            <span>টেলিগ্রাম (Telegram)</span>
+            <div class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center shadow">
+                <i class="fa-brands fa-telegram text-lg"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- Main Floating Toggle Button -->
+    <button onclick="toggleSupportMenu()" class="w-14 h-14 rounded-full purple-gradient text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 border-2 border-white/20">
+        <i id="supportToggleIcon" class="fa-solid fa-headset text-2xl transition-transform duration-300"></i>
+    </button>
+</div>
+
+<!-- AI Chat Box Modal/Window -->
+<div id="aiChatWindow" class="hidden fixed bottom-24 right-6 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden h-[450px] z-50">
+    <!-- Header -->
+    <div class="purple-gradient p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <i class="fa-solid fa-robot text-sm"></i>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold leading-tight">Mihadx AI Assistant</h4>
+                <p class="text-[10px] text-purple-200">ওয়েব ব্যবহার ও সমস্যা সমাধানে</p>
             </div>
         </div>
+        <button onclick="closeAiChat()" class="text-white/80 hover:text-white p-1">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+    </div>
 
-        <!-- Input Area -->
-        <div class="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
-            <input type="text" id="aiUserInput" placeholder="আপনার সমস্যা এখানে লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
-            <button onclick="sendAiMessage()" class="purple-gradient text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center justify-center">
-                <i class="fa-solid fa-paper-plane"></i>
-            </button>
+    <!-- Chat Messages Area -->
+    <div id="aiChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar bg-slate-50">
+        <div class="flex items-start gap-2">
+            <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700">
+                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর এআই গাইড। ওয়েবসাইট কিভাবে ব্যবহার করবেন, অর্ডার করবেন বা কোনো সমস্যা হলে আমাকে বলুন, আমি বুঝিয়ে দিচ্ছি! 😊
+            </div>
         </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
+        <input type="text" id="aiUserInput" placeholder="আপনার সমস্যা বা প্রশ্ন লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
+        <button onclick="sendAiMessage()" class="purple-gradient text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
     </div>
 </div>
 
-<!-- Chat Widget Script -->
+<!-- Widget Script -->
 <script>
-    function toggleAiChat() {
-        const win = document.getElementById('aiChatWindow');
-        win.classList.toggle('hidden');
+    function toggleSupportMenu() {
+        const menu = document.getElementById('supportMenu');
+        const icon = document.getElementById('supportToggleIcon');
+        menu.classList.toggle('hidden');
+        icon.classList.toggle('rotate-45');
+    }
+
+    function openAiChat() {
+        toggleSupportMenu(); // Close menu
+        document.getElementById('aiChatWindow').classList.remove('hidden');
+    }
+
+    function closeAiChat() {
+        document.getElementById('aiChatWindow').classList.add('hidden');
     }
 
     function handleAiKeyPress(e) {
@@ -1345,7 +1384,7 @@ async function sendTelegramNotification(orderData) {
 
         const chatBox = document.getElementById('aiChatMessages');
         
-        // User Message Bubble
+        // User Bubble
         chatBox.innerHTML += `
             <div class="flex items-start gap-2 justify-end">
                 <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] leading-relaxed">
@@ -1356,25 +1395,25 @@ async function sendTelegramNotification(orderData) {
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // AI Smart Auto-Reply Logic
+        // AI Smart Guide Logic
         setTimeout(() => {
-            let reply = "দুঃখিত, বিষয়টি আমি ঠিক বুঝতে পারিনি। বিস্তারিত জানতে আমাদের অফিশিয়াল টেলিগ্রাম বা ফেসবুক পেজে যোগাযোগ করুন।";
+            let reply = "দুঃখিত, বিষয়টি আমি ঠিক বুঝতে পারিনি। আপনি চাইলে আমাদের WhatsApp বা Telegram এ সরাসরি যোগাযোগ করতে পারেন।";
             const lowerMsg = msg.toLowerCase();
 
-            if (lowerMsg.includes('order') || lowerMsg.includes('অর্ডার') || lowerMsg.includes('status') || lowerMsg.includes('স্ট্যাটাস')) {
-                reply = "আপনার অর্ডারের লাইভ স্ট্যাটাস দেখতে ওয়েবসাইটের 'আমার অর্ডারসমূহ' ট্যাবে যান এবং 'Refresh' বাটন চাপুন। সাধারণত পেমেন্ট কনফার্ম হওয়ার ১০-১৫ মিনিটের মধ্যে অর্ডার কমপ্লিট হয়ে যায়!";
-            } else if (lowerMsg.includes('bkash') || lowerMsg.includes('বিকাশ') || lowerMsg.includes('payment') || lowerMsg.includes('পেমেন্ট') || lowerMsg.includes('trxid')) {
-                reply = "আমাদের বিকাশ বা নগদ পেমেন্ট নম্বর চেকআউট পেজে পেয়ে যাবেন। টাকা পাঠানোর পর সঠিক TrxID ও আপনার নম্বর দিয়ে অর্ডার সাবমিট করুন।";
+            if (lowerMsg.includes('order') || lowerMsg.includes('অর্ডার') || lowerMsg.includes('কিভাবে') || lowerMsg.includes('how')) {
+                reply = "অর্ডার করার নিয়ম খুব সহজ:\n১. হোমপেজ থেকে আপনার পছন্দের গেম ও প্যাকেজ সিলেক্ট করুন।\n২. চেকআউট ফর্মে আপনার Player UID এবং পেমেন্ট ইনফো (bKash TrxID) দিন।\n৩. সাবমিট করার পর 'আমার অর্ডারসমূহ' পেজ থেকে লাইভ স্ট্যাটাস দেখতে পাবেন!";
+            } else if (lowerMsg.includes('bkash') || lowerMsg.includes('বিকাশ') || lowerMsg.includes('payment') || lowerMsg.includes('টাকা') || lowerMsg.includes('trxid')) {
+                reply = "আমাদের অফিশিয়াল বিকাশ নম্বরে টাকা পাঠিয়ে যে ট্রানজ্যাকশন আইডি (TrxID) পাবেন, সেটি অর্ডার ফরমের নির্দিষ্ট ঘরে বসিয়ে দিতে হবে।";
             } else if (lowerMsg.includes('diamond') || lowerMsg.includes('ডায়মন্ড') || lowerMsg.includes('free fire') || lowerMsg.includes('ff')) {
-                reply = "Free Fire ডায়মন্ড টপ-আপের জন্য সঠিক Player UID দিন। আমাদের সার্ভিস ১০০% নিরাপদ ও দ্রুততম!";
+                reply = "Free Fire ডায়মন্ড কিনতে প্রথমে Free Fire প্যাকেজে ক্লিক করুন, এরপর আপনার সঠিক Player UID দিয়ে পেমেন্ট সম্পন্ন করুন।";
             } else if (lowerMsg.includes('hi') || lowerMsg.includes('hello') || lowerMsg.includes('সালাম') || lowerMsg.includes('কেমন')) {
-                reply = "ওয়ালাইকুমুসসালাম! আমি আলহামদুলিল্লাহ ভালো আছি। বলুন, আপনার কি ধরনের সাহায্য প্রয়োজন?";
+                reply = "ওয়ালাইকুমুসসালাম! Mihadx.pro.bd এ আপনাকে স্বাগতম। আজ আপনাকে কীভাবে সাহায্য করতে পারি বলুন?";
             }
 
             chatBox.innerHTML += `
                 <div class="flex items-start gap-2">
                     <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed">
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed whitespace-pre-line">
                         ${reply}
                     </div>
                 </div>
@@ -1383,5 +1422,6 @@ async function sendTelegramNotification(orderData) {
         }, 700);
     }
 </script>
+
 </body>
 </html>
