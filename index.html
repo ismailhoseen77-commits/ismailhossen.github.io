@@ -1282,8 +1282,8 @@ async function sendTelegramNotification(orderData) {
         
     </script>
                  
-<!-- Floating Help & Support Widget (Draggable) -->
-<div id="supportWidget" class="fixed z-50 flex flex-col items-end" style="bottom: 24px; right: 24px; touch-action: none;">
+        <!-- Floating Help & Support Widget (Smart Draggable & Auto-Positioned) -->
+<div id="supportWidget" class="fixed z-50 flex flex-col-reverse items-end" style="bottom: 24px; right: 24px; touch-action: none;">
     
     <!-- Expanded Options Menu -->
     <div id="supportMenu" class="hidden flex flex-col gap-3 mb-3 items-end transition-all duration-300">
@@ -1313,7 +1313,7 @@ async function sendTelegramNotification(orderData) {
         </a>
     </div>
 
-    <!-- Main Floating Toggle Button (Draggable Handler) -->
+    <!-- Main Floating Toggle Button -->
     <button id="dragHandle" class="w-14 h-14 rounded-full purple-gradient text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 border-2 border-white/25 cursor-grab active:cursor-grabbing">
         <i id="supportToggleIcon" class="fa-solid fa-headset text-2xl transition-transform duration-300 pointer-events-none"></i>
     </button>
@@ -1356,7 +1356,7 @@ async function sendTelegramNotification(orderData) {
     </div>
 </div>
 
-<!-- Widget & Dragging Script -->
+<!-- Widget & Smart Positioning Script -->
 <script>
     const widget = document.getElementById('supportWidget');
     const dragHandle = document.getElementById('dragHandle');
@@ -1402,13 +1402,12 @@ async function sendTelegramNotification(orderData) {
         const dy = clientY - startY;
 
         if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
-            hasMoved = true; // Mark as dragged so click doesn't trigger
+            hasMoved = true;
         }
 
         let newX = initialX + dx;
         let newY = initialY + dy;
 
-        // Screen boundary limits
         const maxX = window.innerWidth - widget.offsetWidth;
         const maxY = window.innerHeight - widget.offsetHeight;
 
@@ -1423,9 +1422,43 @@ async function sendTelegramNotification(orderData) {
         isDragging = false;
     }
 
+    // Smart Alignment: Ensures menu never goes outside screen boundaries
+    function updateWidgetAlignment() {
+        const menu = document.getElementById('supportMenu');
+        const rect = widget.getBoundingClientRect();
+        
+        // Vertical check: if widget is in top half, open downwards; if bottom half, open upwards
+        if (rect.top < window.innerHeight / 2) {
+            widget.classList.remove('flex-col-reverse');
+            widget.classList.add('flex-col');
+            menu.classList.remove('mb-3');
+            menu.classList.add('mt-3');
+        } else {
+            widget.classList.remove('flex-col');
+            widget.classList.add('flex-col-reverse');
+            menu.classList.remove('mt-3');
+            menu.classList.add('mb-3');
+        }
+        
+        // Horizontal check: if widget is on left side, align left; if right side, align right
+        if (rect.left < window.innerWidth / 2) {
+            widget.classList.remove('items-end');
+            widget.classList.add('items-start');
+            menu.classList.remove('items-end');
+            menu.classList.add('items-start');
+        } else {
+            widget.classList.remove('items-start');
+            widget.classList.add('items-end');
+            menu.classList.remove('items-start');
+            menu.classList.add('items-end');
+        }
+    }
+
     // Toggle Menu (Only opens if not dragged)
     dragHandle.onclick = function() {
-        if (hasMoved) return; // Ignore if user was dragging the button
+        if (hasMoved) return;
+        
+        updateWidgetAlignment(); // Auto adjust position before opening
         
         const menu = document.getElementById('supportMenu');
         const icon = document.getElementById('supportToggleIcon');
@@ -1454,7 +1487,6 @@ async function sendTelegramNotification(orderData) {
 
         const chatBox = document.getElementById('aiChatMessages');
         
-        // User Bubble
         chatBox.innerHTML += `
             <div class="flex items-start gap-2 justify-end">
                 <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] leading-relaxed">
@@ -1465,7 +1497,6 @@ async function sendTelegramNotification(orderData) {
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // AI Smart Guide Logic (Login, Topup, etc.)
         setTimeout(() => {
             let reply = "দুঃখিত, বিষয়টি আমি ঠিক বুঝতে পারিনি। আপনি চাইলে আমাদের WhatsApp বা Telegram এ সরাসরি যোগাযোগ করতে পারেন।";
             const lowerMsg = msg.toLowerCase();
@@ -1494,5 +1525,6 @@ async function sendTelegramNotification(orderData) {
         }, 700);
     }
 </script>
+
 </body>
 </html>
