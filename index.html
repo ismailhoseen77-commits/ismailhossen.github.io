@@ -1282,7 +1282,7 @@ async function sendTelegramNotification(orderData) {
         
     </script>
                  
-        <!-- Floating Help & Support Widget (Perfect Smart Positioning & Draggable) -->
+        <!-- Floating Help & Support Widget (Gemini AI Fully Integrated) -->
 <div id="supportWidget" class="fixed z-50" style="bottom: 24px; right: 24px; touch-action: none;">
     
     <!-- Expanded Options Menu -->
@@ -1329,7 +1329,7 @@ async function sendTelegramNotification(orderData) {
             </div>
             <div>
                 <h4 class="text-xs font-bold leading-tight">Mihadx AI Assistant</h4>
-                <p class="text-[10px] text-purple-200">ওয়েব ব্যবহার ও সমস্যা সমাধানে</p>
+                <p class="text-[10px] text-purple-200">সার্বক্ষণিক স্মার্ট সহায়তা</p>
             </div>
         </div>
         <button onclick="closeAiChat()" class="text-white/80 hover:text-white p-1">
@@ -1342,22 +1342,25 @@ async function sendTelegramNotification(orderData) {
         <div class="flex items-start gap-2">
             <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
             <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700">
-                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর এআই গাইড। ওয়েবসাইট ব্যবহার, লগইন বা অর্ডার সংক্রান্ত যেকোনো সমস্যায় আমাকে বলুন, বুঝিয়ে দিচ্ছি! 😊
+                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর Gemini AI অ্যাসিস্ট্যান্ট। অ্যাকাউন্ট খোলা, টপ-আপ, বা যেকোনো সমস্যার কথা আমাকে বলুন! 😊
             </div>
         </div>
     </div>
 
     <!-- Input Area -->
     <div class="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
-        <input type="text" id="aiUserInput" placeholder="আপনার সমস্যা বা প্রশ্ন লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
+        <input type="text" id="aiUserInput" placeholder="আপনার প্রশ্নটি লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
         <button onclick="sendAiMessage()" class="purple-gradient text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center justify-center">
             <i class="fa-solid fa-paper-plane"></i>
         </button>
     </div>
 </div>
 
-<!-- Widget & Smart Positioning Script -->
+<!-- Widget & Gemini AI Integration Script -->
 <script>
+    // 🔑 আপনার এপিআই কি এখানে বসানো হলো
+    const GEMINI_API_KEY = "AQ.Ab8RN6L7-tkrG0EYTH6Un0q2IaL1gUS3ROUAgNDRPEZoVPXzIw";
+
     const widget = document.getElementById('supportWidget');
     const dragHandle = document.getElementById('dragHandle');
     const supportMenu = document.getElementById('supportMenu');
@@ -1422,25 +1425,19 @@ async function sendTelegramNotification(orderData) {
         isDragging = false;
     }
 
-    // Smart Dynamic Menu Positioning
     function updateMenuPosition() {
         const rect = widget.getBoundingClientRect();
-        const menuHeight = 170; // Approximate menu height
-        const menuWidth = 208;  // Menu width (w-52)
-
         supportMenu.style.bottom = 'auto';
         supportMenu.style.top = 'auto';
         supportMenu.style.right = 'auto';
         supportMenu.style.left = 'auto';
 
-        // Vertical adjustment (Open upwards if near bottom, downwards if near top)
         if (rect.top > window.innerHeight / 2) {
             supportMenu.style.bottom = '70px';
         } else {
             supportMenu.style.top = '70px';
         }
 
-        // Horizontal adjustment (Open to left if near right edge, right if near left edge)
         if (rect.left > window.innerWidth / 2) {
             supportMenu.style.right = '0px';
         } else {
@@ -1450,9 +1447,7 @@ async function sendTelegramNotification(orderData) {
 
     dragHandle.onclick = function() {
         if (hasMoved) return;
-        
         updateMenuPosition();
-        
         const icon = document.getElementById('supportToggleIcon');
         supportMenu.classList.toggle('hidden');
         icon.classList.toggle('rotate-45');
@@ -1472,13 +1467,14 @@ async function sendTelegramNotification(orderData) {
         if (e.key === 'Enter') sendAiMessage();
     }
 
-    function sendAiMessage() {
+    async function sendAiMessage() {
         const input = document.getElementById('aiUserInput');
         const msg = input.value.trim();
         if (!msg) return;
 
         const chatBox = document.getElementById('aiChatMessages');
         
+        // User Message
         chatBox.innerHTML += `
             <div class="flex items-start gap-2 justify-end">
                 <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] leading-relaxed">
@@ -1489,35 +1485,65 @@ async function sendTelegramNotification(orderData) {
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        setTimeout(() => {
-            let reply = "দুঃখিত, বিষয়টি আমি ঠিক বুঝতে পারিনি। আপনি চাইলে আমাদের WhatsApp বা Telegram এ সরাসরি যোগাযোগ করতে পারেন।";
-            const lowerMsg = msg.toLowerCase();
+        // Typing Indicator
+        const loadingId = "loading-" + Date.now();
+        chatBox.innerHTML += `
+            <div id="${loadingId}" class="flex items-start gap-2">
+                <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-500 italic">
+                    উত্তর তৈরি হচ্ছে...
+                </div>
+            </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-            if (lowerMsg.includes('login') || lowerMsg.includes('লগইন') || lowerMsg.includes('ঢুকতে') || lowerMsg.includes('account')) {
-                reply = "ওয়েবসাইটে লগইন করতে সমস্যা হলে:\n১. নিশ্চিত করুন আপনি সঠিক ইমেল ও পাসওয়ার্ড দিচ্ছেন।\n২. যদি অ্যাকাউন্ট না থাকে, তবে সাইন-আপ অপশন থেকে নতুন অ্যাকাউন্ট তৈরি করে নিন।";
-            } else if (lowerMsg.includes('order') || lowerMsg.includes('অর্ডার') || lowerMsg.includes('কিভাবে') || lowerMsg.includes('how')) {
-                reply = "অর্ডার করার নিয়ম:\n১. হোমপেজ থেকে গেম ও প্যাকেজ সিলেক্ট করুন।\n২. চেকআউট ফর্মে আপনার Player UID ও পেমেন্ট TrxID দিন।\n৩. সাবমিট করার পর 'আমার অর্ডারসমূহ' পেজ থেকে লাইভ স্ট্যাটাস দেখতে পাবেন!";
-            } else if (lowerMsg.includes('bkash') || lowerMsg.includes('বিকাশ') || lowerMsg.includes('payment') || lowerMsg.includes('টাকা') || lowerMsg.includes('trxid')) {
-                reply = "আমাদের অফিশিয়াল নম্বরে টাকা পাঠিয়ে যে ট্রানজ্যাকশন আইডি (TrxID) পাবেন, সেটি চেকআউট ফরমের নির্দিষ্ট ঘরে বসিয়ে দেবেন।";
-            } else if (lowerMsg.includes('diamond') || lowerMsg.includes('ডায়মন্ড') || lowerMsg.includes('free fire') || lowerMsg.includes('ff')) {
-                reply = "Free Fire ডায়মন্ড কিনতে গেম ক্যাটাগরি থেকে Free Fire সিলেক্ট করে আপনার সঠিক Player UID দিয়ে পেমেন্ট সম্পন্ন করুন।";
-            } else if (lowerMsg.includes('hi') || lowerMsg.includes('hello') || lowerMsg.includes('সালাম') || lowerMsg.includes('কেমন')) {
-                reply = "ওয়ালাইকুমুসসালাম! Mihadx.pro.bd এ আপনাকে স্বাগতম। বলুন, আজ আপনাকে কীভাবে সাহায্য করতে পারি?";
+        // Gemini AI Call with Comprehensive Website Context
+        try {
+            const systemPrompt = "You are an intelligent, friendly, and expert customer support AI guide for 'Mihadx.pro.bd', a trusted gaming top-up store in Bangladesh. Always reply in clear, polite, and natural Bengali. You have complete knowledge of the website. Here are the core details you must explain accurately when asked: 1. Account & Login: Users can sign up or log in using the profile/login button located at the top-right corner of the website. If they don't have an account, they can easily create one. 2. Top-up & Ordering Process: To buy items (like Free Fire diamonds, eFootball coins, etc.), users need to select their desired game/package from the homepage, provide their correct In-Game Player UID, and submit the checkout form along with the bKash TrxID (Transaction ID) after making the payment to the official number. 3. Order Status: Orders are typically reviewed and completed within 10-15 minutes. Users can track their live order status anytime by going to the 'My Orders' (আমার অর্ডারসমূহ) tab on the website. 4. Support: If they face any complex issues, they can contact Mihadx directly via the WhatsApp or Telegram options available in the support widget. Keep your answers concise, clear, helpful, and directly tailored to mihadx.pro.bd.";
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [
+                            { text: systemPrompt },
+                            { text: "Customer Question: " + msg }
+                        ]
+                    }]
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById(loadingId).remove();
+
+            let replyText = "দুঃখিত, এই মুহূর্তে উত্তর দিতে সমস্যা হচ্ছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন বা আমাদের WhatsApp এ সরাসরি যোগাযোগ করুন।";
+            if (data.candidates && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+                replyText = data.candidates[0].content.parts[0].text;
             }
 
             chatBox.innerHTML += `
                 <div class="flex items-start gap-2">
                     <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
                     <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed whitespace-pre-line">
-                        ${reply}
+                        ${replyText}
                     </div>
                 </div>
             `;
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 700);
+        } catch (error) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `
+                <div class="flex items-start gap-2">
+                    <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed">
+                        নেটওয়ার্ক অথবা এপিআই কানেকশনে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।
+                    </div>
+                </div>
+            `;
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
-
-        
+            
 </body>
 </html>
