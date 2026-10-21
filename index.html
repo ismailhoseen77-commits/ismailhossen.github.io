@@ -1282,7 +1282,7 @@ async function sendTelegramNotification(orderData) {
         
     </script>
                  
-        <!-- Floating Help & Support Widget (Gemini AI Fully Integrated) -->
+            <!-- Floating Help & Support Widget (Mihadx AI Assistant - Advanced & Secure) -->
 <div id="supportWidget" class="fixed z-50" style="bottom: 24px; right: 24px; touch-action: none;">
     
     <!-- Expanded Options Menu -->
@@ -1341,24 +1341,24 @@ async function sendTelegramNotification(orderData) {
     <div id="aiChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar bg-slate-50">
         <div class="flex items-start gap-2">
             <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-            <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700">
-                আসসালামু আলাইকুম! আমি Mihadx.pro.bd এর Gemini AI অ্যাসিস্ট্যান্ট। অ্যাকাউন্ট খোলা, টপ-আপ, বা যেকোনো সমস্যার কথা আমাকে বলুন! 😊
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 leading-relaxed">
+                আসসালামু আলাইকুম! আমি Mihadx AI Assistant, Mihadx.pro.bd-এর কাস্টমার সাপোর্ট সহকারী। অ্যাকাউন্ট খোলা, টপ-আপ, বা অর্ডার সংক্রান্ত যেকোনো সমস্যায় আমাকে বলুন! 😊
             </div>
         </div>
     </div>
 
     <!-- Input Area -->
     <div class="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
-        <input type="text" id="aiUserInput" placeholder="আপনার প্রশ্নটি লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
+        <input type="text" id="aiUserInput" placeholder="আপনার প্রশ্ন বা সমস্যা লিখুন..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-brand-500" onkeypress="handleAiKeyPress(event)">
         <button onclick="sendAiMessage()" class="purple-gradient text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center justify-center">
             <i class="fa-solid fa-paper-plane"></i>
         </button>
     </div>
 </div>
 
-<!-- Widget & Gemini AI Integration Script -->
+<!-- Widget, Drag & Advanced Gemini AI Integration Script -->
 <script>
-    // 🔑 আপনার এপিআই কি এখানে বসানো হলো
+    // 🔑 এপিআই কি কনফিগারেশন
     const GEMINI_API_KEY = "AQ.Ab8RN6L7-tkrG0EYTH6Un0q2IaL1gUS3ROUAgNDRPEZoVPXzIw";
 
     const widget = document.getElementById('supportWidget');
@@ -1369,6 +1369,7 @@ async function sendTelegramNotification(orderData) {
     let hasMoved = false;
     let startX, startY, initialX, initialY;
 
+    // Dragging Logic
     dragHandle.addEventListener('mousedown', dragStart);
     document.addEventListener('mousemove', drag);
     document.addEventListener('mouseup', dragEnd);
@@ -1425,6 +1426,7 @@ async function sendTelegramNotification(orderData) {
         isDragging = false;
     }
 
+    // Smart Menu Positioning
     function updateMenuPosition() {
         const rect = widget.getBoundingClientRect();
         supportMenu.style.bottom = 'auto';
@@ -1467,6 +1469,9 @@ async function sendTelegramNotification(orderData) {
         if (e.key === 'Enter') sendAiMessage();
     }
 
+    // Conversation History for Multi-turn context
+    let chatHistory = [];
+
     async function sendAiMessage() {
         const input = document.getElementById('aiUserInput');
         const msg = input.value.trim();
@@ -1474,76 +1479,128 @@ async function sendTelegramNotification(orderData) {
 
         const chatBox = document.getElementById('aiChatMessages');
         
-        // User Message
-        chatBox.innerHTML += `
-            <div class="flex items-start gap-2 justify-end">
-                <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] leading-relaxed">
-                    ${msg}
-                </div>
-            </div>
-        `;
+        // Securely render User Message using DOM methods
+        const userWrapper = document.createElement('div');
+        userWrapper.className = "flex items-start gap-2 justify-end";
+        
+        const userBubble = document.createElement('div');
+        userBubble.className = "bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] leading-relaxed";
+        userBubble.textContent = msg;
+        
+        userWrapper.appendChild(userBubble);
+        chatBox.appendChild(userWrapper);
+        
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Typing Indicator
+        // Add to history
+        chatHistory.push({ role: "user", parts: [{ text: msg }] });
+
+        // Loading Indicator
         const loadingId = "loading-" + Date.now();
-        chatBox.innerHTML += `
-            <div id="${loadingId}" class="flex items-start gap-2">
-                <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-500 italic">
-                    উত্তর তৈরি হচ্ছে...
-                </div>
-            </div>
-        `;
+        const loadingWrapper = document.createElement('div');
+        loadingWrapper.id = loadingId;
+        loadingWrapper.className = "flex items-start gap-2";
+        
+        const aiAvatar = document.createElement('div');
+        aiAvatar.className = "w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold";
+        aiAvatar.textContent = "AI";
+        
+        const loadingBubble = document.createElement('div');
+        loadingBubble.className = "bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-500 italic";
+        loadingBubble.textContent = "উত্তর তৈরি হচ্ছে...";
+        
+        loadingWrapper.appendChild(aiAvatar);
+        loadingWrapper.appendChild(loadingBubble);
+        chatBox.appendChild(loadingWrapper);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Gemini AI Call with Comprehensive Website Context
         try {
-            const systemPrompt = "You are an intelligent, friendly, and expert customer support AI guide for 'Mihadx.pro.bd', a trusted gaming top-up store in Bangladesh. Always reply in clear, polite, and natural Bengali. You have complete knowledge of the website. Here are the core details you must explain accurately when asked: 1. Account & Login: Users can sign up or log in using the profile/login button located at the top-right corner of the website. If they don't have an account, they can easily create one. 2. Top-up & Ordering Process: To buy items (like Free Fire diamonds, eFootball coins, etc.), users need to select their desired game/package from the homepage, provide their correct In-Game Player UID, and submit the checkout form along with the bKash TrxID (Transaction ID) after making the payment to the official number. 3. Order Status: Orders are typically reviewed and completed within 10-15 minutes. Users can track their live order status anytime by going to the 'My Orders' (আমার অর্ডারসমূহ) tab on the website. 4. Support: If they face any complex issues, they can contact Mihadx directly via the WhatsApp or Telegram options available in the support widget. Keep your answers concise, clear, helpful, and directly tailored to mihadx.pro.bd.";
+            const systemInstructionText = `You are Mihadx AI Assistant, an experienced, polite, and helpful customer support representative for 'mihadx.pro.bd', a trusted gaming top-up store in Bangladesh. 
+Always reply in clear, natural, and polite Bengali. 
+Core Site Knowledge & Guidelines:
+- Services: Free Fire Diamonds Top-up, eFootball Coins Top-up, Special Craft & Airdrop Pass, and other gaming packages.
+- Payments: bKash and authorized local payment methods.
+- Account: Create or login via Profile/Login using Google Sign-In or Email & Password.
+- Ordering steps: 1. Select game & package. 2. Provide correct In-Game Player UID. 3. Make payment to official number. 4. Submit TrxID to confirm order.
+- Delivery Time: Usually 10-15 minutes after payment verification. Technical or server issues may take up to 1 hour.
+- Order Status: Check Profile → My Orders (Pending, Processing, Completed).
+- Rules: Never ask for OTP, Password, bKash PIN, or sensitive info. Do not guess live order statuses; instruct customers to check 'My Orders' or contact support if 1 hour has passed. For complex issues, wrong UID, or refunds, guide them to WhatsApp (https://wa.me/8801576502490) or Telegram (https://t.me/mihadx_pro_bd). Keep answers concise and direct.`;
             
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+            let fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
+            let headers = { "Content-Type": "application/json" };
+
+            if (GEMINI_API_KEY.startsWith("AQ.")) {
+                headers["Authorization"] = `Bearer ${GEMINI_API_KEY}`;
+            } else {
+                fetchUrl += `?key=${GEMINI_API_KEY}`;
+            }
+
+            const response = await fetch(fetchUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: headers,
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [
-                            { text: systemPrompt },
-                            { text: "Customer Question: " + msg }
-                        ]
-                    }]
+                    system_instruction: {
+                        parts: [{ text: systemInstructionText }]
+                    },
+                    contents: chatHistory
                 })
             });
 
             const data = await response.json();
-            document.getElementById(loadingId).remove();
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
 
-            let replyText = "দুঃখিত, এই মুহূর্তে উত্তর দিতে সমস্যা হচ্ছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন বা আমাদের WhatsApp এ সরাসরি যোগাযোগ করুন।";
-            if (data.candidates && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+            let replyText = "দুঃখিত, এই মুহূর্তে উত্তর দিতে সমস্যা হচ্ছে। দয়া করে কিছুক্ষণ পর চেষ্টা করুন বা আমাদের WhatsApp বা Telegram এ যোগাযোগ করুন।";
+            
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
                 replyText = data.candidates[0].content.parts[0].text;
+                // Add model response to history
+                chatHistory.push({ role: "model", parts: [{ text: replyText }] });
+            } else if (data.error) {
+                console.error("Gemini API Error:", data.error);
+                replyText = "এপিআই ত্রুটি: " + (data.error.message || "অনুমোদন বা সংযোগ সমস্যা");
             }
 
-            chatBox.innerHTML += `
-                <div class="flex items-start gap-2">
-                    <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed whitespace-pre-line">
-                        ${replyText}
-                    </div>
-                </div>
-            `;
+            // Securely render AI Response using DOM methods
+            const aiWrapper = document.createElement('div');
+            aiWrapper.className = "flex items-start gap-2";
+            
+            const aiAvatarRes = document.createElement('div');
+            aiAvatarRes.className = "w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold";
+            aiAvatarRes.textContent = "AI";
+            
+            const aiBubble = document.createElement('div');
+            aiBubble.className = "bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed whitespace-pre-line";
+            aiBubble.textContent = replyText;
+            
+            aiWrapper.appendChild(aiAvatarRes);
+            aiWrapper.appendChild(aiBubble);
+            chatBox.appendChild(aiWrapper);
+
         } catch (error) {
-            document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `
-                <div class="flex items-start gap-2">
-                    <div class="w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">AI</div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed">
-                        নেটওয়ার্ক অথবা এপিআই কানেকশনে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।
-                    </div>
-                </div>
-            `;
+            console.error("Fetch Error:", error);
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
+            
+            const errWrapper = document.createElement('div');
+            errWrapper.className = "flex items-start gap-2";
+            
+            const errAvatar = document.createElement('div');
+            errAvatar.className = "w-7 h-7 rounded-full purple-gradient text-white flex items-center justify-center text-xs flex-shrink-0 font-bold";
+            errAvatar.textContent = "AI";
+            
+            const errBubble = document.createElement('div');
+            errBubble.className = "bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 max-w-[80%] leading-relaxed";
+            errBubble.textContent = "নেটওয়ার্ক কানেকশন অথবা এপিআই টোকেনে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।";
+            
+            errWrapper.appendChild(errAvatar);
+            errWrapper.appendChild(errBubble);
+            chatBox.appendChild(errWrapper);
         }
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
-            
+
 </body>
 </html>
