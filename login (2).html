@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register — Mihadx BD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #0f172a; color: #fff; }
+        .purple-gradient { background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%); }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+        <div class="text-center space-y-1">
+            <a href="index.html" class="inline-block font-black text-xl text-white">Mihadx<span class="text-purple-500">.pro.bd</span></a>
+            <p id="authTitleSub" class="text-xs text-slate-400">অর্ডার ও অ্যাকাউন্ট পরিচালনার জন্য অ্যাকাউন্ট খুলুন বা লগইন করুন</p>
+        </div>
+
+        <!-- AUTH TABS -->
+        <div class="flex bg-slate-800 p-1 rounded-2xl text-xs font-bold">
+            <button type="button" id="tabLoginBtn" onclick="switchTab('login')" class="flex-1 py-2.5 rounded-xl bg-purple-600 text-white shadow transition">লগইন</button>
+            <button type="button" id="tabRegBtn" onclick="switchTab('register')" class="flex-1 py-2.5 rounded-xl text-slate-400 hover:text-white transition">রেজিস্ট্রেশন</button>
+        </div>
+
+        <div id="errorMsg" class="hidden text-xs text-red-400 bg-red-950/50 p-3 rounded-xl border border-red-800/50 text-center font-bold"></div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" onsubmit="handleEmailLogin(event)" class="space-y-4">
+            <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">ইমেইল ঠিকানা</label>
+                <input type="email" id="loginEmail" required placeholder="yourname@gmail.com" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 rounded-xl focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label class="text-xs font-bold text-slate-300">পাসওয়ার্ড</label>
+                    <button type="button" onclick="handleForgotPassword()" class="text-[10px] text-purple-400 hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
+                </div>
+                <div class="relative">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 pr-10 rounded-xl focus:outline-none focus:border-purple-500">
+                    <button type="button" onclick="togglePassVisibility('loginPassword', this)" class="absolute right-3 top-3 text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" id="loginSubmitBtn" class="w-full purple-gradient text-white py-3.5 rounded-xl font-bold text-xs shadow-lg hover:opacity-95 transition">
+                লগইন করুন
+            </button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="regForm" onsubmit="handleEmailRegister(event)" class="space-y-3.5 hidden">
+            <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">আপনার নাম</label>
+                <input type="text" id="regName" required placeholder="Ismail Hossen" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 rounded-xl focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">ইমেইল ঠিকানা</label>
+                <input type="email" id="regEmail" required placeholder="yourname@gmail.com" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 rounded-xl focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">পাসওয়ার্ড (নূন্যতম ৬ ডিজিট)</label>
+                <div class="relative">
+                    <input type="password" id="regPassword" minlength="6" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 pr-10 rounded-xl focus:outline-none focus:border-purple-500">
+                    <button type="button" onclick="togglePassVisibility('regPassword', this)" class="absolute right-3 top-3 text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">কনফার্ম পাসওয়ার্ড</label>
+                <input type="password" id="regConfirmPassword" minlength="6" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 text-white text-xs p-3 rounded-xl focus:outline-none focus:border-purple-500">
+            </div>
+            <button type="submit" id="regSubmitBtn" class="w-full purple-gradient text-white py-3.5 rounded-xl font-bold text-xs shadow-lg hover:opacity-95 transition">
+                নতুন একাউন্ট খুলুন
+            </button>
+        </form>
+
+        <div class="relative flex py-1 items-center">
+            <div class="flex-grow border-t border-slate-800"></div>
+            <span class="flex-shrink mx-3 text-[10px] text-slate-500 font-bold uppercase">অথবা</span>
+            <div class="flex-grow border-t border-slate-800"></div>
+        </div>
+
+        <button onclick="loginWithGoogle()" class="w-full bg-white text-slate-900 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-slate-100 transition shadow">
+            <i class="fa-brands fa-google text-red-500 text-sm"></i>
+            <span>Continue with Google</span>
+        </button>
+
+        <div class="text-center pt-2">
+            <a href="index.html" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> হোমে ফিরে যান</a>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyACc83rBZjnoZ8l-pZFIRqSs-fyVoiN6ck",
+            authDomain: "mihadx-pro-bd.firebaseapp.com",
+            projectId: "mihadx-pro-bd",
+            storageBucket: "mihadx-pro-bd.firebasestorage.app",
+            messagingSenderId: "478391400367",
+            appId: "1:478391400367:web:86012d35014ee7350a215a"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                if (user.email && user.email.toLowerCase() === 'ismailhoseen77@gmail.com') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+
+        function switchTab(type) {
+            hideError();
+            if (type === 'login') {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('regForm').classList.add('hidden');
+                document.getElementById('tabLoginBtn').className = "flex-1 py-2.5 rounded-xl bg-purple-600 text-white shadow transition";
+                document.getElementById('tabRegBtn').className = "flex-1 py-2.5 rounded-xl text-slate-400 hover:text-white transition";
+            } else {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('regForm').classList.remove('hidden');
+                document.getElementById('tabRegBtn').className = "flex-1 py-2.5 rounded-xl bg-purple-600 text-white shadow transition";
+                document.getElementById('tabLoginBtn').className = "flex-1 py-2.5 rounded-xl text-slate-400 hover:text-white transition";
+            }
+        }
+
+        function togglePassVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerHTML = `<i class="fa-solid fa-eye-slash"></i>`;
+            } else {
+                input.type = "password";
+                btn.innerHTML = `<i class="fa-solid fa-eye"></i>`;
+            }
+        }
+
+        async function handleEmailLogin(e) {
+            e.preventDefault();
+            hideError();
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value;
+
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+            } catch (err) {
+                showError("ইমেইল বা পাসওয়ার্ড ভুল দেওয়া হয়েছে!");
+            }
+        }
+
+        async function handleEmailRegister(e) {
+            e.preventDefault();
+            hideError();
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPassword').value;
+            const confirmPass = document.getElementById('regConfirmPassword').value;
+
+            if (pass !== confirmPass) {
+                showError("পাসওয়ার্ড দুটি মিলছে না!");
+                return;
+            }
+
+            try {
+                const res = await auth.createUserWithEmailAndPassword(email, pass);
+                await res.user.updateProfile({ displayName: name });
+                await db.collection('users').doc(res.user.uid).set({
+                    uid: res.user.uid,
+                    displayName: name,
+                    email: email,
+                    badge: 'Regular',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            } catch (err) {
+                showError(err.message);
+            }
+        }
+
+        function handleForgotPassword() {
+            const email = prompt("আপনার রেজিস্টার্ড ইমেইল ঠিকানাটি লিখুন:");
+            if (email) {
+                auth.sendPasswordResetEmail(email)
+                    .then(() => alert("আপনার ইমেইলে পাসওয়ার্ড রিকভারি লিঙ্ক পাঠানো হয়েছে!"))
+                    .catch(err => alert("ত্রুটি: " + err.message));
+            }
+        }
+
+        function loginWithGoogle() {
+            auth.signInWithPopup(googleProvider);
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            el.innerText = msg;
+            el.classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('errorMsg').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
